@@ -20,7 +20,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
         
 
         r = ReqBS.getRequisition(id);
-        Label2.Text = r.RequestedBy.ToString();
+        int empid =Convert.ToInt32(r.RequestedBy);
+        Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 
@@ -35,6 +36,14 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
             DropDownList2.DataSource = ReqBS.getItem();
             DropDownList2.DataBind();
+
+            if(r.Status!="Pending")
+            {
+                if (r.Remarks != null)
+                    Label8.Text = r.Remarks.ToString();
+                else
+                    Label8.Text = "-";
+            }
         }
 
         des = DropDownList2.SelectedItem.ToString();

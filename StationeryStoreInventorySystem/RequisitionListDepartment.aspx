@@ -21,7 +21,7 @@
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server"  AutoGenerateColumns="False" 
-DataKeyNames="RequisitionID" >
+DataKeyNames="RequisitionID" CssClass="mGrid">
              <Columns>  
                        
                  <asp:TemplateField HeaderText="RequestDate">
@@ -72,7 +72,7 @@ DataKeyNames="RequisitionID" >
         </asp:GridView>
 
          <asp:GridView ID="GridView2" runat="server"  AutoGenerateColumns="False" 
-DataKeyNames="RequisitionID" >
+DataKeyNames="RequisitionID" CssClass="mGrid" >
               <Columns>  
                        
                  <asp:TemplateField HeaderText="RequestDate">
@@ -86,7 +86,7 @@ DataKeyNames="RequisitionID" >
                 </asp:TemplateField>
 
 
-                 <asp:TemplateField HeaderText="RequisitionID">
+<%--                 <asp:TemplateField HeaderText="RequisitionID">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
@@ -94,7 +94,7 @@ DataKeyNames="RequisitionID" >
                          <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:Label>
                        
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
                   
                 <asp:TemplateField HeaderText="RequestedBy">
                     <EditItemTemplate>

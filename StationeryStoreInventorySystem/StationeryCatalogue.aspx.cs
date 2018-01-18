@@ -12,8 +12,10 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     {
         ItemLogic ilogic = new ItemLogic();
         GridView1.DataSource = ilogic.getCatalogueList();
-        GridView1.DataBind();
-
+        if (!IsPostBack)
+        {
+            GridView1.DataBind();
+        }
 
     }
 
@@ -48,6 +50,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                 case "UpdateRow":
                     {
                         updateRow(index);
+                        refreshPage();
                     }
                     break;
                 default:
@@ -64,7 +67,8 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ItemLogic ilogic = new ItemLogic();
         GridView1.EditIndex = index;
         GridView1.DataBind();
-        GridViewRow row = GridView1.Rows[index];
+        GridViewRowCollection a = GridView1.Rows;
+        GridViewRow row = a[index];
         Label itemLabel = (Label)row.FindControl("Label1");
         DropDownList ddl = (DropDownList)row.FindControl("DropDownList3");
         DropDownList ddl2 = (DropDownList)row.FindControl("DropDownList4");

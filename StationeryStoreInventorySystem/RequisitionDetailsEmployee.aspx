@@ -18,17 +18,8 @@
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-    </strong>
-    <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell>
-                <asp:Label ID="Label1" runat="server" Text="Remarks: " Visible="False"></asp:Label>
-            </asp:TableCell>
-            <asp:TableCell Width="200px">
-                <asp:Label ID="remarks" runat="server"></asp:Label>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
+    </strong><br />
+    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="Label" Width="200px"></asp:Label>
     <br />
 
     <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />

@@ -20,7 +20,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
         
 
         r = ReqBS.getRequisition(id);
-        Label2.Text = r.RequestedBy.ToString();
+        int empid =Convert.ToInt32(r.RequestedBy);
+        Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 
@@ -35,6 +36,14 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
             DropDownList2.DataSource = ReqBS.getItem();
             DropDownList2.DataBind();
+
+            if(r.Status!="Pending")
+            {
+                if (r.Remarks != null)
+                    Label8.Text = r.Remarks.ToString();
+                else
+                    Label8.Text = "-";
+            }
         }
 
         des = DropDownList2.SelectedItem.ToString();
@@ -68,7 +77,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
             id = Convert.ToInt32(Request.QueryString["id"]);
             ReqBS.cancelRejectRequisition(id);
 
-            Response.Redirect("ReqisitionListDepartment.aspx");
+            Response.Redirect("RequisitionListDepartment.aspx");
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
         }
         catch (Exception ex)
@@ -99,7 +108,54 @@ public partial class RequisitionDetails : System.Web.UI.Page
     {
         Panel1.Visible = false;
         Add.Visible = true;
+        Close.Visible = false;
     }
+
+    protected void Delete_Click(object sender, EventArgs e)
+    {
+        //LoadData();
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+        string itemDes = GridView1.DataKeys[row.RowIndex].Value.ToString();
+
+
+        Requisition_Item rItem = ReqBS.findByReqIDItemCode(id, itemDes);
+        string iCode = rItem.ItemCode;
+        int rId = rItem.RequisitionID;
+        ReqBS.removeRequisitionItem(rId, iCode);
+
+        showAllItems();
+    }
+
+    protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
+    {
+        System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView1.Rows[e.RowIndex].FindControl("qtyText");
+        int newQty = Convert.ToInt32(qtyText.Text);
+
+        System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)GridView1.Rows[e.RowIndex].FindControl("itemDes");
+        string itemDesc = itemDescLabel.Text;
+
+        Requisition_Item item = ReqBS.findByReqIDItemCode(id, itemDesc);
+        string iCode = item.ItemCode;
+        int rId = item.RequisitionID;
+
+        ReqBS.updateRequisitionItem(rId, iCode, newQty);
+
+        GridView1.EditIndex = -1;
+        showAllItems();
+    }
+
+    protected void RowEdit(object sender, GridViewEditEventArgs e)
+    {
+        GridView1.EditIndex = e.NewEditIndex;
+        showAllItems();
+    }
+
+    protected void RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        GridView1.EditIndex = -1;
+        showAllItems();
+    }
+
 }
 
 

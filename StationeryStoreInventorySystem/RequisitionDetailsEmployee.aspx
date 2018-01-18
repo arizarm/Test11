@@ -8,12 +8,11 @@
     <br />
     <a href="ReqisitionListDepartment.aspx"><-Back</a>
     <br />
-    <br />
     <h2>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
-    Requested By:
+    <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-    <br />
+    <br /></h3>
     Requested Date:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     <br />
@@ -26,7 +25,7 @@
                 <asp:Label ID="Label1" runat="server" Text="Remarks: " Visible="False"></asp:Label>
             </asp:TableCell>
             <asp:TableCell Width="200px">
-                <asp:Label ID="remarks" runat="server" ></asp:Label>
+                <asp:Label ID="remarks" runat="server"></asp:Label>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
@@ -83,7 +82,7 @@
                                     <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
                                     <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>

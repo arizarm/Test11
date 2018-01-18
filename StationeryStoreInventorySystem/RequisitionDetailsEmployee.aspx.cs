@@ -40,7 +40,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         r = ReqBS.getRequisition(id);
         Label5.Text = "ENGL/" + r.RequisitionID;
-        Label2.Text = r.RequestedBy.ToString();
+        int empid = Convert.ToInt32(r.RequestedBy);
+        Label2.Text = ReqBS.getEmployee(empid).ToString();
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 

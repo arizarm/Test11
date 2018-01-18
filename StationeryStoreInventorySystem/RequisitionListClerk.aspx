@@ -1,18 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionListClerk.aspx.cs" Inherits="ReqisitionListClerk" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <style type="text/css">
-        .auto-style1 {
-            background-color: rgba(100,150,40,1);
-            max-width: 15%;
-            color: #fff;
-            padding: 3px 2% 3px 2%;
-            margin-left: 2px;
-            margin-right: 2px;
-            margin-top: 2%;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
    
@@ -37,7 +26,7 @@
                
                 <asp:TemplateField >
                     <HeaderTemplate>
-                        <asp:CheckBox ID="CheckAll" text="Select All" runat="server" />
+                        <asp:CheckBox ID="CheckAll" OnCheckedChanged="CheckAll_CheckedChanged" AutoPostBack="true" runat="server" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox ID="CheckBox" runat="server" />
@@ -55,8 +44,8 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("requisitionNo") %>'></asp:LinkButton>
-                    </ItemTemplate>
+                        <asp:Label ID="lblrequisitionNo" runat="server" Text='<%# Bind("requisitionNo") %>'></asp:Label>
+                        </ItemTemplate>
                 </asp:TemplateField>
 
                 
@@ -83,7 +72,7 @@
                         <asp:Button ID="Button1" runat="server" Text="Detail" />
                     </EditItemTemplate>
                    <ItemTemplate>
-                       <asp:Button ID="Button1" runat="server" Text="Detail" />
+                       <asp:Button ID="gvDetailBtn" runat="server" OnClick="gvDetailBtn_Click" Text="Detail" />
                     </ItemTemplate>
                 </asp:TemplateField>              
 
@@ -91,8 +80,7 @@
             </Columns>
         </asp:GridView>
     </div>
-    <asp:Button ID="GenerateBtn" runat="server" Text="Generate Retrieval List" CssClass="button" OnClick="GenerateBtn_Click1"/>
-    <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
-</asp:Content>
+    <asp:Button ID="GenerateBtn" runat="server" Text="Generate Retrieval List" CssClass="button" OnClick="GenerateBtn_Click"/>
+    </asp:Content>
 
 

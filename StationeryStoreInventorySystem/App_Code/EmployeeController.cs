@@ -6,16 +6,9 @@ using System.Web;
 /// <summary>
 /// Summary description for EmployeeController
 /// </summary>
-public class EmployeeController
+public static class EmployeeController
 {
-    public EmployeeController()
-    {
-        //
-        // TODO: Add constructor logic here
-        //
-    }
-
-    public bool verifyLogin(string email, string password)
+    public static bool verifyLogin(string email, string password)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -37,12 +30,30 @@ public class EmployeeController
         }
     }
 
-    public Employee GetEmployeeByEmail(string email)
+    public static Employee GetEmployeeByEmail(string email)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
             return context.Employees.Where(x => x.Email == email).First();
         }
 
+    }
+
+    public static string getEmployeeDepartment(int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            string dep= context.Employees.Where(e => e.EmpID.Equals(id)).Select(e => e.DeptCode).FirstOrDefault();
+            return context.Departments.Where(d => d.DeptCode.Equals(dep)).Select(d => d.DeptName).FirstOrDefault();
+        }
+    }
+
+    //EMPLOYEE NAME
+    public static string getEmployee(int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Employees.Where(e => e.EmpID.Equals(id)).Select(e => e.EmpName).FirstOrDefault();
+        }
     }
 }

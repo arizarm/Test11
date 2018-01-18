@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Logic University Stationery Store</string>
+    <string name="login_email">Enter email address</string>
+    <string name="login_pass">Enter password</string>
+    <string name="requisition_list">Requisition List</string>
+    <string name="requisition_form">Generate Requisition Form</string>
+    <string name="retrieval_list">Retrieval List</string>
+    <string name="disbursement">Disbursement</string>
+    <string name="discrepancy">Generate Discrepancy</string>
+    <string name="update_dep">Department Details</string>
+</resources>

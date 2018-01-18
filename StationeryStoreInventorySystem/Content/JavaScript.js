@@ -1,0 +1,4 @@
+﻿//DatePicker
+       $(function () {
+           $("#txtDate").datepicker();
+       });

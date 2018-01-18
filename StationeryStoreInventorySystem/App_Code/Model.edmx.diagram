@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c9b19bbdcd0b48aab9f64bbabe6c4e87" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="StationeryModel.Category" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.CollectionPoint" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Department" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Disbursement" Width="1.5" PointX="9.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Disbursement_Item" Width="1.5" PointX="12" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Discrepency" Width="1.5" PointX="7.5" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Employee" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Item" Width="1.5" PointX="10.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Item_PurchaseOrder" Width="1.5" PointX="12.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.PriceList" Width="1.5" PointX="12.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Requisition" Width="1.5" PointX="15" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Requisition_Item" Width="1.5" PointX="17.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Retrieval" Width="1.5" PointX="7.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.StockCard" Width="1.5" PointX="12.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StationeryModel.Supplier" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <AssociationConnector Association="StationeryModel.FK__Item__CategoryID__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Departmen__Colle__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Disbursem__DeptC__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Employee__DeptCo__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Disbursem__Disbu__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Disbursem__Retri__25869641" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Requisiti__Disbu__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Disbursem__ItemC__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Discrepen__Appro__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Discrepen__ItemC__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Discrepen__Reque__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__PurchaseO__Appro__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__PurchaseO__Reque__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Requisiti__Appro__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Requisiti__Reque__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Retrieval__Retri__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Item_Purc__ItemC__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__PriceList__ItemC__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Requisiti__ItemC__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__StockCard__ItemC__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Item_Purc__Purch__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__PriceList__Suppl__1ED998B2" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__PurchaseO__Suppl__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="StationeryModel.FK__Requisiti__Requi__31EC6D26" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

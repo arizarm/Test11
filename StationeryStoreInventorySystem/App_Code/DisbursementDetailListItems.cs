@@ -8,17 +8,32 @@ using System.Web;
 /// </summary>
 public class DisbursementDetailListItems
 {
+    private string itemCode;
     private string itemDesc;
     private int reqQty;
     private int actualQty;
     private string remarks;
 
-    public DisbursementDetailListItems(string itemDesc, int reqQty, int actualQty, string remarks)
+    public DisbursementDetailListItems(string itemCode, string itemDesc, int reqQty, int actualQty, string remarks)
     {
+        this.itemCode = itemCode;
         this.itemDesc = itemDesc;
         this.reqQty = reqQty;
         this.actualQty = actualQty;
         this.remarks = remarks;
+    }
+
+    public string ItemCode
+    {
+        get
+        {
+            return itemCode;
+        }
+
+        set
+        {
+            itemCode = value;
+        }
     }
 
     public string ItemDesc

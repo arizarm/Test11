@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Summary description for DisbursementCotrol
-/// </summary>
 public class DisbursementCotrol
 {
     static StationeryEntities context = new StationeryEntities();
@@ -23,6 +20,7 @@ public class DisbursementCotrol
     static List<DisbursementDetailListItems> disbursementDetailListItemsList;
 
 
+    //GET DISBURSEMENT LIST TO DISPLAY
     public static List<DisbursementListItems> gvDisbursementPopulate()
     {
         //create new list
@@ -71,6 +69,7 @@ public class DisbursementCotrol
         return disbursementListItemsList;
     }
 
+    //GET DISBURSEMENT DETAIL OBJECT TO DISPLAY
     public static DisbursementListItems DisbursementListItemsObj(string disbId)
     {
         disbID = disbId;
@@ -83,7 +82,8 @@ public class DisbursementCotrol
         }
         return disbItem;
     }
-    
+
+    //GET DISBURSEMENT DETAIL LIST TO DISPLAY
     public static List<DisbursementDetailListItems> gvDisbursementDetailPopulate()
     {
         //create new list
@@ -120,7 +120,7 @@ public class DisbursementCotrol
             reqQty = (int)disbDetails.TotalRequestedQty;
 
             //put all data to display class
-            disbursementDetailListItems = new DisbursementDetailListItems(itemDesc, reqQty, actualQty, remarks);
+            disbursementDetailListItems = new DisbursementDetailListItems(itemCode, itemDesc, reqQty, actualQty, remarks);
 
             //add display data to list
             disbursementDetailListItemsList.Add(disbursementDetailListItems);
@@ -128,6 +128,7 @@ public class DisbursementCotrol
         return disbursementDetailListItemsList;
     }
 
+    //VERIFY ACCESS CODE
     public static bool checkAccessCode(string accessCode)
     {
         if ((context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.AccessCode).First().ToString()).Equals(accessCode))
@@ -138,5 +139,5 @@ public class DisbursementCotrol
         {
             return false;
         }      
-    }
+    }    
 }

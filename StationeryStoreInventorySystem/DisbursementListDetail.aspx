@@ -31,6 +31,7 @@
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>
                        <asp:Label ID="lblitemDesc" runat="server" Text='<%# Bind("itemDesc") %>'></asp:Label>
+                        <asp:HiddenField ID="hdnflditemCode" runat="server" Value ='<%# Bind("itemCode") %>'/> 
                     </ItemTemplate>
                 </asp:TemplateField>                
                 <asp:TemplateField HeaderText="Total Requested Quantity">                                   

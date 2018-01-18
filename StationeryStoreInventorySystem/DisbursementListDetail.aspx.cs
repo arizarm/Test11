@@ -33,8 +33,31 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         }
         else
         {
-            message = "Incorrect Access Code!";        
+            message = "Incorrect Access Code!";
         }
-        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);        
+        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+
+        //TO FOLLOW UP
+        //List<string> itemCode = new List<string>();
+
+        //foreach (GridViewRow r in gvDisbDetail.Rows)
+        //{
+        //    int actuaQty = Convert.ToInt32((r.FindControl("actualQty") as Label).Text);
+        //    int reqQty = Convert.ToInt32((r.FindControl("reqQty") as Label).Text);
+
+        //    if (reqQty < actuaQty)
+        //    {
+        //        itemCode.Add((r.FindControl("hdnflditemCode") as Label).Text);
+        //    }
+        //}
+        //if (itemCode.Count != 0)
+        //{
+        //    Session["RegrenerateItems"] = itemCode;
+        //    Response.Redirect("~/RegenerateRequest.aspx");
+        //}  
+        //else
+        //{
+        //    Response.Redirect("~/DisbursementList.aspx");
+        //}      
     }
 }

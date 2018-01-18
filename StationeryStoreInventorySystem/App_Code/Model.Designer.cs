@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿// T4 code generation is enabled for model 'C:\Users\Branda Ling\Documents\ADPrivateGit\StationeryStoreInventorySystem\App_Code\Model.edmx'. 
+=======
 ﻿// T4 code generation is enabled for model 'C:\Users\Yimon Soe\Documents\NUS\Term2\AD\PrivateRepo\Test11\StationeryStoreInventorySystem\App_Code\Model.edmx'. 
+>>>>>>> b5adea895c8452ffd336e5fa2a1b6192c70ea3df
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

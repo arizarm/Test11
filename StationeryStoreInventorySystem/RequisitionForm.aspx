@@ -1,12 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionForm.aspx.cs" Inherits="RequisitionForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <style type="text/css">
-        .auto-style1 {
-            width: 268435904px;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader">Stationary Requisition Form  </h2>
 
@@ -23,6 +18,8 @@
         </tr>
     </table>
     <table>
+        <tr><td colspan="2">---------------------------------------------------------------------------------------</td></tr>
+        <tr>
         <tr>
             <td>Item Description:</td>
             <td>
@@ -50,15 +47,19 @@
                     MaximumValue="1000" MinimumValue="1">Invalid Quantity</asp:RangeValidator>
             </td>
         </tr>
-
+        <tr><td colspan="2">---------------------------------------------------------------------------------------</td></tr>
+        <tr>
+            <td></td>
+            <td draggable="false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="btn-success" /></td>
+        </tr>
     </table>
-
-
-    <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="button" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
+&nbsp;
+    <asp:Label ID="Label5" runat="server" Text="Label" Visible="False"></asp:Label>
     <br />
 
-    <asp:GridView ID="GridView1" runat="server">
+    <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" Width="60%">
     </asp:GridView>
     <br />
     <asp:Button ID="Submit" runat="server" Text="Submit to Approve" CssClass="button" OnClick="Submit_Click" />

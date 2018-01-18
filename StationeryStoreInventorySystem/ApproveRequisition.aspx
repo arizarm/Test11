@@ -25,15 +25,15 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
-                        <%--CssClass="mGrid"--%>
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid" Width="200%">
+                        
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>

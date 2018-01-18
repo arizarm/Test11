@@ -36,13 +36,40 @@ public partial class RequisitionForm : System.Web.UI.Page
     {
         //reqItem = new ArrayList();
         des = DropDownList1.SelectedItem.ToString();
+        string code = RequisitionControl.getCode(des);
+
         int qty = Convert.ToInt32(TextBox4.Text);
 
-        ri = new RequestedItem(Label4.Text, des, qty);
-        reqItem = (ArrayList)ViewState["list"];
-        reqItem.Add(ri);
-        ViewState["list"] = reqItem;
+        bool isEqual = false;
 
+        if (GridView1.Rows.Count <= 0)
+        {
+            ri = new RequestedItem(Label4.Text, des, qty);
+            reqItem = (ArrayList)ViewState["list"];
+            reqItem.Add(ri);
+            ViewState["list"] = reqItem;
+        }
+        else
+        {
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                if (code.Equals(row.Cells[0].Text))
+                {
+                    isEqual = true;
+                }
+            }
+            if (isEqual)
+            {
+                Response.Write("<script>alert('Item already existed in the list.');</script>");
+            }
+            else
+            {
+                ri = new RequestedItem(Label4.Text, des, qty);
+                reqItem = (ArrayList)ViewState["list"];
+                reqItem.Add(ri);
+                ViewState["list"] = reqItem;
+            }
+        }
         GridView1.DataSource = reqItem;
         GridView1.DataBind();
     }
@@ -74,7 +101,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             ts.Complete();
         }
         Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
-        Server.Transfer("ReqisitionListDepartment.aspx", true);
+        Server.Transfer("RequisitionListDepartment.aspx", true);
         //Response.Redirect("ReqisitionListDepartment.aspx");
 
     }

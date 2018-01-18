@@ -21,7 +21,7 @@
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionID" CssClass="mGrid">
+            DataKeyNames="RequisitionID" CssClass="mGrid" >
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">
@@ -61,7 +61,7 @@
         </asp:GridView>
 
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionID" CssClass="mGrid">
+            DataKeyNames="RequisitionID" CssClass="mGrid" >
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">

@@ -58,7 +58,6 @@
             <td>
     &nbsp;<asp:DropDownList ID="DurationDropDownList" runat="server" Visible="false">
     </asp:DropDownList>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="DurationAddButton" runat="server" Text="Add" Visible="false"/>
                 
                 <asp:Label ID="FromLabel" runat="server" Text="From:" Visible="false"/>
@@ -70,15 +69,13 @@
             <td>
     <asp:DropDownList ID="CategoryDropDownList" runat="server" Visible="false">
     </asp:DropDownList>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="CategoryAddButton" runat="server" Text="Add" Visible="false"/>
+    <asp:Button ID="CategoryAddButton" runat="server" Text="Add" Visible="false" OnClick="CategoryAddButton_Click"/>
             </td>
                                     <td class="auto-style1"></td>
             <td>
                     <asp:DropDownList ID="SupplierDropDownList" runat="server" Visible="false">
     </asp:DropDownList>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="SupplierAddButton" runat="server" Text="Add" Visible="false"/>
+    <asp:Button ID="SupplierAddButton" runat="server" Text="Add" Visible="false" OnClick="SupplierAddButton_Click"/>
             </td>
 
         </tr>
@@ -86,15 +83,45 @@
         <%--Row 4--%>
         <tr>
             <td>
-                  <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+                  <asp:GridView ID="GridView1" runat="server">
+                      
+                  </asp:GridView>
             </td>
             <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="GridView2" runat="server"></asp:GridView>
+                <asp:GridView ID="CategoryGridView" runat="server" AutoGenerateColumns="False">
+                    <Columns>
+                          <asp:TemplateField HeaderText="Category">
+                              <ItemTemplate>
+                                <asp:Label ID="CategoryItemLabel" runat="server" Text="<%#Container.DataItem %>"></asp:Label>
+                              </ItemTemplate>
+                          </asp:TemplateField>
+                                                <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Button ID="RemoveCategoryBtn" runat="server" Text="Remove" OnClick="RemoveCategoryBtn_Click"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                      </Columns>
+                </asp:GridView>
             </td>
               <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="GridView3" runat="server"></asp:GridView>
+                <asp:GridView ID="SupplierGridView" runat="server" AutoGenerateColumns="false">
+                    <Columns>
+                                                <asp:TemplateField HeaderText="Supplier">
+                            <ItemTemplate>
+                                <asp:Label ID="SupplierItemLabel" runat="server" Text="<%#Container.DataItem %>"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:Button ID="RemovSupplierBtn" runat="server" Text="Remove" OnClick="RemovSupplierBtn_Click"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    </Columns>
+                </asp:GridView>
             </td>
         </tr>
     </table>

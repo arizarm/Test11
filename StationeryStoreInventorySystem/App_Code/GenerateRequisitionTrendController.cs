@@ -25,7 +25,7 @@ public class GenerateRequisitionTrendController
         using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities se = new StationeryEntities();
-            List<string> allDepts = se.Departments.Select(c => c.DeptName).ToList();
+            List<string> allDepts = se.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
             ts.Complete();
             return allDepts;
         }

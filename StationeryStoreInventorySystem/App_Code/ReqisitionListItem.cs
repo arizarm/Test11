@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for ReqisitionListItem
 /// </summary>
-public class ReqisitionListItemDepartment
+public class ReqisitionListItem
 {
     private string date;
     private int requisitionNo;
@@ -79,7 +79,7 @@ public class ReqisitionListItemDepartment
         }
     }
 
-    public ReqisitionListItemDepartment(string date, int requisitionNo, string department, string status, string employeeName)
+    public ReqisitionListItem(string date, int requisitionNo, string department, string status, string employeeName)
     {
         this.Date = date;
         this.RequisitionNo = requisitionNo;

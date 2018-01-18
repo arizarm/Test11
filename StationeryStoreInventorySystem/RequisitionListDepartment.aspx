@@ -6,14 +6,14 @@
 
     <div>
         <h2 class="mainPageHeader">Requisition List</h2>
-        <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
-        <asp:Button ID="SearchBtn" runat="server" Text="Search" />
-        <asp:Button ID="Display" runat="server" Text="Display All" />
-
+      <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
+           <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
+           <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
     </div>
     <div>
         <asp:DropDownList ID="DropDownList1" runat="server" CssClass="align-right" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
-            <asp:ListItem Selected="True" Value="Pending">Pending Approval</asp:ListItem>
+            <asp:ListItem Selected="True" >Select Status</asp:ListItem>
+            <asp:ListItem Value="Pending">Pending Approval</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
             <asp:ListItem Value="Closed">Closed</asp:ListItem>
@@ -95,7 +95,7 @@
                 </asp:TemplateField>
 
                 <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject" />
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
             </Columns>
 
         </asp:GridView>

@@ -9,7 +9,17 @@ public partial class StationeryReorderReport : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            GenerateReorderTrendController grtc = new GenerateReorderTrendController();
+            List<string> catNames = grtc.getAllCategoryNames();
+            CategoryDropDownList.DataSource = catNames;
+            CategoryDropDownList.DataBind();
 
+            List<string> supplNames = grtc.getAllSupplierNames();
+            SupplierDropDownList.DataSource = supplNames;
+            SupplierDropDownList.DataBind();
+        }
     }
 
     protected void CategoryRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)

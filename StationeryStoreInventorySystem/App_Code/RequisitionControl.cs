@@ -28,7 +28,7 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplayAll()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.ToList();
+        rlist = context.Requisitions.Where(x => x.Status == "Priority"|| x.Status == "Approved").ToList();
         return PopulateGridView(rlist);
     }
 
@@ -48,31 +48,11 @@ public class RequisitionControl
 
     public static List<ReqisitionListItem> DisplaySearch(string searchWord)
     {
-        //rlist = new List<Requisition>();
-        //rlist = context.Requisitions.ToList();
-
-        //searchList = new List<ReqisitionListItem>();
-
-        //foreach (ReqisitionListItem i in PopulateGridView(rlist))
-        //{
-        //if(i.Date== searchWord || i.Department == searchWord|| i.RequisitionNo == Convert.ToInt32(searchWord)|| i.Status == searchWord)
-        //    {
-        //        i = searchList;
-        //    }
-        //}
-
         itemList = DisplayAll();
         foreach(ReqisitionListItem i in itemList)
         {
             searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)|| x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
-
-            //searchList = itemList.Where(x => x.RequisitionNo.ToString().Contains(searchWord)).ToList();
-            //x.Date.ToLower().Contains(searchWord.ToLower()) || Convert.ToString(x.RequisitionNo).Contains(searchWord)) ||
         }
-
-        //gvReq.DataSource = context.Requisitions.Where(x => x.RequestDate.ToString().Contains(searchWord)|| x.RequisitionID.ToString().Contains(searchWord) || x.RequestedBy.ToString().Contains((searchWord)) || x.Status.Contains(searchWord)).ToList();
-        //gvReq.DataBind();
-
         return searchList;
     }
 

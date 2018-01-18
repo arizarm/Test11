@@ -12,9 +12,20 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     {
         ItemLogic ilogic = new ItemLogic();
         GridView1.DataSource = ilogic.getCatalogueList();
+        List <Category> catList = ilogic.getCategoryList();
+        Category temp = new Category();
+        temp.CategoryID = 0;
+        temp.CategoryName = "Other";
+        catList.Add(temp);
+        DropDownListUOM.DataSource = catList;
+        List<string> UOMList = ilogic.getDistinctUOMList();
+        UOMList.Add("Other");
+        DropDownListCategory.DataSource = UOMList;
         if (!IsPostBack)
         {
             GridView1.DataBind();
+            DropDownListUOM.DataBind();
+            DropDownListCategory.DataBind();  
         }
 
     }
@@ -164,6 +175,30 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
-        addItem("itemcode","test","test","10","10","test");
+        //addItem("itemcode","test","test","10","10","test");
+        string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
+
+        if (!DropDownListCategory.SelectedValue.Equals("Other"))
+        {
+            TextBoxCategory.Text = DropDownListCategory.SelectedValue;
+        }
+        if (!DropDownListUOM.SelectedValue.Equals("Other"))
+        {
+            TextBoxUOM.Text= DropDownListUOM.SelectedValue;
+        }
+        if (Page.IsValid) { 
+        itemCode = TextBoxItemNo.Text;
+        description = TextBoxDesc.Text;
+        reorderLevel = TextBoxReLvl.Text;
+        reorderQty = TextBoxReQty.Text;
+        categoryName = TextBoxCategory.Text;
+        uom = TextBoxUOM.Text;
+        addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom);
+        }
+        else
+        {
+
+        }
+        return;
     }
 }

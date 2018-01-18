@@ -166,8 +166,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         List<PriceList> lpl = mplc.getSupplierPriceList(code);
         //populate tender supply list
-        if (lpl.Count > 0)
-            ItemDisplayDesc.Visible = true;
         for (int i = 0; i < lpl.Count; i++)
         {
             string itemDesc = mplc.getItemNameForGivenItemCode(lpl[i].ItemCode);

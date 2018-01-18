@@ -86,4 +86,15 @@ public static class ReqBS
         }
 
     }
+    public static void approveRequisition(int id,string reason)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
+            r.Remarks = reason;
+            r.RequisitionID = id;
+            r.Status = "Approved";          
+            context.SaveChanges();  
+        }
+    }
 }

@@ -55,7 +55,7 @@
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2">
                     <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="button" />
-                    <asp:Button ID="Button1" runat="server" Text="Approve" CssClass="button" />
+                    
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -95,6 +95,13 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <div>
+        <asp:Label ID="ReasonLabel" runat="server" Text="Reason"></asp:Label>
+        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+    </div>
+
     <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
+    <asp:Button ID="ApproveButton" runat="server" Text="Approve" CssClass="button" OnClick="ApproveButton_Click" />
+    <asp:Label ID="approveSuccess" runat="server"></asp:Label>
 </asp:Content>
 

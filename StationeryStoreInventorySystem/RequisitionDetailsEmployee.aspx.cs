@@ -14,7 +14,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        
+            id = Convert.ToInt32(Request.QueryString["id"]);
         //int id = 24;
         
 
@@ -92,6 +93,20 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
 
         showAllItems();
+    }
+
+    protected void ApproveButton_Click(object sender, EventArgs e)
+    {
+      
+
+        id = Convert.ToInt32(Request.QueryString["id"]);
+        string reason = ReasonLabel.Text;
+        ReqBS.approveRequisition(id,reason);
+
+        approveSuccess.Text = "Approved Success";
+
+
+            
     }
 }
 

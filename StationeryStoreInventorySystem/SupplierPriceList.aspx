@@ -159,7 +159,7 @@
 
 
         <br />
-        <asp:Label ID="Label11" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label>
+        <asp:Label ID="ItemDisplayDesc" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small" Visible="false"></asp:Label>
         <asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription" OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating">
             <Columns>
                 <asp:TemplateField HeaderText ="Item Description" ItemStyle-Width ="80%">

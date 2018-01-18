@@ -94,23 +94,6 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         showAllItems();
     }
-
-    protected void Close_Click(object sender, EventArgs e)
-    {
-        Panel1.Visible = false;
-        Add.Visible = true;
-    }
-
-    protected void ApproveButton_Click(object sender, EventArgs e)
-    {
-      
-
-        id = Convert.ToInt32(Request.QueryString["id"]);
-        string reason = ReasonLabel.Text;
-        ReqBS.approveRequisition(id,reason);
-
-        approveSuccess.Text = "Approved Success";      
-    }
 }
 
 

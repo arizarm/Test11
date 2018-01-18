@@ -76,7 +76,7 @@
                     <%-- Supplier Menu --%> 
                     <asp:Label ID="lblSupplier" runat="server" CssClass="CategoryHeader">Supplier</asp:Label>
                     <asp:HyperLink ID="hLinkSupplierList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierList.aspx">Supplier List</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkSupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierListClerk.aspx">Supplier List</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkSupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierCreate.aspx">Add New Supplier</asp:HyperLink>
                     
 
                 </div>

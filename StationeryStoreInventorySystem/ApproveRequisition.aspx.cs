@@ -25,21 +25,18 @@ public partial class ApproveRequisition : System.Web.UI.Page
         Label2.Text = r.RequestDate.ToString();
         Label3.Text = r.Status.ToString();
 
+        if(r.Status.ToString() !=  "Pending")
+        {
+            ReasonLabel.Visible = false;
+            TextBox2.Visible = false;
+            ApproveButton.Visible = false;
+            RejectButton.Visible = false;
+        }
+
         if (!IsPostBack)
         {
             showAllItems();
-        }
-
-        if (Session["empRole"].ToString() == "Head")
-        {
-            ApproveButton.Visible = true;
-            ReasonLabel.Visible = true;
-        }
-        else if (Session["empRole"].ToString() == "Employee")
-        {
-            ApproveButton.Visible = false;
-            ReasonLabel.Visible = false;
-        }
+        }      
         
     }
 

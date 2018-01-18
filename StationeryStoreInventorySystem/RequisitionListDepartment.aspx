@@ -29,7 +29,8 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequestDate") %>'></asp:LinkButton>
+                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("RequestDate") %>'></asp:Label>
+                       
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -39,7 +40,8 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:LinkButton>
+                         <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:Label>
+                       
                     </ItemTemplate>
                 </asp:TemplateField>
                   
@@ -48,7 +50,8 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:LinkButton>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:Label>
+                        
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -58,7 +61,7 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>    
 
@@ -70,14 +73,15 @@ DataKeyNames="RequisitionID" >
 
          <asp:GridView ID="GridView2" runat="server"  AutoGenerateColumns="False" 
 DataKeyNames="RequisitionID" >
-             <Columns>  
+              <Columns>  
                        
                  <asp:TemplateField HeaderText="RequestDate">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequestDate") %>'></asp:LinkButton>
+                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("RequestDate") %>'></asp:Label>
+                       
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -87,7 +91,8 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:LinkButton>
+                         <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:Label>
+                       
                     </ItemTemplate>
                 </asp:TemplateField>
                   
@@ -96,7 +101,8 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:LinkButton>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:Label>
+                        
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -106,11 +112,11 @@ DataKeyNames="RequisitionID" >
                         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
                     </ItemTemplate>
-                </asp:TemplateField>                  
+                </asp:TemplateField>                   
 
-                <asp:HyperLinkField HeaderText="View And Approve" DataNavigateUrlFields="RequisitionID" 
+                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionID" 
                       DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/> 
             </Columns>
 

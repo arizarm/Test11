@@ -46,8 +46,6 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-
-                            <asp:CommandField ShowEditButton="True" ButtonType="Button" ShowDeleteButton="True" />
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>

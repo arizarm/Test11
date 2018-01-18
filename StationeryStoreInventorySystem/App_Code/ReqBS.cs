@@ -31,14 +31,14 @@ public static class ReqBS
     {
         return context.Items.Where(i => i.Description.Equals(item)).Select(i => i.ItemCode).FirstOrDefault();
     }
-    public static List<Requisition> getRequisitionList()
-    {
-        return context.Requisitions.Where(x => x.Status == "Pending").ToList<Requisition>();
-    }
 
     public static Requisition getRequisition(int id)
     {
-        return (context.Requisitions.Where(r => r.RequisitionID.Equals(id))).FirstOrDefault();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return (context.Requisitions.Where(r => r.RequisitionID.Equals(id))).FirstOrDefault();
+
+        }
     }
 
     public static void getList(int id)

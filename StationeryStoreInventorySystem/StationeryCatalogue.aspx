@@ -67,7 +67,7 @@
     </table>
 
 
-    <asp:button id="Button1" runat="server" text="Add" cssclass="button" />
+    <asp:button id="Button1" runat="server" text="Add" cssclass="button" OnClick="Button1_Click" />
     <br />
     <br />
     <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False" OnRowCommand="GridView1_RowCommand">

@@ -58,4 +58,7 @@ public class Message
 
     public const String DepartmentAlreadyInList
         = "Department is already in list!";
+
+    public const String SupplierAlreadyInList
+        = "Supplier is already in list!";
 }

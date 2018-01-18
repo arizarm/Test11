@@ -94,6 +94,12 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         showAllItems();
     }
+
+    protected void Close_Click(object sender, EventArgs e)
+    {
+        Panel1.Visible = false;
+        Add.Visible = true;
+    }
 }
 
 

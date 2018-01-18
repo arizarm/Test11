@@ -83,7 +83,8 @@ public class MaintainPriceListController
         using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities S = new StationeryEntities();
-            string latestYear = S.PriceLists.Select(a => a.TenderYear).Max();
+            DateTime dt = DateTime.Now;
+            string latestYear = dt.Year.ToString();
             List<PriceList> lpl = S.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
             ts.Complete();
             return lpl;

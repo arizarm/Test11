@@ -50,7 +50,8 @@ public class SupplierListController
         {
             StationeryEntities S = new StationeryEntities();
             Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
-            S.Suppliers.Remove(s);
+            s.ActiveStatus = "N";
+            S.Entry(s).State = System.Data.Entity.EntityState.Modified;
             S.SaveChanges();
             ts.Complete();
         }

@@ -9,6 +9,17 @@ public partial class RequisitionTrend : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+            List<string> catNames = grtc.getAllCategoryNames();
+            CategoryDropDownList.DataSource = catNames;
+            CategoryDropDownList.DataBind();
+
+            List<string> deptNames = grtc.getAllDepartmentNames();
+            DepartmentDropDownList.DataSource = deptNames;
+            DepartmentDropDownList.DataBind();
+        }
 
     }
 

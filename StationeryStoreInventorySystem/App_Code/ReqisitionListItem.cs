@@ -6,12 +6,13 @@ using System.Web;
 /// <summary>
 /// Summary description for ReqisitionListItem
 /// </summary>
-public class ReqisitionListItem
+public class ReqisitionListItemDepartment
 {
     private string date;
     private int requisitionNo;
     private string department;
     private string status;
+    private string employeeName;
 
     public string Date
     {
@@ -65,11 +66,26 @@ public class ReqisitionListItem
         }
     }
 
-    public ReqisitionListItem(string date, int requisitionNo, string department, string status)
+    public string EmployeeName
+    {
+        get
+        {
+            return employeeName;
+        }
+
+        set
+        {
+            employeeName = value;
+        }
+    }
+
+    public ReqisitionListItemDepartment(string date, int requisitionNo, string department, string status, string employeeName)
     {
         this.Date = date;
         this.RequisitionNo = requisitionNo;
         this.Department = department;
         this.Status = status;
+        this.EmployeeName = employeeName;
     }
+
 }

@@ -16,13 +16,13 @@ public class ItemLogic
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, string categoryID,string description,string reorderLevel,string reorderQty,string unitOfMeasure)
+    public void updateItem(string itemCode, Category category,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
     {
         Item i = getItem(itemCode);
-        i.CategoryID = Convert.ToInt32(categoryID);
+        i.Category = category;
         i.Description = description;
-        i.ReorderLevel = Convert.ToInt32(reorderLevel);
-        i.ReorderQty = Convert.ToInt32(reorderQty);
+        i.ReorderLevel = reorderLevel;
+        i.ReorderQty = reorderQty;
         i.UnitOfMeasure = unitOfMeasure;
         inventoryDB.SaveChanges();
         return;

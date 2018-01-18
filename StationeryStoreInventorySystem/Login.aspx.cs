@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class Login : System.Web.UI.Page
 {
-    EmployeeController empCtrl = new EmployeeController();
+    
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -18,11 +18,11 @@ public partial class Login : System.Web.UI.Page
         string email = TextBox1.Text;
         string password = Password1.Value;
 
-        bool isValid = empCtrl.verifyLogin(email, password);
+        bool isValid = EmployeeController.verifyLogin(email, password);
 
         if (isValid)
         {
-            Employee emp = empCtrl.GetEmployeeByEmail(email);
+            Employee emp = EmployeeController.GetEmployeeByEmail(email);
             Session["empID"] = emp.EmpID;
             Session["empRole"] = emp.Role;
 
@@ -35,9 +35,6 @@ public partial class Login : System.Web.UI.Page
         {
             Label4.Text = "Invalid User";
         }
-
-
-
     }
 
     protected void NavigateMain()
@@ -67,8 +64,7 @@ public partial class Login : System.Web.UI.Page
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Utility u = new Utility();
-        u.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
+        Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
         Response.Redirect("~/Login.aspx");
     }
 }

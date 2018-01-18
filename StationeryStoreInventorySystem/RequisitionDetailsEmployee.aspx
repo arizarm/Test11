@@ -8,23 +8,23 @@
     <br />
     <a href="ReqisitionListDepartment.aspx"><-Back</a>
     <br />
-    <br />
-
-    Requested By:
+    <h2>
+        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
+    <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-    <br />
+    <br /></h3>
     Requested Date:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-    </strong>
+    </strong><br />
+    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="Label" Width="200px"></asp:Label>
+    <br />
 
+    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
+    <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
 
-    <br />
-    <br />
-    <asp:Button ID="Add" runat="server" CssClass="btn-success" Text="Add More Item" OnClick="Add_Click" />
-    <br />
     <asp:Panel ID="Panel1" runat="server" Visible="False">
         <asp:Table runat="server">
             <asp:TableHeaderRow>
@@ -35,13 +35,13 @@
                 <asp:TableCell>
                     <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True">
                     </asp:DropDownList>
-                    
+
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow>
                 <asp:TableCell>Quantity: </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="TextBox1" runat="server" TextMode="Number" Width="74px"></asp:TextBox>
+                    <asp:TextBox ID="TextBox1" runat="server" TextMode="Number" Width="74px" Text="1"></asp:TextBox>
                     <asp:Label ID="Label6" runat="server"></asp:Label>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                         ControlToValidate="TextBox1" ForeColor="Red"
@@ -54,8 +54,7 @@
             </asp:TableRow>
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2">
-                    <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="button" />
-                    <asp:Button ID="Button1" runat="server" Text="Approve" CssClass="button" />
+                    <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="btn-success" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -66,29 +65,44 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
-                        <%--CssClass="mGrid"--%>
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                        
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                                    <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
+                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="qty" runat="server" TextMode="Number" />
+                                    <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
                                 <ItemTemplate>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
+                                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:CommandField ShowEditButton="True" ButtonType="Button" ShowDeleteButton="True" />
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" />
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="ItemDelete" runat="server" Text="Delete " OnClick="Delete_Click" CssClass="alert-warning" />
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning" />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>

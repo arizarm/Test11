@@ -83,7 +83,8 @@ public class MaintainPriceListController
         using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities S = new StationeryEntities();
-            string latestYear = S.PriceLists.Select(a => a.TenderYear).Max();
+            DateTime dt = DateTime.Now;
+            string latestYear = dt.Year.ToString();
             List<PriceList> lpl = S.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
             ts.Complete();
             return lpl;
@@ -118,7 +119,8 @@ public class MaintainPriceListController
         {
             StationeryEntities S = new StationeryEntities();
             string itemCode = S.Items.Where(b => b.Description == desc).Select(d => d.ItemCode).First();
-            PriceList pl = S.PriceLists.Where(x => x.ItemCode == itemCode).Where(e => e.SupplierCode == supplierCode).OrderBy(f => f.TenderYear).First();
+            DateTime dt = DateTime.Now;
+            PriceList pl = S.PriceLists.Where(x => x.ItemCode == itemCode).Where(e => e.SupplierCode == supplierCode).Where(f => f.TenderYear == dt.Year.ToString()).First();
             ts.Complete();
             return pl;
         }

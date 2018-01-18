@@ -12,14 +12,11 @@
         }
         .auto-style3 {
             width: 422px;
-            height: 40px;
-        }
-        .auto-style4 {
-            height: 40px;
+            height: 21px;
         }
         .auto-style5 {
-            width: 400px;
-            height: 400px;
+            width: 811px;
+            height: 444px;
             
         }
         .auto-style6 {
@@ -29,87 +26,119 @@
         .auto-style7 {
             height: 12px;
         }
+        .auto-style8 {
+            width: 422px;
+            height: 23px;
+        }
+        .auto-style9 {
+            height: 23px;
+        }
+        .auto-style10 {
+            height: 21px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script src="Content/JavaScript.js"></script>
-        <table class="auto-style5">
+      
+    <table class="auto-style5">
             <tr>
-                <th colspan="2" > <h2 class="auto-style1">Update Department Info</h2></th>
+                <th colspan="2" class="updateDeptHead"> <h2 class="auto-style1">Update Department Info</h2></th>
             </tr>            
             <tr>
-                <td class="auto-style2">Department Name :</td>
-                <td>English Dept</td>
+                <td class="auto-style8">Department Name :</td>
+                <td class="auto-style9">
+                    <asp:Label ID="lblDeptName" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">Contact Name :</td>
-                <td>Mrs. Pamela Kow </td>
+                <td>
+                    <asp:Label ID="lblContactName" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style3">Telephone No :</td>
-                <td class="auto-style4">8742234 </td>
+                <td class="auto-style10">
+                    <asp:Label ID="lblPhone" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">Fax No :</td>
-                <td>8921456</td>
+                <td>
+                    <asp:Label ID="lblFax" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">Head&#39;s Name :</td>
-                <td>Prof. Ezra Pound</td>
+                <td>
+                    <asp:Label ID="lblHeadname" runat="server"></asp:Label>
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">Acting Department Head :</td>
                 <td>
-                    <asp:DropDownList ID="DropDownList1" runat="server" class="auto-styledd">
-                        <asp:ListItem Selected="True">Michelle</asp:ListItem>
-                        <asp:ListItem>John</asp:ListItem>
-                        <asp:ListItem>Cheryl</asp:ListItem>
-                        <asp:ListItem>Sarah</asp:ListItem>
-                        <asp:ListItem>lyana</asp:ListItem>
+                    <asp:DropDownList ID="DropDownListActingDHead" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListActingDHead_SelectedIndexChanged">
+                       
                     </asp:DropDownList>
+                    
                 </td>
                
             </tr>  
             <tr>
                 <td class="auto-style2">Assignment Start Date :</td>
-                <td> <asp:TextBox ID="txtDate" runat="server"></asp:TextBox></td>
+                <td>
+                    <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300"></asp:RequiredFieldValidator>
+                    
+                    
+                   
+
+                </td>
             </tr>
             <tr>
                 <td class="auto-style2">Assignment End Date :</td>
-                <td> <asp:TextBox ID="txtDate1" runat="server"></asp:TextBox></td>
+                <td> 
+                    
+
+      
+                    <asp:CompareValidator ID="CompareEndTodayValidator" Operator="GreaterThan" type="String" 
+                        ControltoValidate="txtSDate" ErrorMessage="The 'Start Date' must be after today" runat="server" ForeColor="#FF3300" /><br />
+                    <asp:TextBox ID="txtEDate" runat="server" ClientIDMode="Static"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300"></asp:RequiredFieldValidator>
+                   
+                </td>
             </tr>          
             <tr>
+                
                 <td class="auto-style6">Representative Name :</td>
                 <td class="auto-style7">
-                    <asp:DropDownList ID="DropDownList3" runat="server" class="auto-styledd">
-                        <asp:ListItem Selected="True">Lim</asp:ListItem>
-                        <asp:ListItem>Eliza</asp:ListItem>
-                        <asp:ListItem>Kelly</asp:ListItem>
+                    <asp:CompareValidator ID="cmpStartAndEndDates" runat="server" Display="Dynamic"
+    Operator="GreaterThan" ControlToValidate="txtEDate" ControlToCompare="txtSDate"
+    ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" />
+                    
+                    <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListDRep_SelectedIndexChanged">
+                        
                     </asp:DropDownList>
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">Collection Point :</td>
                 <td>
-                    <asp:DropDownList ID="DropDownList4" runat="server" class="auto-styledd">
-                        <asp:ListItem>Stationery Store</asp:ListItem>
-                        <asp:ListItem>Management School</asp:ListItem>
-                        <asp:ListItem>Medical School</asp:ListItem>
-                        <asp:ListItem>Engineering School</asp:ListItem>
-                        <asp:ListItem>Science School</asp:ListItem>
-                        <asp:ListItem Selected="True">University Hospital</asp:ListItem>
+                    <asp:DropDownList ID="DropDownListCollectionPoint" runat="server" class="auto-styledd">
+                        
                     </asp:DropDownList>
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td class="auto-style2">
-                    <asp:Button ID="Button1" runat="server" Text="Update" CssClass="button"/>
+                    <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click"/>
                 </td>
                 
             </tr>
             
         </table>
-    </p>
+    <asp:Label ID="lblMessage" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="Large" ForeColor="#006600"></asp:Label>
 </asp:Content>
 

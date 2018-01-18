@@ -21,6 +21,7 @@ public class RequisitionControl
     static int requestedBy;
     static string depCode;
     static string searchWord;
+    static string employeeName;
 
     static ReqisitionListItem item;
     static List<ReqisitionListItem> itemList;
@@ -29,8 +30,15 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplayAll()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Priority"|| x.Status == "Approved").ToList();
+        rlist = context.Requisitions.Where(x => x.Status == "Priority" || x.Status == "Approved").ToList();
         return PopulateGridView(rlist);
+    }
+
+    public static List<ReqisitionListItem> DisplayAllDepartment()
+    {
+        rlist = new List<Requisition>();
+        rlist = context.Requisitions.ToList();
+        return PopulateGridViewForDepartment(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayPriority()
@@ -50,9 +58,19 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplaySearch(string searchWord)
     {
         itemList = DisplayAll();
-        foreach(ReqisitionListItem i in itemList)
+        foreach (ReqisitionListItem i in itemList)
         {
-            searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)|| x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
+            searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord) || x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
+        }
+        return searchList;
+    }
+
+    public static List<ReqisitionListItem> DisplaySearchDepartment(string searchWord)
+    {
+        itemList = DisplayAllDepartment();
+        foreach (ReqisitionListItem i in itemList)
+        {
+            searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord) || x.EmployeeName.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
         }
         return searchList;
     }
@@ -70,7 +88,7 @@ public class RequisitionControl
             depCode = context.Employees.Where(x => x.EmpID.Equals(requestedBy)).Select(x => x.DeptCode).First().ToString();
 
             department = context.Departments.Where(x => x.DeptCode.Equals(depCode)).Select(x => x.DeptName).First().ToString();
-            item = new ReqisitionListItem(date, requisitionNo, department, status);
+            item = new ReqisitionListItem(date, requisitionNo, department, status, "");
             itemList.Add(item);
         }
         return itemList;
@@ -163,11 +181,12 @@ public class RequisitionControl
     }
 
     //SEARCH REQUISITION BY STATUS
-    public static List<Requisition> getRequisitionListByStatus(String status)
+    public static List<ReqisitionListItem> getRequisitionListByStatus(String status)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return (context.Requisitions.Where(x => x.Status == status).ToList<Requisition>());
+            List<Requisition> rlist = context.Requisitions.Where(x => x.Status == status).ToList<Requisition>();
+            return PopulateGridViewForDepartment(rlist);
         }
     }
 
@@ -253,6 +272,33 @@ public class RequisitionControl
             r.Status = "Rejected";
             r.Remarks = "Rejected By Head";
             context.SaveChanges();
+        }
+    }
+    public static List<ReqisitionListItem> PopulateGridViewForDepartment(List<Requisition> rlist)
+    {
+        itemList = new List<ReqisitionListItem>();
+        foreach (Requisition r in rlist)
+        {
+            date = r.RequestDate.Value.ToLongDateString();
+            requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
+            status = r.Status.ToString();
+            int empCode = Convert.ToInt32(r.RequestedBy);
+            employeeName = context.Employees.Where(x => x.EmpID == empCode).Select(x => x.EmpName).First().ToString();
+            item = new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
+            itemList.Add(item);
+        }
+        return itemList;
+    }
+
+    public static void editRequisitionItemQty(int id, string code, int qty)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition_Item ri = context.Requisition_Item.Where(i => i.RequisitionID.Equals(id)).Where(i => i.ItemCode.Equals(code)).FirstOrDefault();
+            ri.RequestedQty += qty;
+            context.SaveChanges();
+            ts.Complete();
         }
     }
 }

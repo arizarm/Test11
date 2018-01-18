@@ -4,17 +4,18 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for disbursementListItems
+/// Summary description for DisbursementListItems
 /// </summary>
-public class disbursementListItems
+public class DisbursementListItems
 {
+
     private string disbId;
     private string collectionDate;
     private string collectionTime;
     private string depName;
     private string collectionPoint;
 
-    public disbursementListItems(string disbId, string collectionDate, string collectionTime, string depName, string collectionPoint)
+    public DisbursementListItems(string disbId, string collectionDate, string collectionTime, string depName, string collectionPoint)
     {
         this.disbId = disbId;
         this.collectionDate = collectionDate;

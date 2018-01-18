@@ -25,9 +25,9 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
         if(!IsPostBack)
         {
-            GridView1.DataSource = ReqBS.getRequisitionListByStatus("Pending");
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
             GridView1.DataBind();
-            GridView2.DataSource = ReqBS.getRequisitionListByStatus("Pending");
+            GridView2.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
             GridView2.DataBind();
 
         }
@@ -37,11 +37,39 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     {
         string selectedStatus = DropDownList1.SelectedValue;
 
-        GridView1.DataSource = ReqBS.getRequisitionListByStatus(selectedStatus);
+        GridView1.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
         GridView1.DataBind();
 
-        GridView2.DataSource = ReqBS.getRequisitionListByStatus(selectedStatus);
+        GridView2.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
         GridView2.DataBind();
     }
+    protected void SearchBtn_Click(object sender, EventArgs e)
+    {
+
+        string searchWord = SearchBox.Text;
+
+        if (SearchBox.Text == String.Empty)
+        {
+            ClientScript.RegisterStartupScript(Page.GetType(),
+      "MessageBox",
+      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+        }
+        else
+        {
+            GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+            GridView2.DataBind();
+            GridView2.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+            GridView2.DataBind();
+        }
+    }
+
+    protected void DisplayBtn_Click(object sender, EventArgs e)
+    {
+        GridView1.DataSource = RequisitionControl.DisplayAllDepartment();
+        GridView1.DataBind();
+        GridView2.DataSource = RequisitionControl.DisplayAllDepartment();
+        GridView2.DataBind();
+    }
+
 
 }

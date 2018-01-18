@@ -12,9 +12,20 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     {
         ItemLogic ilogic = new ItemLogic();
         GridView1.DataSource = ilogic.getCatalogueList();
+        List <Category> catList = ilogic.getCategoryList();
+        Category temp = new Category();
+        temp.CategoryID = 0;
+        temp.CategoryName = "Other";
+        catList.Add(temp);
+        DropDownListUOM.DataSource = catList;
+        List<string> UOMList = ilogic.getDistinctUOMList();
+        UOMList.Add("Other");
+        DropDownListCategory.DataSource = UOMList;
         if (!IsPostBack)
         {
             GridView1.DataBind();
+            DropDownListUOM.DataBind();
+            DropDownListCategory.DataBind();  
         }
 
     }
@@ -100,19 +111,94 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         GridViewRow row = GridView1.Rows[index];
         Label itemCode = (Label)row.FindControl("Label1");
         DropDownList categoryList = (DropDownList)row.FindControl("DropDownList3");
-        Category category = ilogic.getCategory(categoryList.Text);
+        int categoryID = Convert.ToInt32(categoryList.SelectedValue);
         TextBox description = (TextBox)row.FindControl("TextBox6");
         TextBox reorderLevel = (TextBox)row.FindControl("TextBox9");
         int level = Convert.ToInt32(reorderLevel.Text);
         TextBox reorderQty = (TextBox)row.FindControl("TextBox8");
         int qty = Convert.ToInt32(reorderQty.Text);
         DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownList4");
-        ilogic.updateItem(itemCode.Text, category, description.Text, level, qty, unitMeasure.SelectedValue);
+        ilogic.updateItem(itemCode.Text, categoryID, description.Text, level, qty, unitMeasure.SelectedValue);
         cancelEdit();
     }
     protected void cancelEdit()
     {
         GridView1.EditIndex = -1;
         GridView1.DataBind();
+    }
+    protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
+    {
+        bool failure = false, success = true;
+        ItemLogic ilogic = new ItemLogic();
+        Item item = new Item();
+        int level, qty;
+        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+        {
+            return failure;
+        }
+        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
+        {
+            return failure;
+        }
+        else if (ilogic.getItem(itemCode) != null)
+        {
+            return failure;
+        }
+        else
+        {
+            Category cat = ilogic.getCategorybyName(categoryName);
+            if (cat == null)
+            {
+                categoryName = ilogic.firstUpperCase(categoryName);
+                addCategory(categoryName);
+                cat = ilogic.getCategorybyName(categoryName);
+            }
+
+            item.ItemCode = itemCode;
+            item.Category = cat;
+            item.Description = description;
+            item.ReorderLevel = level;
+            item.ReorderQty = qty;
+            item.UnitOfMeasure = UOM;
+            item.ActiveStatus = "Y";
+            ilogic.addItem(item);
+        }
+        return success;
+    }
+    protected void addCategory(string categoryName)
+    {
+        ItemLogic iLogic = new ItemLogic();
+        Category cat = new Category();
+        cat.CategoryName = categoryName;
+        iLogic.addCategory(cat);
+        return;
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        //addItem("itemcode","test","test","10","10","test");
+        string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
+
+        if (!DropDownListCategory.SelectedValue.Equals("Other"))
+        {
+            TextBoxCategory.Text = DropDownListCategory.SelectedValue;
+        }
+        if (!DropDownListUOM.SelectedValue.Equals("Other"))
+        {
+            TextBoxUOM.Text= DropDownListUOM.SelectedValue;
+        }
+        if (Page.IsValid) { 
+        itemCode = TextBoxItemNo.Text;
+        description = TextBoxDesc.Text;
+        reorderLevel = TextBoxReLvl.Text;
+        reorderQty = TextBoxReQty.Text;
+        categoryName = TextBoxCategory.Text;
+        uom = TextBoxUOM.Text;
+        addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom);
+        }
+        else
+        {
+
+        }
+        return;
     }
 }

@@ -228,3 +228,9 @@
 .align-right {
     float: right;
 }
+
+.updateDeptHead{
+    background-color:rgba(100,150,40,1);
+    color:white;
+    text-align:center;
+}

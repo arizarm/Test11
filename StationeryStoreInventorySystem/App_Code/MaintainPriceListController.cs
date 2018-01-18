@@ -119,7 +119,8 @@ public class MaintainPriceListController
         {
             StationeryEntities S = new StationeryEntities();
             string itemCode = S.Items.Where(b => b.Description == desc).Select(d => d.ItemCode).First();
-            PriceList pl = S.PriceLists.Where(x => x.ItemCode == itemCode).Where(e => e.SupplierCode == supplierCode).OrderBy(f => f.TenderYear).First();
+            DateTime dt = DateTime.Now;
+            PriceList pl = S.PriceLists.Where(x => x.ItemCode == itemCode).Where(e => e.SupplierCode == supplierCode).Where(f => f.TenderYear == dt.Year.ToString()).First();
             ts.Complete();
             return pl;
         }

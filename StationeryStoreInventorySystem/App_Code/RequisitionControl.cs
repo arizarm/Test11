@@ -289,4 +289,15 @@ public class RequisitionControl
         }
         return itemList;
     }
-}
+
+    public static void editRequisitionItemQty(int id, string code, int qty)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition_Item ri = context.Requisition_Item.Where(i => i.RequisitionID.Equals(id)).Where(i => i.ItemCode.Equals(code)).FirstOrDefault();
+            ri.RequestedQty += qty;
+            context.SaveChanges();
+            ts.Complete();
+        }
+    }

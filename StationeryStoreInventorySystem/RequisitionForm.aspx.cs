@@ -19,16 +19,16 @@ public partial class RequisitionForm : System.Web.UI.Page
         Label1.Text = DateTime.Now.ToLongDateString();
         if(!IsPostBack)
         {
-            int id = Convert.ToInt32(ReqBS.getLastReq()) + 1;
+            int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
             Label3.Text = "Form:ENGL/" + id;
             ViewState["list"] = reqItem;
-            DropDownList1.DataSource = ReqBS.getItem();
+            DropDownList1.DataSource = RequisitionControl.getItem();
             DropDownList1.DataBind();
         }
         reqItem = (ArrayList)ViewState["list"];
         des = DropDownList1.SelectedItem.ToString();
-        Label2.Text = ReqBS.getUOM(des);
-        Label4.Text = ReqBS.getCode(des);
+        Label2.Text = RequisitionControl.getUOM(des);
+        Label4.Text = RequisitionControl.getCode(des);
         Label4.Visible = false;
     }
 

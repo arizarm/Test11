@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 /// <summary>
 /// Summary description for EmployeeController
@@ -16,6 +15,7 @@ public static class EmployeeController
             {    //Check if email exists
                 if (context.Employees.Where(x => x.Email == email).Select(y => y.Password).First() == password)
                 {      //Check if the password is correct
+                    
                     return true;
                 }
                 else

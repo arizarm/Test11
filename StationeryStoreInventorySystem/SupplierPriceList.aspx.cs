@@ -71,8 +71,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
-        slc.deleteSupplier(code);
-        Response.Write("<script>alert('" + Message.DeleteSuccessful + "');</script>");
+            slc.deleteSupplier(code);
+
+        Response.Write(@"
+         <script>
+        alert('"+ Message.InactiveSuccessful + "'); window.location = '" + "SupplierList.aspx" + @"';    
+            </script>");
     }
 
     protected void AddNewItemButton_Click(object sender, EventArgs e)
@@ -94,6 +98,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
                 pl.SupplierRank = int.Parse(PriorityRankList.SelectedValue);
             if (!ValidatorUtil.isEmpty(TextBox11.Text))
                 pl.TenderYear = (TextBox11.Text);
+            
             mplc.addPriceListItem(pl);
             defaultDropDownListRestore();
             populateTenderSupplyList();
@@ -116,7 +121,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
             List<string> shortlistedItems = mplc.getAllItemNamesForGivenCat(CategoryDropDownList.SelectedItem.Value.ToString());
             ItemDropDownList.DataSource = shortlistedItems;
             ItemDropDownList.DataBind();
-            //ItemDropDownList.AutoPostBack = false;
         }
         else
         {
@@ -162,6 +166,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         List<PriceList> lpl = mplc.getSupplierPriceList(code);
         //populate tender supply list
+        if (lpl.Count > 0)
+            ItemDisplayDesc.Visible = true;
         for (int i = 0; i < lpl.Count; i++)
         {
             string itemDesc = mplc.getItemNameForGivenItemCode(lpl[i].ItemCode);
@@ -187,6 +193,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         mplc.removePriceListObject(code, itemCode, tenderY);
         //repopulate tender list
         populateTenderSupplyList();
+
         Response.Write("<script>alert('" + Message.DeleteSuccessful + "');</script>");
     }
 

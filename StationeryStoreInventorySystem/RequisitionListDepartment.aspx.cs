@@ -9,8 +9,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //Session["empRole"] = "Head";
         Session["empRole"] = "Employee";
-        //Session["empRole"] = "Employee";
 
         if (Session["empRole"].ToString() == "Head")
         {
@@ -23,12 +23,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             GridView2.Visible = false;
         }
 
-        if (!IsPostBack)
+        if(!IsPostBack)
         {
-            GridView1.DataSource = ReqBS.getRequisitionList();
+            GridView1.DataSource = ReqBS.getRequisitionListByStatus("Pending");
             GridView1.DataBind();
-            GridView2.DataSource = ReqBS.getRequisitionList();
+            GridView2.DataSource = ReqBS.getRequisitionListByStatus("Pending");
             GridView2.DataBind();
+
         }
     }
 

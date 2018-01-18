@@ -4,9 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Transactions;
 
-public partial class RequisitionDetails : System.Web.UI.Page
+public partial class ApproveRequisition : System.Web.UI.Page
 {
     StationeryEntities context = new StationeryEntities();
     Requisition r = new Requisition();
@@ -14,31 +13,31 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        
-            id = Convert.ToInt32(Request.QueryString["id"]);
+        id = Convert.ToInt32(Request.QueryString["id"]);
         //int id = 24;
-        
+
 
         r = ReqBS.getRequisition(id);
-        Label2.Text = r.RequestedBy.ToString();
-        Label3.Text = r.RequestDate.ToString();
-        Label4.Text = r.Status.ToString();
+        Session["empRole"] = "Head";
+        //Session["empRole"] = "Employee";
+
+        Label1.Text = r.RequestedBy.ToString();
+        Label2.Text = r.RequestDate.ToString();
+        Label3.Text = r.Status.ToString();
+
+        if(r.Status.ToString() !=  "Pending")
+        {
+            ReasonLabel.Visible = false;
+            TextBox2.Visible = false;
+            ApproveButton.Visible = false;
+            RejectButton.Visible = false;
+        }
 
         if (!IsPostBack)
         {
             showAllItems();
-            if(r.Status=="Rejected" || r.Status=="Closed")
-            {
-                Cancel.Visible = false;
-                Add.Visible = false;
-            }
-
-            DropDownList2.DataSource = ReqBS.getItem();
-            DropDownList2.DataBind();
-        }
-
-        des = DropDownList2.SelectedItem.ToString();
-        Label6.Text = ReqBS.getUOM(des);
+        }      
+        
     }
 
     protected void showAllItems()
@@ -77,29 +76,24 @@ public partial class RequisitionDetails : System.Web.UI.Page
         }
     }
 
-    protected void Add_Click(object sender, EventArgs e)
-    {
-        Panel1.Visible = true;
-        
-    }
+    
 
-    protected void New_Click(object sender, EventArgs e)
+    protected void ApproveButton_Click(object sender, EventArgs e)
     {
         id = Convert.ToInt32(Request.QueryString["id"]);
-        string code = ReqBS.getCode(des);
-        int qty = Convert.ToInt32(TextBox1.Text);
+        string reason = ReasonLabel.Text;
+        ReqBS.approveRequisition(id, reason);
 
-        ReqBS.addItemToRequisition(code, qty, id);
+        approveSuccess.Text = "Approved Success";
 
-
-        showAllItems();
     }
 
-    protected void Close_Click(object sender, EventArgs e)
+    protected void RejectButton_Click(object sender, EventArgs e)
     {
-        Panel1.Visible = false;
-        Add.Visible = true;
+        id = Convert.ToInt32(Request.QueryString["id"]);
+        string reason = ReasonLabel.Text;
+        ReqBS.rejectRequisition(id, reason);
+
+        approveSuccess.Text = "Rejected Success";
     }
 }
-
-

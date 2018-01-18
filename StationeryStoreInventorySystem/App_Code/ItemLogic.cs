@@ -58,6 +58,11 @@ public class ItemLogic
         List<Category> categories= inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
         return categories;
     }
+    public Category getCategory(string categoryName)
+    {
+        Category cat = inventoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
+        return cat;
+    }
     public List<string> getDistinctUOMList()
     {
         List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();

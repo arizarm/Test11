@@ -17,7 +17,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         //int id = 24;
 
 
-        r = ReqBS.getRequisition(id);
+        r = RequisitionControl.getRequisition(id);
         Session["empRole"] = "Head";
         //Session["empRole"] = "Employee";
 
@@ -65,7 +65,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         try
         {
             id = Convert.ToInt32(Request.QueryString["id"]);
-            ReqBS.cancelRejectRequisition(id);
+            RequisitionControl.cancelRejectRequisition(id);
 
             Response.Redirect("ReqisitionListDepartment.aspx");
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
@@ -82,7 +82,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
     {
         id = Convert.ToInt32(Request.QueryString["id"]);
         string reason = ReasonLabel.Text;
-        ReqBS.approveRequisition(id, reason);
+        RequisitionControl.approveRequisition(id, reason);
 
         approveSuccess.Text = "Approved Success";
 
@@ -92,7 +92,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
     {
         id = Convert.ToInt32(Request.QueryString["id"]);
         string reason = ReasonLabel.Text;
-        ReqBS.rejectRequisition(id, reason);
+        RequisitionControl.rejectRequisition(id, reason);
 
         approveSuccess.Text = "Rejected Success";
     }

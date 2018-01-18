@@ -111,7 +111,7 @@ DataKeyNames="RequisitionID" >
                 </asp:TemplateField>                  
 
                 <asp:HyperLinkField HeaderText="View And Approve" DataNavigateUrlFields="RequisitionID" 
-                      DataNavigateUrlFormatString="ApproveRequisition.aspx.aspx?id={0}" Text="Approve"/> 
+                      DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/> 
             </Columns>
 
         </asp:GridView>

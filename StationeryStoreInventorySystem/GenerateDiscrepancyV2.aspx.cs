@@ -130,17 +130,17 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
                         InventoryItem invItem = new InventoryItem(item, quantity);
-                        string adjustment = "";
+                        string adjustment = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            if (adj > 0)
-                            {
-                                adjustment = "+" + adj.ToString();
-                            }
-                            else
-                            {
-                                adjustment = adj.ToString();
-                            }
+                            //if (adj > 0)
+                            //{
+                            //    adjustment = "+" + adj.ToString();
+                            //}
+                            //else
+                            //{
+                            //    adjustment = adj.ToString();
+                            //}
                             iList2.Add(invItem, adjustment);
                         }
                     }

@@ -43,7 +43,7 @@
                         <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.I.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Adjustment Amount" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="Actual Quantity" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
                     </ItemTemplate>

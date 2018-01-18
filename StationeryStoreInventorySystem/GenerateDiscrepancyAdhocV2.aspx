@@ -11,12 +11,12 @@
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='P001'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Key.I.ItemCode") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>
-                        <asp:Label ID="Label2" runat="server" Text='2B Pencil'></asp:Label>
+                        <asp:Label ID="Label2" runat="server" Text='<%# Bind("Key.I.Description") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>               
                 <asp:TemplateField HeaderText="Unit of Measure">
@@ -24,7 +24,7 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server" Text='Box'></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Key.I.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Quantity in Stock" ItemStyle-HorizontalAlign="Center">

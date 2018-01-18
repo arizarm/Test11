@@ -146,10 +146,4 @@ public static class ReqBS
             context.SaveChanges();  
         }
     }
-
-    //EMPLOYEE NAME
-    public static string getEmployee(int id)
-    {
-        return context.Employees.Where(e => e.EmpID.Equals(id)).Select(e => e.EmpName).FirstOrDefault();
-    }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Collections;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for ReqBS
@@ -60,6 +62,7 @@ public static class ReqBS
     {
         Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
         r.Status = "Rejected";
+        r.Remarks = "Request cancelled";
         context.SaveChanges();
     }
 
@@ -71,6 +74,37 @@ public static class ReqBS
     public static Requisition_Item findRequisitionID(int id)
     {
         return context.Requisition_Item.Where(ri => ri.RequisitionID.Equals(id)).FirstOrDefault();
+    }
+
+    public static Requisition_Item findByReqIDItemCode(int id, string des)
+    {
+        string code = context.Items.Where(i => i.Description.Equals(des)).Select(i=>i.ItemCode).FirstOrDefault();
+        return context.Requisition_Item.Where(ri => ri.ItemCode.Equals(code)).Where(ri => ri.RequisitionID.Equals(id)).FirstOrDefault();
+    }
+
+    public static void removeRequisitionItem(int id, string code)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition_Item ri = context.Requisition_Item.Where(r => r.RequisitionID.Equals(id)).Where(r => r.ItemCode.Equals(code)).FirstOrDefault();
+            context.Requisition_Item.Remove(ri);
+            context.SaveChanges();
+            ts.Complete();
+        }
+    }
+
+    public static void updateRequisitionItem(int id, string code, int qty)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition_Item ri = context.Requisition_Item.Where(r=>r.RequisitionID.Equals(id)).Where(r=>r.ItemCode.Equals(code)).FirstOrDefault();
+            ri.RequestedQty = qty;
+            context.Entry(ri).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+            ts.Complete();
+        }
     }
     
     public static void addItemToRequisition(string code, int qty, int id)
@@ -84,6 +118,5 @@ public static class ReqBS
             context.Requisition_Item.Add(ri);
             context.SaveChanges();
         }
-
     }
 }

@@ -11,15 +11,10 @@
             <asp:ListItem Selected="True">Monthly Inventory Check</asp:ListItem>
             <asp:ListItem>Adhoc</asp:ListItem>
         </asp:RadioButtonList>
-        <br />
-        <asp:Label ID="Label5" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <asp:Label ID="Label7" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <br />
-        <asp:Label ID="Label8" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <br />
         <% if (GridView2.Rows.Count > 0)
            {%>
-                <h2>Discrepancy List</h2>
+        
+        <h2>Discrepancy List</h2>
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
@@ -54,8 +49,14 @@
         </asp:GridView>
         <br />
         <asp:Button ID="Button2" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>
-        <% } %>
         <br />
+        <br />
+        <asp:Label ID="Label5" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <asp:Label ID="Label7" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <br />
+        <asp:Label ID="Label8" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <% } %>
+        <h2>Item List</h2>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
             <Columns>
                 
@@ -72,24 +73,24 @@
                         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblDesc" runat="server" Text='<%# Bind("I.Description") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("I.Description") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Unit of Measure">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("I.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="Label2" runat="server" Text='<%# Bind("I.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 
                     <asp:TemplateField HeaderText="Quantity in stock"  ItemStyle-HorizontalAlign="Center">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Stock") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("Stock") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                

@@ -10,15 +10,9 @@ using System.IO;
 /// <summary>
 /// Summary description for Utility
 /// </summary>
-public class Utility
+public static class Utility
 {
-    public Utility()
-    {
-        //
-        // TODO: Add constructor logic here
-        //
-    }
-    public void sendMail(string mailReceiver,string mailSubject,string mailBody)
+    public static void sendMail(string mailReceiver,string mailSubject,string mailBody)
     {
         MailMessage m = new MailMessage();
         SmtpClient sc = new SmtpClient();

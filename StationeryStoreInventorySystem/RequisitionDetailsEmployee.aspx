@@ -8,24 +8,32 @@
     <br />
     <a href="ReqisitionListDepartment.aspx"><-Back</a>
     <br />
-    <br />
-
-    Requested By:
+    <h2>
+        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
+    <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-    <br />
+    <br /></h3>
     Requested Date:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
     </strong>
-
-
+    <asp:Table runat="server">
+        <asp:TableRow>
+            <asp:TableCell>
+                <asp:Label ID="Label1" runat="server" Text="Remarks: " Visible="False"></asp:Label>
+            </asp:TableCell>
+            <asp:TableCell Width="200px">
+                <asp:Label ID="remarks" runat="server"></asp:Label>
+            </asp:TableCell>
+        </asp:TableRow>
+    </asp:Table>
     <br />
-    <br />
+
     <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
-    <br />
+
     <asp:Panel ID="Panel1" runat="server" Visible="False">
         <asp:Table runat="server">
             <asp:TableHeaderRow>
@@ -74,7 +82,7 @@
                                     <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
                                 <ItemTemplate>
                                     <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>
@@ -98,10 +106,10 @@
                             </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="ItemDelete" runat="server" Text="Delete " OnClick="Delete_Click" CssClass="alert-warning"/>
+                                    <asp:Button ID="ItemDelete" runat="server" Text="Delete " OnClick="Delete_Click" CssClass="alert-warning" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning"/>
+                                    <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
                         </Columns>

@@ -44,9 +44,12 @@ public class Message
     public const String UpdateSuccessful
         = "Update Successful!";
 
-    public const String DeleteSuccessful
-        = "Delete Successful!";
+    public const String InactiveSuccessful
+        = "Supplier successfuly set to Inactive!";
 
     public const String SupplierSuccessfulAdd
         = "Supplier Added Successfully!";
+
+    public const String DeleteSuccessful
+        = "Deleted Successfully!";
 }

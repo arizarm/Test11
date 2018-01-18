@@ -90,7 +90,7 @@
                 <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
                     <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="button" OnClick="UpdateButton_Click"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="DeleteButton" runat="server" Text="Delete" CssClass="rejectBtn" OnClick="DeleteButton_Click"/>
+                    <asp:Button ID="DeleteButton" runat="server" Text="Set To Inactive" CssClass="rejectBtn" OnClick="DeleteButton_Click" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -159,22 +159,7 @@
 
 
         <br />
-        <%--<asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription">
-            <Columns>
-                <asp:BoundField DataField="ItemDescription" HeaderText="Item Description" ItemStyle-Width ="80%">
-                <ItemStyle Width="80%" />
-                </asp:BoundField>
-                <asp:BoundField DataField="ItemPrice" HeaderText="Item Price" ItemStyle-Width ="50%">
-                <ItemStyle Width="50%" />
-                </asp:BoundField>
-                <asp:TemplateField><ItemTemplate>
-                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " OnClick="ItemEdit_Click"/>
-                                   </ItemTemplate></asp:TemplateField>
-                <asp:TemplateField><ItemTemplate>
-                    <asp:Button ID="ItemDelete" runat="server" Text="Delete" OnClick="ItemDelete_Click"/>
-                                   </ItemTemplate></asp:TemplateField>
-            </Columns>
-        </asp:GridView>--%>
+        <asp:Label ID="Label11" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label>
         <asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription" OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating">
             <Columns>
                 <asp:TemplateField HeaderText ="Item Description" ItemStyle-Width ="80%">

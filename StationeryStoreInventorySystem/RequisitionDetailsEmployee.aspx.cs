@@ -20,7 +20,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
         if (!IsPostBack)
         {
             showAllItems();
-            if (r.Status == "Rejected" || r.Status == "Closed")
+            if (r.Status == "Rejected" || r.Status == "Closed" || r.Status=="Approved")
             {
                 Cancel.Visible = false;
                 Add.Visible = false;
@@ -39,9 +39,16 @@ public partial class RequisitionDetails : System.Web.UI.Page
         //int id = 24;
 
         r = ReqBS.getRequisition(id);
+        Label5.Text = "ENGL/" + r.RequisitionID;
         Label2.Text = r.RequestedBy.ToString();
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
+
+        if (r.Status == "Rejected")
+        {
+            Label1.Visible = true;
+            remarks.Text = r.Remarks.ToString();
+        }
     }
 
     protected void showAllItems()

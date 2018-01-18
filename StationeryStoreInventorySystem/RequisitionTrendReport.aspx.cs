@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class RequisitionTrend : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -19,6 +20,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
             List<string> deptNames = grtc.getAllDepartmentNames();
             DepartmentDropDownList.DataSource = deptNames;
             DepartmentDropDownList.DataBind();
+
+            List<string> catAdded = new List<string>();
+            ViewState["catAdded"] = catAdded;
+
+            List<string> deptAdded = new List<string>();
+            ViewState["deptAdded"] = deptAdded;
+
         }
 
     }
@@ -86,5 +94,85 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 break;
         }
 
+    }
+
+    protected void CategoryAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = CategoryDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["catAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["catAdded"]).Add(addMe);
+            CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+            CategoryGridView.DataBind();
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["catAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["catAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.CategoryAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["catAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["catAdded"]).Add(addMe);
+                    CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+                    CategoryGridView.DataBind();
+                    break;
+                }
+            }
+        }
+    }
+
+    protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
+    {
+        //get row position of item
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["catAdded"]).RemoveAt(row.RowIndex);
+        CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+        CategoryGridView.DataBind();
+    }
+
+    protected void RemoveDepartmentBtn_Click(object sender, EventArgs e)
+    {
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["deptAdded"]).RemoveAt(row.RowIndex);
+        DepartmentGridView.DataSource = ((List<string>)ViewState["deptAdded"]);
+        DepartmentGridView.DataBind();
+
+    }
+
+    protected void DepartmentAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = DepartmentDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["deptAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["deptAdded"]).Add(addMe);
+            DepartmentGridView.DataSource = ((List<string>)ViewState["deptAdded"]);
+            DepartmentGridView.DataBind();
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["deptAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["deptAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.DepartmentAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["deptAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["deptAdded"]).Add(addMe);
+                    DepartmentGridView.DataSource = ((List<string>)ViewState["deptAdded"]);
+                    DepartmentGridView.DataBind();
+                    break;
+                }
+            }
+        }
     }
 }

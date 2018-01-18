@@ -52,4 +52,10 @@ public class Message
 
     public const String DeleteSuccessful
         = "Deleted Successfully!";
+
+    public const String CategoryAlreadyInList
+        = "Category is already in list!";
+
+    public const String DepartmentAlreadyInList
+        = "Department is already in list!";
 }

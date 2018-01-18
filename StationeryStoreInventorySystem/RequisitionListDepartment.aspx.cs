@@ -25,9 +25,9 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
         if(!IsPostBack)
         {
-            GridView1.DataSource = ReqBS.getRequisitionListByStatus("Pending");
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
             GridView1.DataBind();
-            GridView2.DataSource = ReqBS.getRequisitionListByStatus("Pending");
+            GridView2.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
             GridView2.DataBind();
 
         }
@@ -37,10 +37,10 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     {
         string selectedStatus = DropDownList1.SelectedValue;
 
-        GridView1.DataSource = ReqBS.getRequisitionListByStatus(selectedStatus);
+        GridView1.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
         GridView1.DataBind();
 
-        GridView2.DataSource = ReqBS.getRequisitionListByStatus(selectedStatus);
+        GridView2.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
         GridView2.DataBind();
     }
 

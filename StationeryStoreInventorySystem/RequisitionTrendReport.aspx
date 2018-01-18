@@ -27,7 +27,7 @@
         <tr>
             <td>
                                             <asp:RadioButtonList ID="DurationRadioButtonList" runat="server" OnSelectedIndexChanged="DurationRadioButtonList_SelectedIndexChanged" AutoPostBack="true">
-                <asp:ListItem Text ="Past 3 Months"></asp:ListItem>
+                <asp:ListItem Text ="Past 3 Months" Selected="True"></asp:ListItem>
                 <asp:ListItem Text ="Range" />
                 <asp:ListItem Text ="Custom" />
             </asp:RadioButtonList>
@@ -35,14 +35,14 @@
                         <td class="auto-style1"></td>
                         <td>
                                 <asp:RadioButtonList ID="CategoryRadioButtonList" runat="server" OnSelectedIndexChanged="CategoryRadioButtonList_SelectedIndexChanged" AutoPostBack="true">
-                    <asp:ListItem Text ="All" />
+                    <asp:ListItem Text ="All" Selected="True"/>
                     <asp:ListItem Text ="Custom" />
                 </asp:RadioButtonList>            
             </td>
                         <td class="auto-style1"></td>
             <td>
                                 <asp:RadioButtonList ID="DepartmentRadioButtonList" runat="server" OnSelectedIndexChanged="DepartmentRadioButtonList_SelectedIndexChanged" AutoPostBack="true">
-                    <asp:ListItem Text ="All" />
+                    <asp:ListItem Text ="All" Selected="True"/>
                     <asp:ListItem Text ="Custom" />
                 </asp:RadioButtonList>
             </td>
@@ -99,7 +99,7 @@
   
     Split report by: <br />
     <asp:RadioButtonList ID="SplitReportRadioButtonList" runat="server">
-                <asp:ListItem Text="Department" />
+                <asp:ListItem Text="Department" Selected="True"/>
         <asp:ListItem Text="Category" />
     </asp:RadioButtonList>
   <br />

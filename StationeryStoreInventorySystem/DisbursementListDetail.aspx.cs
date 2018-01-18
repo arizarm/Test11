@@ -11,21 +11,30 @@ public partial class DisbursementListDetail : System.Web.UI.Page
     {
         string disbId = Session["SelectedDisb"].ToString();
 
-        StationeryEntities context = new StationeryEntities();
+        DisbursementListItems disb = DisbursementCotrol.DisbursementListItemsObj(disbId);
 
-        List<Disbursement_Item> disbDetails = new List<Disbursement_Item>();
-        disbDetails = context.Disbursement_Item.Where(x => x.DisbursementID.ToString().Equals(disbId)).ToList();       
+        lblDate.Text = disb.CollectionDate.ToString();
+        lblTime.Text = disb.CollectionTime.ToString();
+        lblDepartment.Text = disb.DepName.ToString();
+        lblColPoint.Text = disb.CollectionPoint.ToString();
 
-        gvDisbDetail.DataSource = disbDetails;
+        gvDisbDetail.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate();
         gvDisbDetail.DataBind();
-
-        List<Disbursement> testDisb = new List<Disbursement>();
-        testDisb = context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbId)).ToList();        
-
-        gvTestDisb.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate(disbId);
-        gvTestDisb.DataBind();
     }
 
 
-   
+    protected void btnAck_Click(object sender, EventArgs e)
+    {
+        string message;
+
+        if (DisbursementCotrol.checkAccessCode(txtAccessCode.Text))
+        {
+            message = "Disbursement Acknowledgement Successful!";
+        }
+        else
+        {
+            message = "Incorrect Access Code!";        
+        }
+        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);        
+    }
 }

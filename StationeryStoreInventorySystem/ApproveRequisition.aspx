@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="ReqisitionListDepartment.aspx"><-Back</a>
+    <a href="RequisitionListDepartment.aspx"><-Back</a>
     <br />
     <br />
 
@@ -46,8 +46,6 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-
-                            <asp:CommandField ShowEditButton="True" ButtonType="Button" ShowDeleteButton="True" />
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>

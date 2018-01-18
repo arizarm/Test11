@@ -34,17 +34,6 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-
-                <%--                 <asp:TemplateField HeaderText="RequisitionID">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                         <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:Label>
-                       
-                    </ItemTemplate>
-                </asp:TemplateField>--%>
-
                 <asp:TemplateField HeaderText="RequestedBy">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
@@ -84,17 +73,6 @@
 
                     </ItemTemplate>
                 </asp:TemplateField>
-
-
-                <%--                 <asp:TemplateField HeaderText="RequisitionID">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                         <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequisitionID") %>'></asp:Label>
-                       
-                    </ItemTemplate>
-                </asp:TemplateField>--%>
 
                 <asp:TemplateField HeaderText="RequestedBy">
                     <EditItemTemplate>

@@ -64,8 +64,7 @@ public partial class Login : System.Web.UI.Page
     }
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Utility u = new Utility();
-        u.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
+        Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
         Response.Redirect("~/Login.aspx");
     }
 }

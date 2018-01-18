@@ -103,10 +103,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
         string reason = ReasonLabel.Text;
         ReqBS.approveRequisition(id,reason);
 
-        approveSuccess.Text = "Approved Success";
-
-
-            
+        approveSuccess.Text = "Approved Success";      
     }
 }
 

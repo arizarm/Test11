@@ -130,4 +130,17 @@ public static class ReqBS
             context.SaveChanges();  
         }
     }
+    public static void rejectRequisition(int id, string reason)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
+            r.Remarks = reason;
+            r.RequisitionID = id;
+            r.Status = "Rejected";
+            context.SaveChanges();
+        }
+    }
+
+    
 }

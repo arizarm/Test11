@@ -77,7 +77,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
             id = Convert.ToInt32(Request.QueryString["id"]);
             ReqBS.cancelRejectRequisition(id);
 
-            Response.Redirect("ReqisitionListDepartment.aspx");
+            Response.Redirect("RequisitionListDepartment.aspx");
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
         }
         catch (Exception ex)

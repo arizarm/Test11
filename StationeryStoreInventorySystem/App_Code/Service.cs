@@ -12,7 +12,7 @@ public class Service : IService
     public List<WCFEmployee> EmployeeList()
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.getEmployeeList();
+        List<Employee> elist = DeptBusinessLogic.GetEmployeeList();
 
         foreach (Employee e in elist)
         {
@@ -26,8 +26,8 @@ public class Service : IService
     public WCFEmployee GetDeptHead(string dcode)
     {
 
-        Department d = DeptBusinessLogic.getDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.getEmployeeByDeptCode(dcode);
+        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
+        Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -36,8 +36,8 @@ public class Service : IService
     public WCFEmployee GetActingDHead(string dcode)
     {
 
-        Department d = DeptBusinessLogic.getDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.getEmployeeListForActingDHeadSelected(dcode);
+        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
+        Employee emp = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -46,7 +46,7 @@ public class Service : IService
     public List<WCFEmployee> ListForActingDHead(string dcode,string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.getEmployeeListForActingDHead(dcode,Convert.ToInt16(id));
+        List<Employee> elist = DeptBusinessLogic.GetEmployeeListForActingDHead(dcode,Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -60,8 +60,8 @@ public class Service : IService
     public WCFEmployee GetDeptRep(string dcode)
     {
 
-        Department d = DeptBusinessLogic.getDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.getEmployeeListForDRepSelected(dcode);
+        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
+        Employee emp = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -70,7 +70,7 @@ public class Service : IService
     public List<WCFEmployee> ListForDeptRep(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.getEmployeeListForDRep(dcode, Convert.ToInt16(id));
+        List<Employee> elist = DeptBusinessLogic.GetEmployeeListForDRep(dcode, Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -113,7 +113,7 @@ public class Service : IService
     public List<WCFDept> DepartmentList()
     {
         List<WCFDept> wlist = new List<WCFDept>();
-        List<Department> dlist = DeptBusinessLogic.getDepartList();
+        List<Department> dlist = DeptBusinessLogic.GetDepartList();
 
         foreach (Department d in dlist)
         {
@@ -125,8 +125,8 @@ public class Service : IService
 
     public WCFDept GetDeptInfo(string dcode)
     {
-        string collectpoint =DeptBusinessLogic.getDepartmentForCollectionPointSelected(dcode);
-        Department d = DeptBusinessLogic.getDepartByDepCode(dcode);
+        string collectpoint =DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
        
         return WCFDept.Make(d.DeptCode,collectpoint,d.DeptName,d.DeptContactName,d.DeptTelephone,d.DeptFax);
     }
@@ -138,7 +138,7 @@ public class Service : IService
     public List<WCFCollectPoint> CollectionPointList()
     {
         List<WCFCollectPoint> wlist = new List<WCFCollectPoint>();
-        List<CollectionPoint> clist = DeptBusinessLogic.getCollectionPointList();
+        List<CollectionPoint> clist = DeptBusinessLogic.GetCollectionPointList();
 
         foreach (CollectionPoint c in clist)
         {

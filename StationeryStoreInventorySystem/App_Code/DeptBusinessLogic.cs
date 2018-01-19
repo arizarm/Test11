@@ -12,7 +12,7 @@ public class DeptBusinessLogic
         //
         // TODO: Add constructor logic here
         //
-        public static List<Department> getDepartList()
+        public static List<Department> GetDepartList()
          {
              using (StationeryEntities smodel = new StationeryEntities())
                 {
@@ -22,7 +22,7 @@ public class DeptBusinessLogic
 
          }
 
-     public static List<Employee> getEmployeeList()
+     public static List<Employee> GetEmployeeList()
          {
              using (StationeryEntities smodel = new StationeryEntities())
                 {
@@ -32,7 +32,7 @@ public class DeptBusinessLogic
 
          }
 
-    public static Department getDepartByDepCode(string depCode)
+    public static Department GetDepartByDepCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -42,7 +42,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee getEmployeeByDeptCode(string depCode)
+    public static Employee GetDHeadByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -54,7 +54,7 @@ public class DeptBusinessLogic
 
    
 
-    public static List<Employee> getEmployeeListForActingDHead(string deptcode, int a)
+    public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -65,7 +65,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee getEmployeeListForActingDHeadSelected(string deptcode)
+    public static Employee GetEmployeeListForActingDHeadSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -79,7 +79,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static List<Employee> getEmployeeListForDRep(string deptcode,int a)
+    public static List<Employee> GetEmployeeListForDRep(string deptcode,int a)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -90,7 +90,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee getEmployeeListForDRepSelected(string deptcode)
+    public static Employee GetEmployeeListForDRepSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -103,7 +103,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static List<CollectionPoint> getCollectionPointList()
+    public static List<CollectionPoint> GetCollectionPointList()
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -113,7 +113,7 @@ public class DeptBusinessLogic
         }
 
     }
-    public static string getDepartmentForCollectionPointSelected(string deptcode)
+    public static string GetDepartmentForCollectionPointSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {

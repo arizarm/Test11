@@ -8,15 +8,15 @@ using System.Web.UI.WebControls;
 public partial class DepartmentListDRep : System.Web.UI.Page
 {
     static string dcode = "BDTD";
-    Employee empActingDHead = DeptBusinessLogic.getEmployeeListForActingDHeadSelected(dcode);
-    Employee empDRep = DeptBusinessLogic.getEmployeeListForDRepSelected(dcode);
+    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
+    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
     protected void Page_Load(object sender, EventArgs e)
     {
         Session["deptcode"] = dcode;
         if (!IsPostBack)
         {
-            Department dept = DeptBusinessLogic.getDepartByDepCode(dcode);
-            Employee emp = DeptBusinessLogic.getEmployeeByDeptCode(dcode);
+            Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
+            Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
 
             string aheadname = empActingDHead.EmpName;
             string detpRname = empDRep.EmpName;
@@ -37,8 +37,8 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             lblDeptRep.Text = detpRname;
 
             //UpdateCollectionPoint
-            string empCollectionname = DeptBusinessLogic.getDepartmentForCollectionPointSelected(dcode);
-            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.getCollectionPointList();
+            string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
             DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
             DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
             DropDownListCollectionPoint.DataBind();

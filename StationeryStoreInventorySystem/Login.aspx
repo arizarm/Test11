@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <form id="form1" runat="server" action="Login.aspx">
+    <form id="form1" runat="server">
         <div class="wrapper">
             <div class="header row">
                 <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">

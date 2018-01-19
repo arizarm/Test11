@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StationeryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StationeryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -52,6 +52,7 @@
           <Property Name="ItemCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ActualQty" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="TotalRequestedQty" Type="int" />
         </EntityType>
         <EntityType Name="Discrepency">
           <Key>
@@ -587,8 +588,7 @@
             <End Role="StockCard" EntitySet="StockCard" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StationeryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -650,6 +650,7 @@
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Disbursement" Relationship="Self.FK__Disbursem__Disbu__29572725" FromRole="Disbursement_Item" ToRole="Disbursement" />
           <NavigationProperty Name="Item" Relationship="Self.FK__Disbursem__ItemC__2A4B4B5E" FromRole="Disbursement_Item" ToRole="Item" />
+          <Property Name="TotalRequestedQty" Type="Int32" />
         </EntityType>
         <EntityType Name="Discrepency">
           <Key>
@@ -1273,6 +1274,7 @@
           <EntitySetMapping Name="Disbursement_Item">
             <EntityTypeMapping TypeName="StationeryModel.Disbursement_Item">
               <MappingFragment StoreEntitySet="Disbursement_Item">
+                <ScalarProperty Name="TotalRequestedQty" ColumnName="TotalRequestedQty" />
                 <ScalarProperty Name="DisbursementID" ColumnName="DisbursementID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ActualQty" ColumnName="ActualQty" />

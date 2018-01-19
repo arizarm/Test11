@@ -38,7 +38,7 @@ public partial class RequisitionForm : System.Web.UI.Page
         des = DropDownList1.SelectedItem.ToString();
         int qty = Convert.ToInt32(TextBox4.Text);
 
-        ri = new RequestedItem(Label4.Text, des, qty);
+        ri = new RequestedItem(Label4.Text, des, qty,Label2.Text);
         reqItem = (ArrayList)ViewState["list"];
         reqItem.Add(ri);
         ViewState["list"] = reqItem;
@@ -86,15 +86,18 @@ public class RequestedItem
     private string code;
     private string description;
     private int quantity;
+    private string uom;
 
-    public RequestedItem(string code, string description,int quantity)
+    public RequestedItem(string code, string description,int quantity, string uom)
     {
         this.code=code;
         this.description = description;
         this.quantity = quantity;
+        this.uom = uom;
     }
 
     public string Code { get { return code; } set { code = value; } }
     public string Description { get { return description; } set { description = value; } }
     public int Quantity { get { return quantity; } set { quantity = value; } }
+    public string Uom { get { return uom; } set { uom = value; } }
 }

@@ -95,6 +95,7 @@ public partial class Disbursement_Item
     public string ItemCode { get; set; }
     public Nullable<int> ActualQty { get; set; }
     public string Remarks { get; set; }
+    public Nullable<int> TotalRequestedQty { get; set; }
 
     public virtual Disbursement Disbursement { get; set; }
     public virtual Item Item { get; set; }

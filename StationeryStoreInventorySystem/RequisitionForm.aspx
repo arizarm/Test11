@@ -58,7 +58,7 @@
     <br />
     <br />
 
-    <asp:GridView ID="GridView1" runat="server">
+    <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" Width="40%">
     </asp:GridView>
     <br />
     <asp:Button ID="Submit" runat="server" Text="Submit to Approve" CssClass="button" OnClick="Submit_Click" />

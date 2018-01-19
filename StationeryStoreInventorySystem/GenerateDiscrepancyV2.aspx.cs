@@ -75,7 +75,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Dictionary<InventoryItem, String> discrepancies = new Dictionary<InventoryItem, String>();
+        Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
         GenerateDiscrepancyList();
         if (itemError == false)
         {
@@ -84,12 +84,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             {
                 GridViewRow row = GridView2.Rows[i];
                 string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
-                string stock = (row.FindControl("lblStock") as Label).Text;
+                //string stock = (row.FindControl("lblStock") as Label).Text;
                 string adj = (row.FindControl("lblAdj") as Label).Text;
                 Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-                InventoryItem invItem = new InventoryItem(item, stock);
+                //InventoryItem invItem = new InventoryItem(item, stock);
 
-                discrepancies.Add(invItem, adj);
+                discrepancies.Add(item, adj);
             }
             Session["discrepancyList"] = discrepancies;
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
@@ -112,7 +112,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     private void GenerateDiscrepancyList()
     {
-        Dictionary<InventoryItem, String> iList2 = new Dictionary<InventoryItem, String>();
+        Dictionary<Item, String> iList2 = new Dictionary<Item, String>();
         List<String> missed = new List<String>();
         itemError = false;
         for (int i = 0; i < GridView1.Rows.Count; i++)
@@ -144,7 +144,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //    }
             //}
 
-            if (ticked)   //If a row is not checked
+            if (!ticked)   //If a row is not checked
             {
                 if (!(txtActual == "" || txtActual == null))    //Check whether actual quantity is blank
                 {
@@ -161,11 +161,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         string quantity = holderContents[0];
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-                        InventoryItem invItem = new InventoryItem(item, quantity);
+                        //InventoryItem invItem = new InventoryItem(item, quantity);
                         string adjustment = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            iList2.Add(invItem, adjustment);
+                            iList2.Add(item, adjustment);
                         }
                     }
                     else

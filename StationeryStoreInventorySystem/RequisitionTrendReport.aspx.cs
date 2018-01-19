@@ -27,6 +27,8 @@ public partial class RequisitionTrend : System.Web.UI.Page
             List<string> deptAdded = new List<string>();
             ViewState["deptAdded"] = deptAdded;
 
+            List<string> dateAdded = new List<string>();
+            ViewState["dateAdded"] = dateAdded;
         }
 
     }
@@ -40,7 +42,6 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 FromLabel.Visible = false;
                 FromDropDownList.Visible = false;
                 ToLabel.Visible = false;
-                ToDropDownList.Visible = false;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
                 break;
@@ -48,7 +49,6 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 FromLabel.Visible = true;
                 FromDropDownList.Visible = true;
                 ToLabel.Visible = true;
-                ToDropDownList.Visible = true;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
                 break;
@@ -56,9 +56,12 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 FromLabel.Visible = false;
                 FromDropDownList.Visible = false;
                 ToLabel.Visible = false;
-                ToDropDownList.Visible = false;
                 DurationDropDownList.Visible = true;
                 DurationAddButton.Visible = true;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> allMonths = grtc.getUniqueRequisitionMonths();
+                DurationDropDownList.DataSource = allMonths;
+                DurationDropDownList.DataBind();
                 break;
         }
     }
@@ -174,5 +177,45 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 }
             }
         }
+    }
+
+    protected void DurationAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = DurationDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["dateAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["dateAdded"]).Add(addMe);
+            DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+            DurationGridView.DataBind();
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["dateAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["dateAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.DateAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["dateAdded"]).Add(addMe);
+                    DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+                    DurationGridView.DataBind();
+                    break;
+                }
+            }
+        }
+
+    }
+
+    protected void RemoveDurationBtn_Click(object sender, EventArgs e)
+    {
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["dateAdded"]).RemoveAt(row.RowIndex);
+        DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+        DurationGridView.DataBind();
     }
 }

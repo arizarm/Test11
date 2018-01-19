@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Collections;
-using System.Transactions; 
+using System.Transactions;
 
 public partial class RequisitionForm : System.Web.UI.Page
 {
@@ -18,7 +18,7 @@ public partial class RequisitionForm : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Label1.Text = DateTime.Now.ToLongDateString();
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
             Label3.Text = "Form:ENGL/" + id;
@@ -47,11 +47,11 @@ public partial class RequisitionForm : System.Web.UI.Page
             //reqItem.Add(ri);
             ViewState["list"] = rItem;
         }
-        
+
         else
         {
             bool isEqual = false;
-            foreach(GridViewRow row in GridView2.Rows)
+            foreach (GridViewRow row in GridView2.Rows)
             {
                 System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("code");
                 string item = labelDes.Text;
@@ -61,7 +61,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                     isEqual = true;
                 }
             }
-            if(isEqual)
+            if (isEqual)
             {
                 Response.Write("<script>alert('Item is already in the form.');</script>");
             }
@@ -103,12 +103,12 @@ public partial class RequisitionForm : System.Web.UI.Page
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
         string itemDes = GridView2.DataKeys[row.RowIndex].Value.ToString();
 
-        RequestedItem i= rItem.Find(r => r.Code.Equals(itemDes));
+        RequestedItem i = rItem.Find(r => r.Code.Equals(itemDes));
 
         rItem = (List<RequestedItem>)ViewState["list"];
         rItem.Remove(i);
         ViewState["list"] = rItem;
-        
+
         bindGrid();
     }
 

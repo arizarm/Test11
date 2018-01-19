@@ -9,7 +9,7 @@ using System.Collections;
 /// </summary>
 public class RequisitionControl
 {
-
+    //RequestedItem rItem;
     static StationeryEntities context = new StationeryEntities();
 
     static List<Requisition> rlist;
@@ -301,32 +301,35 @@ public class RequisitionControl
             ts.Complete();
         }
     }
+    public static void addNewRequisitionItem(List<RequestedItem> item)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition r = new Requisition();
+            r.RequestDate = DateTime.Now;
+            r.Status = "Pending";
+            r.RequestedBy = 1028;
 
-    //public static void addRequisitionItem(List<T> requestItem)
-    //{
-    //    using (TransactionScope ts = new TransactionScope())
-    //    {
-    //        StationeryEntities context = new StationeryEntities();
-    //        Requisition r = new Requisition();
-    //        r.RequestDate = DateTime.Now;
-    //        r.Status = "Pending";
-    //        r.RequestedBy = 1028;
+            context.Requisitions.Add(r);
+            context.SaveChanges();
 
-    //        context.Requisitions.Add(r);
-    //        context.SaveChanges();
+            foreach (RequestedItem i in item)
+            {
+                int qty = i.Quantity;
 
-    //        foreach (var row in requestItem)
-    //        {
-    //            Requisition_Item ri = new Requisition_Item();
-    //            ri.RequisitionID = r.RequisitionID;
-    //            //string code = row.Cells[0].Text;
-    //            ri.ItemCode = ;
-    //            ri.RequestedQty = Convert.ToInt32(row.Cells[2].Text);
-    //            context.Requisition_Item.Add(ri);
-    //            context.SaveChanges();
-    //        }
+                string code = i.Code;
 
-    //        ts.Complete();
-    //    }
-    //}
+                Requisition_Item ri = new Requisition_Item();
+                ri.RequisitionID = r.RequisitionID;
+                //string code = row.Cells[0].Text;
+
+                ri.ItemCode = code;
+                ri.RequestedQty = qty;
+                context.Requisition_Item.Add(ri);
+                context.SaveChanges();
+            }
+            ts.Complete();
+        }
+    }
 }

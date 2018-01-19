@@ -1,13 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionForm.aspx.cs" Inherits="RequisitionForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    </asp:Content>
+    <style type="text/css">
+        .auto-style1 {
+            width: 268435904px;
+        }
+    </style>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader">Stationary Requisition Form  </h2>
 
     <table>
         <tr>
-            <td> 
+            <td>
                 <h3>
                     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></h3>
             </td>
@@ -18,10 +23,8 @@
         </tr>
     </table>
     <table>
-        <tr><td colspan="2">---------------------------------------------------------------------------------------</td></tr>
         <tr>
-        <tr>
-            <td>Item Description: </td>
+            <td>Item Description:</td>
             <td>
                 <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True">
                 </asp:DropDownList>
@@ -33,9 +36,9 @@
         </tr>
 
         <tr>
-            <td>Quantity: </td>
+            <td>Quantity:</td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server" TextMode="Number" Width="74px" Text="1"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" TextMode="Number" Width="74px"></asp:TextBox>
 
                 <asp:Label ID="Label2" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
@@ -47,23 +50,18 @@
                     MaximumValue="1000" MinimumValue="1">Invalid Quantity</asp:RangeValidator>
             </td>
         </tr>
-        <tr><td colspan="2">---------------------------------------------------------------------------------------</td></tr>
-        <tr>
-            <td></td>
-            <td draggable="false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="btn-success" /></td>
-        </tr>
+
     </table>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="button" />
     <br />
-&nbsp;
-    <asp:Label ID="Label5" runat="server" Text="Label" Visible="False"></asp:Label>
     <br />
 
-    <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" Width="60%">
+    <asp:GridView ID="GridView1" runat="server">
     </asp:GridView>
 
-
-     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid" Width="40%">
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
                         
                         <Columns>
                             <asp:TemplateField HeaderText="Code" SortExpression="Code">
@@ -71,7 +69,7 @@
                                     <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                             <asp:TemplateField HeaderText="UOM" SortExpression="Description">
+                            <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
                                     <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>

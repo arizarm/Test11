@@ -1,17 +1,18 @@
 ﻿<%@ Application Language="C#" %>
 
-<script runat="server">
+<script RunAt="server">
 
     void Application_Start(object sender, EventArgs e)
     {
         System.Web.UI.ScriptManager.ScriptResourceMapping.AddDefinition
                 ("jquery",
-                 new System.Web.UI.ScriptResourceDefinition {
-        Path = "~/scripts/jquery-1.12.4.min.js",
-        DebugPath = "~/scripts/jquery-1.12.4.js",
-        CdnPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.12.4.min.js",
-        CdnDebugPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.12.4.js"
-                     }
+                 new System.Web.UI.ScriptResourceDefinition
+                 {
+                     Path = "~/scripts/jquery-1.12.4.min.js",
+                     DebugPath = "~/scripts/jquery-1.12.4.js",
+                     CdnPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.12.4.min.js",
+                     CdnDebugPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.12.4.js"
+                 }
                 );
 
     }
@@ -45,6 +46,29 @@
         // is set to InProc in the Web.config file. If session mode is set to StateServer 
         // or SQLServer, the event is not raised.
 
+    }
+
+
+    protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+    {
+        if (HttpContext.Current.User != null)
+        {
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                if (HttpContext.Current.User.Identity is FormsIdentity)
+                {
+                    FormsIdentity id =
+                    (FormsIdentity)HttpContext.Current.User.Identity;
+                    FormsAuthenticationTicket ticket = id.Ticket;
+
+                    // Get the stored user-data, in this case, our roles
+
+                    string userData = ticket.UserData;
+                    string[] roles = userData.Split(',');
+                    HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(id, roles);
+                }
+            }
+        }
     }
 
 </script>

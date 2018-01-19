@@ -21,7 +21,7 @@
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionID" CssClass="mGrid" >
+            DataKeyNames="RequisitionNo" CssClass="mGrid" >
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">
@@ -29,7 +29,7 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RequestDate") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
 
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -39,7 +39,7 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
 
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -54,14 +54,14 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:HyperLinkField HeaderText="View Details" DataNavigateUrlFields="RequisitionID"
+                <asp:HyperLinkField HeaderText="View Details" DataNavigateUrlFields="RequisitionNo"
                     DataNavigateUrlFormatString="RequisitionDetailsEmployee.aspx?id={0}" Text="View Details" />
             </Columns>
 
         </asp:GridView>
 
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionID" CssClass="mGrid" >
+            DataKeyNames="RequisitionNo" CssClass="mGrid" >
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">
@@ -69,17 +69,17 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RequestDate") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
 
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="RequestedBy">
+                <asp:TemplateField HeaderText="Requested By">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("RequestedBy") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
 
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -94,7 +94,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionID"
+                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
                     DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject" />
             </Columns>
 

@@ -84,40 +84,43 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        if(GridView2.Rows.Count<=0)
+        if (GridView2.Rows.Count <= 0)
         {
             Response.Write("<script>alert('You have not requested any item yet!');</script>");
         }
-        using (TransactionScope ts = new TransactionScope())
+        else
         {
-            StationeryEntities context = new StationeryEntities();
-            Requisition r = new Requisition();
-            r.RequestDate = DateTime.Now;
-            r.Status = "Pending";
-            r.RequestedBy = 1028;
-
-            context.Requisitions.Add(r);
-            context.SaveChanges();
-
-            foreach (GridViewRow row in GridView2.Rows)
+            using (TransactionScope ts = new TransactionScope())
             {
-                System.Web.UI.WebControls.Label Newqty = (System.Web.UI.WebControls.Label)row.FindControl("Label6");
-                int item = Convert.ToInt32(Newqty.Text);
+                StationeryEntities context = new StationeryEntities();
+                Requisition r = new Requisition();
+                r.RequestDate = DateTime.Now;
+                r.Status = "Pending";
+                r.RequestedBy = 1028;
 
-                System.Web.UI.WebControls.Label iCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
-                string code = iCode.Text;
-
-                Requisition_Item ri = new Requisition_Item();
-                ri.RequisitionID=r.RequisitionID;
-                //string code = row.Cells[0].Text;
-
-                ri.ItemCode = code;
-                ri.RequestedQty = item;
-                context.Requisition_Item.Add(ri);
+                context.Requisitions.Add(r);
                 context.SaveChanges();
+
+                foreach (GridViewRow row in GridView2.Rows)
+                {
+                    System.Web.UI.WebControls.Label Newqty = (System.Web.UI.WebControls.Label)row.FindControl("Label6");
+                    int item = Convert.ToInt32(Newqty.Text);
+
+                    System.Web.UI.WebControls.Label iCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
+                    string code = iCode.Text;
+
+                    Requisition_Item ri = new Requisition_Item();
+                    ri.RequisitionID = r.RequisitionID;
+                    //string code = row.Cells[0].Text;
+
+                    ri.ItemCode = code;
+                    ri.RequestedQty = item;
+                    context.Requisition_Item.Add(ri);
+                    context.SaveChanges();
+                }
+
+                ts.Complete();
             }
-            
-            ts.Complete();
         }
         //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
         //Server.Transfer("RequisitionListDepartment.aspx", true);

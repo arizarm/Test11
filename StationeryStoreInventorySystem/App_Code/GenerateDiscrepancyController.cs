@@ -24,7 +24,28 @@ public class GenerateDiscrepancyController
         foreach (Item i in iList)
         {
             List<StockCard> sc = GetStockCardsByItemCode(i.ItemCode);
-            InventoryItem iItem = new InventoryItem(i, sc.Last().Balance.ToString());
+            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            int adj = 0;
+
+            foreach (Discrepency d in dList)
+            {
+                adj += (int)d.AdjustmentQty;
+            }
+
+            string adjStr = "";
+
+            if (adj > 0)
+            {
+                adjStr = "+" + adj.ToString();
+            }
+            else
+            {
+                adjStr = adj.ToString();
+            }
+
+            string stock = sc.Last().Balance.ToString() + " (" + adjStr + ")";
+
+            InventoryItem iItem = new InventoryItem(i, stock);
             //InventoryItem iItem = new InventoryItem(i, i.StockCards.Last().Balance.ToString());
             invItemList.Add(iItem);
         }
@@ -58,6 +79,12 @@ public class GenerateDiscrepancyController
         return i;
     }
 
+    public static List<Item> GetItemsByItemCodeOrDesc(string search)
+    {
+        List<Item> iList = context.Items.Where(x => x.ItemCode.ToLower() == search.ToLower() || x.Description.ToLower() == search.ToLower()).ToList();
+        return iList;
+    }
+
     public static List<PriceList> GetPricesByItemCode(string itemCode)
     {   //goes to price list broker
         List<PriceList> prices = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
@@ -82,6 +109,13 @@ public class GenerateDiscrepancyController
     public static int GetDiscrepancyID(Discrepency d)
     {   //goes to discrepancy id
         return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
+    }
+
+    public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
+    {
+        List<Discrepency> dList = new List<Discrepency>();
+        dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Pending").ToList();
+        return dList;
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)

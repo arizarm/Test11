@@ -5,12 +5,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
         <h2 class="mainPageHeader">Generate Discrepancy CheckList</h2>
-        <br />
+        <%--<br />
         Selection Type: 
         <asp:RadioButtonList ID="RadioButtonList1" runat="server">
             <asp:ListItem Selected="True">Monthly Inventory Check</asp:ListItem>
             <asp:ListItem>Adhoc</asp:ListItem>
-        </asp:RadioButtonList>
+        </asp:RadioButtonList> --%>
         <% if (GridView2.Rows.Count > 0)
            {%>
         
@@ -64,8 +64,19 @@
         <asp:Label ID="Label7" runat="server" Text="" ForeColor="Red"></asp:Label>
         <br />
         <asp:Label ID="Label8" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <br />
+        <br />
         <%} %>
 
+        <h4>Search by Item Code or Name</h4>
+        <br />
+        <asp:TextBox ID="txtSearch" runat="server" Width="212px"></asp:TextBox>&nbsp;
+        <asp:Button ID="Button4" runat="server" Text="Search" OnClick="Button4_Click" />&nbsp;
+        <asp:Button ID="Button5" runat="server" Text="Display All" OnClick="Button5_Click" />
+
+
+        <% if (GridView1.Rows.Count > 0)
+           {%>
         <h2>Item List</h2>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
             <Columns>
@@ -95,21 +106,29 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 
-                    <asp:TemplateField HeaderText="Quantity in stock"  ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Qty in stock (Pending adjustments)" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Stock") %>'></asp:Label>
                     </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Center"></ItemStyle>
                 </asp:TemplateField>
                
-                <asp:TemplateField HeaderText="Amount Correct" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="Amount Correct" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                     <EditItemTemplate>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:CheckBox ID="CheckBox1" runat="server" />
                     </ItemTemplate>
+
+<HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Center"></ItemStyle>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Actual Quantity">
                     <EditItemTemplate>
@@ -127,7 +146,7 @@
         <asp:Button ID="Button1" runat="server" Text="Generate Discrepancy List" OnClick="Button1_Click" CssClass="button" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button3" runat="server" Text="Check All" OnClick="Button3_Click" CssClass="button"/>
-        
+        <%} %>
        
     </div>
 </asp:Content>

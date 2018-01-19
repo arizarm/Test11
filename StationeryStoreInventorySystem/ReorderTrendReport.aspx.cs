@@ -52,7 +52,6 @@ public partial class StationeryReorderReport : System.Web.UI.Page
             case 0:
                 FromLabel.Visible = false;
                 FromDropDownList.Visible = false;
-                ToLabel.Visible = false;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
                 DurationGridView.Visible = false;
@@ -60,7 +59,6 @@ public partial class StationeryReorderReport : System.Web.UI.Page
             case 1:
                 FromLabel.Visible = true;
                 FromDropDownList.Visible = true;
-                ToLabel.Visible = true;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
                 DurationGridView.Visible = false;
@@ -72,7 +70,6 @@ public partial class StationeryReorderReport : System.Web.UI.Page
             case 2:
                 FromLabel.Visible = false;
                 FromDropDownList.Visible = false;
-                ToLabel.Visible = false;
                 DurationDropDownList.Visible = true;
                 DurationAddButton.Visible = true;
                 DurationGridView.Visible = true;

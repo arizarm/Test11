@@ -61,7 +61,7 @@
                 
                 <asp:Label ID="FromLabel" runat="server" Text="From:" Visible="false"/>
                 <asp:DropDownList ID="FromDropDownList" runat="server" Visible="false"/>
-                <asp:Label ID="ToLabel" runat="server" Visible="false"/>
+Please commit your changes or stash them before you merge.
             </td>
                         <td class="auto-style1"></td>
             <td>

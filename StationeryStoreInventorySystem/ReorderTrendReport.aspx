@@ -63,7 +63,6 @@
                 
                 <asp:Label ID="FromLabel" runat="server" Text="From:" Visible="false"/>
                 <asp:DropDownList ID="FromDropDownList" runat="server" Visible="false"/>
-                <asp:Label ID="ToLabel" runat="server" Text="To:" Visible="false"/>
             </td>
                         <td class="auto-style1"></td>
             <td>

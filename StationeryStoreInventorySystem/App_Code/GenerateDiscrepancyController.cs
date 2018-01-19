@@ -80,7 +80,7 @@ public class GenerateDiscrepancyController
     }
 
     public static List<Item> GetItemsByItemCodeOrDesc(string search)
-    {
+    {   //might be redundant
         List<Item> iList = context.Items.Where(x => x.ItemCode.ToLower() == search.ToLower() || x.Description.ToLower() == search.ToLower()).ToList();
         return iList;
     }

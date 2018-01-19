@@ -21,7 +21,7 @@
         <tr><td colspan="2">---------------------------------------------------------------------------------------</td></tr>
         <tr>
         <tr>
-            <td>Item Description:.....</td>
+            <td>Item Description: </td>
             <td>
                 <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True">
                 </asp:DropDownList>
@@ -33,7 +33,7 @@
         </tr>
 
         <tr>
-            <td>Quantity:</td>
+            <td>Quantity: </td>
             <td>
                 <asp:TextBox ID="TextBox4" runat="server" TextMode="Number" Width="74px" Text="1"></asp:TextBox>
 
@@ -66,7 +66,7 @@
      <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid" Width="40%">
                         
                         <Columns>
-                            <asp:TemplateField HeaderText="Cpde" SortExpression="Code">
+                            <asp:TemplateField HeaderText="Code" SortExpression="Code">
                                 <ItemTemplate>
                                     <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
                                 </ItemTemplate>

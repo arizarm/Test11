@@ -101,11 +101,18 @@ public partial class RequisitionForm : System.Web.UI.Page
 
             foreach (GridViewRow row in GridView2.Rows)
             {
+                System.Web.UI.WebControls.Label Newqty = (System.Web.UI.WebControls.Label)row.FindControl("Label6");
+                int item = Convert.ToInt32(Newqty.Text);
+
+                System.Web.UI.WebControls.Label iCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
+                string code = iCode.Text;
+
                 Requisition_Item ri = new Requisition_Item();
                 ri.RequisitionID=r.RequisitionID;
                 //string code = row.Cells[0].Text;
-                ri.ItemCode = row.Cells[0].Text;
-                ri.RequestedQty = Convert.ToInt32(row.Cells[2].Text);
+
+                ri.ItemCode = code;
+                ri.RequestedQty = item;
                 context.Requisition_Item.Add(ri);
                 context.SaveChanges();
             }
@@ -142,12 +149,12 @@ public partial class RequisitionForm : System.Web.UI.Page
 
         RequestedItem i = rItem.Find(r => r.Code.Equals(code));
         rItem = (List<RequestedItem>)ViewState["list"];
-        rItem.Remove(i);
+
         i.Quantity = Convert.ToInt32(newQty);
-        rItem.Add(i);
+        rItem[e.RowIndex].Quantity = i.Quantity;
         ViewState["list"] = rItem;
 
-        GridView1.EditIndex = -1;
+        GridView2.EditIndex = -1;
         bindGrid();
     }
 

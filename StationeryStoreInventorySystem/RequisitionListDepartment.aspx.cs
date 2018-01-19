@@ -25,8 +25,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
         if(!IsPostBack)
         {
-            //GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
-            //GridView1.DataBind();
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
+            GridView1.DataBind();
             GridView2.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
             GridView2.DataBind();
 

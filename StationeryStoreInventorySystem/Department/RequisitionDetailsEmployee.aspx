@@ -21,10 +21,10 @@
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
     </strong>
     <br />
-    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="Label" Width="200px"></asp:Label>
+    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="-" Width="200px"></asp:Label>
     <br />
 
-    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
+    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click"  Visible="false"/>
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
 
     <asp:Panel ID="Panel1" runat="server" Visible="False">
@@ -57,6 +57,7 @@
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2">
                     <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="btn-success" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Close_Click" Text="Close" CssClass="btn-warning" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -67,7 +68,7 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
 
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -108,7 +109,7 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
 
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -135,6 +136,8 @@
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <asp:Button ID="Update" runat="server" Text="Update Request" CssClass="button" OnClick="Update_Click" />
+    <asp:Button ID="Save" runat="server" Text="Save Request" CssClass="button" OnClick="Save_Click" Visible="false"/>
     <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
-</asp:Content>
+    </asp:Content>
 

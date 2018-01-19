@@ -8,6 +8,7 @@ using System.Web;
 /// </summary>
 public class GenerateDiscrepancyController
 {
+    private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
         //
@@ -17,7 +18,6 @@ public class GenerateDiscrepancyController
 
     public static List<InventoryItem> GetInventoryWithStock()
     {
-        StationeryEntities context = new StationeryEntities();
         List<Item> iList = new List<Item>();
         iList = GetAllItems();
         List<InventoryItem> invItemList = new List<InventoryItem>();
@@ -49,34 +49,29 @@ public class GenerateDiscrepancyController
 
     public static List<Item> GetAllItems()
     {   //goes to item broker
-        StationeryEntities context = new StationeryEntities();
         return context.Items.OrderBy(x => x.ItemCode).ToList();
     }
 
     public static Item GetItemByItemCode(string itemCode)
     {   //goes to item broker
-        StationeryEntities context = new StationeryEntities();
         Item i = context.Items.Where(x => x.ItemCode == itemCode).First();
         return i;
     }
 
     public static List<PriceList> GetPricesByItemCode(string itemCode)
     {   //goes to price list broker
-        StationeryEntities context = new StationeryEntities();
         List<PriceList> prices = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
         return prices;
     }
 
     public static Employee GetEmployeeByRole(string role)
     {  //goes to employee broker
-        StationeryEntities context = new StationeryEntities();
         Employee e = context.Employees.Where(x => x.Role == role).First();
         return e;
     }
 
     public static void SaveDiscrepancies(List<Discrepency> dList)
     {    //goes to discrepancy broker
-        StationeryEntities context = new StationeryEntities();
         foreach (Discrepency d in dList)
         {
             context.Discrepencies.Add(d);
@@ -86,19 +81,16 @@ public class GenerateDiscrepancyController
 
     public static int GetDiscrepancyID(Discrepency d)
     {   //goes to discrepancy id
-        StationeryEntities context = new StationeryEntities();
         return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)
     {   //goes to stock card broker
-        StationeryEntities context = new StationeryEntities();
         return context.StockCards.Where(x => x.ItemCode == itemCode).ToList();
     }
 
     public static void UpdateStockCards(List<Discrepency> dList)
     {   //goes to stock card broker
-        StationeryEntities context = new StationeryEntities();
         foreach (Discrepency d in dList)
         {
             StockCard sc = new StockCard();

@@ -38,10 +38,35 @@ public partial class RequisitionForm : System.Web.UI.Page
         des = DropDownList1.SelectedItem.ToString();
         int qty = Convert.ToInt32(TextBox4.Text);
 
-        ri = new RequestedItem(Label4.Text, des, qty,Label2.Text);
-        reqItem = (ArrayList)ViewState["list"];
-        reqItem.Add(ri);
-        ViewState["list"] = reqItem;
+        if (GridView1.Rows.Count <= 0)
+        {
+            ri = new RequestedItem(Label4.Text, des, qty, Label2.Text);
+            reqItem = (ArrayList)ViewState["list"];
+            reqItem.Add(ri);
+            ViewState["list"] = reqItem;
+        }
+        else
+        {
+            bool isEqual = false;
+            foreach(GridViewRow row in GridView1.Rows)
+            {
+               if(Label4.Text.Equals(row.Cells[0].Text))
+                {
+                    isEqual = true;
+                }
+            }
+            if(isEqual)
+            {
+                Response.Write("<script>alert('Item is already in the form.');</script>");
+            }
+            else
+            {
+                ri = new RequestedItem(Label4.Text, des, qty, Label2.Text);
+                reqItem = (ArrayList)ViewState["list"];
+                reqItem.Add(ri);
+                ViewState["list"] = reqItem;
+            }
+        }
 
         GridView1.DataSource = reqItem;
         GridView1.DataBind();

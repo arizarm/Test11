@@ -22,6 +22,16 @@ public class DeptBusinessLogic
 
          }
 
+     public static List<Employee> getEmployeeList()
+         {
+             using (StationeryEntities smodel = new StationeryEntities())
+                {
+                    
+                    return smodel.Employees.ToList<Employee>();
+                }
+
+         }
+
     public static Department getDepartByDepCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -41,6 +51,9 @@ public class DeptBusinessLogic
         }
 
     }
+
+   
+
     public static List<Employee> getEmployeeListForActingDHead(string deptcode, int a)
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -116,7 +129,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static void UpdateCollectionPoint(string depcode,int collectpoint)
+    public static void UpdateCollectionPoint(string depcode,int? collectpoint)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {

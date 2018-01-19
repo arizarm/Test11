@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Transactions;
-using System.Collections;
+
 /// <summary>
 /// Summary description for RequisitionControl
 /// </summary>
@@ -20,12 +20,14 @@ public class RequisitionControl
     static string status;
     static int requestedBy;
     static string depCode;
-    static string searchWord;
+ 
     static string employeeName;
 
     static ReqisitionListItem item;
     static List<ReqisitionListItem> itemList;
+    static string searchWord;
     static List<ReqisitionListItem> searchList;
+      
 
     public static List<ReqisitionListItem> DisplayAll()
     {
@@ -288,7 +290,7 @@ public class RequisitionControl
             itemList.Add(item);
         }
         return itemList;
-    } 
+    }
 
     public static void editRequisitionItemQty(int id, string code, int qty)
     {
@@ -301,32 +303,4 @@ public class RequisitionControl
             ts.Complete();
         }
     }
-
-    //public static void addRequisitionItem(List<T> requestItem)
-    //{
-    //    using (TransactionScope ts = new TransactionScope())
-    //    {
-    //        StationeryEntities context = new StationeryEntities();
-    //        Requisition r = new Requisition();
-    //        r.RequestDate = DateTime.Now;
-    //        r.Status = "Pending";
-    //        r.RequestedBy = 1028;
-
-    //        context.Requisitions.Add(r);
-    //        context.SaveChanges();
-
-    //        foreach (var row in requestItem)
-    //        {
-    //            Requisition_Item ri = new Requisition_Item();
-    //            ri.RequisitionID = r.RequisitionID;
-    //            //string code = row.Cells[0].Text;
-    //            ri.ItemCode = ;
-    //            ri.RequestedQty = Convert.ToInt32(row.Cells[2].Text);
-    //            context.Requisition_Item.Add(ri);
-    //            context.SaveChanges();
-    //        }
-
-    //        ts.Complete();
-    //    }
-    //}
 }

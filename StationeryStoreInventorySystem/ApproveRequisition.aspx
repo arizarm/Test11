@@ -25,7 +25,7 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid" Width="200%">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid">
                         
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -33,7 +33,7 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>

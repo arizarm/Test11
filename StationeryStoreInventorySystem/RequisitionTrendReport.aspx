@@ -6,7 +6,6 @@
     <h2 class="mainPageHeader">Requisition Trend Report</h2>
     <br />
     <br />
-
     <table >
         <%--Row1--%>
         <tr><td>
@@ -22,15 +21,14 @@
             <td>
                 <asp:Label ID="DepartmentLabel" runat="server" Text="Select Department:"></asp:Label>                 
             </td>
-            </tr>
-
+        </tr>
 <%--        Row 2--%>
         <tr>
             <td>
                                             <asp:RadioButtonList ID="DurationRadioButtonList" runat="server" OnSelectedIndexChanged="DurationRadioButtonList_SelectedIndexChanged" AutoPostBack="true">
                 <asp:ListItem Text ="Past 3 Months" Selected="True"></asp:ListItem>
-                <asp:ListItem Text ="Range (3 Months)" />
-                <asp:ListItem Text ="Custom (Select 3 Months)" />
+                <asp:ListItem Text ="Range" />
+                <asp:ListItem Text ="Custom" />
             </asp:RadioButtonList>
             </td>
                         <td class="auto-style1"></td>
@@ -49,19 +47,18 @@
             </td>
         </tr>
 
-                <tr><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td></tr>
-
         <%--Row 3--%>
         <tr>
             <td>
     &nbsp;<asp:DropDownList ID="DurationDropDownList" runat="server" Visible="false">
     </asp:DropDownList>
     
-    <asp:Button ID="DurationAddButton" runat="server" Text="Add" Visible="false" OnClick="DurationAddButton_Click"/>
+    <asp:Button ID="DurationAddButton" runat="server" Text="Add" Visible="false"/>
                 
                 <asp:Label ID="FromLabel" runat="server" Text="From:" Visible="false"/>
                 <asp:DropDownList ID="FromDropDownList" runat="server" Visible="false"/>
-Please commit your changes or stash them before you merge.
+                <asp:Label ID="ToLabel" runat="server" Text="To:" Visible="false"/>
+                <asp:DropDownList ID="ToDropDownList" runat="server" Visible="false"/>
             </td>
                         <td class="auto-style1"></td>
             <td>
@@ -80,30 +77,14 @@ Please commit your changes or stash them before you merge.
 
         </tr>
 
-                        <tr><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td></tr>
-
         <%--Row 4--%>
         <tr>
             <td>
-                  <asp:GridView ID="DurationGridView" runat="server" AutoGenerateColumns="False" Visible="false">
-                      <Columns>
-                                                  <asp:TemplateField HeaderText="Month">
-                            <ItemTemplate>
-                                <asp:Label ID="DurationItemLabel" runat="server" Text="<%#Container.DataItem %>"></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="RemoveDurationBtn" runat="server" Text="Remove" OnClick="RemoveDurationBtn_Click"/>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                      </Columns>
-                  </asp:GridView>
+                  <asp:GridView ID="GridView1" runat="server"></asp:GridView>
             </td>
             <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="CategoryGridView" runat="server" AutoGenerateColumns="False" Visible="false">
+                <asp:GridView ID="CategoryGridView" runat="server" AutoGenerateColumns="False">
                     <Columns>
                         <asp:TemplateField HeaderText="Category">
                             <ItemTemplate>
@@ -120,7 +101,7 @@ Please commit your changes or stash them before you merge.
             </td>
               <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="DepartmentGridView" runat="server" AutoGenerateColumns="False" Visible="false">
+                <asp:GridView ID="DepartmentGridView" runat="server" AutoGenerateColumns="False">
                     <Columns>
                         <asp:TemplateField HeaderText="Department">
                             <ItemTemplate>

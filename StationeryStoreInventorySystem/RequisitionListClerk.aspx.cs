@@ -83,23 +83,17 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
-        List<int> reqNo = new List<int>();
+        List<string> reqNo = new List<string>();
 
         foreach (GridViewRow row in gvReq.Rows)
         {
             if (((CheckBox)row.FindControl("CheckBox")).Checked)
             {
-                reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
+                reqNo.Add((row.FindControl("lblrequisitionNo") as Label).Text);
             }
         }
 
-        RequisitionControl.AddRetrieval();
-        RequisitionControl.AddDisbursement(reqNo);
        // RequisitionControl.AddDisbursemen_Item(reqNo);
-
-        //Session["reqNo"] = reqNo;
-        Response.Redirect("RetrievalList.aspx");
-
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

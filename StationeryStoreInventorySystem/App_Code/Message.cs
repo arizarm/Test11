@@ -61,4 +61,7 @@ public class Message
 
     public const String SupplierAlreadyInList
         = "Supplier is already in list!";
+
+    public const String DateAlreadyInList
+        = "Month already selected!";
 }

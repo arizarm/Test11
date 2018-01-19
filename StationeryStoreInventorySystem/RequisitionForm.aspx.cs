@@ -74,6 +74,10 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
+        if(GridView1.Rows.Count<=0)
+        {
+            Response.Write("<script>alert('You have not requested any item yet!');</script>");
+        }
         using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities context = new StationeryEntities();

@@ -68,6 +68,9 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         GridView1.DataSource = q.ToList();
         GridView1.DataBind();
+
+        GridView2.DataSource = q.ToList();
+        GridView2.DataBind();
     }
 
     protected void Cancel_Click(object sender, EventArgs e)
@@ -98,8 +101,35 @@ public partial class RequisitionDetails : System.Web.UI.Page
         string code = RequisitionControl.getCode(des);
         int qty = Convert.ToInt32(TextBox1.Text);
 
-        RequisitionControl.addItemToRequisition(code, qty, id);
+        if(GridView1.Rows.Count<=0)
+        {
+            RequisitionControl.addItemToRequisition(code, qty, id);
+        }
 
+        else
+        {
+            bool isEqual = false;
+            string truCode = "";
+            foreach(GridViewRow row in GridView1.Rows)
+            {
+                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
+                string item = labelDes.Text;
+
+                if (des.Equals(item))
+                {
+                    isEqual = true;
+                    truCode = RequisitionControl.getCode(des);
+                }
+            }
+            if(isEqual)
+            {
+                RequisitionControl.editRequisitionItemQty(id, truCode, qty);
+            }
+            else
+            {
+                RequisitionControl.addItemToRequisition(code, qty, id);
+            }
+        }
 
         showAllItems();
     }

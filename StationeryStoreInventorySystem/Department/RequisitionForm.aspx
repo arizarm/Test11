@@ -38,7 +38,7 @@
         <tr>
             <td>Quantity:</td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server" TextMode="Number" Width="74px"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" Text="1" TextMode="Number" Width="74px"></asp:TextBox>
 
                 <asp:Label ID="Label2" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"

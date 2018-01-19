@@ -37,7 +37,7 @@
 
                     <%-- Requisition Menu --%>
                     <asp:Label ID="lblRequisition" runat="server" CssClass="CategoryHeader">Requisition</asp:Label>
-                    <asp:HyperLink ID="hLinkRequisitionForm" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/RequisitionForm.aspx">Requisition Form</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionForm" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/RequisitionForm.aspx">Requisition Form</asp:HyperLink>
                     <asp:HyperLink ID="hLinkRequisitionList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>
 
                     <%-- Retrieval Menu --%>                    

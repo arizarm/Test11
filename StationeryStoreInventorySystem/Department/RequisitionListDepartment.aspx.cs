@@ -9,6 +9,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Session["empRole"] = "Employee";
+        Session["isTempHead"] = "11";
 
         if (Session["empRole"].ToString() == "DepartmentHead" || Session["isTempHead"].ToString() == "Representative")
         {

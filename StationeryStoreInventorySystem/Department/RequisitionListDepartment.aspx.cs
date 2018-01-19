@@ -9,8 +9,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        if (Session["empRole"].ToString() == "DepartmentHead" || Session["isTempHead"].ToString() == "Representative")
+        //will check duration for representative soon
+        if (Session["empRole"].ToString() == "DepartmentHead" || Session["isTempHead"].ToString() == "Y")
         {
             GridView1.Visible = false;
             GridView2.Visible = true;

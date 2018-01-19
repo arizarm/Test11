@@ -16,10 +16,10 @@ public class ItemLogic
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, int categoryID,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
+    public void updateItem(string itemCode, string categoryName,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
     {
         Item i = getItem(itemCode);
-        Category category = getCategorybyID(categoryID);
+        Category category = getCategorybyName(categoryName);
         i.CategoryID = category.CategoryID;
         i.Description = description;
         i.ReorderLevel = reorderLevel;

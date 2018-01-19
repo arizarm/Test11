@@ -5,6 +5,55 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader"> Retrieval List
     </h2>
+    <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
+
+
+    <asp:GridView ID="gvRe" runat="server" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Bin#">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Description">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Quantity Requested">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Quantity Retrieved">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:TextBox ID="txtRetrieved" runat="server"></asp:TextBox>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+
+
+
+
+
+
+
     <div>
 
         <asp:Table ID="Table1" runat="server" BorderStyle="Double" HorizontalAlign="Center">

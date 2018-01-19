@@ -45,6 +45,7 @@
                 <asp:TableCell>
                     <asp:TextBox ID="TextBox4" runat="server" TextMode="SingleLine" Width ="130%"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBox4"  ForeColor="Red" ErrorMessage="Phone Number is required!"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid Singapore phone number" ControlToValidate="TextBox4" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 

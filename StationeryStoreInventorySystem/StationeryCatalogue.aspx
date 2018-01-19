@@ -21,7 +21,7 @@
         <tr>
             <td>Category:</td>
             <td>
-                <asp:dropdownlist id="DropDownListCategory" runat="server">
+                <asp:dropdownlist id="DropDownListCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListCategory_SelectedIndexChanged">
                     </asp:dropdownlist>
                 <br />
                 <asp:textbox id="TextBoxCategory" runat="server"></asp:textbox>
@@ -42,7 +42,7 @@
         <tr>
             <td>Unit of Measure:</td>
             <td>
-                <asp:dropdownlist id="DropDownListUOM" runat="server">
+                <asp:dropdownlist id="DropDownListUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListUOM_SelectedIndexChanged">
                     </asp:dropdownlist>
                 <br />
                 <asp:textbox id="TextBoxUOM" runat="server"></asp:textbox>
@@ -56,7 +56,7 @@
             <td>
                 <asp:textbox id="TextBoxReLvl" runat="server"></asp:textbox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup"></asp:RangeValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
                 <br />
                 <br />
             </td>
@@ -66,7 +66,7 @@
             <td>
                 <asp:textbox id="TextBoxReQty" runat="server"></asp:textbox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup"></asp:RangeValidator>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
             </td>
         </tr>
         <tr>

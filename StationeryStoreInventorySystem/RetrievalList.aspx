@@ -18,6 +18,7 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
+                        <%--<asp:Label ID="Label1" runat="server" Text='<%# Bind(Convert.ToDateTime(Eval("RetrievedDate")).ToLongDateString())%>'</asp:Label>--%>
                         <asp:Label ID="Label4" runat="server" Text='<%# Bind("RetrievedDate") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -27,7 +28,7 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RetrievalID") %>'></asp:Label>
+                        <asp:Label ID="LabelRetrievalID" runat="server" Text='<%# Bind("RetrievalID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 

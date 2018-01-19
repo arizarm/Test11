@@ -93,8 +93,8 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             }
         }
 
-        RequisitionControl.AddRetrieval();
-        RequisitionControl.AddDisbursement(reqNo);
+        RetrievalControl.AddRetrieval();
+        RetrievalControl.AddDisbursement(reqNo);
        // RequisitionControl.AddDisbursemen_Item(reqNo);
 
         //Session["reqNo"] = reqNo;

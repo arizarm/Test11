@@ -6,7 +6,6 @@
     <h2 class="mainPageHeader">Requisition Trend Report</h2>
     <br />
     <br />
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
 
     <table >
         <%--Row1--%>
@@ -86,7 +85,7 @@
         <%--Row 4--%>
         <tr>
             <td>
-                  <asp:GridView ID="DurationGridView" runat="server" AutoGenerateColumns="False">
+                  <asp:GridView ID="DurationGridView" runat="server" AutoGenerateColumns="False" Visible="false">
                       <Columns>
                                                   <asp:TemplateField HeaderText="Month">
                             <ItemTemplate>
@@ -104,7 +103,7 @@
             </td>
             <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="CategoryGridView" runat="server" AutoGenerateColumns="False">
+                <asp:GridView ID="CategoryGridView" runat="server" AutoGenerateColumns="False" Visible="false">
                     <Columns>
                         <asp:TemplateField HeaderText="Category">
                             <ItemTemplate>
@@ -121,7 +120,7 @@
             </td>
               <td class="auto-style1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
             <td>
-                <asp:GridView ID="DepartmentGridView" runat="server" AutoGenerateColumns="False">
+                <asp:GridView ID="DepartmentGridView" runat="server" AutoGenerateColumns="False" Visible="false">
                     <Columns>
                         <asp:TemplateField HeaderText="Department">
                             <ItemTemplate>

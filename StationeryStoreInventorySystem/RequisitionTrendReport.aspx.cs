@@ -12,15 +12,6 @@ public partial class RequisitionTrend : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
-            List<string> catNames = grtc.getAllCategoryNames();
-            CategoryDropDownList.DataSource = catNames;
-            CategoryDropDownList.DataBind();
-
-            List<string> deptNames = grtc.getAllDepartmentNames();
-            DepartmentDropDownList.DataSource = deptNames;
-            DepartmentDropDownList.DataBind();
-
             List<string> catAdded = new List<string>();
             ViewState["catAdded"] = catAdded;
 
@@ -44,6 +35,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 ToLabel.Visible = false;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
+                DurationGridView.Visible = false;
                 break;
             case 1:
                 FromLabel.Visible = true;
@@ -51,6 +43,11 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 ToLabel.Visible = true;
                 DurationDropDownList.Visible = false;
                 DurationAddButton.Visible = false;
+                DurationGridView.Visible = false;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> allMonths = grtc.getRequisitionsUpTo2MonthsAgo();
+                FromDropDownList.DataSource = allMonths;
+                FromDropDownList.DataBind();
                 break;
             case 2:
                 FromLabel.Visible = false;
@@ -58,9 +55,10 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 ToLabel.Visible = false;
                 DurationDropDownList.Visible = true;
                 DurationAddButton.Visible = true;
-                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
-                List<string> allMonths = grtc.getUniqueRequisitionMonths();
-                DurationDropDownList.DataSource = allMonths;
+                DurationGridView.Visible = true;
+                GenerateRequisitionTrendController grtc1 = new GenerateRequisitionTrendController();
+                List<string> fromMths = grtc1.getUniqueRequisitionMonths();
+                DurationDropDownList.DataSource = fromMths;
                 DurationDropDownList.DataBind();
                 break;
         }
@@ -74,10 +72,16 @@ public partial class RequisitionTrend : System.Web.UI.Page
             case 0:
                 CategoryDropDownList.Visible = false;
                 CategoryAddButton.Visible = false;
+                CategoryGridView.Visible = false;
                 break;
             case 1:
                 CategoryDropDownList.Visible = true;
                 CategoryAddButton.Visible = true;
+                CategoryGridView.Visible = true;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> catNames = grtc.getAllCategoryNames();
+                CategoryDropDownList.DataSource = catNames;
+                CategoryDropDownList.DataBind();
                 break;
         }
         }
@@ -90,10 +94,16 @@ public partial class RequisitionTrend : System.Web.UI.Page
             case 0:
                 DepartmentDropDownList.Visible = false;
                 DepartmentAddButton.Visible = false;
+                DepartmentGridView.Visible = false;
                 break;
             case 1:
                 DepartmentDropDownList.Visible = true;
                 DepartmentAddButton.Visible = true;
+                DepartmentGridView.Visible = true;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> deptNames = grtc.getAllDepartmentNames();
+                DepartmentDropDownList.DataSource = deptNames;
+                DepartmentDropDownList.DataBind();
                 break;
         }
 

@@ -66,5 +66,34 @@ public class GenerateRequisitionTrendController
 
         return uniqueMonths;
     }
+
+    //(1c) below will be in useCaseController
+    public List<string> getRequisitionsUpTo2MonthsAgo()
+    {
+        List<DateTime?> allMonths = getAllRequisitionMonths();
+
+        List<string> allMonthsInString = new List<string>();
+        List<string> uniqueMonths = new List<string>();
+
+        DateTime maxMonth = DateTime.Now.AddMonths(-2);
+
+        foreach (DateTime d in allMonths)
+        {
+            if (d > maxMonth)
+                continue;
+            else
+            {
+                string month = d.ToString("MMMM");
+                string year = d.Year.ToString();
+                string entry = month + " " + year;
+
+                allMonthsInString.Add(entry);
+            }
+        }
+
+        uniqueMonths = allMonthsInString.Distinct().ToList();
+
+        return uniqueMonths;
+    }
 }
 

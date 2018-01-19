@@ -8,7 +8,7 @@ using System.Web.Security;
 
 public partial class Login : System.Web.UI.Page
 {
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!this.IsPostBack)
@@ -75,16 +75,11 @@ public partial class Login : System.Web.UI.Page
         }
         else if (role == "Employee")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm..aspx");
         }
         else if (role == "Representative")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm..aspx");
         }
-    }
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
-        Response.Redirect("~/Login.aspx");
     }
 }

@@ -22,17 +22,17 @@
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblItemCode2" runat="server" Text='<%# Bind("Key.I.ItemCode") %>'></asp:Label>
+                        <asp:Label ID="lblItemCode2" runat="server" Text='<%# Bind("Key.ItemCode") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Item Name">
                     <ItemTemplate>
-                        <asp:Label ID="lblDesc" runat="server" Text='<%# Bind("Key.I.Description") %>'></asp:Label>
+                        <asp:Label ID="lblDesc" runat="server" Text='<%# Bind("Key.Description") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Quantity in Stock" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.Stock") %>'></asp:Label>
+                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Unit of Measure">
@@ -40,7 +40,7 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.I.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Actual Quantity" ItemStyle-HorizontalAlign="Center">

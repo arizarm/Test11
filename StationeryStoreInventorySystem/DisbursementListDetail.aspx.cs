@@ -18,8 +18,11 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         lblDepartment.Text = disb.DepName.ToString();
         lblColPoint.Text = disb.CollectionPoint.ToString();
 
-        gvDisbDetail.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate();
-        gvDisbDetail.DataBind();
+        if(!IsPostBack)
+        {
+            gvDisbDetail.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate();
+            gvDisbDetail.DataBind();
+        }
     }
 
 
@@ -37,27 +40,34 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         }
         ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
 
-        //TO FOLLOW UP
-        //List<string> itemCode = new List<string>();
 
-        //foreach (GridViewRow r in gvDisbDetail.Rows)
-        //{
-        //    int actuaQty = Convert.ToInt32((r.FindControl("actualQty") as Label).Text);
-        //    int reqQty = Convert.ToInt32((r.FindControl("reqQty") as Label).Text);
+        List<RegenerateRequestItems> shortfallItem = new List<RegenerateRequestItems>();
+        RegenerateRequestItems regReq;
 
-        //    if (reqQty < actuaQty)
-        //    {
-        //        itemCode.Add((r.FindControl("hdnflditemCode") as Label).Text);
-        //    }
-        //}
-        //if (itemCode.Count != 0)
-        //{
-        //    Session["RegrenerateItems"] = itemCode;
-        //    Response.Redirect("~/RegenerateRequest.aspx");
-        //}  
-        //else
-        //{
-        //    Response.Redirect("~/DisbursementList.aspx");
-        //}      
+        foreach (GridViewRow r in gvDisbDetail.Rows)
+        {
+            int actualQty = Convert.ToInt32((r.FindControl("txtactualQty") as TextBox).Text);
+            int reqQty = Convert.ToInt32((r.FindControl("lblreqQty") as Label).Text);
+                        
+            if (actualQty < reqQty)
+            {
+                string iCode = (r.FindControl("hdnflditemCode") as HiddenField).Value;
+                string iDesc = (r.FindControl("lblitemDesc") as Label).Text;
+                int shortfallQty = reqQty - actualQty;  
+                regReq = new RegenerateRequestItems(iCode, iDesc, shortfallQty);
+                shortfallItem.Add(regReq);
+            }
+        }
+        if (shortfallItem.Count != 0)
+        {
+            Session["RegenerateDate"] = DisbursementCotrol.getRegenrateDate();
+            Session["RegenerateDep"] = lblDepartment.Text;
+            Session["RegrenerateItems"] = shortfallItem;
+            Response.Redirect("~/RegenerateRequest.aspx");
+        }
+        else
+        {
+            Response.Redirect("~/DisbursementList.aspx");
+        }
     }
 }

@@ -25,6 +25,8 @@
     <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
 
+    <%--<asp:Label ID="Label10" runat="server" Visible="False"></asp:Label>--%>
+
     <asp:Panel ID="Panel1" runat="server" Visible="False">
         <asp:Table runat="server">
             <asp:TableHeaderRow>

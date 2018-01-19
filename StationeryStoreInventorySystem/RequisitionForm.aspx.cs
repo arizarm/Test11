@@ -13,7 +13,7 @@ public partial class RequisitionForm : System.Web.UI.Page
     //ReqBS bs = new ReqBS();
     List<RequestedItem> rItem = new List<RequestedItem>();
     //ArrayList reqItem =new ArrayList();
-    RequestedItem ri;
+    static RequestedItem ri;
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -90,37 +90,7 @@ public partial class RequisitionForm : System.Web.UI.Page
         }
         else
         {
-            using (TransactionScope ts = new TransactionScope())
-            {
-                StationeryEntities context = new StationeryEntities();
-                Requisition r = new Requisition();
-                r.RequestDate = DateTime.Now;
-                r.Status = "Pending";
-                r.RequestedBy = 1028;
-
-                context.Requisitions.Add(r);
-                context.SaveChanges();
-
-                foreach (GridViewRow row in GridView2.Rows)
-                {
-                    System.Web.UI.WebControls.Label Newqty = (System.Web.UI.WebControls.Label)row.FindControl("Label6");
-                    int item = Convert.ToInt32(Newqty.Text);
-
-                    System.Web.UI.WebControls.Label iCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
-                    string code = iCode.Text;
-
-                    Requisition_Item ri = new Requisition_Item();
-                    ri.RequisitionID = r.RequisitionID;
-                    //string code = row.Cells[0].Text;
-
-                    ri.ItemCode = code;
-                    ri.RequestedQty = item;
-                    context.Requisition_Item.Add(ri);
-                    context.SaveChanges();
-                }
-
-                ts.Complete();
-            }
+            RequisitionControl.addNewRequisitionItem(rItem);
         }
         //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
         //Server.Transfer("RequisitionListDepartment.aspx", true);
@@ -173,41 +143,4 @@ public partial class RequisitionForm : System.Web.UI.Page
         bindGrid();
     }
 
-}
-
-[Serializable]
-public class RequestedItem
-{
-    private string code;
-    private string description;
-    private int quantity;
-    private string uom;
-
-    public RequestedItem(string code, string description, int quantity, string uom)
-    {
-        this.code = code;
-        this.description = description;
-        this.quantity = quantity;
-        this.uom = uom;
-    }
-
-    public string Code { get { return code; } set { code = value; } }
-    public string Description { get { return description; } set { description = value; } }
-    public int Quantity { get { return quantity; } set { quantity = value; } }
-    public string Uom { get { return uom; } set { uom = value; } }
-
-    public override bool Equals(object obj)
-    {
-        if (obj == null) return false;
-        RequestedItem objAsPart = obj as RequestedItem;
-        if (objAsPart == null) return false;
-        else return Equals(objAsPart);
-    }
-
-
-    public bool Equals(RequestedItem other)
-    {
-        if (other == null) return false;
-        return (this.code.Equals(other.code));
-    }
 }

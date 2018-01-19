@@ -16,10 +16,10 @@ public class ItemLogic
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, int categoryID,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
+    public void updateItem(string itemCode, string categoryName,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
     {
         Item i = getItem(itemCode);
-        Category category = getCategorybyID(categoryID);
+        Category category = getCategorybyName(categoryName);
         i.CategoryID = category.CategoryID;
         i.Description = description;
         i.ReorderLevel = reorderLevel;
@@ -38,6 +38,11 @@ public class ItemLogic
     {
         Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
+    }
+
+    public string getItemDes(string itemCode)
+    {
+        return inventoryDB.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.Description).FirstOrDefault();
     }
     public void removeItem(string itemCode)
     {

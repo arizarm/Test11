@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader"> Retrieval List
     </h2>
-    <p class="mainPageHeader"> &nbsp;</p>
+ <p class="mainPageHeader"> &nbsp;</p>
     <p class="mainPageHeader"> &nbsp;</p>
     <p class="mainPageHeader"> &nbsp;</p>
     <p class="mainPageHeader"> &nbsp;</p>
@@ -40,7 +40,5 @@
      <asp:Button ID="Save" runat="server"  Text="Save" CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
             <asp:Button ID="FinalizeDisbursmentList"  runat="server"  Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" style="height: 47px" />
 
-
-
-</asp:Content>
+</</asp:Content>
 

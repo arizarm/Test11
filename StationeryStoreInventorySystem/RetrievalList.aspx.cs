@@ -9,15 +9,16 @@ public partial class RetrievalList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        //}
+if (!IsPostBack)
         {
             List<Retrieval> retList = RetrievalControl.DisplayRetrievalList();
             gvReq.DataSource = retList;
             gvReq.DataBind();            
         }
-    }
+}
 
-    protected void SearchBtn_Click(object sender, EventArgs e)
+protected void SearchBtn_Click(object sender, EventArgs e)
     {
         string searchWord = SearchBox.Text;
 
@@ -48,4 +49,5 @@ public partial class RetrievalList : System.Web.UI.Page
         Session["RetrievalID"] = s;
         Response.Redirect("RetrievalListDetail.aspx");
     }
+}
 }

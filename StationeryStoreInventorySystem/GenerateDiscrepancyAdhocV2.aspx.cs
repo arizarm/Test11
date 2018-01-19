@@ -8,6 +8,7 @@ using System.Drawing;
 
 public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 {
+    int maxChars = 100;
     protected void Page_Load(object sender, EventArgs e)
     {
         Dictionary<InventoryItem, String> discrepancies = new Dictionary<InventoryItem, String>();
@@ -57,7 +58,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             int adj = Int32.Parse(actual) - Int32.Parse(stock);
             if (!ValidatorUtil.isEmpty(remarks))
             {
-                if (remarks.Length < 100)
+                if (remarks.Length < maxChars)
                 {
                     List<PriceList> itemPrices = GenerateDiscrepancyController.GetPricesByItemCode(itemCode);
                     decimal totalPrice = 0;
@@ -100,6 +101,32 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         if (complete)
         {
             GenerateDiscrepancyController.SubmitDiscrepancies(dList);
+
+            bool informSupervisor = false;
+            bool informManager = false;
+            foreach(Discrepency d in dList)
+            {
+                if(Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+                {
+                    informSupervisor = true;
+                }
+                else
+                {
+                    informManager = true;
+                }
+            }
+
+            //if (informSupervisor)
+            //{
+            //    string supervisorEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").Email;
+            //    Utility.sendMail(supervisorEmail, "New Discrepancies Notification", "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+            //}
+            //if (informManager)
+            //{
+            //    string managerEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").Email;
+            //    Utility.sendMail(managerEmail, "New Discrepancies Notification", "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+            //}
+            Utility.sendMail("etedwin123@gmail.com", "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             Response.Redirect("https://www.google.com.sg");
         }
     }

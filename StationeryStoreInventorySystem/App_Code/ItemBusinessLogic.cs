@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
+using System.Reflection;
 
 /// <summary>
-/// Summary description for ItemLogic
+/// Summary description for ItemBusinessLogic
 /// </summary>
-public class ItemLogic
+public class ItemBusinessLogic
 {
     StationeryEntities inventoryDB;
-    public ItemLogic()
+    public ItemBusinessLogic()
     {
         inventoryDB=new StationeryEntities();
         //
@@ -38,11 +40,6 @@ public class ItemLogic
     {
         Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
-    }
-
-    public string getItemDes(string itemCode)
-    {
-        return inventoryDB.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.Description).FirstOrDefault();
     }
     public void removeItem(string itemCode)
     {

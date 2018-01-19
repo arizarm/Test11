@@ -73,8 +73,8 @@ public partial class RequisitionForm : System.Web.UI.Page
             
             ts.Complete();
         }
-        Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
-        Server.Transfer("ReqisitionListDepartment.aspx", true);
+        //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
+        //Server.Transfer("RequisitionListDepartment.aspx", true);
         //Response.Redirect("ReqisitionListDepartment.aspx");
 
     }

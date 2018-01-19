@@ -329,7 +329,6 @@ public class RequisitionControl
                 context.Requisition_Item.Add(ri);
                 context.SaveChanges();
             }
-
             ts.Complete();
         }
     }

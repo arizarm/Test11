@@ -14,36 +14,36 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        
+            id = Convert.ToInt32(Request.QueryString["id"]);
         //int id = 24;
+        
 
         r = RequisitionControl.getRequisition(id);
-        int empid = Convert.ToInt32(r.RequestedBy);
+        int empid =Convert.ToInt32(r.RequestedBy);
         Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 
         if (!IsPostBack)
         {
-            if (r.Status == "Rejected" || r.Status == "Closed" || r.Status == "Approved")
+            showAllItems();
+            if(r.Status=="Rejected" || r.Status=="Closed")
             {
                 Cancel.Visible = false;
-                Update.Visible = false;
-                //GridView2.Visible = true;
+                Add.Visible = false;
             }
-
-            GridView2.Visible = true;
 
             DropDownList2.DataSource = RequisitionControl.getItem();
             DropDownList2.DataBind();
 
-            if (r.Status != "Pending")
+            if(r.Status!="Pending")
             {
                 if (r.Remarks != null)
                     Label8.Text = r.Remarks.ToString();
+                else
+                    Label8.Text = "-";
             }
-            showAllItems();
         }
 
         des = DropDownList2.SelectedItem.ToString();
@@ -66,14 +66,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
                     rt.Status
                 };
 
-        // GridView2.Visible = true;
-        GridView2.DataSource = q.ToList();
-        GridView2.DataBind();
-
-        // GridView1.Visible = true;
         GridView1.DataSource = q.ToList();
         GridView1.DataBind();
-
     }
 
     protected void Cancel_Click(object sender, EventArgs e)
@@ -95,9 +89,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Add_Click(object sender, EventArgs e)
     {
         Panel1.Visible = true;
-        Close.Visible = true;
-        Add.Visible = false;
-
+        
     }
 
     protected void New_Click(object sender, EventArgs e)
@@ -106,36 +98,10 @@ public partial class RequisitionDetails : System.Web.UI.Page
         string code = RequisitionControl.getCode(des);
         int qty = Convert.ToInt32(TextBox1.Text);
 
-        if (GridView1.Rows.Count <= 0)
-        {
-            RequisitionControl.addItemToRequisition(code, qty, id);
-            showAllItems();
-        }
-        else
-        {
-            bool isEqual = false;
-            string truCode = "";
-            foreach (GridViewRow row in GridView1.Rows)
-            {
-                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
-                string item = labelDes.Text;
+        RequisitionControl.addItemToRequisition(code, qty, id);
 
-                if (des.ToString().Equals(item))
-                {
-                    isEqual = true;
-                    truCode = code; break;
-                }
-            }
-            if (isEqual)
-            {
-                RequisitionControl.editRequisitionItemQty(id, truCode, qty);
-            }
-            else
-            {
-                RequisitionControl.addItemToRequisition(code, qty, id);
-            }
-            showAllItems();
-        }
+
+        showAllItems();
     }
 
     protected void Close_Click(object sender, EventArgs e)
@@ -147,6 +113,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
     protected void Delete_Click(object sender, EventArgs e)
     {
+        //LoadData();
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
         string itemDes = GridView1.DataKeys[row.RowIndex].Value.ToString();
 
@@ -189,22 +156,6 @@ public partial class RequisitionDetails : System.Web.UI.Page
         showAllItems();
     }
 
-    protected void Update_Click(object sender, EventArgs e)
-    {
-        Add.Visible = true;
-        GridView1.Visible = true;
-        GridView2.Visible = false;
-        Update.Visible = false;
-        Save.Visible = true;
-    }
-
-    protected void Save_Click(object sender, EventArgs e)
-    {
-        Save.Visible = false;
-        Update.Visible = true;
-        GridView1.Visible = false;
-        GridView2.Visible = true;
-        Add.Visible = false;
-    }
 }
+
 

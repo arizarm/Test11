@@ -21,8 +21,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         Session["empRole"] = "Head";
         //Session["empRole"] = "Employee";
 
-        int empid = Convert.ToInt32(r.RequestedBy);
-        Label1.Text = EmployeeController.getEmployee(empid);
+        Label1.Text = r.RequestedBy.ToString();
         Label2.Text = r.RequestDate.ToString();
         Label3.Text = r.Status.ToString();
 

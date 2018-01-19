@@ -9,6 +9,13 @@ public partial class DepartmentList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        if (!IsPostBack)
+        {
+
+            StationeryEntities smodel = new StationeryEntities();
+            GridViewDept.DataSource = DeptBusinessLogic.getDepartList();
+            GridViewDept.DataBind();
+
+        }
     }
 }

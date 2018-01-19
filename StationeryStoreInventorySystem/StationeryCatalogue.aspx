@@ -5,11 +5,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
-    <table>
+
+
+    <asp:Panel ID="Panel1" runat="server">
+            <table>
         <tr>
             <td>Item Number:</td>
             <td>
-                <asp:textbox id="TextBox1" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxItemNo" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -17,13 +21,11 @@
         <tr>
             <td>Category:</td>
             <td>
-                <asp:dropdownlist id="DropDownList2" runat="server">
-                        <asp:ListItem>Others</asp:ListItem>
-                        <asp:ListItem>Clip</asp:ListItem>
-                        <asp:ListItem>File</asp:ListItem>
+                <asp:dropdownlist id="DropDownListCategory" runat="server">
                     </asp:dropdownlist>
                 <br />
-                <asp:textbox id="TextBox4" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxCategory" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -31,7 +33,8 @@
         <tr>
             <td>Item Description : </td>
             <td>
-                <asp:textbox id="TextBox2" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxDesc" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -39,13 +42,11 @@
         <tr>
             <td>Unit of Measure:</td>
             <td>
-                <asp:dropdownlist id="DropDownList1" runat="server">
-                        <asp:ListItem>Others</asp:ListItem>
-                        <asp:ListItem>Box</asp:ListItem>
-                        <asp:ListItem>Each</asp:ListItem>
+                <asp:dropdownlist id="DropDownListUOM" runat="server">
                     </asp:dropdownlist>
                 <br />
-                <asp:textbox id="TextBox3" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxUOM" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -53,7 +54,9 @@
         <tr>
             <td>Reorder Level : </td>
             <td>
-                <asp:textbox id="TextBox5" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxReLvl" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup"></asp:RangeValidator>
                 <br />
                 <br />
             </td>
@@ -61,14 +64,17 @@
         <tr>
             <td>Reorder Quantity : </td>
             <td>
-                <asp:textbox id="TextBox11" runat="server"></asp:textbox>
+                <asp:textbox id="TextBoxReQty" runat="server"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup"></asp:RangeValidator>
             </td>
         </tr>
+        <tr>
+            <td> <asp:button id="Button1" runat="server" text="Add" cssclass="button" OnClick="Button1_Click" ValidationGroup="validateItemGroup" /></td>
+        </tr>
     </table>
+    </asp:Panel>
 
-
-    <asp:button id="Button1" runat="server" text="Add" cssclass="button" />
-    <br />
     <br />
     <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False" OnRowCommand="GridView1_RowCommand">
             <Columns>

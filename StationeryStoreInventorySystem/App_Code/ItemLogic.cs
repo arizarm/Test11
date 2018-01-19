@@ -16,10 +16,11 @@ public class ItemLogic
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, Category category,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
+    public void updateItem(string itemCode, int categoryID,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
     {
         Item i = getItem(itemCode);
-        i.Category = category;
+        Category category = getCategorybyID(categoryID);
+        i.CategoryID = category.CategoryID;
         i.Description = description;
         i.ReorderLevel = reorderLevel;
         i.ReorderQty = reorderQty;
@@ -35,7 +36,7 @@ public class ItemLogic
     }
     public Item getItem(string itemCode)
     {
-        Item result=inventoryDB.Items.Where(x => x.ItemCode == itemCode).First();
+        Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
     }
 
@@ -45,7 +46,7 @@ public class ItemLogic
     }
     public void removeItem(string itemCode)
     {
-        Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).First();
+        Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
     }
@@ -63,14 +64,29 @@ public class ItemLogic
         List<Category> categories= inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
         return categories;
     }
-    public Category getCategory(string categoryName)
+    public Category getCategorybyID(int categoryID)
     {
-        Category cat = inventoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
+        Category cat = inventoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
         return cat;
+    }
+    public Category getCategorybyName(string categoryName)
+    {
+        string i = firstUpperCase(categoryName);
+        Category cat = inventoryDB.Categories.Where(x => x.CategoryName == i).FirstOrDefault();
+        return cat;
+    }
+    public void addCategory(Category category)
+    {
+        inventoryDB.Categories.Add(category);
+        inventoryDB.SaveChanges();
     }
     public List<string> getDistinctUOMList()
     {
         List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
         return uom;
+    }
+    public string firstUpperCase(string s)
+    {
+        return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
     }
 }

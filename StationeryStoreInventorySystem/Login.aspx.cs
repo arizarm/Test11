@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Security;
 
 public partial class Login : System.Web.UI.Page
 {
@@ -22,6 +23,10 @@ public partial class Login : System.Web.UI.Page
 
         if (isValid)
         {
+            FormsAuthentication.RedirectFromLoginPage
+          (email, Persist.Checked);
+
+
             Employee emp = EmployeeController.GetEmployeeByEmail(email);
             Session["empID"] = emp.EmpID;
             Session["empRole"] = emp.Role;
@@ -41,17 +46,17 @@ public partial class Login : System.Web.UI.Page
     {
         string role = Session["empRole"].ToString();
 
-        if (role == "Clerk")
+        if (role == "Store Clerk")
         {
-            Response.Redirect("~/ReqisitionListClerk.aspx");
+            Response.Redirect("~/RequisitionListClerk.aspx");
         }
-        else if (role == "Supervisor" || role == "Manager")
+        else if (role == "Store Supervisor" || role == "Store Manager")
         {
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
-        else if (role == "Head")
+        else if (role == "DepartmentHead")
         {
-            Response.Redirect("~/ReqisitionListDepartment.aspx");
+            Response.Redirect("~/RequisitionListDepartment.aspx");
         }
         else if (role == "Employee")
         {

@@ -18,12 +18,19 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
             GridView1.DataSource = invItemList;
             GridView1.DataBind();
+            if (Session["itemError"] != null)
+            {
+                Session["itemError"] = null;
+            }
+        }
+        else
+        {
+            if (Session["itemError"] != null)   //Retain the value of itemError when posting back
+            {
+                itemError = (bool)Session["itemError"];
+            }
         }
 
-        if(Session["itemError"] != null)   //Retain the value of itemError when posting back
-        {
-            itemError = (bool)Session["itemError"];
-        }
 
         Label1.Text = "";
     }
@@ -49,7 +56,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         if (itemError == false)
         {
             //foreach (GridViewRow row in GridView2.Rows)
-            for(int i = 0; i < GridView2.Rows.Count; i++)
+            for (int i = 0; i < GridView2.Rows.Count; i++)
             {
                 GridViewRow row = GridView2.Rows[i];
                 string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
@@ -71,7 +78,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     private void ErrorClear()
     {
-        if(itemError == false)
+        if (itemError == false)
         {
             Label5.Text = "";
             Label7.Text = "";
@@ -130,17 +137,17 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
                         InventoryItem invItem = new InventoryItem(item, quantity);
-                        string adjustment = "";
+                        string adjustment = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            if (adj > 0)
-                            {
-                                adjustment = "+" + adj.ToString();
-                            }
-                            else
-                            {
-                                adjustment = adj.ToString();
-                            }
+                            //if (adj > 0)
+                            //{
+                            //    adjustment = "+" + adj.ToString();
+                            //}
+                            //else
+                            //{
+                            //    adjustment = adj.ToString();
+                            //}
                             iList2.Add(invItem, adjustment);
                         }
                     }

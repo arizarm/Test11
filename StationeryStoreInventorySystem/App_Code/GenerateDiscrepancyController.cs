@@ -19,23 +19,96 @@ public class GenerateDiscrepancyController
     {
         StationeryEntities context = new StationeryEntities();
         List<Item> iList = new List<Item>();
-        iList = context.Items.Include("StockCards").OrderBy(x => x.ItemCode).ToList();
-        //iList = context.Items.ToList();       //Commented are alt methods
+        iList = GetAllItems();
         List<InventoryItem> invItemList = new List<InventoryItem>();
-        foreach(Item i in iList)
+        foreach (Item i in iList)
         {
-            //List<StockCard> sc = context.StockCards.Where(x => x.ItemCode == i.ItemCode).ToList();
-            //InventoryItem iItem = new InventoryItem(i, sc[(sc.Count - 1)]);
-            InventoryItem iItem = new InventoryItem(i, i.StockCards.Last().Balance.ToString());
+            List<StockCard> sc = GetStockCardsByItemCode(i.ItemCode);
+            InventoryItem iItem = new InventoryItem(i, sc.Last().Balance.ToString());
+            //InventoryItem iItem = new InventoryItem(i, i.StockCards.Last().Balance.ToString());
             invItemList.Add(iItem);
         }
         return invItemList;
     }
 
-    public static Item GetItemByItemCode(string itemCode)
+    public static void SubmitDiscrepancies(List<Discrepency> dList)
     {
+        foreach (Discrepency d in dList)
+        {
+            if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+            {
+                d.ApprovedBy = GetEmployeeByRole("Store Supervisor").EmpID;
+            }
+            else
+            {
+                d.ApprovedBy = GetEmployeeByRole("Store Manager").EmpID;
+            }
+        }
+        SaveDiscrepancies(dList);
+    }
+
+    public static List<Item> GetAllItems()
+    {   //goes to item broker
+        StationeryEntities context = new StationeryEntities();
+        return context.Items.OrderBy(x => x.ItemCode).ToList();
+    }
+
+    public static Item GetItemByItemCode(string itemCode)
+    {   //goes to item broker
         StationeryEntities context = new StationeryEntities();
         Item i = context.Items.Where(x => x.ItemCode == itemCode).First();
         return i;
+    }
+
+    public static List<PriceList> GetPricesByItemCode(string itemCode)
+    {   //goes to price list broker
+        StationeryEntities context = new StationeryEntities();
+        List<PriceList> prices = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
+        return prices;
+    }
+
+    public static Employee GetEmployeeByRole(string role)
+    {  //goes to employee broker
+        StationeryEntities context = new StationeryEntities();
+        Employee e = context.Employees.Where(x => x.Role == role).First();
+        return e;
+    }
+
+    public static void SaveDiscrepancies(List<Discrepency> dList)
+    {    //goes to discrepancy broker
+        StationeryEntities context = new StationeryEntities();
+        foreach (Discrepency d in dList)
+        {
+            context.Discrepencies.Add(d);
+        }
+        context.SaveChanges();
+    }
+
+    public static int GetDiscrepancyID(Discrepency d)
+    {   //goes to discrepancy id
+        StationeryEntities context = new StationeryEntities();
+        return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
+    }
+
+    public static List<StockCard> GetStockCardsByItemCode(string itemCode)
+    {   //goes to stock card broker
+        StationeryEntities context = new StationeryEntities();
+        return context.StockCards.Where(x => x.ItemCode == itemCode).ToList();
+    }
+
+    public static void UpdateStockCards(List<Discrepency> dList)
+    {   //goes to stock card broker
+        StationeryEntities context = new StationeryEntities();
+        foreach (Discrepency d in dList)
+        {
+            StockCard sc = new StockCard();
+            sc.ItemCode = d.ItemCode;
+            sc.TransactionType = "Discrepancy";
+            sc.Qty = d.AdjustmentQty;
+            sc.Balance = GetStockCardsByItemCode(d.ItemCode).Last().Balance + d.AdjustmentQty;
+            sc.TransactionDetailID = GetDiscrepancyID(d);
+            context.StockCards.Add(sc);
+        }
+        context.SaveChanges();
     }
 }

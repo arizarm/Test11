@@ -43,7 +43,7 @@
                         <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.I.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Adjustment Amount" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="Actual Quantity" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
                     </ItemTemplate>
@@ -52,6 +52,11 @@
         </asp:GridView>
         <br />
         <asp:Button ID="Button2" runat="server" Text="Finalise Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>
+        
+        <% } %>
+
+        <%if (Label8.Text != "")
+            { %>
         <br />
         <br />
         <asp:Label ID="Label1" runat="server" Text="" ForeColor="Red"></asp:Label>
@@ -59,7 +64,8 @@
         <asp:Label ID="Label7" runat="server" Text="" ForeColor="Red"></asp:Label>
         <br />
         <asp:Label ID="Label8" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <% } %>
+        <%} %>
+
         <h2>Item List</h2>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
             <Columns>
@@ -110,7 +116,7 @@
                         
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="txtActual" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtActual" runat="server" Width=""></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 

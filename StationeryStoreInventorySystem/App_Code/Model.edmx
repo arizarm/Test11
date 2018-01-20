@@ -94,7 +94,6 @@
           <Property Name="UnitOfMeasure" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Bin" Type="nvarchar" MaxLength="10" />
           <Property Name="ActiveStatus" Type="char" MaxLength="1" />
-          <Property Name="BalanceQty" Type="int" />
         </EntityType>
         <EntityType Name="Item_PurchaseOrder">
           <Key>
@@ -110,13 +109,12 @@
           <Key>
             <PropertyRef Name="SupplierCode" />
             <PropertyRef Name="ItemCode" />
-            <PropertyRef Name="TenderYear" />
           </Key>
           <Property Name="SupplierCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" />
           <Property Name="SupplierRank" Type="int" />
-          <Property Name="TenderYear" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="TenderYear" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -332,7 +330,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceList__ItemC__4AB81AF0">
+        <Association Name="FK__PriceList__ItemC__1FCDBCEB">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -344,7 +342,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceList__Suppl__49C3F6B7">
+        <Association Name="FK__PriceList__Suppl__1ED998B2">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
           <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
           <ReferentialConstraint>
@@ -541,11 +539,11 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
             <End Role="Item_PurchaseOrder" EntitySet="Item_PurchaseOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceList__ItemC__4AB81AF0" Association="Self.FK__PriceList__ItemC__4AB81AF0">
+          <AssociationSet Name="FK__PriceList__ItemC__1FCDBCEB" Association="Self.FK__PriceList__ItemC__1FCDBCEB">
             <End Role="Item" EntitySet="Item" />
             <End Role="PriceList" EntitySet="PriceList" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceList__Suppl__49C3F6B7" Association="Self.FK__PriceList__Suppl__49C3F6B7">
+          <AssociationSet Name="FK__PriceList__Suppl__1ED998B2" Association="Self.FK__PriceList__Suppl__1ED998B2">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="PriceList" EntitySet="PriceList" />
           </AssociationSet>
@@ -709,10 +707,9 @@
           <NavigationProperty Name="Disbursement_Item" Relationship="Self.FK__Disbursem__ItemC__2A4B4B5E" FromRole="Item" ToRole="Disbursement_Item" />
           <NavigationProperty Name="Discrepencies" Relationship="Self.FK__Discrepen__ItemC__3E52440B" FromRole="Item" ToRole="Discrepency" />
           <NavigationProperty Name="Item_PurchaseOrder" Relationship="Self.FK__Item_Purc__ItemC__3B75D760" FromRole="Item" ToRole="Item_PurchaseOrder" />
+          <NavigationProperty Name="PriceLists" Relationship="Self.FK__PriceList__ItemC__1FCDBCEB" FromRole="Item" ToRole="PriceList" />
           <NavigationProperty Name="Requisition_Item" Relationship="Self.FK__Requisiti__ItemC__32E0915F" FromRole="Item" ToRole="Requisition_Item" />
           <NavigationProperty Name="StockCards" Relationship="Self.FK__StockCard__ItemC__4316F928" FromRole="Item" ToRole="StockCard" />
-          <Property Name="BalanceQty" Type="Int32" />
-          <NavigationProperty Name="PriceLists" Relationship="StationeryModel.FK__PriceList__ItemC__4AB81AF0" FromRole="Item" ToRole="PriceList" />
         </EntityType>
         <EntityType Name="Item_PurchaseOrder">
           <Key>
@@ -725,6 +722,19 @@
           <Property Name="Amount" Type="Decimal" Precision="6" Scale="2" />
           <NavigationProperty Name="Item" Relationship="Self.FK__Item_Purc__ItemC__3B75D760" FromRole="Item_PurchaseOrder" ToRole="Item" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__Item_Purc__Purch__3A81B327" FromRole="Item_PurchaseOrder" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="PriceList">
+          <Key>
+            <PropertyRef Name="SupplierCode" />
+            <PropertyRef Name="ItemCode" />
+          </Key>
+          <Property Name="SupplierCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="SupplierRank" Type="Int32" />
+          <Property Name="TenderYear" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__PriceList__ItemC__1FCDBCEB" FromRole="PriceList" ToRole="Item" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__PriceList__Suppl__1ED998B2" FromRole="PriceList" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -808,8 +818,8 @@
           <Property Name="SupplierAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SupplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="PriceLists" Relationship="Self.FK__PriceList__Suppl__1ED998B2" FromRole="Supplier" ToRole="PriceList" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Suppl__35BCFE0A" FromRole="Supplier" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PriceLists" Relationship="StationeryModel.FK__PriceList__Suppl__49C3F6B7" FromRole="Supplier" ToRole="PriceList" />
         </EntityType>
         <Association Name="FK__Item__CategoryID__1A14E395">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -1015,6 +1025,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PriceList__ItemC__1FCDBCEB">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="PriceList">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Requisiti__ItemC__32E0915F">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Requisition_Item" Type="Self.Requisition_Item" Multiplicity="*" />
@@ -1048,6 +1070,18 @@
             </Principal>
             <Dependent Role="Item_PurchaseOrder">
               <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceList__Suppl__1ED998B2">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="PriceList">
+              <PropertyRef Name="SupplierCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1085,6 +1119,7 @@
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Item_PurchaseOrder" EntityType="Self.Item_PurchaseOrder" />
+          <EntitySet Name="PriceLists" EntityType="Self.PriceList" />
           <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
           <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
           <EntitySet Name="Requisition_Item" EntityType="Self.Requisition_Item" />
@@ -1159,6 +1194,10 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="Item_PurchaseOrder" EntitySet="Item_PurchaseOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK__PriceList__ItemC__1FCDBCEB" Association="Self.FK__PriceList__ItemC__1FCDBCEB">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="PriceList" EntitySet="PriceLists" />
+          </AssociationSet>
           <AssociationSet Name="FK__Requisiti__ItemC__32E0915F" Association="Self.FK__Requisiti__ItemC__32E0915F">
             <End Role="Item" EntitySet="Items" />
             <End Role="Requisition_Item" EntitySet="Requisition_Item" />
@@ -1171,6 +1210,10 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
             <End Role="Item_PurchaseOrder" EntitySet="Item_PurchaseOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK__PriceList__Suppl__1ED998B2" Association="Self.FK__PriceList__Suppl__1ED998B2">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PriceList" EntitySet="PriceLists" />
+          </AssociationSet>
           <AssociationSet Name="FK__PurchaseO__Suppl__35BCFE0A" Association="Self.FK__PurchaseO__Suppl__35BCFE0A">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -1179,54 +1222,7 @@
             <End Role="Requisition" EntitySet="Requisitions" />
             <End Role="Requisition_Item" EntitySet="Requisition_Item" />
           </AssociationSet>
-          <EntitySet Name="PriceLists" EntityType="StationeryModel.PriceList" />
-          <AssociationSet Name="FK__PriceList__ItemC__4AB81AF0" Association="StationeryModel.FK__PriceList__ItemC__4AB81AF0">
-            <End Role="Item" EntitySet="Items" />
-            <End Role="PriceList" EntitySet="PriceLists" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PriceList__Suppl__49C3F6B7" Association="StationeryModel.FK__PriceList__Suppl__49C3F6B7">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="PriceList" EntitySet="PriceLists" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="PriceList">
-          <Key>
-            <PropertyRef Name="SupplierCode" />
-            <PropertyRef Name="ItemCode" />
-            <PropertyRef Name="TenderYear" />
-          </Key>
-          <Property Name="SupplierCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="SupplierRank" Type="Int32" />
-          <Property Name="TenderYear" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Item" Relationship="StationeryModel.FK__PriceList__ItemC__4AB81AF0" FromRole="PriceList" ToRole="Item" />
-          <NavigationProperty Name="Supplier" Relationship="StationeryModel.FK__PriceList__Suppl__49C3F6B7" FromRole="PriceList" ToRole="Supplier" />
-        </EntityType>
-        <Association Name="FK__PriceList__ItemC__4AB81AF0">
-          <End Type="StationeryModel.Item" Role="Item" Multiplicity="1" />
-          <End Type="StationeryModel.PriceList" Role="PriceList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemCode" />
-            </Principal>
-            <Dependent Role="PriceList">
-              <PropertyRef Name="ItemCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PriceList__Suppl__49C3F6B7">
-          <End Type="StationeryModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="StationeryModel.PriceList" Role="PriceList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierCode" />
-            </Principal>
-            <Dependent Role="PriceList">
-              <PropertyRef Name="SupplierCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1319,7 +1315,6 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="StationeryModel.Item">
               <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1338,6 +1333,17 @@
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="OrderQty" ColumnName="OrderQty" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceLists">
+            <EntityTypeMapping TypeName="StationeryModel.PriceList">
+              <MappingFragment StoreEntitySet="PriceList">
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SupplierRank" ColumnName="SupplierRank" />
+                <ScalarProperty Name="TenderYear" ColumnName="TenderYear" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1413,17 +1419,6 @@
                 <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
                 <ScalarProperty Name="SupplierEmail" ColumnName="SupplierEmail" />
                 <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PriceLists">
-            <EntityTypeMapping TypeName="StationeryModel.PriceList">
-              <MappingFragment StoreEntitySet="PriceList">
-                <ScalarProperty Name="TenderYear" ColumnName="TenderYear" />
-                <ScalarProperty Name="SupplierRank" ColumnName="SupplierRank" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

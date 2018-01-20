@@ -35,6 +35,4 @@ public static class Utility
             Console.WriteLine(ex.Message);
         }
     }
-
-    //public 
-}
+    }

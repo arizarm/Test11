@@ -13,35 +13,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            //Dictionary<InventoryItem, String> invItems = new Dictionary<InventoryItem, String>();
+            List<InventoryItem> invItemList = new List<InventoryItem>();
+            invItemList = GenerateDiscrepancyController.GetInventoryWithStock();
 
-            //foreach (InventoryItem ii in invItemList)
-            //{
-            //    List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(ii.I.ItemCode);
-            //    int adj = 0;
-
-            //    foreach(Discrepency d in dList)
-            //    {
-            //        adj += (int) d.AdjustmentQty;
-            //    }
-
-            //    string adjStr = "";
-
-            //    if (adj > 0)
-            //    {
-            //        adjStr = "+" + adj.ToString();
-            //    }
-            //    else
-            //    {
-            //        adjStr = adj.ToString();
-            //    }
-
-            //    string stockWithAdj = ii.Stock + " (" + adjStr + ")";
-
-            //    invItems.Add(ii, stockWithAdj);
-            //}
-
-            
+            GridView1.DataSource = invItemList;
+            GridView1.DataBind();
             if (Session["itemError"] != null)
             {
                 Session["itemError"] = null;
@@ -75,7 +51,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
+        Dictionary<InventoryItem, String> discrepancies = new Dictionary<InventoryItem, String>();
         GenerateDiscrepancyList();
         if (itemError == false)
         {
@@ -84,12 +60,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             {
                 GridViewRow row = GridView2.Rows[i];
                 string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
-                //string stock = (row.FindControl("lblStock") as Label).Text;
+                string stock = (row.FindControl("lblStock") as Label).Text;
                 string adj = (row.FindControl("lblAdj") as Label).Text;
                 Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-                //InventoryItem invItem = new InventoryItem(item, stock);
+                InventoryItem invItem = new InventoryItem(item, stock);
 
-                discrepancies.Add(item, adj);
+                discrepancies.Add(invItem, adj);
             }
             Session["discrepancyList"] = discrepancies;
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
@@ -112,7 +88,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     private void GenerateDiscrepancyList()
     {
-        Dictionary<Item, String> iList2 = new Dictionary<Item, String>();
+        Dictionary<InventoryItem, String> iList2 = new Dictionary<InventoryItem, String>();
         List<String> missed = new List<String>();
         itemError = false;
         for (int i = 0; i < GridView1.Rows.Count; i++)
@@ -122,29 +98,29 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             string txtActual = (row.FindControl("txtActual") as TextBox).Text;
             string itemCode = (row.FindControl("lblItemCode1") as Label).Text;
             bool error = false;
-            //string mode = "Monthly";
+            string mode = "";
 
-            //switch (RadioButtonList1.SelectedIndex)
-            //{
-            //    case 0:
-            //        mode = "Monthly";
-            //        break;
-            //    case 1:
-            //        mode = "Adhoc";
-            //        break;
-            //}
+            switch (RadioButtonList1.SelectedIndex)
+            {
+                case 0:
+                    mode = "Monthly";
+                    break;
+                case 1:
+                    mode = "Adhoc";
+                    break;
+            }
 
-            //bool monthlyCheckPass = true;    //Functions as ticked, but only if
-            //                                 //the page mode is on Monthly
-            //if (mode == "Monthly")           //If adhoc, ticked is ignored
-            //{
-            //    if (ticked)
-            //    {
-            //        monthlyCheckPass = false;
-            //    }
-            //}
+            bool monthlyCheckPass = true;    //Functions as ticked, but only if
+                                             //the page mode is on Monthly
+            if (mode == "Monthly")           //If adhoc, ticked is ignored
+            {
+                if (ticked)
+                {
+                    monthlyCheckPass = false;
+                }
+            }
 
-            if (!ticked)   //If a row is not checked
+            if (monthlyCheckPass)   //If a row is not checked
             {
                 if (!(txtActual == "" || txtActual == null))    //Check whether actual quantity is blank
                 {
@@ -157,15 +133,22 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                     {
                         //Calculate the adjustment needed, then add to GridView2
                         Label holder = row.FindControl("lblStock") as Label;
-                        string[] holderContents = holder.Text.Split(' ');
-                        string quantity = holderContents[0];
+                        string quantity = holder.Text;
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-                        //InventoryItem invItem = new InventoryItem(item, quantity);
+                        InventoryItem invItem = new InventoryItem(item, quantity);
                         string adjustment = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            iList2.Add(item, adjustment);
+                            //if (adj > 0)
+                            //{
+                            //    adjustment = "+" + adj.ToString();
+                            //}
+                            //else
+                            //{
+                            //    adjustment = adj.ToString();
+                            //}
+                            iList2.Add(invItem, adjustment);
                         }
                     }
                     else
@@ -178,12 +161,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 {
                     ErrorClear();
                     row.BackColor = Color.Transparent;
-                    //if (mode == "Monthly")   // This code only applies to monthly
-                    //{
+                    if (mode == "Monthly")   // This code only applies to monthly
+                    {
                         Label5.Text = "Some items have not been checked yet. ";
                         itemError = true;
                         error = true;
-                    //}
+                    }
 
                 }
             }
@@ -223,33 +206,5 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         Session["itemError"] = itemError;
         GridView2.DataSource = iList2;
         GridView2.DataBind();
-    }
-
-    protected void Button4_Click(object sender, EventArgs e)
-    {
-        List<InventoryItem> invItemList = new List<InventoryItem>();
-        invItemList = GenerateDiscrepancyController.GetInventoryWithStock();
-
-        List<InventoryItem> searchResults = new List<InventoryItem>();
-        string search = txtSearch.Text.ToLower();
-
-        foreach (InventoryItem ii in invItemList)
-        {
-            if(ii.I.ItemCode.ToLower().Contains(search) || ii.I.Description.ToLower().Contains(search))
-            {
-                searchResults.Add(ii);
-            }
-        }
-
-        GridView1.DataSource = searchResults;
-        GridView1.DataBind();
-    }
-
-    protected void Button5_Click(object sender, EventArgs e)
-    {
-        List<InventoryItem> invItemList = new List<InventoryItem>();
-        invItemList = GenerateDiscrepancyController.GetInventoryWithStock();
-        GridView1.DataSource = invItemList;
-        GridView1.DataBind();
     }
 }

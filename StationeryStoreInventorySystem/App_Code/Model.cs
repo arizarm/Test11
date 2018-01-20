@@ -167,9 +167,9 @@ public partial class Item
         this.Disbursement_Item = new HashSet<Disbursement_Item>();
         this.Discrepencies = new HashSet<Discrepency>();
         this.Item_PurchaseOrder = new HashSet<Item_PurchaseOrder>();
+        this.PriceLists = new HashSet<PriceList>();
         this.Requisition_Item = new HashSet<Requisition_Item>();
         this.StockCards = new HashSet<StockCard>();
-        this.PriceLists = new HashSet<PriceList>();
     }
 
     public string ItemCode { get; set; }
@@ -180,7 +180,6 @@ public partial class Item
     public string UnitOfMeasure { get; set; }
     public string Bin { get; set; }
     public string ActiveStatus { get; set; }
-    public Nullable<int> BalanceQty { get; set; }
 
     public virtual Category Category { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -190,11 +189,11 @@ public partial class Item
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Item_PurchaseOrder> Item_PurchaseOrder { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PriceList> PriceLists { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Requisition_Item> Requisition_Item { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<StockCard> StockCards { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<PriceList> PriceLists { get; set; }
 }
 
 public partial class Item_PurchaseOrder
@@ -315,8 +314,8 @@ public partial class Supplier
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
     public Supplier()
     {
-        this.PurchaseOrders = new HashSet<PurchaseOrder>();
         this.PriceLists = new HashSet<PriceList>();
+        this.PurchaseOrders = new HashSet<PurchaseOrder>();
     }
 
     public string SupplierCode { get; set; }
@@ -329,7 +328,7 @@ public partial class Supplier
     public string ActiveStatus { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<PriceList> PriceLists { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
 }

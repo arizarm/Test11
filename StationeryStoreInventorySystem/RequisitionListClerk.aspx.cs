@@ -93,9 +93,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             }
         }
 
-        Session["reqNo"] = reqNo;
-        Response.Redirect("RequisitionDetails.aspx");
-
+       // RequisitionControl.AddDisbursemen_Item(reqNo);
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

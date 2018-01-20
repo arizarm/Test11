@@ -12,20 +12,20 @@
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
     <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-        <br />
-    </h3>
+    <br /></h3>
     Requested Date:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-    </strong>
-    <br />
+    </strong><br />
     <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="Label" Width="200px"></asp:Label>
     <br />
 
     <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
+
+    <%--<asp:Label ID="Label10" runat="server" Visible="False"></asp:Label>--%>
 
     <asp:Panel ID="Panel1" runat="server" Visible="False">
         <asp:Table runat="server">
@@ -68,7 +68,7 @@
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
-
+                        
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
@@ -104,30 +104,6 @@
                                 <EditItemTemplate>
                                     <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning" />
                                 </EditItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
-
-                        <Columns>
-                            <asp:TemplateField HeaderText="Item" SortExpression="Description">
-                                <ItemTemplate>
-                                    <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
-                                </EditItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
-                                </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>

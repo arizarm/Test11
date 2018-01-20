@@ -39,11 +39,6 @@ public class ItemLogic
         Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
     }
-
-    public string getItemDes(string itemCode)
-    {
-        return inventoryDB.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.Description).FirstOrDefault();
-    }
     public void removeItem(string itemCode)
     {
         Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();

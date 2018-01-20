@@ -117,10 +117,10 @@ public class DisbursementCotrol
             remarks = disbDetails.Remarks;
 
             //get total requested quantity
-            //reqQty = (int)disbDetails.TotalRequestedQty;
+            reqQty = (int)disbDetails.TotalRequestedQty;
 
             //put all data to display class
-            //disbursementDetailListItems = new DisbursementDetailListItems(itemCode, itemDesc, reqQty, actualQty, remarks);
+            disbursementDetailListItems = new DisbursementDetailListItems(itemCode, itemDesc, reqQty, actualQty, remarks);
 
             //add display data to list
             disbursementDetailListItemsList.Add(disbursementDetailListItems);

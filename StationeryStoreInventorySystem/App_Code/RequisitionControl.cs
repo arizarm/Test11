@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Transactions;
-using System.Collections;
+
 /// <summary>
 /// Summary description for RequisitionControl
 /// </summary>
 public class RequisitionControl
 {
-    //RequestedItem rItem;
+
     static StationeryEntities context = new StationeryEntities();
 
     static List<Requisition> rlist;
@@ -20,12 +20,14 @@ public class RequisitionControl
     static string status;
     static int requestedBy;
     static string depCode;
-    static string searchWord;
+ 
     static string employeeName;
 
     static ReqisitionListItem item;
     static List<ReqisitionListItem> itemList;
+    static string searchWord;
     static List<ReqisitionListItem> searchList;
+      
 
     public static List<ReqisitionListItem> DisplayAll()
     {
@@ -288,7 +290,7 @@ public class RequisitionControl
             itemList.Add(item);
         }
         return itemList;
-    } 
+    }
 
     public static void editRequisitionItemQty(int id, string code, int qty)
     {
@@ -298,37 +300,6 @@ public class RequisitionControl
             Requisition_Item ri = context.Requisition_Item.Where(i => i.RequisitionID.Equals(id)).Where(i => i.ItemCode.Equals(code)).FirstOrDefault();
             ri.RequestedQty += qty;
             context.SaveChanges();
-            ts.Complete();
-        }
-    }
-    public static void addNewRequisitionItem(List<RequestedItem> item)
-    {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition r = new Requisition();
-            r.RequestDate = DateTime.Now;
-            r.Status = "Pending";
-            r.RequestedBy = 1028;
-
-            context.Requisitions.Add(r);
-            context.SaveChanges();
-
-            foreach (RequestedItem i in item)
-            {
-                int qty = i.Quantity;
-
-                string code = i.Code;
-
-                Requisition_Item ri = new Requisition_Item();
-                ri.RequisitionID = r.RequisitionID;
-                //string code = row.Cells[0].Text;
-
-                ri.ItemCode = code;
-                ri.RequestedQty = qty;
-                context.Requisition_Item.Add(ri);
-                context.SaveChanges();
-            }
             ts.Complete();
         }
     }

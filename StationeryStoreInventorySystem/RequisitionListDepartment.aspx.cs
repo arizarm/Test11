@@ -9,15 +9,15 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //Session["empRole"] = "Head";
         Session["empRole"] = "Employee";
-        Session["isTempHead"] = "11";
 
-        if (Session["empRole"].ToString() == "DepartmentHead" || Session["isTempHead"].ToString() == "Representative")
+        if (Session["empRole"].ToString() == "Head")
         {
             GridView1.Visible = false;
             GridView2.Visible = true;
         }
-        else if (Session["empRole"].ToString() == "Employee" || Session["empRole"].ToString() == "Representative")
+        else if (Session["empRole"].ToString() == "Employee")
         {
             GridView1.Visible = true;
             GridView2.Visible = false;

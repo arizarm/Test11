@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" action="Login.aspx">
         <div class="wrapper">
             <div class="header row">
                 <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
@@ -38,7 +38,8 @@
     <input id="Password1" type="password" runat="server" class="form-control" />
                 </div>
                 <asp:Label ID="Label3" runat="server"></asp:Label>
-                <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp              
+                <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp
+                <%--<asp:Button ID="Button2" runat="server" Text="Send mail" OnClick="Button2_Click" />--%>
                 <asp:Label ID="Label4" runat="server"></asp:Label>
             </div>
         </div>

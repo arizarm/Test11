@@ -303,4 +303,32 @@ public class RequisitionControl
             ts.Complete();
         }
     }
+
+    public static void addNewRequisitionItem(List<RequestedItem> rItem)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition r = new Requisition();
+            r.RequestDate = DateTime.Now;
+            r.Status = "Pending";
+            r.RequestedBy = 1028;
+
+            context.Requisitions.Add(r);
+            context.SaveChanges();
+
+            foreach (RequestedItem row in rItem)
+            {
+                Requisition_Item ri = new Requisition_Item();
+                ri.RequisitionID = r.RequisitionID;
+                //string code = row.Cells[0].Text;
+                ri.ItemCode = row.Code;
+                ri.RequestedQty = Convert.ToInt32(row.Quantity);
+                context.Requisition_Item.Add(ri);
+                context.SaveChanges();
+            }
+
+            ts.Complete();
+        }
+    }
 }

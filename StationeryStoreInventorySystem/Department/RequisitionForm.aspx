@@ -55,6 +55,7 @@
 
 
     <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="button" />
+    <asp:Label ID="Label8" runat="server"></asp:Label>
     <br />
     <br />
 

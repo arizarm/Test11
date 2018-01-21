@@ -21,12 +21,11 @@ public partial class ApproveRequisition : System.Web.UI.Page
         Session["empRole"] = "Head";
         //Session["empRole"] = "Employee";
 
-        int empid = Convert.ToInt32(r.RequestedBy);
-        Label1.Text = EmployeeController.getEmployee(empid);
+        Label1.Text = r.RequestedBy.ToString();
         Label2.Text = r.RequestDate.ToString();
         Label3.Text = r.Status.ToString();
 
-        if(r.Status.ToString() !=  "Pending")
+        if (r.Status.ToString() != "Pending")
         {
             ReasonLabel.Visible = false;
             TextBox2.Visible = false;
@@ -37,8 +36,8 @@ public partial class ApproveRequisition : System.Web.UI.Page
         if (!IsPostBack)
         {
             showAllItems();
-        }      
-        
+        }
+
     }
 
     protected void showAllItems()
@@ -77,7 +76,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         }
     }
 
-    
+
 
     protected void ApproveButton_Click(object sender, EventArgs e)
     {

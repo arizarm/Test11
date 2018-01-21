@@ -25,8 +25,8 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid">
-                        
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+                        <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>

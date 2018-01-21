@@ -43,7 +43,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
 
             Session["itemError"] = null;
-            
         }
         else
         {
@@ -229,15 +228,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
         if (GridView1.Rows.Count == GenerateDiscrepancyController.GetAllItems().Count)
         {
-
-            bool monthly = true;
-            Session["monthly"] = monthly;
+            Session["monthly"] = true;
         }
         else
         {
-
-            bool monthly = false;
-            Session["monthly"] = monthly;
+            Session["monthly"] = false;
         }
 
         Session["discrepancyList"] = iList2;

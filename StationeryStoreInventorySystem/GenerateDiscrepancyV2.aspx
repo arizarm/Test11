@@ -99,7 +99,7 @@
                         <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label2" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 
@@ -108,7 +108,7 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
+                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
                     </ItemTemplate>
 
 <HeaderStyle HorizontalAlign="Center"></HeaderStyle>

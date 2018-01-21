@@ -11,17 +11,17 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     int maxChars = 100;
     protected void Page_Load(object sender, EventArgs e)
     {
-        Dictionary<InventoryItem, String> discrepancies = new Dictionary<InventoryItem, String>();
-        Dictionary<KeyValuePair<InventoryItem, String>, String> fullDiscrepancies = new Dictionary<KeyValuePair<InventoryItem, String>, String>();
+        Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
+        Dictionary<KeyValuePair<Item, String>, String> fullDiscrepancies = new Dictionary<KeyValuePair<Item, String>, String>();
         if (!IsPostBack)
         {
             if (Session["discrepancyList"] != null)
             {
-                discrepancies = (Dictionary<InventoryItem, String>)Session["discrepancyList"];
-                foreach (KeyValuePair<InventoryItem, String> kvp in discrepancies)
+                discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
+                foreach (KeyValuePair<Item, String> kvp in discrepancies)
                 {
                     string adjustment = "";
-                    int stock = Int32.Parse(kvp.Key.Stock);
+                    int stock = (int) kvp.Key.BalanceQty;
                     int actualQuantity = Int32.Parse(kvp.Value);
                     int adj = actualQuantity - stock;
 
@@ -77,7 +77,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
-                    d.Status = "Pending";
+                    if ((bool)Session["monthly"] == true)
+                    {
+                        d.Status = "Monthly";
+                    }
+                    else
+                    {
+                        d.Status = "Pending";
+                    }
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
                     dList.Add(d);
                 }
@@ -101,6 +108,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         if (complete)
         {
             GenerateDiscrepancyController.SubmitDiscrepancies(dList);
+
+            Session["discrepancyList"] = null;
+            Session["monthly"] = null;
 
             bool informSupervisor = false;
             bool informManager = false;

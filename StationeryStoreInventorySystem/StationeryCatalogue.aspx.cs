@@ -10,7 +10,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ItemLogic ilogic = new ItemLogic();
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridView1.DataSource = ilogic.getCatalogueList();
         List<Category> catList = ilogic.getCategoryList();
         Category temp = new Category();
@@ -84,7 +84,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void editRow(int index)
     {
-        ItemLogic ilogic = new ItemLogic();
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridView1.EditIndex = index;
         GridView1.DataBind();
         GridViewRowCollection a = GridView1.Rows;
@@ -108,7 +108,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void removeRow(int index)
     {
-        ItemLogic ilogic = new ItemLogic();
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Label r = (Label)GridView1.Rows[index].FindControl("Label1");
         string output = r.Text;
         ilogic.removeItem(output);
@@ -116,7 +116,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void updateRow(int index)
     {
-        ItemLogic ilogic = new ItemLogic();
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridViewRow row = GridView1.Rows[index];
         Label itemCode = (Label)row.FindControl("Label1");
         DropDownList categoryList = (DropDownList)row.FindControl("DropDownList3");
@@ -137,7 +137,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
     {
         bool failure = false, success = true;
-        ItemLogic ilogic = new ItemLogic();
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Item item = new Item();
         int level, qty;
         if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
@@ -175,7 +175,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void addCategory(string categoryName)
     {
-        ItemLogic iLogic = new ItemLogic();
+        ItemBusinessLogic iLogic = new ItemBusinessLogic();
         Category cat = new Category();
         cat.CategoryName = categoryName;
         iLogic.addCategory(cat);

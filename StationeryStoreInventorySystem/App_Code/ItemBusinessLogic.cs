@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
+using System.Reflection;
 
 /// <summary>
-/// Summary description for ItemLogic
+/// Summary description for ItemBusinessLogic
 /// </summary>
-public class ItemLogic
+public class ItemBusinessLogic
 {
     StationeryEntities inventoryDB;
-    public ItemLogic()
+    public ItemBusinessLogic()
     {
         inventoryDB=new StationeryEntities();
         //
@@ -44,6 +46,13 @@ public class ItemLogic
         Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
+    }
+    public List<Item> getItemList()
+    {
+        List<Item> itemList = inventoryDB.Items
+            .Where(db => db.ActiveStatus == "Y")
+            .ToList();
+        return itemList;
     }
     public List<Item> getCatalogueList()
     {

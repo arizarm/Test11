@@ -14,7 +14,7 @@
     <br />
     Adjustment Amount: <asp:TextBox ID="txtAdj" runat="server"></asp:TextBox>
     <br /> <br />
-    <asp:Button ID="Button1" runat="server" Text="Add Item" OnClick="Button1_Click" />
+    <asp:Button ID="Button1" runat="server" Text="Add Item" CssClass="button" OnClick="Button1_Click" />
 
 &nbsp;&nbsp; 
     <asp:Label ID="Label1" runat="server" ForeColor="Red" Text=""></asp:Label>

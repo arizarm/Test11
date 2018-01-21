@@ -107,15 +107,28 @@ public class GenerateDiscrepancyController
     }
 
     public static int GetDiscrepancyID(Discrepency d)
-    {   //goes to discrepancy id
+    {   //goes to discrepancy broker
         return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
     }
 
     public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
-    {
+    {   //goes to discrepancy broker
         List<Discrepency> dList = new List<Discrepency>();
         dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Pending").ToList();
         return dList;
+    }
+
+    public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
+    {
+        List<Discrepency> d = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
+        if(d.Count != 0)
+        {
+            return d[0];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)

@@ -47,14 +47,14 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
             discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
         }
 
-        bool alreadyInDiscrepancyList = false;
-        foreach (KeyValuePair<Item, String> kvp in discrepancies)
-        {
-            if (kvp.Key.ItemCode == lblItemCode.Text)
-            {
-                alreadyInDiscrepancyList = true;
-            }
-        }
+        //bool alreadyInDiscrepancyList = false;
+        //foreach (KeyValuePair<Item, String> kvp in discrepancies)
+        //{
+        //    if (kvp.Key.ItemCode == lblItemCode.Text)
+        //    {
+        //        alreadyInDiscrepancyList = true;
+        //    }
+        //}
 
         Item item = GenerateDiscrepancyController.GetItemByItemCode(lblItemCode.Text);
 
@@ -63,16 +63,26 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         {
             if (adjustment != 0)
             {
-                int actualQuantity = (int)item.BalanceQty + adjustment;
+                //int actualQuantity = (int)item.BalanceQty + adjustment;
 
-                if (alreadyInDiscrepancyList)
+                //if (alreadyInDiscrepancyList)
+                //{
+                string adjStr = "";
+
+                if (adjustment > 0)
                 {
-                    discrepancies[item] = actualQuantity.ToString();
+                    adjStr = "+" + adjustment.ToString();
                 }
                 else
                 {
-                    discrepancies.Add(item, actualQuantity.ToString());
+                    adjStr = adjustment.ToString();
                 }
+                discrepancies[item] = adjStr.ToString();
+                //}
+                //else
+                //{
+                //    discrepancies.Add(item, actualQuantity.ToString());
+                //}
                 Session["discrepancyList"] = discrepancies;
                 Response.Redirect("~/GenerateDiscrepancyV2.aspx");
             }

@@ -52,14 +52,14 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             }
         }
 
-        if(Session["discrepancyList"] != null)
+        if (Session["discrepancyList"] != null)
         {
             Dictionary<Item, String> iList2 = (Dictionary<Item, String>)Session["discrepancyList"];
             GridView2.DataSource = iList2;
             GridView2.DataBind();
         }
-        
-        
+
+
         Label1.Text = "";
     }
 
@@ -79,7 +79,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
+        
         //GenerateDiscrepancyList();
         if (itemError == false)
         {
@@ -96,6 +96,29 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //    discrepancies.Add(item, actual);
             //}
             //Session["discrepancyList"] = discrepancies;
+
+            if((bool)Session["monthly"] == false)
+            {
+                Dictionary<Item, String> discrepancies = (Dictionary<Item, String>) Session["discrepancyList"];
+                Dictionary<Item, String> discrepanciesOutput = new Dictionary<Item, String>();
+
+                foreach (KeyValuePair<Item, String> kvp in discrepancies)
+                {
+                    string actual = "";
+                    if(kvp.Value[0] == '+')
+                    {
+                        string adj = kvp.Value.Substring(1);
+                        actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
+                    }
+                    else
+                    {
+                        string adj = kvp.Value;
+                        actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
+                    }
+                    discrepanciesOutput.Add(kvp.Key, actual);
+                }
+                Session["discrepancyList"] = discrepanciesOutput;
+            }
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
@@ -104,6 +127,76 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        List<Item> iList = new List<Item>();
+        iList = GenerateDiscrepancyController.GetAllItems();
+
+        Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
+        string search = txtSearch.Text.ToLower();
+
+        foreach (Item i in iList)
+        {
+            if (i.ItemCode.ToLower().Contains(search) || i.Description.ToLower().Contains(search))
+            {
+                //If a monthly inventory check discrepancy is not yet approved, the sum of only
+                //discrepancies starting from the monthly one will be displayed
+                Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+                List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+                if (dMonthly == null)
+                {
+
+                    string adjStr = GetAdjustmentString(dList);
+
+                    searchResults.Add(i, adjStr);
+                }
+                else
+                {
+                    string adjStr = GetPartialAdjustmentString(dList, dMonthly);
+                    searchResults.Add(i, adjStr);
+                }
+            }
+        }
+
+        GridView1.DataSource = searchResults;
+        GridView1.DataBind();
+    }
+
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        List<Item> iList = new List<Item>();
+        iList = GenerateDiscrepancyController.GetAllItems();
+        Dictionary<Item, String> displayItems = new Dictionary<Item, String>();
+
+        foreach (Item i in iList)
+        {
+            //If a monthly inventory check discrepancy is not yet approved, the sum of only
+            //discrepancies starting from the monthly one will be displayed
+            Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            if (dMonthly == null)
+            {
+                string adjStr = GetAdjustmentString(dList);
+                displayItems.Add(i, adjStr);
+            }
+            else
+            {
+                string adjStr = GetPartialAdjustmentString(dList, dMonthly);
+                displayItems.Add(i, adjStr);
+            }
+        }
+
+        GridView1.DataSource = displayItems;
+        GridView1.DataBind();
+
+        foreach (GridViewRow row in GridView1.Rows)
+        {
+            HyperLink link = row.FindControl("lnkItem") as HyperLink;
+            Label lbl = row.FindControl("lblItemCode1") as Label;
+            string itemCode = lbl.Text;
+            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+        }
+    }
     private void ErrorClear()
     {
         if (itemError == false)
@@ -263,52 +356,37 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         return adjStr;
     }
 
-    protected void Button4_Click(object sender, EventArgs e)
+    private string GetPartialAdjustmentString(List<Discrepency> dList, Discrepency dMonthly)
     {
-        List<Item> iList = new List<Item>();
-        iList = GenerateDiscrepancyController.GetAllItems();
+        int adj = (int)dMonthly.AdjustmentQty;
 
-        Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
-        string search = txtSearch.Text.ToLower();
-
-        foreach (Item i in iList)
+        foreach (Discrepency d in dList)
         {
-            if (i.ItemCode.ToLower().Contains(search) || i.Description.ToLower().Contains(search))
+            if (d.DiscrepencyID > dMonthly.DiscrepencyID)
             {
-                List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-                string adjStr = GetAdjustmentString(dList);
-
-                searchResults.Add(i, adjStr);
+                adj += (int)d.AdjustmentQty; ;
             }
         }
 
-        GridView1.DataSource = searchResults;
-        GridView1.DataBind();
+        string adjStr = "";
+
+        if (adj > 0)
+        {
+            adjStr = "+" + adj.ToString();
+        }
+        else
+        {
+            adjStr = adj.ToString();
+        }
+        return adjStr;
     }
 
-    protected void Button5_Click(object sender, EventArgs e)
+    protected void Button6_Click(object sender, EventArgs e)
     {
-        List<Item> iList = new List<Item>();
-        iList = GenerateDiscrepancyController.GetAllItems();
-        Dictionary<Item, String> displayItems = new Dictionary<Item, String>();
-
-        foreach (Item i in iList)
-        {
-            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-            string adjStr = GetAdjustmentString(dList);
-
-            displayItems.Add(i, adjStr);
-        }
-
-        GridView1.DataSource = displayItems;
-        GridView1.DataBind();
-
-        foreach (GridViewRow row in GridView1.Rows)
-        {
-            HyperLink link = row.FindControl("lnkItem") as HyperLink;
-            Label lbl = row.FindControl("lblItemCode1") as Label;
-            string itemCode = lbl.Text;
-            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
-        }
+        Dictionary<Item, String> empty = new Dictionary<Item, String>();
+        Session["discrepancyList"] = empty;
+        GridView2.DataSource = empty;
+        GridView2.DataBind();
     }
 }
+

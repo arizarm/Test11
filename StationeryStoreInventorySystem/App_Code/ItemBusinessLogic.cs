@@ -47,6 +47,13 @@ public class ItemBusinessLogic
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
     }
+    public List<Item> getItemList()
+    {
+        List<Item> itemList = inventoryDB.Items
+            .Where(db => db.ActiveStatus == "Y")
+            .ToList();
+        return itemList;
+    }
     public List<Item> getCatalogueList()
     {
         List<Item> catalogue =

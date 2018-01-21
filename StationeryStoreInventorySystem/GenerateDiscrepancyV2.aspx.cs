@@ -42,10 +42,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //}
 
 
-            if (Session["itemError"] != null)
-            {
-                Session["itemError"] = null;
-            }
+            Session["itemError"] = null;
+            
         }
         else
         {
@@ -55,7 +53,14 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             }
         }
 
-
+        if(Session["discrepancyList"] != null)
+        {
+            Dictionary<Item, String> iList2 = (Dictionary<Item, String>)Session["discrepancyList"];
+            GridView2.DataSource = iList2;
+            GridView2.DataBind();
+        }
+        
+        
         Label1.Text = "";
     }
 
@@ -76,22 +81,22 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
         Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
-        GenerateDiscrepancyList();
+        //GenerateDiscrepancyList();
         if (itemError == false)
         {
             //foreach (GridViewRow row in GridView2.Rows)
-            for (int i = 0; i < GridView2.Rows.Count; i++)
-            {
-                GridViewRow row = GridView2.Rows[i];
-                string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
-                //string stock = (row.FindControl("lblStock") as Label).Text;
-                string actual = (row.FindControl("lblActual") as Label).Text;
-                Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-                //InventoryItem invItem = new InventoryItem(item, stock);
+            //for (int i = 0; i < GridView2.Rows.Count; i++)
+            //{
+            //    GridViewRow row = GridView2.Rows[i];
+            //    string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
+            //    //string stock = (row.FindControl("lblStock") as Label).Text;
+            //    string actual = (row.FindControl("lblActual") as Label).Text;
+            //    Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
+            //    //InventoryItem invItem = new InventoryItem(item, stock);
 
-                discrepancies.Add(item, actual);
-            }
-            Session["discrepancyList"] = discrepancies;
+            //    discrepancies.Add(item, actual);
+            //}
+            //Session["discrepancyList"] = discrepancies;
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
@@ -162,10 +167,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
                         //InventoryItem invItem = new InventoryItem(item, quantity);
-                        string adjustment = actualQuantity.ToString();
+                        string actual = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            iList2.Add(item, adjustment);
+                            iList2.Add(item, actual);
                         }
                     }
                     else
@@ -221,6 +226,22 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             Label8.Text = missedMessage;
         }
         Session["itemError"] = itemError;
+
+        if (GridView1.Rows.Count == GenerateDiscrepancyController.GetAllItems().Count)
+        {
+
+            bool monthly = true;
+            Session["monthly"] = monthly;
+        }
+        else
+        {
+
+            bool monthly = false;
+            Session["monthly"] = monthly;
+        }
+
+        Session["discrepancyList"] = iList2;
+
         GridView2.DataSource = iList2;
         GridView2.DataBind();
     }

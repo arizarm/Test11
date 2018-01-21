@@ -58,7 +58,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             int adj = Int32.Parse(actual) - Int32.Parse(stock);
             if (!ValidatorUtil.isEmpty(remarks))
             {
-                if (remarks.Length < maxChars)
+                if (remarks.Length <= maxChars)
                 {
                     List<PriceList> itemPrices = GenerateDiscrepancyController.GetPricesByItemCode(itemCode);
                     decimal totalPrice = 0;

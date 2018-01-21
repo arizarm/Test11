@@ -45,7 +45,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Remarks (Max 100 characters)" ValidateRequestMode="Enabled">
                     <ItemTemplate>
-                        <asp:TextBox ID="txtRemarks" runat="server" Width="300"></asp:TextBox>
+                        <asp:TextBox ID="txtRemarks" runat="server" Width="300" MaxLength="100"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

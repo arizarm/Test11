@@ -50,4 +50,18 @@ public class EFBroker_PriceList
         }
     }
 
+    public void UpdatePriceListObject(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities S = new StationeryEntities();
+            decimal price = Decimal.Parse(newPrice);
+            PriceList pl = S.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
+            pl.Price = price;
+            S.Entry(pl).State = System.Data.Entity.EntityState.Modified;
+            S.SaveChanges();
+            ts.Complete();
+        }
+    }
+
 }

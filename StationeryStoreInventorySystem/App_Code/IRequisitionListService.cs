@@ -41,7 +41,7 @@ public class WCFRequisitionListItem
     private string department;
     private string status;
     private string employeeName;
-    private string remarks;
+    //private string remarks;
 
     public static WCFRequisitionListItem Make(string date, string requisitionNo, string department, string status, string employeeName/*,string remarks*/)
     {
@@ -65,8 +65,8 @@ public class WCFRequisitionListItem
     public string Status { get { return status; } set { status = value; } }
     [DataMember]
     public string EmployeeName { get { return employeeName; } set { employeeName = value; } }
-    [DataMember]
-    public string Remarks { get { return remarks; } set { remarks = value; } }
+    //[DataMember]
+    //public string Remarks { get { return remarks; } set { remarks = value; } }
 } 
 
 [DataContract]

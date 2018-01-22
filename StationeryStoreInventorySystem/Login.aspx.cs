@@ -23,9 +23,6 @@ public partial class Login : System.Web.UI.Page
 
         if (isValid)
         {
-            FormsAuthentication.RedirectFromLoginPage
-          (email, Persist.Checked);
-
 
             Employee emp = EmployeeController.GetEmployeeByEmail(email);
             Session["empID"] = emp.EmpID;
@@ -33,6 +30,25 @@ public partial class Login : System.Web.UI.Page
             Session["emp"] = emp;
 
             Label4.Text = "Success User";
+
+            FormsAuthentication.RedirectFromLoginPage
+          (emp.Email, Persist.Checked);
+
+
+            FormsAuthenticationTicket ticket1 =
+               new FormsAuthenticationTicket(
+                    1,                                   // version
+                    emp.EmpName.Trim(),   // get username  from the form
+                    DateTime.Now,                        // issue time is now
+                    DateTime.Now.AddMinutes(10),         // expires in 10 minutes
+                    false,      // cookie is not persistent
+                    emp.Role                             // role assignment is stored
+                                                      // in userData
+                    );
+            HttpCookie cookie1 = new HttpCookie(
+              FormsAuthentication.FormsCookieName,
+              FormsAuthentication.Encrypt(ticket1));
+            Response.Cookies.Add(cookie1);
 
             NavigateMain();
 

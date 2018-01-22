@@ -7,7 +7,9 @@
      <h2 class="mainPageHeader">Stock Card List</h2>
     <br />
       <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
+           &nbsp;
            <asp:Button ID="SearchBtn" runat="server" Text="Search"/>
+           &nbsp;
            <asp:Button ID="Display" runat="server" Text="Display All" /> <br /><br />
          <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
             <Columns>              

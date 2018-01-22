@@ -43,8 +43,9 @@
                     <asp:Label ID="Label6" runat="server" Text="Phone No.: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="TextBox4" runat="server" TextMode="SingleLine" Width ="130%"></asp:TextBox>
+                    <asp:TextBox ID="SupplierPhoneNoTextBox" runat="server" TextMode="SingleLine" Width ="130%" OnTextChanged="SupplierPhoneNoTextBox_TextChanged"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Phone Number is required!" ControlToValidate="TextBox4" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid Singapore phone number" ControlToValidate="TextBox4" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" Enabled="false"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 

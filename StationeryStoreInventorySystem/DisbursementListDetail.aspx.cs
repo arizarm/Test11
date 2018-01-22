@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 
 public partial class DisbursementListDetail : System.Web.UI.Page
 {
+
+    List<RequestedItem> shortfallItem = new List<RequestedItem>();
     protected void Page_Load(object sender, EventArgs e)
     {
         string disbId = Session["SelectedDisb"].ToString();
@@ -18,11 +20,11 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         lblDepartment.Text = disb.DepName.ToString();
         lblColPoint.Text = disb.CollectionPoint.ToString();
 
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             gvDisbDetail.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate();
             gvDisbDetail.DataBind();
-        }      
+        }
     }
 
 
@@ -34,8 +36,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         {
             //message = "Disbursement Acknowledgement Successful!";
             //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
-          
-            List<RequestedItem> shortfallItem = new List<RequestedItem>();
+
             RequestedItem reqItem;
 
             foreach (GridViewRow r in gvDisbDetail.Rows)
@@ -53,12 +54,14 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                     shortfallItem.Add(reqItem);
                 }
             }
+
             if (shortfallItem.Count != 0)
             {
                 Session["RegenerateDate"] = DisbursementCotrol.getRegenrateDate();
                 Session["RegenerateDep"] = lblDepartment.Text;
                 Session["RegrenerateItems"] = shortfallItem;
                 Response.Redirect("~/RegenerateRequest.aspx");
+
             }
             else
             {
@@ -71,4 +74,4 @@ public partial class DisbursementListDetail : System.Web.UI.Page
             ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
         }
     }
-}
+}    

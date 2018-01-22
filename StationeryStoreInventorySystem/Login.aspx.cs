@@ -61,9 +61,9 @@ public partial class Login : System.Web.UI.Page
 
     protected void NavigateMain()
     {
-        string role = Session["empRole"].ToString();
+       
         Employee e = (Employee)Session["emp"];
-
+        string role = e.Role;
         if (role == "Store Clerk")
         {
             Response.Redirect("~/RequisitionListClerk.aspx");
@@ -73,7 +73,7 @@ public partial class Login : System.Web.UI.Page
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
         else if (role == "DepartmentHead" || Utility.checkIsTempDepHead(e))
-        {
+        {        
             Response.Redirect("~/Department/RequisitionListDepartment.aspx");
         }
         else if (role == "Employee")
@@ -90,4 +90,5 @@ public partial class Login : System.Web.UI.Page
         Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
         Response.Redirect("~/Login.aspx");
     }
+
 }

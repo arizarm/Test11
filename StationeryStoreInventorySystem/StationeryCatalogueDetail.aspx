@@ -4,16 +4,17 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
+    <h2 class="mainPageHeader">Logic University Stationery Catalogue (New Item)</h2>
 
-
-    <asp:Panel ID="Panel1" runat="server">
+    <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/StationeryCatalogue.aspx" >&lt &lt Return to Catalogue List &gt &gt</asp:HyperLink>
+    <asp:panel id="Panel1" runat="server">
             <table>
         <tr>
             <td>Item Number:</td>
             <td>
                 <asp:textbox id="TextBoxItemNo" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
                 <br />
                 <br />
             </td>
@@ -67,16 +68,29 @@
                 <asp:textbox id="TextBoxReQty" runat="server"></asp:textbox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
                 <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
+                <br />
+                <br />
             </td>
         </tr>
         <tr>
+            <td>
+                Bin No:
+            </td>
+                    <td>
+                        <asp:textbox id="TextBoxBin" runat="server"></asp:textbox>
+                                        <br />
+                <br />
+                    </td>
+                </tr>
+                <tr>
             <td> <asp:button id="Button1" runat="server" text="Add" cssclass="button" OnClick="Button1_Click" ValidationGroup="validateItemGroup" /></td>
         </tr>
+                
     </table>
-    </asp:Panel>
+    </asp:panel>
 
     <br />
-    <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False">
+    <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False" Width = "90%" >
             <Columns>
                 <asp:TemplateField HeaderText="Item Number">
                     <ItemTemplate>
@@ -123,6 +137,15 @@
                         <asp:Label ID="Label6" runat="server" Text='<%# Bind("unitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
+                <asp:TemplateField HeaderText="Bin">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox1" runat="server" Text ='<%# Bind("bin") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label7" runat="server" Text ='<%# Bind("bin") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
 
             </Columns>
         </asp:gridview>

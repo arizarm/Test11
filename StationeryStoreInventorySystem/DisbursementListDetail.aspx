@@ -23,8 +23,7 @@
             <td><b>Collection Point :</b><br /><br /></td>
             <td><asp:Label ID="lblColPoint" runat="server" ></asp:Label><br /><br /></td>
         </tr>
-    </table>        
-                 
+    </table>                         
 
     <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns ="false">
         <Columns>                
@@ -41,10 +40,11 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Actual Quantity">                                   
                     <ItemTemplate>
-                        <asp:TextBox ID="txtactualQty" runat="server" Text='<%# Bind("actualQty") %>'></asp:TextBox> <br />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red">Quantity cannot be empty</asp:RequiredFieldValidator>
-                        <%--<asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Actual Quantity Cannot be more than requested" ControlToValidate="txtactualQty" MaximumValue="<% Convert.ToInt32((gvDisbDetail.FindControl("lblreqQty") as Label).Text); %>""></asp:RangeValidator>--%>
-                    </ItemTemplate>
+                        <asp:TextBox ID="txtactualQty" runat="server" Text='<%# Bind("actualQty") %>'></asp:TextBox> 
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtactualQty" MaximumValue='<%# Eval("reqQty") %>' MinimumValue="0" style="color:red"></asp:RangeValidator>
+                   <br />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red">Quantity cannot be empty!</asp:RequiredFieldValidator>
+                         </ItemTemplate>
                 </asp:TemplateField>
              <asp:TemplateField HeaderText="Remarks" SortExpression="Remarks">                                   
                     <ItemTemplate>
@@ -58,8 +58,9 @@
     <br /><br />
     <asp:Label ID="Label1" runat="server" Text="Enter Access Code : "></asp:Label>
     <asp:TextBox ID="txtAccessCode" runat="server"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" style="color:red">Access Code cannot be empty</asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" style="color:red">Access Code cannot be empty!</asp:RequiredFieldValidator>
     <br /> <br /> <br />
+    <input id="btnReset" type="reset" value="Reset Data" class= "button"/>
     <asp:Button ID="btnAck" runat="server" Text="Acknowledge" CssClass="button" OnClick="btnAck_Click"/>
 </asp:Content>
 

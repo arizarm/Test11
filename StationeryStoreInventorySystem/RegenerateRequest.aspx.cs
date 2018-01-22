@@ -12,7 +12,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
     static string requestedBy;
     static string status = "Priority";
 
-    List<RequestedItem> shortfallItem = new List<RequestedItem>();
+    static List<RequestedItem> shortfallItem;
     List<RequestedItem> regenerateItem = new List<RequestedItem>();    
 
     protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +21,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
         {
             date = (DateTime)Session["RegenerateDate"];
             depName = (string)Session["RegenerateDep"];
-            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];            
             requestedBy = DisbursementCotrol.getDepRep(depName);
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
@@ -62,13 +62,32 @@ public partial class RegenerateRequest : System.Web.UI.Page
                 regenerateItem.Add(shortfallItem[i]);
             }
         }
-        DisbursementCotrol.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
+        RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
 
-        ModalPopupExtender.Show();
+        redirectCheck();
+
+        //ModalPopupExtender1.Show();
     }
 
-    protected void btnOkay_Click(object sender, EventArgs e)
+    //protected void btnOkay_Click(object sender, EventArgs e)
+    //{
+
+    //}
+
+    protected void redirectCheck()
     {
-        Response.Redirect("~/DisbursementList.aspx");
+        if (((Dictionary<Item, String>)Session["discrepancyList"]).Count != 0)
+        {
+            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+        }
+        else
+        {
+            Response.Redirect("~/DisbursementList.aspx");
+        }
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        redirectCheck();
     }
 }

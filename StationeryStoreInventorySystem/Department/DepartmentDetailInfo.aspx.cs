@@ -81,7 +81,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
         Session["deptcode"] = dcode;
 
-        if (Session["userType"] == "Head")
+        if (Session["userType"] == "All")
         {
             Response.Redirect("DepartmentListDHead.aspx");
         }

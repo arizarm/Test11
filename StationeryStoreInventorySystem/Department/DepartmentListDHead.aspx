@@ -40,7 +40,29 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script src="Content/JavaScript.js"></script>
-      
+      <script type="text/javascript">
+        $(function () {
+
+ $("#txtSDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-0:+2", // You can set the year range as per as your need
+               dateFormat: 'dd-M-yy'
+
+           }).val()
+           $("#txtEDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-0:+2", // You can set the year range as per as your need
+               dateFormat: 'dd-M-yy'
+           }).val()
+
+
+
+
+        });
+    </script>
+
     <table class="auto-style5">
             <tr>
                 <th colspan="2" class="updateDeptHead"> <h2 class="auto-style1">Update Department Info</h2></th>

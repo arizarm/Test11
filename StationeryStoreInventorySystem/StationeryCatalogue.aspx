@@ -7,7 +7,7 @@
     <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
 
 
-    <asp:Panel ID="Panel1" runat="server">
+<%--    <asp:Panel ID="Panel1" runat="server">
         <table>
             <tr>
                 <td>Item Number:</td>
@@ -74,10 +74,12 @@
                     <asp:Button ID="Button1" runat="server" Text="Add" CssClass="button" OnClick="Button1_Click" ValidationGroup="validateItemGroup" /></td>
             </tr>
         </table>
-    </asp:Panel>
+    </asp:Panel>--%>
+
+    <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/StationeryCatalogueDetail.aspx" >&lt &lt Create New Item &gt &gt</asp:HyperLink>
 
     <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width ="90%">
         <Columns>
             <asp:TemplateField HeaderText="Item Number">
                 <ItemTemplate>

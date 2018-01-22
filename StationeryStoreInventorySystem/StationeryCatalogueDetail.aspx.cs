@@ -42,7 +42,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
 
     }
 
-    protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
+    protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
     {
         bool failure = false, success = true;
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
@@ -76,7 +76,9 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             item.ReorderLevel = level;
             item.ReorderQty = qty;
             item.UnitOfMeasure = UOM;
+            item.Bin = bin;
             item.ActiveStatus = "Y";
+            item.BalanceQty = 0;
             ilogic.addItem(item);
             iList.Add(item);
             Session["itemlist"] = iList;
@@ -87,7 +89,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         //addItem("itemcode","test","test","10","10","test");
-        string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
+        string itemCode, categoryName, description, reorderLevel, reorderQty, uom,bin;
 
 
         if (Page.IsValid)
@@ -98,9 +100,10 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             reorderQty = TextBoxReQty.Text;
             categoryName = TextBoxCategory.Text;
             uom = TextBoxUOM.Text;
-            if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom))
+            bin = TextBoxBin.Text;
+            if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom,bin))
             {
-                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = "";
+                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text= "";
                 Response.Redirect(Request.RawUrl);
             }
 
@@ -122,5 +125,12 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         {
             TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
         }
+    }
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        string itemCode = args.Value;
+        args.IsValid= (ilogic.getItem(args.Value) == null);
     }
 }

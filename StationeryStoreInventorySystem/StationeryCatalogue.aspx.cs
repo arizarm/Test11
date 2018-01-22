@@ -11,30 +11,22 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        Employee user = (Employee)Session["emp"];
         GridView1.DataSource = ilogic.getCatalogueList();
-        List<Category> catList = ilogic.getCategoryList();
-        Category temp = new Category();
-        temp.CategoryID = 0;
-        temp.CategoryName = "Other";
-        catList.Add(temp);
-        DropDownListCategory.DataSource = catList;
-        DropDownListCategory.DataTextField = "CategoryName";
-        DropDownListCategory.DataValueField = "CategoryID";
-        List<string> UOMList = ilogic.getDistinctUOMList();
-        UOMList.Add("Other");
-        DropDownListUOM.DataSource = UOMList;
         if (!IsPostBack)
         {
-            //for employee
-            Panel1.Visible = false;
-            //GridView1.Columns[0].Visible = false;
-            //GridView1.Columns[3].Visible = false;
-            //GridView1.Columns[4].Visible = false;
-            //GridView1.Columns[6].Visible = false;
-            //GridView1.Columns[7].Visible = false;
+            //if (user.DeptCode != "STATS")
+            if(true)
+            {
+                HyperLink7.Visible = false;
+                GridView1.Columns[0].Visible = false;
+                GridView1.Columns[3].Visible = false;
+                GridView1.Columns[4].Visible = false;
+                GridView1.Columns[6].Visible = false;
+                GridView1.Columns[7].Visible = false;
+                GridView1.Columns[8].Visible = false;
+            }
             GridView1.DataBind();
-            DropDownListUOM.DataBind();
-            DropDownListCategory.DataBind();
         }
 
     }
@@ -135,83 +127,83 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         GridView1.EditIndex = -1;
         GridView1.DataBind();
     }
-    protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
-    {
-        bool failure = false, success = true;
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        Item item = new Item();
-        int level, qty;
-        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
-        {
-            return failure;
-        }
-        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
-        {
-            return failure;
-        }
-        else if (ilogic.getItem(itemCode) != null)
-        {
-            return failure;
-        }
-        else
-        {
-            Category cat = ilogic.getCategorybyName(categoryName);
-            if (cat == null)
-            {
-                categoryName = ilogic.firstUpperCase(categoryName);
-                ilogic.addCategory(categoryName);
-                cat = ilogic.getCategorybyName(categoryName);
-            }
+    //protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
+    //{
+    //    bool failure = false, success = true;
+    //    ItemBusinessLogic ilogic = new ItemBusinessLogic();
+    //    Item item = new Item();
+    //    int level, qty;
+    //    if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+    //    {
+    //        return failure;
+    //    }
+    //    else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
+    //    {
+    //        return failure;
+    //    }
+    //    else if (ilogic.getItem(itemCode) != null)
+    //    {
+    //        return failure;
+    //    }
+    //    else
+    //    {
+    //        Category cat = ilogic.getCategorybyName(categoryName);
+    //        if (cat == null)
+    //        {
+    //            categoryName = ilogic.firstUpperCase(categoryName);
+    //            ilogic.addCategory(categoryName);
+    //            cat = ilogic.getCategorybyName(categoryName);
+    //        }
 
-            item.ItemCode = itemCode;
-            item.Category = cat;
-            item.Description = description;
-            item.ReorderLevel = level;
-            item.ReorderQty = qty;
-            item.UnitOfMeasure = UOM;
-            item.ActiveStatus = "Y";
-            ilogic.addItem(item);
-        }
-        return success;
-    }
+    //        item.ItemCode = itemCode;
+    //        item.Category = cat;
+    //        item.Description = description;
+    //        item.ReorderLevel = level;
+    //        item.ReorderQty = qty;
+    //        item.UnitOfMeasure = UOM;
+    //        item.ActiveStatus = "Y";
+    //        ilogic.addItem(item);
+    //    }
+    //    return success;
+    //}
 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        //addItem("itemcode","test","test","10","10","test");
-        string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
+    //protected void Button1_Click(object sender, EventArgs e)
+    //{
+    //    //addItem("itemcode","test","test","10","10","test");
+    //    string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
 
 
-        if (Page.IsValid)
-        {
-            itemCode = TextBoxItemNo.Text;
-            description = TextBoxDesc.Text;
-            reorderLevel = TextBoxReLvl.Text;
-            reorderQty = TextBoxReQty.Text;
-            categoryName = TextBoxCategory.Text;
-            uom = TextBoxUOM.Text;
-            if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom))
-            {
-                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = "";
-                refreshPage();
-            }
+    //    if (Page.IsValid)
+    //    {
+    //        itemCode = TextBoxItemNo.Text;
+    //        description = TextBoxDesc.Text;
+    //        reorderLevel = TextBoxReLvl.Text;
+    //        reorderQty = TextBoxReQty.Text;
+    //        categoryName = TextBoxCategory.Text;
+    //        uom = TextBoxUOM.Text;
+    //        if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom))
+    //        {
+    //            TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = "";
+    //            refreshPage();
+    //        }
 
-        }
-        return;
-    }
+    //    }
+    //    return;
+    //}
 
-    protected void DropDownListCategory_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (!DropDownListCategory.SelectedValue.Equals("0"))
-        {
-            TextBoxCategory.Text = DropDownListCategory.SelectedItem.Text;
-        }
-    }
+    //protected void DropDownListCategory_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (!DropDownListCategory.SelectedValue.Equals("0"))
+    //    {
+    //        TextBoxCategory.Text = DropDownListCategory.SelectedItem.Text;
+    //    }
+    //}
 
-    protected void DropDownListUOM_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (!DropDownListUOM.SelectedValue.Equals("Other"))
-        {
-            TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
-        }
-    }
+    //protected void DropDownListUOM_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (!DropDownListUOM.SelectedValue.Equals("Other"))
+    //    {
+    //        TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
+    //    }
+    //}
 }

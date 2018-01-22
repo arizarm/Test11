@@ -24,7 +24,7 @@
     <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="-" Width="200px"></asp:Label>
     <br />
 
-    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click"  Visible="false"/>
+    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" Visible="false" />
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
 
     <asp:Panel ID="Panel1" runat="server" Visible="False">
@@ -47,11 +47,11 @@
                     <asp:Label ID="Label6" runat="server"></asp:Label>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                         ControlToValidate="TextBox1" ForeColor="Red"
-                        ErrorMessage="RequiredFieldValidator">Enter quantity.</asp:RequiredFieldValidator>
+                        ErrorMessage="RequiredFieldValidator" Enabled="false">Enter quantity.</asp:RequiredFieldValidator>
                     <asp:RangeValidator ID="RangeValidator2" runat="server"
                         ErrorMessage="RangeValidator" ControlToValidate="TextBox1"
                         ForeColor="Red" Type="Integer"
-                        MaximumValue="1000" MinimumValue="1">Invalid Quantity</asp:RangeValidator>
+                        MaximumValue="1000" MinimumValue="1" Enabled="false">Invalid Quantity</asp:RangeValidator>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow>
@@ -68,8 +68,8 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
-
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
@@ -82,6 +82,13 @@
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                        ControlToValidate="qtyText" ForeColor="Red"
+                                        ErrorMessage="Enter quantity" Display="None" Enabled="True"></asp:RequiredFieldValidator>
+                                    <asp:RangeValidator ID="RangeValidator3" runat="server"
+                                        ErrorMessage="Invalid Quantity" ControlToValidate="qtyText"
+                                        ForeColor="Red" Type="Integer"
+                                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False"></asp:RangeValidator>
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
@@ -106,6 +113,7 @@
                                     <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
+
                         </Columns>
                     </asp:GridView>
 
@@ -121,9 +129,6 @@
                                 <ItemTemplate>
                                     <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
-                                </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
                                 <ItemTemplate>
@@ -137,7 +142,7 @@
         </asp:TableRow>
     </asp:Table>
     <asp:Button ID="Update" runat="server" Text="Update Request" CssClass="button" OnClick="Update_Click" />
-    <asp:Button ID="Save" runat="server" Text="Save Request" CssClass="button" OnClick="Save_Click" Visible="false"/>
+    <asp:Button ID="Save" runat="server" Text="Save Request" CssClass="button" OnClick="Save_Click" Visible="false" />
     <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
-    </asp:Content>
+</asp:Content>
 

@@ -66,9 +66,11 @@ public partial class RequisitionDetails : System.Web.UI.Page
         //        };
 
         GridView1.DataSource = RequisitionControl.getList(id);
+        //GridView1.DataSource = q.ToList();
         GridView1.DataBind();
 
         GridView2.DataSource = RequisitionControl.getList(id);
+        //GridView2.DataSource = q.ToList();
         GridView2.DataBind();
     }
 
@@ -122,10 +124,14 @@ public partial class RequisitionDetails : System.Web.UI.Page
             }
             if (isEqual)
             {
+                RequiredFieldValidator2.Enabled = true;
+                RangeValidator2.Enabled = true;
                 RequisitionControl.editRequisitionItemQty(id, truCode, qty);
             }
             else
             {
+                RequiredFieldValidator2.Enabled = true;
+                RangeValidator2.Enabled = true;
                 RequisitionControl.addItemToRequisition(code, qty, id);
             }
         }
@@ -157,6 +163,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
     protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
     {
+        ValidationSummary1.Enabled = true;
         System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView1.Rows[e.RowIndex].FindControl("qtyText");
         int newQty = Convert.ToInt32(qtyText.Text);
 

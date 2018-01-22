@@ -13,8 +13,8 @@ public partial class SupplierList : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            SupplierListController slc = new SupplierListController();
-            List<Supplier> LS = slc.listAllSuppliers();
+            SupplierListController Slc = new SupplierListController();
+            List<Supplier> LS = Slc.ListAllSuppliers();
 
             GridView1.DataSource = LS;
             GridView1.DataBind();
@@ -22,6 +22,7 @@ public partial class SupplierList : System.Web.UI.Page
             if ((string)Session["userType"] == "Store Supervisor" || (string)Session["userType"] == "Store Manager")
             {
                 Label2.Enabled = true;
+                Label2.Visible = true;
             }
         }
     }

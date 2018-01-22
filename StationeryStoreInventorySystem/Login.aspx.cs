@@ -18,15 +18,20 @@ public partial class Login : System.Web.UI.Page
     {
         string email = TextBox1.Text;
         string password = Password1.Value;
-
         bool isValid = EmployeeController.verifyLogin(email, password);
 
         if (isValid)
         {
-
             Employee emp = EmployeeController.GetEmployeeByEmail(email);
-            Session["empID"] = emp.EmpID;
-            Session["empRole"] = emp.Role;
+            //Check is temp head or not 
+            if(Utility.checkIsTempDepHead(emp) == true)
+            {
+                //set role for temp head
+                emp.Role = "DepartmentTempHead";
+                
+            }
+            Session["empRole"] = emp.Role;           
+            Session["empID"] = emp.EmpID;         
             Session["emp"] = emp;
 
             Label4.Text = "Success User";
@@ -40,7 +45,7 @@ public partial class Login : System.Web.UI.Page
                     1,                                   // version
                     emp.EmpName.Trim(),   // get username  from the form
                     DateTime.Now,                        // issue time is now
-                    DateTime.Now.AddMinutes(10),         // expires in 10 minutes
+                    DateTime.Now.AddMinutes(30),         // expires in 30 minutes
                     false,      // cookie is not persistent
                     emp.Role                             // role assignment is stored
                                                       // in userData
@@ -64,6 +69,7 @@ public partial class Login : System.Web.UI.Page
        
         Employee e = (Employee)Session["emp"];
         string role = e.Role;
+
         if (role == "Store Clerk")
         {
             Response.Redirect("~/RequisitionListClerk.aspx");
@@ -72,10 +78,11 @@ public partial class Login : System.Web.UI.Page
         {
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
-        else if (role == "DepartmentHead" || Utility.checkIsTempDepHead(e))
+        else if (role == "DepartmentHead" || role == "DepartmentTempHead")
         {        
             Response.Redirect("~/Department/RequisitionListDepartment.aspx");
         }
+
         else if (role == "Employee")
         {
             Response.Redirect("~/Department/RequisitionForm.aspx");

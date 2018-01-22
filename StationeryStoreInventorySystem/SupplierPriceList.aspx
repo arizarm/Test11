@@ -44,8 +44,8 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="SupplierPhoneNoTextBox" runat="server" TextMode="SingleLine" Width ="130%" OnTextChanged="SupplierPhoneNoTextBox_TextChanged"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Phone Number is required!" ControlToValidate="TextBox4" ForeColor="Red"></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid Singapore phone number" ControlToValidate="TextBox4" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" Enabled="false"></asp:RegularExpressionValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Phone Number is required!" ControlToValidate="SupplierPhoneNoTextBox" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid Singapore phone number" ControlToValidate="SupplierPhoneNoTextBox" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" Enabled="false" ForeColor="Red"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -107,7 +107,7 @@
         <br />
 
         <asp:Panel ID="Panel3" runat="server">
-            <asp:Table ID="Table3" runat="server" HorizontalAlign="Center" Visible="False">
+            <asp:Table ID="Table3" runat="server" HorizontalAlign="Center" Visible="False" Width="560px">
                 <asp:TableRow>
                     <asp:TableCell ColumnSpan="2"><strong>New Item</strong></asp:TableCell>
                 </asp:TableRow>
@@ -132,51 +132,27 @@
                     <asp:TableCell>Price: </asp:TableCell>
                     <asp:TableCell>
                         <asp:TextBox ID="TextBox7" runat="server" ></asp:TextBox>
-                    </asp:TableCell>
-                </asp:TableRow>
-               <asp:TableRow />
+                    <asp:RegularExpressionValidator ID="NewItemPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TextBox7" ValidationExpression="(\d{0,4})([.]{0,1}\d{0,2})"/>
+                    </asp:TableCell></asp:TableRow><asp:TableRow />
                 <asp:TableRow>
-                    <asp:TableCell>Supplier Priority for this item: </asp:TableCell>
-                    <asp:TableCell>
+                    <asp:TableCell>Supplier Priority for this item: </asp:TableCell><asp:TableCell>
                         <asp:DropDownList runat="server" ID="PriorityRankList" Width="50%" >
                           </asp:DropDownList>
-                    </asp:TableCell>
-                </asp:TableRow>
-               <asp:TableRow />
+                    </asp:TableCell></asp:TableRow><asp:TableRow />
                 <asp:TableRow>
-                    <asp:TableCell>Year(Tender): </asp:TableCell>
-                    <asp:TableCell>
+                    <asp:TableCell>Year(Tender): </asp:TableCell><asp:TableCell>
                         <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
-                    </asp:TableCell>
-                </asp:TableRow>
-
-                <asp:TableRow>
+                    </asp:TableCell></asp:TableRow><asp:TableRow>
                     <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
                         <asp:Button ID="AddItemButton" runat="server" Text="Add" OnClick="AddItemButton_Click"/>
-                    </asp:TableCell>
-                </asp:TableRow>
-            </asp:Table>
-        </asp:Panel>
-
-
-        <br />
-        <asp:Label ID="ItemDisplayDesc" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label>
-        <asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription" OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating">
+                    </asp:TableCell></asp:TableRow></asp:Table></asp:Panel><br /><asp:Label ID="ItemDisplayDesc" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label><asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription" OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating">
             <Columns>
                 <asp:TemplateField HeaderText ="Item Description" ItemStyle-Width ="80%">
                     <ItemTemplate>
-                    <asp:Label ID="ItemDesLabel" runat="server" Text='<%# Eval("ItemDescription") %>'></asp:Label>
-                        </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText ="Item Price" ItemStyle-Width ="80%">
+                    <asp:Label ID="ItemDesLabel" runat="server" Text='<%# Eval("ItemDescription") %>'></asp:Label></ItemTemplate></asp:TemplateField><asp:TemplateField HeaderText ="Item Price" ItemStyle-Width ="80%">
                     <ItemTemplate>
-                    <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label>
-                        </ItemTemplate>
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox10" runat="server" Text='<%# Eval("ItemPrice") %>'></asp:TextBox>
-                    </EditItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField><ItemTemplate>
+                    <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label></ItemTemplate><EditItemTemplate>
+                        <asp:TextBox ID="NewPriceTextBox" runat="server" OnTextChanged="NewPriceTextBox_TextChanged"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="NewPriceTextBox" ValidationExpression="(\d{0,4})([.]{0,1}\d{0,2})" ForeColor="Red"></asp:RegularExpressionValidator></EditItemTemplate></asp:TemplateField><asp:TemplateField><ItemTemplate>
                     <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CommandName="Edit" />
                                    </ItemTemplate>
                     <EditItemTemplate>

@@ -12,7 +12,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
     static string requestedBy;
     static string status = "Priority";
 
-    static List<RequestedItem> shortfallItem;
+    List<RequestedItem> shortfallItem = new List<RequestedItem>();
     List<RequestedItem> regenerateItem = new List<RequestedItem>();    
 
     protected void Page_Load(object sender, EventArgs e)
@@ -64,7 +64,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
         }
         DisbursementCotrol.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
 
-        ModalPopupExtender1.Show();
+        ModalPopupExtender.Show();
     }
 
     protected void btnOkay_Click(object sender, EventArgs e)

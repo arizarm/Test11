@@ -9,7 +9,8 @@ using System.Web;
 /// </summary>
 public class SupplierListController
 {
-    public List<Supplier> listAllSuppliers()
+    //put in Supplier Table DAO
+    public List<Supplier> ListAllSuppliers()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -21,7 +22,8 @@ public class SupplierListController
         }
     }
 
-    public Supplier getSupplier(string supplierCode)
+    //DAO
+    public Supplier GetSupplier(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -33,7 +35,8 @@ public class SupplierListController
         }
     }
 
-    public void updateSupplier(Supplier supplier)
+    //DAO
+    public void UpdateSupplier(Supplier supplier)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -44,7 +47,8 @@ public class SupplierListController
         }
     }
 
-    public void deleteSupplier(string supplierCode)
+    //DAO
+    public void DeleteSupplier(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -57,7 +61,8 @@ public class SupplierListController
         }
     }
 
-    public void createSupplier(Supplier supplier)
+    //DAO
+    public void CreateSupplier(Supplier supplier)
     {
         using (TransactionScope ts = new TransactionScope())
         {

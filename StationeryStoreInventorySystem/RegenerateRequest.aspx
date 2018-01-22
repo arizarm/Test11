@@ -7,31 +7,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
    
-    <style type="text/css">
-    .modalBackground
-    {
-        background-color: Black;
-        filter: alpha(opacity=90);
-        opacity: 0.8;
-    }
-    .modalPopup
-    {
-        background-color: #FFFFFF;
-        border-width: 3px;
-        border-style: solid;
-        border-color: black;
-        padding-top: 10px;
-        padding-left: 10px;
-        width: 300px;
-        height: 140px;
-    }
-</style>
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
+   
+<asp:ScriptManager ID="ScriptManager1" runat="server">
 </asp:ScriptManager>
  
 <!-- ModalPopupExtender -->
 <cc1:ModalPopupExtender     
-    ID="ModalPopupExtender1" runat="server" TargetControlID="btnReGenReq"
+    ID="ModalPopupExtender" runat="server" TargetControlID="btnReGenReq"
     PopupControlID="Panel1" BackgroundCssClass="modalBackground" DropShadow="true"
     CancelControlID="btnOkay" >
 </cc1:ModalPopupExtender>

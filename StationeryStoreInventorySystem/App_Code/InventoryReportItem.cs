@@ -8,12 +8,12 @@ using System.Web;
 /// </summary>
 public class InventoryReportItem
 {
-    private string itemCode;
-    private string description;
-    private string bin;
-    private string unitOfMeasurement;
-    private int currentQty;
-    private int reorderLevel;
+    public string itemCode { get; set; }
+    public string description { get; set; }
+    public string bin { get; set; }
+    public string unitOfMeasurement { get; set; }
+    public int currentQty { get; set; }
+    public int reorderLevel { get; set; }
 
     public InventoryReportItem()
     {
@@ -35,7 +35,7 @@ public class InventoryReportItem
         ItemBusinessLogic itemBusinessLogic = new ItemBusinessLogic();
         List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
         List<Item> iList = itemBusinessLogic.getItemList();
-        foreach(Item i in iList)
+        foreach (Item i in iList)
         {
             InventoryReportItem rItem = new InventoryReportItem(i);
             reportItemList.Add(rItem);

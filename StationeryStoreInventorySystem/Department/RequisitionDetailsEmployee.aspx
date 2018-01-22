@@ -12,17 +12,19 @@
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
     <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
-    <br /></h3>
+        <br />
+    </h3>
     Requested Date:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-    </strong><br />
-    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="Label" Width="200px"></asp:Label>
+    </strong>
+    <br />
+    <asp:Label ID="Label9" runat="server" Text="Remarks: "></asp:Label><asp:Label ID="Label8" runat="server" Text="-" Width="200px"></asp:Label>
     <br />
 
-    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click" />
+    <asp:Button ID="Add" runat="server" CssClass="btn-link" Text="Add More Item" OnClick="Add_Click"  Visible="false"/>
     <asp:Button ID="Close" runat="server" CssClass="btn-link" Text="Close" OnClick="Close_Click" Visible="False" />
 
     <asp:Panel ID="Panel1" runat="server" Visible="False">
@@ -55,6 +57,7 @@
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2">
                     <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="btn-success" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Close_Click" Text="Close" CssClass="btn-warning" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -65,8 +68,8 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
-                        
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
@@ -105,10 +108,36 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
+
+                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+
+                        <Columns>
+                            <asp:TemplateField HeaderText="Item" SortExpression="Description">
+                                <ItemTemplate>
+                                    <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </asp:Panel>
             </asp:TableCell>
         </asp:TableRow>
     </asp:Table>
+    <asp:Button ID="Update" runat="server" Text="Update Request" CssClass="button" OnClick="Update_Click" />
+    <asp:Button ID="Save" runat="server" Text="Save Request" CssClass="button" OnClick="Save_Click" Visible="false"/>
     <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
-</asp:Content>
+    </asp:Content>
 

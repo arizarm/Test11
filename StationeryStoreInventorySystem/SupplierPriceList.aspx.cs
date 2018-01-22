@@ -33,7 +33,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
                 TextBox1.Text = S.SupplierCode;
                 TextBox2.Text = S.SupplierName;
                 TextBox3.Text = S.SupplierContactName;
-                TextBox4.Text = S.SupplierPhone;
+                SupplierPhoneNoTextBox.Text = S.SupplierPhone;
                 TextBox5.Text = S.SupplierFax;
                 TextBox6.Text = S.SupplierAddress;
                 TextBox8.Text = S.SupplierEmail;
@@ -60,7 +60,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         S.SupplierCode = TextBox1.Text;
         S.SupplierName = TextBox2.Text;
         S.SupplierContactName = TextBox3.Text;
-        S.SupplierPhone = TextBox4.Text;
+        S.SupplierPhone = SupplierPhoneNoTextBox.Text;
         S.SupplierFax = TextBox5.Text;
         S.SupplierAddress = TextBox6.Text;
         S.SupplierEmail = TextBox8.Text;

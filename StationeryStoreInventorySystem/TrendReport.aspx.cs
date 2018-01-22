@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -327,14 +328,14 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 List<string> catSelected = getSelectedCategories();
                 List<string> duratnSelected = getSelectedDuration();
 
-                List<List<RequisitionTrendReportClass>> ListOfBROs = new List<List<RequisitionTrendReportClass>>();
+                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
 
                 int splitBySelected = SplitReportRadioButtonList.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string dept in deptSelected)
                     {
-                        List<RequisitionTrendReportClass> basicReportObjects = new List<RequisitionTrendReportClass>();
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName;
                         string departmentName = dept;
@@ -343,19 +344,19 @@ public partial class RequisitionTrend : System.Web.UI.Page
                         foreach (string cat in catSelected)
                         {
                             categoryName = cat;
-                            RequisitionTrendReportClass input;
+                            TrendReport input;
 
                             if (duratnSelected.Count == 1)
                             {
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, duratnSelected[0]);
+                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
                                 basicReportObjects.Add(input);
                             }
                             else if (duratnSelected.Count == 2)
                             {
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
                                 month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
                                 basicReportObjects.Add(input);
                             }
                             else
@@ -363,7 +364,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
                                 month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
                                 month3 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
                                 basicReportObjects.Add(input);
                             }
                         }
@@ -374,7 +375,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 {
                     foreach (string cat in catSelected)
                     {
-                        List<RequisitionTrendReportClass> basicReportObjects = new List<RequisitionTrendReportClass>();
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName = cat;
                         string departmentName = "";
@@ -383,18 +384,18 @@ public partial class RequisitionTrend : System.Web.UI.Page
                         foreach (string dept in deptSelected)
                         {
                             departmentName = dept;
-                            RequisitionTrendReportClass input;
+                            TrendReport input;
                             if (duratnSelected.Count == 1)
                             {
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, duratnSelected[0]);
+                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
                                 basicReportObjects.Add(input);
                             }
                             else if (duratnSelected.Count == 2)
                             {
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
                                 month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
                                 basicReportObjects.Add(input);
                             }
                             else
@@ -402,7 +403,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
                                 month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
                                 month3 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
-                                input = new RequisitionTrendReportClass(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
                                 basicReportObjects.Add(input);
                             }
 
@@ -429,14 +430,14 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 List<string> catSelected = getSelectedCategories();
                 List<string> supplierSelected = getSelectedSuppliers();
 
-                List<List<RequisitionTrendReportClass>> ListOfBROs = new List<List<RequisitionTrendReportClass>>();
+                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
 
                 int splitBySelected = SplitRORReportRadioButtonList.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string suppl in supplierSelected)
                     {
-                        List<RequisitionTrendReportClass> basicReportObjects = new List<RequisitionTrendReportClass>();
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName;
                         string supplierName = suppl;
@@ -445,19 +446,19 @@ public partial class RequisitionTrend : System.Web.UI.Page
                         foreach (string cat in catSelected)
                         {
                             categoryName = cat;
-                            RequisitionTrendReportClass input;
+                            TrendReport input;
 
                             if (duratnSelected.Count == 1)
                             {
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, duratnSelected[0]);
+                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
                                 basicReportObjects.Add(input);
                             }
                             else if (duratnSelected.Count == 2)
                             {
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
                                 month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
                                 basicReportObjects.Add(input);
                             }
                             else
@@ -465,7 +466,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
                                 month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
                                 month3 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
                                 basicReportObjects.Add(input);
                             }
                         }
@@ -477,7 +478,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 {
                     foreach (string cat in catSelected)
                     {
-                        List<RequisitionTrendReportClass> basicReportObjects = new List<RequisitionTrendReportClass>();
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName = cat;
                         string supplierName = "";
@@ -486,18 +487,18 @@ public partial class RequisitionTrend : System.Web.UI.Page
                         foreach (string suppl in supplierSelected)
                         {
                             supplierName = suppl;
-                            RequisitionTrendReportClass input;
+                            TrendReport input;
                             if (duratnSelected.Count == 1)
                             {
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, duratnSelected[0]);
+                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
                                 basicReportObjects.Add(input);
                             }
                             else if (duratnSelected.Count == 2)
                             {
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
                                 month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
                                 basicReportObjects.Add(input);
                             }
                             else
@@ -505,7 +506,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
                                 month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
                                 month3 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
-                                input = new RequisitionTrendReportClass(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
                                 basicReportObjects.Add(input);
                             }
 

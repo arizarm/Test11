@@ -10,7 +10,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (Session["empRole"].ToString() == "DepartementHead")
         {
             DepHeadMenu.Visible = true;
@@ -19,58 +18,57 @@ public partial class MasterPage : System.Web.UI.MasterPage
             StoreManMenu.Visible = false;
             StoreSuperMenu.Visible = false;
             StoreClerkMenu.Visible = false;
+        }
 
+       if (Session["empRole"].ToString() == "Representative")
+       {
+            DepHeadMenu.Visible = false;
+            DepRepMenu.Visible = true;
+            DepMember.Visible = false;
+            StoreManMenu.Visible = false;
+            StoreSuperMenu.Visible = false;
+            StoreClerkMenu.Visible = false;
+        }
 
-            if (Session["empRole"].ToString() == "Representative")
-            {
-                DepHeadMenu.Visible = false;
-                DepRepMenu.Visible = true;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
-            }
+       if (Session["empRole"].ToString() == "Employee")
+       {
+            DepHeadMenu.Visible = false;
+            DepRepMenu.Visible = false;
+            DepMember.Visible = true;
+            StoreManMenu.Visible = false;
+            StoreSuperMenu.Visible = false;
+            StoreClerkMenu.Visible = false;
+        }
 
-            if (Session["empRole"].ToString() == "Employee")
-            {
-                DepHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = true;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
-            }
+        if (Session["empRole"].ToString() == "Store Manager")
+        {
+            DepHeadMenu.Visible = false;
+            DepRepMenu.Visible = false;
+            DepMember.Visible = false;
+            StoreManMenu.Visible = true;
+            StoreSuperMenu.Visible = false;
+            StoreClerkMenu.Visible = false;
+        }
 
-            if (Session["empRole"].ToString() == "Store Manager")
-            {
-                DepHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = true;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
-            }
+        if (Session["empRole"].ToString() == "Store Supervisor")
+         {
+            DepHeadMenu.Visible = false;
+            DepRepMenu.Visible = false;
+            DepMember.Visible = false;
+            StoreManMenu.Visible = false;
+            StoreSuperMenu.Visible = true;
+            StoreClerkMenu.Visible = false;
+         }
 
-            if (Session["empRole"].ToString() == "Store Supervisor")
-            {
-                DepHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = true;
-                StoreClerkMenu.Visible = false;
-            }
-
-
-            if (Session["empRole"].ToString() == "Store Clerk")
-            {
-                DepHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = true;
-            }
+         if (Session["empRole"].ToString() == "Store Clerk")
+          {
+             DepHeadMenu.Visible = false;
+             DepRepMenu.Visible = false;
+             DepMember.Visible = false;
+             StoreManMenu.Visible = false;
+             StoreSuperMenu.Visible = false;
+             StoreClerkMenu.Visible = true;
+           }
 
             //if (Session["userType"].ToString() == "Employee")
             //{
@@ -119,11 +117,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
             //    this.hLinkSupplierList.Visible = false;
             //    this.hLinkPurchaseOrderList.Visible = false;
             //}
-        }
     }
-
-
-
+    
     protected void btnSignOut_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();

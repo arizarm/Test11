@@ -16,18 +16,18 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void SaveButton_Click(object sender, EventArgs e)
     {
-        Supplier s = new Supplier();
-        s.SupplierCode = TextBox1.Text;
-        s.SupplierName = TextBox2.Text;
-        s.SupplierContactName = TextBox3.Text;
-        s.SupplierPhone = TextBox4.Text;
-        s.SupplierFax = TextBox5.Text;
-        s.SupplierAddress = TextBox6.Text;
-        s.SupplierEmail = TextBox7.Text;
-        s.ActiveStatus = TextBox8.Text;
+        Supplier S = new Supplier();
+        S.SupplierCode = TextBox1.Text;
+        S.SupplierName = TextBox2.Text;
+        S.SupplierContactName = TextBox3.Text;
+        S.SupplierPhone = TextBox4.Text;
+        S.SupplierFax = TextBox5.Text;
+        S.SupplierAddress = TextBox6.Text;
+        S.SupplierEmail = TextBox7.Text;
+        S.ActiveStatus = TextBox8.Text;
 
-        SupplierListController slc = new SupplierListController();
-        slc.createSupplier(s);
+        SupplierListController Slc = new SupplierListController();
+        Slc.CreateSupplier(S);
         Page.ClientScript.RegisterStartupScript(Page.GetType(), "my", "alert('" + Message.SupplierSuccessfulAdd + "');", true);
         //Response.Write("<script>alert('" + Message.SupplierSuccessfulAdd + "');</script>");
 

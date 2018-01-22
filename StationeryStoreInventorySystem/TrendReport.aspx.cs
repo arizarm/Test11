@@ -22,14 +22,14 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DepartmentLabel.Visible = true;
                     DepartmentRadioButtonList.Visible = true;
                     SplitReportRadioButtonList.Visible = true;
-                    HeaderLabel.Text = "Requisition Trend Report";
+                    HeaderLabel.Text = Message.RTReport;
                     break;
                 case "ROR":
                     displayCommonComponents();
                     SupplierLabel.Visible = true;
                     SupplierRadioButtonList.Visible = true;
                     SplitRORReportRadioButtonList.Visible = true;
-                    HeaderLabel.Text = "Reorder Trend Report";
+                    HeaderLabel.Text = Message.ROReport;
                     break;
             }
             List<string> catAdded = new List<string>();
@@ -155,13 +155,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 SharedDropDownList.Visible = false;
                 SharedAddButton.Visible = false;
                 SharedGridView.Visible = false;
-                ViewState["supplierAdded"] = 0;
+                ViewState["sharedListSel"] = 0;
                 break;
             case 1:
                 SharedDropDownList.Visible = true;
                 SharedAddButton.Visible = true;
                 SharedGridView.Visible = true;
-                ViewState["supplierAdded"] = 1;
+                ViewState["sharedListSel"] = 1;
                 GenerateReorderTrendController grtc = new GenerateReorderTrendController();
                 List<string> supplierNames = grtc.getAllSupplierNames();
                 SharedDropDownList.DataSource = supplierNames;

@@ -68,4 +68,9 @@ public class Message
     public const String CustomFieldsNotSelected
         = "Please ensure to click 'Add' afterwards if you are selecting customised data!";
 
+    public const String ROReport
+        = "Reorder Trend Report";
+
+    public const String RTReport
+        = "Requisition Trend Report";
 }

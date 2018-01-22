@@ -29,12 +29,10 @@ public static class Utility
             sc.Credentials = new System.Net.NetworkCredential("iss.team11.stationery@gmail.com", "123!@#iss");
             sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
             sc.Send(m);
-            Console.ReadLine();
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            Console.ReadLine();
         }
     }
     public static bool checkIsTempDepHead(Employee e)

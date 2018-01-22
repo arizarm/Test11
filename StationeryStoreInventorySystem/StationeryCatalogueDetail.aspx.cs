@@ -12,7 +12,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        List<Category> catList = ilogic.getCategoryList();
+        List<Category> catList = ilogic.GetCategoryList();
         Category temp = new Category();
         temp.CategoryID = 0;
         temp.CategoryName = "Other";
@@ -20,7 +20,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         DropDownListCategory.DataSource = catList;
         DropDownListCategory.DataTextField = "CategoryName";
         DropDownListCategory.DataValueField = "CategoryID";
-        List<string> UOMList = ilogic.getDistinctUOMList();
+        List<string> UOMList = ilogic.GetDistinctUOMList();
         UOMList.Add("Other");
         DropDownListUOM.DataSource = UOMList;
         if (Session["itemlist"] == null)
@@ -63,12 +63,12 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         }
         else
         {
-            Category cat = ilogic.getCategorybyName(categoryName);
+            Category cat = ilogic.GetCategorybyName(categoryName);
             if (cat == null)
             {
-                categoryName = ilogic.firstUpperCase(categoryName);
-                ilogic.addCategory(categoryName);
-                cat = ilogic.getCategorybyName(categoryName);
+                categoryName = ilogic.FirstUpperCase(categoryName);
+                ilogic.AddCategory(categoryName);
+                cat = ilogic.GetCategorybyName(categoryName);
             }
 
             item.ItemCode = itemCode;
@@ -80,7 +80,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             item.Bin = bin;
             item.ActiveStatus = "Y";
             item.BalanceQty = 0;
-            itemDB.addItem(item);
+            itemDB.AddItem(item);
             iList.Add(item);
             Session["itemlist"] = iList;
         }

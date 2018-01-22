@@ -20,28 +20,28 @@ public class ItemBusinessLogic
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
-        Category category = getCategorybyName(categoryName);
-        itemDB.updateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
+        Category category = GetCategorybyName(categoryName);
+        itemDB.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
         return;
     }
     public Item GetItembyItemCode(string itemCode)
     {
         return itemDB.GetItembyItemCode(itemCode);
     }
-    public void removeItem(string itemCode)
+    public void RemoveItem(string itemCode)
     {
-        itemDB.removeItem(itemCode);
+        itemDB.RemoveItem(itemCode);
         return;
     }
-    public List<Item> getItemList()
+    public List<Item> GetItemList()
     {
-        return itemDB.getActiveItemList();
+        return itemDB.GetActiveItemList();
     }
-    public List<Item> getCatalogueList()
+    public List<Item> GetCatalogueList()
     {
-        return itemDB.getCatalogueList();
+        return itemDB.GetCatalogueList();
     }
     public List<Category> GetCategoryList()
     {
@@ -51,22 +51,23 @@ public class ItemBusinessLogic
     {
         return categoryDB.GetCategorybyID(categoryID);
     }
-    public Category getCategorybyName(string categoryName)
+    public Category GetCategorybyName(string categoryName)
     {
-        string i = firstUpperCase(categoryName);
-        return categoryDB.getCategorybyName(i);
+        string i = FirstUpperCase(categoryName);
+        return categoryDB.GetCategorybyName(i);
     }
-    public void addCategory(string categoryName)
+    public void AddCategory(string categoryName)
     {
+        string i = FirstUpperCase(categoryName);
         Category cat = new Category();
-        cat.CategoryName = categoryName;
-        categoryDB.addCategory(cat);
+        cat.CategoryName = i;
+        categoryDB.AddCategory(cat);
     }
-    public List<string> getDistinctUOMList()
+    public List<string> GetDistinctUOMList()
     {
-        return itemDB.getDistinctUOMList();
+        return itemDB.GetDistinctUOMList();
     }
-    public string firstUpperCase(string s)
+    public string FirstUpperCase(string s)
     {
         return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
     }

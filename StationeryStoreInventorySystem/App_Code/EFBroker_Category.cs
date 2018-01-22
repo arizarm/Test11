@@ -26,12 +26,12 @@ public class EFBroker_Category
         Category cat = categoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
         return cat;
     }
-    public Category getCategorybyName(string categoryName)
+    public Category GetCategorybyName(string categoryName)
     {
         Category cat = categoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
         return cat;
     }
-    public void addCategory(Category category)
+    public void AddCategory(Category category)
     {
         categoryDB.Categories.Add(category);
         categoryDB.SaveChanges();

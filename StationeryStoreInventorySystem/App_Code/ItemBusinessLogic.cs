@@ -11,58 +11,37 @@ using System.Reflection;
 public class ItemBusinessLogic
 {
     StationeryEntities inventoryDB;
+    EFBroker_Item itemDB;
     public ItemBusinessLogic()
     {
         inventoryDB = new StationeryEntities();
+        itemDB = new EFBroker_Item();
         //
         // TODO: Add constructor logic here
         //
     }
     public void updateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
-        Item i = getItem(itemCode);
         Category category = getCategorybyName(categoryName);
-        i.CategoryID = category.CategoryID;
-        i.Description = description;
-        i.ReorderLevel = reorderLevel;
-        i.ReorderQty = reorderQty;
-        i.UnitOfMeasure = unitOfMeasure;
-        i.Bin = bin;
-        inventoryDB.SaveChanges();
+        itemDB.updateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
         return;
     }
-    public void addItem(Item item)
+    public Item GetItembyItemCode(string itemCode)
     {
-        inventoryDB.Items.Add(item);
-        inventoryDB.SaveChanges();
-        return;
-    }
-    public Item getItem(string itemCode)
-    {
-        Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
-        return result;
+        return itemDB.GetItembyItemCode(itemCode);
     }
     public void removeItem(string itemCode)
     {
-        Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
-        i.ActiveStatus = "N";
-        inventoryDB.SaveChanges();
+        itemDB.removeItem(itemCode);
+        return;
     }
     public List<Item> getItemList()
     {
-        List<Item> itemList = inventoryDB.Items
-            .Where(db => db.ActiveStatus == "Y")
-            .ToList();
-        return itemList;
+        return itemDB.getActiveItemList();
     }
     public List<Item> getCatalogueList()
     {
-        List<Item> catalogue =
-            inventoryDB.Items
-            .Include("Category")
-            .Where(db => db.ActiveStatus == "Y")
-            .ToList();
-        return catalogue;
+        return itemDB.getCatalogueList();
     }
     public List<Category> getCategoryList()
     {

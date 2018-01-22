@@ -88,7 +88,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ddl.DataTextField = "CategoryName";
         ddl.DataValueField = "CategoryID";
         List<Category> categories = ilogic.getCategoryList();
-        Item item = ilogic.getItem(itemLabel.Text);
+        Item item = ilogic.GetItembyItemCode(itemLabel.Text);
         ddl.DataSource = categories;
         ddl.SelectedValue = item.CategoryID.ToString();
         ddl.DataBind();
@@ -141,7 +141,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //    {
     //        return failure;
     //    }
-    //    else if (ilogic.getItem(itemCode) != null)
+    //    else if (ilogic.GetItembyItemCode(itemCode) != null)
     //    {
     //        return failure;
     //    }

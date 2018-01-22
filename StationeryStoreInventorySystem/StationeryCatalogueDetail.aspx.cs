@@ -46,6 +46,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     {
         bool failure = false, success = true;
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        EFBroker_Item itemDB= new EFBroker_Item();
         Item item = new Item();
         int level, qty;
         if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
@@ -56,7 +57,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         {
             return failure;
         }
-        else if (ilogic.getItem(itemCode) != null)
+        else if (ilogic.GetItembyItemCode(itemCode) != null)
         {
             return failure;
         }
@@ -79,7 +80,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             item.Bin = bin;
             item.ActiveStatus = "Y";
             item.BalanceQty = 0;
-            ilogic.addItem(item);
+            itemDB.addItem(item);
             iList.Add(item);
             Session["itemlist"] = iList;
         }
@@ -131,6 +132,6 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         string itemCode = args.Value;
-        args.IsValid= (ilogic.getItem(args.Value) == null);
+        args.IsValid= (ilogic.GetItembyItemCode(args.Value) == null);
     }
 }

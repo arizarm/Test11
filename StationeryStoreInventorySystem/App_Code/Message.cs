@@ -61,4 +61,11 @@ public class Message
 
     public const String SupplierAlreadyInList
         = "Supplier is already in list!";
+
+    public const String DateAlreadyInList
+    = "Month already selected!";
+
+    public const String CustomFieldsNotSelected
+        = "Please ensure to click 'Add' afterwards if you are selecting customised data!";
+
 }

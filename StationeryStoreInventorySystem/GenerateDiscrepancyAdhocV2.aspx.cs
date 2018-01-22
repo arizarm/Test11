@@ -86,6 +86,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         d.Status = "Pending";
                     }
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
+                    if(d.TotalDiscrepencyAmount < 250)
+                    {
+                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").EmpID;
+                    }
+                    else
+                    {
+                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").EmpID;
+                    }
                     dList.Add(d);
                 }
                 else
@@ -107,7 +115,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
         if (complete)
         {
-            GenerateDiscrepancyController.SubmitDiscrepancies(dList);
+            GenerateDiscrepancyController.SaveDiscrepancies(dList);
 
             Session["discrepancyList"] = null;
             Session["monthly"] = null;

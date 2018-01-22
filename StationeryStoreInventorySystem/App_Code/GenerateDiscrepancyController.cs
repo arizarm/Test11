@@ -16,74 +16,74 @@ public class GenerateDiscrepancyController
         //
     }
 
-    public static List<InventoryItem> GetInventoryWithStock()
-    {    //might be redundant
-        List<Item> iList = new List<Item>();
-        iList = GetAllItems();
-        List<InventoryItem> invItemList = new List<InventoryItem>();
-        foreach (Item i in iList)
-        {
-            List<StockCard> sc = GetStockCardsByItemCode(i.ItemCode);
-            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-            int adj = 0;
+    //public static List<InventoryItem> GetInventoryWithStock()
+    //{    //might be redundant
+    //    List<Item> iList = new List<Item>();
+    //    iList = GetAllItems();
+    //    List<InventoryItem> invItemList = new List<InventoryItem>();
+    //    foreach (Item i in iList)
+    //    {
+    //        List<StockCard> sc = GetStockCardsByItemCode(i.ItemCode);
+    //        List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+    //        int adj = 0;
 
-            foreach (Discrepency d in dList)
-            {
-                adj += (int)d.AdjustmentQty;
-            }
+    //        foreach (Discrepency d in dList)
+    //        {
+    //            adj += (int)d.AdjustmentQty;
+    //        }
 
-            string adjStr = "";
+    //        string adjStr = "";
 
-            if (adj > 0)
-            {
-                adjStr = "+" + adj.ToString();
-            }
-            else
-            {
-                adjStr = adj.ToString();
-            }
+    //        if (adj > 0)
+    //        {
+    //            adjStr = "+" + adj.ToString();
+    //        }
+    //        else
+    //        {
+    //            adjStr = adj.ToString();
+    //        }
 
-            string stock = sc.Last().Balance.ToString() + " (" + adjStr + ")";
+    //        string stock = sc.Last().Balance.ToString() + " (" + adjStr + ")";
 
-            InventoryItem iItem = new InventoryItem(i, stock);
-            //InventoryItem iItem = new InventoryItem(i, i.StockCards.Last().Balance.ToString());
-            invItemList.Add(iItem);
-        }
-        return invItemList;
-    }
+    //        InventoryItem iItem = new InventoryItem(i, stock);
+    //        //InventoryItem iItem = new InventoryItem(i, i.StockCards.Last().Balance.ToString());
+    //        invItemList.Add(iItem);
+    //    }
+    //    return invItemList;
+    //}
 
-    public static void SubmitDiscrepancies(List<Discrepency> dList)
-    {
-        foreach (Discrepency d in dList)
-        {
-            if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
-            {
-                d.ApprovedBy = GetEmployeeByRole("Store Supervisor").EmpID;
-            }
-            else
-            {
-                d.ApprovedBy = GetEmployeeByRole("Store Manager").EmpID;
-            }
-        }
-        SaveDiscrepancies(dList);
-    }
+    //public static void SubmitDiscrepancies(List<Discrepency> dList)
+    //{
+    //    foreach (Discrepency d in dList)
+    //    {
+    //        if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+    //        {
+    //            d.ApprovedBy = GetEmployeeByRole("Store Supervisor").EmpID;
+    //        }
+    //        else
+    //        {
+    //            d.ApprovedBy = GetEmployeeByRole("Store Manager").EmpID;
+    //        }
+    //    }
+    //    SaveDiscrepancies(dList);
+    //}
 
     public static List<Item> GetAllItems()
     {   //goes to item broker
-        return context.Items.OrderBy(x => x.ItemCode).ToList();
+        return context.Items.Where(x => x.ActiveStatus == "Y").OrderBy(x => x.ItemCode).ToList();
     }
 
     public static Item GetItemByItemCode(string itemCode)
     {   //goes to item broker
-        Item i = context.Items.Where(x => x.ItemCode == itemCode).First();
+        Item i = context.Items.Where(x => x.ItemCode == itemCode && x.ActiveStatus == "Y").First();
         return i;
     }
 
-    public static List<Item> GetItemsByItemCodeOrDesc(string search)
-    {   //might be redundant
-        List<Item> iList = context.Items.Where(x => x.ItemCode.ToLower() == search.ToLower() || x.Description.ToLower() == search.ToLower()).ToList();
-        return iList;
-    }
+    //public static List<Item> GetItemsByItemCodeOrDesc(string search)
+    //{   //might be redundant
+    //    List<Item> iList = context.Items.Where(x => x.ItemCode.ToLower() == search.ToLower() || x.Description.ToLower() == search.ToLower()).ToList();
+    //    return iList;
+    //}
 
     public static List<PriceList> GetPricesByItemCode(string itemCode)
     {   //goes to price list broker

@@ -30,16 +30,4 @@ public class InventoryReportItem
         this.currentQty = item.BalanceQty ?? 0;
         this.reorderLevel = item.ReorderLevel;
     }
-    public static List<InventoryReportItem> GetInventoryReportItems()
-    {
-        ItemBusinessLogic itemBusinessLogic = new ItemBusinessLogic();
-        List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
-        List<Item> iList = itemBusinessLogic.GetItemList();
-        foreach (Item i in iList)
-        {
-            InventoryReportItem rItem = new InventoryReportItem(i);
-            reportItemList.Add(rItem);
-        }
-        return reportItemList;
-    }
 }

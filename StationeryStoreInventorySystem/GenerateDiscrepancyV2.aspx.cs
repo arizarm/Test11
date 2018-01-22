@@ -59,9 +59,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             GridView2.DataBind();
         }
 
-        if (Request.UrlReferrer.ToString().Contains("AddItemDiscrepancy"))
-        {    //Load full list after adding an item
-            ShowAll();
+        if(Request.UrlReferrer != null)
+        {
+            if (Request.UrlReferrer.ToString().Contains("AddItemDiscrepancy"))
+            {    //Load full list after adding an item
+                ShowAll();
+            }
         }
 
         Label1.Text = "";

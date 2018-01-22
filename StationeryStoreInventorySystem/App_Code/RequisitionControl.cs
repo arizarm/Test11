@@ -20,12 +20,14 @@ public class RequisitionControl
     static string status;
     static int requestedBy;
     static string depCode;
-    static string searchWord;
+
     static string employeeName;
 
     static ReqisitionListItem item;
     static List<ReqisitionListItem> itemList;
+    static string searchWord;
     static List<ReqisitionListItem> searchList;
+
 
     public static List<ReqisitionListItem> DisplayAll()
     {
@@ -148,8 +150,9 @@ public class RequisitionControl
         }
     }
 
-    public static void getList(int id)
+    public static List<Requisition_ItemList> getList(int id)
     {
+        List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
         using (StationeryEntities context = new StationeryEntities())
         {
             var q = from i in context.Items
@@ -165,7 +168,16 @@ public class RequisitionControl
                         i.UnitOfMeasure,
                         rt.Status
                     };
+            foreach (var x in q)
+            {
+                Requisition_ItemList r = new Requisition_ItemList();
+                r.Description = x.Description;
+                r.ReqQty = x.RequestedQty;
+                r.Uom = x.UnitOfMeasure;
+                r.Status = x.Status;
+            }
         }
+        return rlist;
     }
 
     //CANCEL REQUISITION
@@ -298,6 +310,38 @@ public class RequisitionControl
             Requisition_Item ri = context.Requisition_Item.Where(i => i.RequisitionID.Equals(id)).Where(i => i.ItemCode.Equals(code)).FirstOrDefault();
             ri.RequestedQty += qty;
             context.SaveChanges();
+            ts.Complete();
+        }
+    }
+
+    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int RequestedBy)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition r = new Requisition();
+
+            //to pass from previous form
+            r.RequestDate = date;
+            r.Status = status;
+            r.RequestedBy = RequestedBy;
+
+            context.Requisitions.Add(r);
+            context.SaveChanges();
+
+            foreach (RequestedItem i in item)
+            {
+                int qty = i.Quantity;
+
+                string code = i.Code;
+
+                Requisition_Item ri = new Requisition_Item();
+                ri.RequisitionID = r.RequisitionID;
+                ri.ItemCode = code;
+                ri.RequestedQty = qty;
+                context.Requisition_Item.Add(ri);
+                context.SaveChanges();
+            }
             ts.Complete();
         }
     }

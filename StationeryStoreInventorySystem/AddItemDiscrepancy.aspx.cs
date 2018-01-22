@@ -9,6 +9,10 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if((bool)Session["monthly"] == true)
+        {
+            Session["discrepancyList"] = new Dictionary<Item, String>();
+        }
         Session["monthly"] = false;
         string itemCode = Request.QueryString["itemCode"];
         if (!ValidatorUtil.isEmpty(itemCode))

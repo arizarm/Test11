@@ -129,12 +129,12 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             if (informSupervisor)
             {
                 string supervisorEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").Email;
-                Utility.sendMail(supervisorEmail, "New Discrepancies Notification", "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+                Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             }
             if (informManager)
             {
                 string managerEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").Email;
-                Utility.sendMail(managerEmail, "New Discrepancies Notification", "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+                Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
             //Utility.sendMail("etedwin123@gmail.com", "New Discrepancies Notification", "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             Response.Redirect("https://www.google.com.sg");

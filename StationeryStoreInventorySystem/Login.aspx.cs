@@ -23,15 +23,32 @@ public partial class Login : System.Web.UI.Page
 
         if (isValid)
         {
-            FormsAuthentication.RedirectFromLoginPage
-          (email, Persist.Checked);
-
 
             Employee emp = EmployeeController.GetEmployeeByEmail(email);
             Session["empID"] = emp.EmpID;
             Session["empRole"] = emp.Role;
+            Session["emp"] = emp;
 
             Label4.Text = "Success User";
+
+            FormsAuthentication.RedirectFromLoginPage
+          (emp.Email, Persist.Checked);
+
+
+            FormsAuthenticationTicket ticket1 =
+               new FormsAuthenticationTicket(
+                    1,                                   // version
+                    emp.EmpName.Trim(),   // get username  from the form
+                    DateTime.Now,                        // issue time is now
+                    DateTime.Now.AddMinutes(10),         // expires in 10 minutes
+                    false,      // cookie is not persistent
+                    emp.Role                             // role assignment is stored
+                                                      // in userData
+                    );
+            HttpCookie cookie1 = new HttpCookie(
+              FormsAuthentication.FormsCookieName,
+              FormsAuthentication.Encrypt(ticket1));
+            Response.Cookies.Add(cookie1);
 
             NavigateMain();
 
@@ -44,8 +61,9 @@ public partial class Login : System.Web.UI.Page
 
     protected void NavigateMain()
     {
-        string role = Session["empRole"].ToString();
-
+       
+        Employee e = (Employee)Session["emp"];
+        string role = e.Role;
         if (role == "Store Clerk")
         {
             Response.Redirect("~/RequisitionListClerk.aspx");
@@ -54,17 +72,17 @@ public partial class Login : System.Web.UI.Page
         {
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
-        else if (role == "DepartmentHead")
-        {
-            Response.Redirect("~/RequisitionListDepartment.aspx");
+        else if (role == "DepartmentHead" || Utility.checkIsTempDepHead(e))
+        {        
+            Response.Redirect("~/Department/RequisitionListDepartment.aspx");
         }
         else if (role == "Employee")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm.aspx");
         }
         else if (role == "Representative")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm.aspx");
         }
     }
     protected void Button2_Click(object sender, EventArgs e)
@@ -72,4 +90,5 @@ public partial class Login : System.Web.UI.Page
         Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
         Response.Redirect("~/Login.aspx");
     }
+
 }

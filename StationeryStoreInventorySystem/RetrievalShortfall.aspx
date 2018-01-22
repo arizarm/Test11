@@ -1,79 +1,104 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RetrievalShortfall.aspx.cs" Inherits="RetrievalDecision" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
+        .auto-style1 {
+            height: 22px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div>
-        <h2> There are insufficient numbers of quantities for the following items.</h2>
-        <h3> Please allocate the items before generating forms</h3>
-        <table width="100%" border="1">
-            <thead>
-                <tr>
-                    <th>Stationery Description</th>
-                    <th>Available Quantity</th>
-                    <th>Breakdown by Department</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tr>
-                <td>Staplet</td>
-                <td>9</td>
-                <td>
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="100%" CssClass="mGrid">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Requisition Date">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TextBox" runat="server"></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Label" runat="server" Text='<%# Bind("date")%>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Dept name">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("name")%>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Requested Quantity">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("needed")%>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Actual Quantity">
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-                                </EditItemTemplate>
-                                <ItemTemplate>
-                                    <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </td>
-                <td>
-                    &nbsp;</td>
-            </tr>
-        </table>
+        <h2>There are insufficient numbers of quantities for the following items.</h2>
+        <h3>Please allocate the items before generating forms</h3>
+   
+        <asp:GridView ID="gvMain" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvMain_RowDataBound">
+            <Columns>
+                <asp:TemplateField HeaderText="Item Description">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                       <asp:Label ID="itemDescription" runat="server" Text='<%# Bind("Description")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Available Quantity">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="availableQuantity" runat="server" Text='<%# Bind("Qty")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Breakdown by Department">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+
+                    <ItemTemplate>
+                         <asp:GridView ID="gvSub" runat="server" AutoGenerateColumns="False" CssClass="mGrid" Width="100%">
+                            <Columns>
+                                <asp:TemplateField HeaderText="DeptName">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox" runat="server"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="DeptName" runat="server" Text='<%# Bind("DeptName")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Requested Quantity">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Label ID="RequestedQty" runat="server" Text='<%# Bind("RequestedQty")%>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Actual Quantity">
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtActualQuantity" runat="server"></asp:TextBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnSaveActualQuantity" runat="server" Text="Save" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                            </Columns>
+                        </asp:GridView>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+
+            </Columns>
+        </asp:GridView>
+
     </div>
     <div>
-        <br />
-        <asp:Button ID="Button2" runat="server" Text="Reset All" align="left"/>
+       
+        <asp:Button ID="BtnResetAll" runat="server" Text="Reset All" CssClass="button" align="left" OnClick="BtnResetAll_Click" />
         <table align="right">
             <tr>
 
                 <td>
-                    <asp:Button ID="Button3" runat="server" Text="Save" CssClass="button"/>
-                     &nbsp; &nbsp; &nbsp;
+                    <asp:Button ID="BtnSave" runat="server" Text="Save" CssClass="button" OnClick="BtnSave_Click" />
+                    &nbsp; &nbsp; &nbsp;
                 </td>
-                
+
                 <td>
-                    <asp:Button ID="Button4" runat="server" Text="Generate Disbursement List" CssClass="button"/>
+                    <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Generate Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
                 </td>
             </tr>
         </table>

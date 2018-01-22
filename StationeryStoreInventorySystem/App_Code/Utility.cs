@@ -26,15 +26,33 @@ public static class Utility
 
             sc.Host = "smtp.gmail.com";
             sc.Port = 587;
-            sc.Credentials = new System.Net.NetworkCredential("iss.team11.stationery@gmail.com", "password");
+            sc.Credentials = new System.Net.NetworkCredential("iss.team11.stationery@gmail.com", "123!@#iss");
             sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
             sc.Send(m);
-            Console.ReadLine();
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            Console.ReadLine();
         }
     }
+    public static bool checkIsTempDepHead(Employee e)
+    {
+        DateTime today = DateTime.Now;
+        if (e.IsTempHead == "Y")
+        {
+            if(today >= e.StartDate && today <= e.EndDate )
+            {
+                return true;
+            }
+           else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
+ }
+

@@ -27,11 +27,21 @@ public class EFBroker_Item
         Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
     }
+    public Item GetItembyDescription(string description)
+    {
+        Item result = inventoryDB.Items.Where(x => x.Description.Equals(description)).FirstOrDefault();
+        return result;
+    }
     public void RemoveItem(string itemCode)
     {
         Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
+    }
+    public List<Item> GetItemsbyCategoryID(int categoryID)
+    {
+        List<Item> itemList = inventoryDB.Items.Where(x=> x.CategoryID==categoryID).ToList();
+        return itemList;
     }
     public List<Item> GetItemList()
     {
@@ -56,6 +66,11 @@ public class EFBroker_Item
     {
         List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
         return uom;
+    }
+    public string GetUnitbyItemCode(string itemCode)
+    {
+        string unit = inventoryDB.Items.Where(x => x.ItemCode==itemCode).Select(x=> x.UnitOfMeasure).FirstOrDefault();
+        return unit;
     }
     public void UpdateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {

@@ -21,6 +21,11 @@ public class EFBroker_Category
         List<Category> categories = categoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
         return categories;
     }
+    public List<string> GetAllCategoryNames()
+    {
+        List<string> categoryNames = categoryDB.Categories.Select(x => x.CategoryName).ToList();
+        return categoryNames;
+    }
     public Category GetCategorybyID(int categoryID)
     {
         Category cat = categoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();

@@ -21,12 +21,12 @@ public class MaintainPriceListController
         }
     }
 
-    public List<string> GetAllCategoryNames()
-    {
-        EFBroker_Category EFBC = new EFBroker_Category();
-        List<string> categories = EFBC.GetAllCategoryNames();
-        return categories;
-    }
+    //public List<string> GetAllCategoryNames()
+    //{
+    //    //EFBroker_Category EFBC = new EFBroker_Category();
+    //    //List<string> categories = EFBC.GetAllCategoryNames();
+    //    //return categories;
+    //}
 
     //Break into 2. DAO(ItemDescAndCat) AND BizLogic(getItemDescForCat)
     public List<string> GetAllItemNamesForGivenCat(string cat)

@@ -21,12 +21,11 @@ public partial class ApproveRequisition : System.Web.UI.Page
         Session["empRole"] = "Head";
         //Session["empRole"] = "Employee";
 
-        int empid = Convert.ToInt32(r.RequestedBy);
-        Label1.Text = EmployeeController.getEmployee(empid);
+        Label1.Text = r.RequestedBy.ToString();
         Label2.Text = r.RequestDate.ToString();
         Label3.Text = r.Status.ToString();
 
-        if(r.Status.ToString() !=  "Pending")
+        if (r.Status.ToString() != "Pending")
         {
             ReasonLabel.Visible = false;
             TextBox2.Visible = false;
@@ -37,27 +36,27 @@ public partial class ApproveRequisition : System.Web.UI.Page
         if (!IsPostBack)
         {
             showAllItems();
-        }      
-        
+        }
+
     }
 
     protected void showAllItems()
     {
-        var q = from i in context.Items
-                join ri in context.Requisition_Item
-                on i.ItemCode equals ri.ItemCode
-                join rt in context.Requisitions
-                on ri.RequisitionID equals rt.RequisitionID
-                where ri.RequisitionID == id
-                select new
-                {
-                    i.Description,
-                    ri.RequestedQty,
-                    i.UnitOfMeasure,
-                    rt.Status
-                };
+        //var q = from i in context.Items
+        //        join ri in context.Requisition_Item
+        //        on i.ItemCode equals ri.ItemCode
+        //        join rt in context.Requisitions
+        //        on ri.RequisitionID equals rt.RequisitionID
+        //        where ri.RequisitionID == id
+        //        select new
+        //        {
+        //            i.Description,
+        //            ri.RequestedQty,
+        //            i.UnitOfMeasure,
+        //            rt.Status
+        //        };
 
-        GridView1.DataSource = q.ToList();
+        GridView1.DataSource = RequisitionControl.getList(id);
         GridView1.DataBind();
     }
 
@@ -77,7 +76,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         }
     }
 
-    
+
 
     protected void ApproveButton_Click(object sender, EventArgs e)
     {

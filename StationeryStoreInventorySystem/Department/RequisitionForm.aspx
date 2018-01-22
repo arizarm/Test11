@@ -38,7 +38,7 @@
         <tr>
             <td>Quantity:</td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server" TextMode="Number" Width="74px"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" Text="1" TextMode="Number" Width="74px"></asp:TextBox>
 
                 <asp:Label ID="Label2" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
@@ -58,8 +58,55 @@
     <br />
     <br />
 
-    <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" Width="40%">
+    <asp:GridView ID="GridView1" runat="server">
     </asp:GridView>
+
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                        
+                        <Columns>
+                            <asp:TemplateField HeaderText="Code" SortExpression="Code">
+                                <ItemTemplate>
+                                    <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Item" SortExpression="Description">
+                                <ItemTemplate>
+                                    <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty" ItemStyle-HorizontalAlign="Center">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("Quantity") %>'></asp:Label>
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("Quantity") %>' TextMode="Number" Width="60px"></asp:TextBox>
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("Uom") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" />
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="ItemDelete" runat="server" Text="Delete " OnClick="Delete_Click" CssClass="alert-warning" />
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning" />
+                                </EditItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+
     <br />
     <asp:Button ID="Submit" runat="server" Text="Submit to Approve" CssClass="button" OnClick="Submit_Click" />
     <br />

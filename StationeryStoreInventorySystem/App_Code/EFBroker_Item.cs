@@ -52,6 +52,11 @@ public class EFBroker_Item
             .ToList();
         return catalogue;
     }
+    public List<string> getDistinctUOMList()
+    {
+        List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
+        return uom;
+    }
     public void updateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Item i = GetItembyItemCode(itemCode);

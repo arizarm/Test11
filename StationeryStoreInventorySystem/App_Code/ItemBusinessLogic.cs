@@ -10,12 +10,12 @@ using System.Reflection;
 /// </summary>
 public class ItemBusinessLogic
 {
-    StationeryEntities inventoryDB;
     EFBroker_Item itemDB;
+    EFBroker_Category categoryDB;
     public ItemBusinessLogic()
     {
-        inventoryDB = new StationeryEntities();
         itemDB = new EFBroker_Item();
+        categoryDB = new EFBroker_Category();
         //
         // TODO: Add constructor logic here
         //
@@ -43,33 +43,28 @@ public class ItemBusinessLogic
     {
         return itemDB.getCatalogueList();
     }
-    public List<Category> getCategoryList()
+    public List<Category> GetCategoryList()
     {
-        List<Category> categories = inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
-        return categories;
+        return categoryDB.GetCategoryList();
     }
-    public Category getCategorybyID(int categoryID)
+    public Category GetCategorybyID(int categoryID)
     {
-        Category cat = inventoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
-        return cat;
+        return categoryDB.GetCategorybyID(categoryID);
     }
     public Category getCategorybyName(string categoryName)
     {
         string i = firstUpperCase(categoryName);
-        Category cat = inventoryDB.Categories.Where(x => x.CategoryName == i).FirstOrDefault();
-        return cat;
+        return categoryDB.getCategorybyName(i);
     }
     public void addCategory(string categoryName)
     {
         Category cat = new Category();
         cat.CategoryName = categoryName;
-        inventoryDB.Categories.Add(cat);
-        inventoryDB.SaveChanges();
+        categoryDB.addCategory(cat);
     }
     public List<string> getDistinctUOMList()
     {
-        List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
-        return uom;
+        return itemDB.getDistinctUOMList();
     }
     public string firstUpperCase(string s)
     {

@@ -16,7 +16,7 @@ public class EFBroker_Item
         // TODO: Add constructor logic here
         //
     }
-    public void addItem(Item item)
+    public void AddItem(Item item)
     {
         inventoryDB.Items.Add(item);
         inventoryDB.SaveChanges();
@@ -27,23 +27,33 @@ public class EFBroker_Item
         Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         return result;
     }
-    public void removeItem(string itemCode)
+    public Item GetItembyDescription(string description)
+    {
+        Item result = inventoryDB.Items.Where(x => x.Description.Equals(description)).FirstOrDefault();
+        return result;
+    }
+    public void RemoveItem(string itemCode)
     {
         Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
     }
-    public List<Item> getItemList()
+    public List<Item> GetItemsbyCategoryID(int categoryID)
+    {
+        List<Item> itemList = inventoryDB.Items.Where(x=> x.CategoryID==categoryID).ToList();
+        return itemList;
+    }
+    public List<Item> GetItemList()
     {
         List<Item> itemList = inventoryDB.Items.ToList();
         return itemList;
     }
-    public List<Item> getActiveItemList()
+    public List<Item> GetActiveItemList()
     {
         List<Item> itemList = inventoryDB.Items.Where(x=> x.ActiveStatus=="Y").ToList();
         return itemList;
     }
-    public List<Item> getCatalogueList()
+    public List<Item> GetCatalogueList()
     {
         List<Item> catalogue =
             inventoryDB.Items
@@ -52,7 +62,17 @@ public class EFBroker_Item
             .ToList();
         return catalogue;
     }
-    public void updateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public List<string> GetDistinctUOMList()
+    {
+        List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
+        return uom;
+    }
+    public string GetUnitbyItemCode(string itemCode)
+    {
+        string unit = inventoryDB.Items.Where(x => x.ItemCode==itemCode).Select(x=> x.UnitOfMeasure).FirstOrDefault();
+        return unit;
+    }
+    public void UpdateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Item i = GetItembyItemCode(itemCode);
         i.CategoryID = category.CategoryID;

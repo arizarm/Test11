@@ -28,6 +28,11 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
             if (!IsPostBack)
             {
+                if ((string)Session["empRole"] != "Store Supervisor" || (string)Session["empRole"] != "Store Manager")
+                {
+                    UpdateButton.Enabled = false;
+                    UpdateButton.Visible = false;
+                }
                 //Set Default Supplier Info on Page
                 Supplier S = Slc.GetSupplier(Code);
                 TextBox1.Text = S.SupplierCode;
@@ -170,7 +175,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
         {
             string ItemDesc = Mplc.GetItemNameForGivenItemCode(Lpl[i].ItemCode);
             string ItemPrice = "$" + Lpl[i].Price + "/" + Mplc.GetUnitOfMeasureForGivenItemCode(Lpl[i].ItemCode) + "  ";
-            ViewState["oldPrice"] = ItemPrice =;
             TenderListObj A = new TenderListObj(ItemDesc, ItemPrice);
             TenderSupplyList.Add(A);
         }

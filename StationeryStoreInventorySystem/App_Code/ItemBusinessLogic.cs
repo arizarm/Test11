@@ -10,89 +10,104 @@ using System.Reflection;
 /// </summary>
 public class ItemBusinessLogic
 {
-    StationeryEntities inventoryDB;
+    EFBroker_Item itemDB;
+    EFBroker_Category categoryDB;
     public ItemBusinessLogic()
     {
-        inventoryDB = new StationeryEntities();
+        itemDB = new EFBroker_Item();
+        categoryDB = new EFBroker_Category();
         //
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public Item AddItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
     {
-        Item i = getItem(itemCode);
-        Category category = getCategorybyName(categoryName);
-        i.CategoryID = category.CategoryID;
-        i.Description = description;
-        i.ReorderLevel = reorderLevel;
-        i.ReorderQty = reorderQty;
-        i.UnitOfMeasure = unitOfMeasure;
-        i.Bin = bin;
-        inventoryDB.SaveChanges();
+        Item item = new Item();
+        int level, qty;
+        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+        {
+            return null;
+        }
+        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
+        {
+            return null;
+        }
+        else if (itemDB.GetItembyItemCode(itemCode) != null)
+        {
+            return null;
+        }
+        else
+        {
+            Category cat = categoryDB.GetCategorybyName(categoryName);
+            if (cat == null)
+            {
+                AddCategory(categoryName);
+                cat = categoryDB.GetCategorybyName(categoryName);
+            }
+
+            item.ItemCode = itemCode;
+            item.Category = cat;
+            item.Description = description;
+            item.ReorderLevel = level;
+            item.ReorderQty = qty;
+            item.UnitOfMeasure = UOM;
+            item.Bin = bin;
+            item.ActiveStatus = "Y";
+            item.BalanceQty = 0;
+            itemDB.AddItem(item);
+            //iList.Add(item);
+            //Session["itemlist"] = iList;
+        }
+        return item;
+    }
+    public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    {
+        Category category = GetCategorybyName(categoryName);
+        itemDB.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
         return;
     }
-    public void addItem(Item item)
+    public Item GetItembyItemCode(string itemCode)
     {
-        inventoryDB.Items.Add(item);
-        inventoryDB.SaveChanges();
+        return itemDB.GetItembyItemCode(itemCode);
+    }
+    public void RemoveItem(string itemCode)
+    {
+        itemDB.RemoveItem(itemCode);
         return;
     }
-    public Item getItem(string itemCode)
+    public List<Item> GetItemList()
     {
-        Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
-        return result;
+        return itemDB.GetActiveItemList();
     }
-    public void removeItem(string itemCode)
+    public List<Item> GetCatalogueList()
     {
-        Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
-        i.ActiveStatus = "N";
-        inventoryDB.SaveChanges();
+        return itemDB.GetCatalogueList();
     }
-    public List<Item> getItemList()
+    public List<Category> GetCategoryList()
     {
-        List<Item> itemList = inventoryDB.Items
-            .Where(db => db.ActiveStatus == "Y")
-            .ToList();
-        return itemList;
+        return categoryDB.GetCategoryList();
     }
-    public List<Item> getCatalogueList()
+    public Category GetCategorybyID(int categoryID)
     {
-        List<Item> catalogue =
-            inventoryDB.Items
-            .Include("Category")
-            .Where(db => db.ActiveStatus == "Y")
-            .ToList();
-        return catalogue;
+        return categoryDB.GetCategorybyID(categoryID);
     }
-    public List<Category> getCategoryList()
+    public Category GetCategorybyName(string categoryName)
     {
-        List<Category> categories = inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
-        return categories;
+        string i = FirstUpperCase(categoryName);
+        return categoryDB.GetCategorybyName(i);
     }
-    public Category getCategorybyID(int categoryID)
+    public void AddCategory(string categoryName)
     {
-        Category cat = inventoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
-        return cat;
-    }
-    public Category getCategorybyName(string categoryName)
-    {
-        string i = firstUpperCase(categoryName);
-        Category cat = inventoryDB.Categories.Where(x => x.CategoryName == i).FirstOrDefault();
-        return cat;
-    }
-    public void addCategory(string categoryName)
-    {
+        string i = FirstUpperCase(categoryName);
         Category cat = new Category();
-        cat.CategoryName = categoryName;
-        inventoryDB.Categories.Add(cat);
-        inventoryDB.SaveChanges();
+        cat.CategoryName = i;
+        categoryDB.AddCategory(cat);
     }
-    public List<string> getDistinctUOMList()
+    public List<string> GetDistinctUOMList()
     {
-        List<string> uom = inventoryDB.Items.Select(x => x.UnitOfMeasure).Distinct().ToList();
-        return uom;
+        return itemDB.GetDistinctUOMList();
     }
-    public string firstUpperCase(string s)
+    public string FirstUpperCase(string s)
     {
         return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
     }

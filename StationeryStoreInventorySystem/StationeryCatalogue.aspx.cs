@@ -12,7 +12,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Employee user = (Employee)Session["emp"];
-        GridView1.DataSource = ilogic.getCatalogueList();
+        GridView1.DataSource = ilogic.GetCatalogueList();
         if (!IsPostBack)
         {
             //if (user.DeptCode != "STATS")
@@ -45,13 +45,13 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                 case "EditRow":
                     {
                         //editRow method
-                        editRow(index);
+                        EditRow(index);
                     }
                     break;
                 case "RemoveRow":
                     {
-                        removeRow(index);
-                        refreshPage();
+                        RemoveRow(index);
+                        RefreshPage();
                     }
                     break;
                 case "CancelEdit":
@@ -61,8 +61,8 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                     break;
                 case "UpdateRow":
                     {
-                        updateRow(index);
-                        refreshPage();
+                        UpdateRow(index);
+                        RefreshPage();
                     }
                     break;
                 default:
@@ -70,11 +70,11 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             }
         }
     }
-    protected void refreshPage()
+    protected void RefreshPage()
     {
         Response.Redirect(Request.RawUrl);
     }
-    protected void editRow(int index)
+    protected void EditRow(int index)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridView1.EditIndex = index;
@@ -87,26 +87,26 @@ public partial class StationeryCatalogue : System.Web.UI.Page
 
         ddl.DataTextField = "CategoryName";
         ddl.DataValueField = "CategoryID";
-        List<Category> categories = ilogic.getCategoryList();
-        Item item = ilogic.getItem(itemLabel.Text);
+        List<Category> categories = ilogic.GetCategoryList();
+        Item item = ilogic.GetItembyItemCode(itemLabel.Text);
         ddl.DataSource = categories;
         ddl.SelectedValue = item.CategoryID.ToString();
         ddl.DataBind();
 
-        ddl2.DataSource = ilogic.getDistinctUOMList();
+        ddl2.DataSource = ilogic.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
         return;
     }
-    protected void removeRow(int index)
+    protected void RemoveRow(int index)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Label r = (Label)GridView1.Rows[index].FindControl("Label1");
         string output = r.Text;
-        ilogic.removeItem(output);
+        ilogic.RemoveItem(output);
         return;
     }
-    protected void updateRow(int index)
+    protected void UpdateRow(int index)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridViewRow row = GridView1.Rows[index];
@@ -119,7 +119,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         int qty = Convert.ToInt32(reorderQty.Text);
         TextBox bin = (TextBox)row.FindControl("TextBoxBin");
         DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownList4");
-        ilogic.updateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
+        ilogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
         cancelEdit();
     }
     protected void cancelEdit()
@@ -141,7 +141,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //    {
     //        return failure;
     //    }
-    //    else if (ilogic.getItem(itemCode) != null)
+    //    else if (ilogic.GetItembyItemCode(itemCode) != null)
     //    {
     //        return failure;
     //    }

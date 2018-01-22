@@ -10,14 +10,12 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        List<List<TrendReport>> ListOfBROs = (List<List<TrendReport>>)Session["reportsToDisplay"];
+        List<TrendReport> ListOfBROs = (List<TrendReport>)Session["reportsToDisplay"];
         int typeOfReport = (int)Session["typeOfReport"];
 
         switch (typeOfReport)
         {
             case 0:
-                foreach (List<TrendReport> list in ListOfBROs)
-                {
                     CrystalReportViewer crv1 = new CrystalReportViewer();
 
                     ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
@@ -27,82 +25,58 @@ public partial class TrendReportDisplay : System.Web.UI.Page
                     content.Controls.Add(new LiteralControl("<br />"));
                     content.Controls.Add(new LiteralControl("<br />"));
 
-                    //Only Report Type that will appear differs
-
                     RequisitionTrendByDept cr1 = new RequisitionTrendByDept();
                     crv1.ReportSource = cr1;
-                    cr1.SetDataSource(list);
-                }
+                    cr1.SetDataSource(ListOfBROs);              
 
                 break;
 
             case 1:
-                foreach (List<TrendReport> list in ListOfBROs)
-                {
-                    CrystalReportViewer crv1 = new CrystalReportViewer();
+                    CrystalReportViewer crv2 = new CrystalReportViewer();
 
-                    ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
-                    content.Controls.Add(crv1);
-                    crv1.AutoDataBind = true;
+                    ContentPlaceHolder content1 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    content1.Controls.Add(crv2);
+                    crv2.AutoDataBind = true;
 
-                    content.Controls.Add(new LiteralControl("<br />"));
-                    content.Controls.Add(new LiteralControl("<br />"));
+                    content1.Controls.Add(new LiteralControl("<br />"));
+                    content1.Controls.Add(new LiteralControl("<br />"));
 
-                    //Only Report Type that will appear differs
+                    RequisitionTrendByCat cr2 = new RequisitionTrendByCat();
 
-
-                    RequisitionTrendByCat cr1 = new RequisitionTrendByCat();
-
-                    crv1.ReportSource = cr1;
-                    cr1.SetDataSource(list);
-
-                }
+                    crv2.ReportSource = cr2;
+                    cr2.SetDataSource(ListOfBROs);
                 break;
 
             case 2:
-                foreach (List<TrendReport> list in ListOfBROs)
-                {
-                    CrystalReportViewer crv1 = new CrystalReportViewer();
+                    CrystalReportViewer crv3 = new CrystalReportViewer();
 
-                    ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
-                    content.Controls.Add(crv1);
-                    crv1.AutoDataBind = true;
+                    ContentPlaceHolder content2 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    content2.Controls.Add(crv3);
+                    crv3.AutoDataBind = true;
 
-                    content.Controls.Add(new LiteralControl("<br />"));
-                    content.Controls.Add(new LiteralControl("<br />"));
+                    content2.Controls.Add(new LiteralControl("<br />"));
+                    content2.Controls.Add(new LiteralControl("<br />"));
 
-                    //Only Report Type that will appear differs
+                    RORSupplier cr3 = new RORSupplier();
 
-
-                    RORSupplier cr1 = new RORSupplier();
-
-                    crv1.ReportSource = cr1;
-                    cr1.SetDataSource(list);
-
-                }
+                    crv3.ReportSource = cr3;
+                    cr3.SetDataSource(ListOfBROs);
                 break;
 
             case 3:
-                foreach (List<TrendReport> list in ListOfBROs)
-                {
-                    CrystalReportViewer crv1 = new CrystalReportViewer();
+                    CrystalReportViewer crv4 = new CrystalReportViewer();
 
-                    ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
-                    content.Controls.Add(crv1);
-                    crv1.AutoDataBind = true;
+                    ContentPlaceHolder content3 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
+                    content3.Controls.Add(crv4);
+                    crv4.AutoDataBind = true;
 
-                    content.Controls.Add(new LiteralControl("<br />"));
-                    content.Controls.Add(new LiteralControl("<br />"));
+                    content3.Controls.Add(new LiteralControl("<br />"));
+                    content3.Controls.Add(new LiteralControl("<br />"));
 
-                    //Only Report Type that will appear differs
+                    RORCategory cr4 = new RORCategory();
 
-
-                    RORCategory cr1 = new RORCategory();
-
-                    crv1.ReportSource = cr1;
-                    cr1.SetDataSource(list);
-
-                }
+                    crv4.ReportSource = cr4;
+                    cr4.SetDataSource(ListOfBROs);
                 break;
         }
     }

@@ -328,14 +328,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 List<string> catSelected = getSelectedCategories();
                 List<string> duratnSelected = getSelectedDuration();
 
-                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
+                List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                 int splitBySelected = SplitReportRadioButtonList.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string dept in deptSelected)
                     {
-                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName;
                         string departmentName = dept;
@@ -368,15 +367,12 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 basicReportObjects.Add(input);
                             }
                         }
-                        ListOfBROs.Add(basicReportObjects);
                     }
                 }
                 else
                 {
                     foreach (string cat in catSelected)
                     {
-                        List<TrendReport> basicReportObjects = new List<TrendReport>();
-
                         string categoryName = cat;
                         string departmentName = "";
                         int month1 = 0, month2 = 0, month3 = 0;
@@ -408,10 +404,9 @@ public partial class RequisitionTrend : System.Web.UI.Page
                             }
 
                         }
-                        ListOfBROs.Add(basicReportObjects);
                     }
                 }
-                Session["reportsToDisplay"] = ListOfBROs;
+                Session["reportsToDisplay"] = basicReportObjects;
                 Session["typeOfReport"] = splitBySelected;
                 Response.Redirect("TrendReportDisplay.aspx");
             }
@@ -430,14 +425,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 List<string> catSelected = getSelectedCategories();
                 List<string> supplierSelected = getSelectedSuppliers();
 
-                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
+                List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                 int splitBySelected = SplitRORReportRadioButtonList.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string suppl in supplierSelected)
                     {
-                        List<TrendReport> basicReportObjects = new List<TrendReport>();
 
                         string categoryName;
                         string supplierName = suppl;
@@ -470,7 +464,6 @@ public partial class RequisitionTrend : System.Web.UI.Page
                                 basicReportObjects.Add(input);
                             }
                         }
-                        ListOfBROs.Add(basicReportObjects);
                     }
                     Session["typeOfReport"] = 2;
                 }
@@ -478,8 +471,6 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 {
                     foreach (string cat in catSelected)
                     {
-                        List<TrendReport> basicReportObjects = new List<TrendReport>();
-
                         string categoryName = cat;
                         string supplierName = "";
                         int month1 = 0, month2 = 0, month3 = 0;
@@ -511,11 +502,10 @@ public partial class RequisitionTrend : System.Web.UI.Page
                             }
 
                         }
-                        ListOfBROs.Add(basicReportObjects);
                     }
                     Session["typeOfReport"] = 3;
                 }
-                Session["reportsToDisplay"] = ListOfBROs;
+                Session["reportsToDisplay"] = basicReportObjects;
 
                 Response.Redirect("TrendReportDisplay.aspx");
             }

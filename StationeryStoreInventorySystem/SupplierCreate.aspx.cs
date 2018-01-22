@@ -11,7 +11,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
     }
 
     protected void SaveButton_Click(object sender, EventArgs e)

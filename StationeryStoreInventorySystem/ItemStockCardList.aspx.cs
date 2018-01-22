@@ -11,4 +11,38 @@ public partial class ItemStockCardList : System.Web.UI.Page
     {
 
     }
+
+    protected void SearchBtn_Click(object sender, EventArgs e)
+    {
+        List<Item> iList = GenerateDiscrepancyController.GetAllItems();
+        List<Item> searchResults = new List<Item>();
+        string searchString = SearchBox.Text.ToLower();
+        foreach(Item i in iList)
+        {
+            if(i.ItemCode.ToLower().Contains(searchString) || i.Description.ToLower().Contains(searchString))
+            {
+                searchResults.Add(i);
+            }
+        }
+        BindGrid(iList);
+    }
+
+    protected void Display_Click(object sender, EventArgs e)
+    {
+        List<Item> iList = GenerateDiscrepancyController.GetAllItems();
+        BindGrid(iList);
+    }
+
+    private void BindGrid(List<Item> iList)
+    {
+        GridView1.DataSource = iList;
+        GridView1.DataBind();
+
+        foreach(GridViewRow row in GridView1.Rows)
+        {
+            HyperLink itemLink = row.FindControl("lnkStockCard") as HyperLink;
+            Label lblItemCode = row.FindControl("lblItemCode") as Label;
+            itemLink.NavigateUrl = "~/ItemStockCard.aspx?itemCode=" + lblItemCode.Text;
+        }
+    }
 }

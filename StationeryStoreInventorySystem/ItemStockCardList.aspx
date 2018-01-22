@@ -6,26 +6,27 @@
 
      <h2 class="mainPageHeader">Stock Card List</h2>
     <br />
+    <h4>Search By Item Code or Name</h4>
       <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
            &nbsp;
-           <asp:Button ID="SearchBtn" runat="server" Text="Search"/>
+           <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click"/>
            &nbsp;
-           <asp:Button ID="Display" runat="server" Text="Display All" /> <br /><br />
+           <asp:Button ID="Display" runat="server" Text="Display All" OnClick="Display_Click" /> <br /><br />
          <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
             <Columns>              
                 <asp:TemplateField HeaderText="Item Code">                                   
                     <ItemTemplate>
-                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/StockCard.aspx">001</asp:HyperLink>
+                        <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("ItemCode") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>                 
                 <asp:TemplateField HeaderText="Item Description">                                   
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='2B'></asp:Label>
+                        <asp:HyperLink ID="lnkStockCard" runat="server" NavigateUrl="" Text='<%# Bind("Description") %>'></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                <asp:TemplateField HeaderText="Bin#">                                   
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='001'></asp:Label>
+                        <asp:Label ID="lblBin" runat="server" Text='<%# Bind("Bin") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField> 
                

@@ -12,7 +12,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        List<Category> catList = ilogic.getCategoryList();
+        List<Category> catList = ilogic.GetCategoryList();
         Category temp = new Category();
         temp.CategoryID = 0;
         temp.CategoryName = "Other";
@@ -20,7 +20,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         DropDownListCategory.DataSource = catList;
         DropDownListCategory.DataTextField = "CategoryName";
         DropDownListCategory.DataValueField = "CategoryID";
-        List<string> UOMList = ilogic.getDistinctUOMList();
+        List<string> UOMList = ilogic.GetDistinctUOMList();
         UOMList.Add("Other");
         DropDownListUOM.DataSource = UOMList;
         if (Session["itemlist"] == null)
@@ -42,52 +42,54 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
 
     }
 
-    protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
-    {
-        bool failure = false, success = true;
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        Item item = new Item();
-        int level, qty;
-        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
-        {
-            return failure;
-        }
-        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
-        {
-            return failure;
-        }
-        else if (ilogic.getItem(itemCode) != null)
-        {
-            return failure;
-        }
-        else
-        {
-            Category cat = ilogic.getCategorybyName(categoryName);
-            if (cat == null)
-            {
-                categoryName = ilogic.firstUpperCase(categoryName);
-                ilogic.addCategory(categoryName);
-                cat = ilogic.getCategorybyName(categoryName);
-            }
+    //protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
+    //{
+    //    bool failure = false, success = true;
+    //    ItemBusinessLogic ilogic = new ItemBusinessLogic();
+    //    EFBroker_Item itemDB= new EFBroker_Item();
+    //    Item item = new Item();
+    //    int level, qty;
+    //    if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+    //    {
+    //        return failure;
+    //    }
+    //    else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
+    //    {
+    //        return failure;
+    //    }
+    //    else if (ilogic.GetItembyItemCode(itemCode) != null)
+    //    {
+    //        return failure;
+    //    }
+    //    else
+    //    {
+    //        Category cat = ilogic.GetCategorybyName(categoryName);
+    //        if (cat == null)
+    //        {
+    //            categoryName = ilogic.FirstUpperCase(categoryName);
+    //            ilogic.AddCategory(categoryName);
+    //            cat = ilogic.GetCategorybyName(categoryName);
+    //        }
 
-            item.ItemCode = itemCode;
-            item.Category = cat;
-            item.Description = description;
-            item.ReorderLevel = level;
-            item.ReorderQty = qty;
-            item.UnitOfMeasure = UOM;
-            item.Bin = bin;
-            item.ActiveStatus = "Y";
-            item.BalanceQty = 0;
-            ilogic.addItem(item);
-            iList.Add(item);
-            Session["itemlist"] = iList;
-        }
-        return success;
-    }
+    //        item.ItemCode = itemCode;
+    //        item.Category = cat;
+    //        item.Description = description;
+    //        item.ReorderLevel = level;
+    //        item.ReorderQty = qty;
+    //        item.UnitOfMeasure = UOM;
+    //        item.Bin = bin;
+    //        item.ActiveStatus = "Y";
+    //        item.BalanceQty = 0;
+    //        ilogic.AddItem(item);
+    //        iList.Add(item);
+    //        Session["itemlist"] = iList;
+    //    }
+    //    return success;
+    //}
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         //addItem("itemcode","test","test","10","10","test");
         string itemCode, categoryName, description, reorderLevel, reorderQty, uom,bin;
 
@@ -101,8 +103,11 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             categoryName = TextBoxCategory.Text;
             uom = TextBoxUOM.Text;
             bin = TextBoxBin.Text;
-            if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom,bin))
+            Item item = ilogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
+            if (item!= null)
             {
+                iList.Add(item);
+                Session["itemlist"] = iList;
                 TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text= "";
                 Response.Redirect(Request.RawUrl);
             }
@@ -130,7 +135,6 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        string itemCode = args.Value;
-        args.IsValid= (ilogic.getItem(args.Value) == null);
+        args.IsValid= (ilogic.GetItembyItemCode(args.Value) == null);
     }
 }

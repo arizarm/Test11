@@ -24,7 +24,7 @@ public class Requisition_ItemList
     public Requisition_ItemList() { }
 
     public string Description { get { return description; } set { description = value; } }
-    public int? ReqQty { get { return reqQty; } set { reqQty = value; } }
-    public string Uom { get { return uom; } set { uom = value; } }
+    public int? RequestedQty { get { return reqQty; } set { reqQty = value; } }
+    public string UnitOfMeasure { get { return uom; } set { uom = value; } }
     public string Status { get { return status; } set { status = value; } }
 }

@@ -9,62 +9,40 @@ using System.Web;
 /// </summary>
 public class SupplierListController
 {
-    public List<Supplier> listAllSuppliers()
-    {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            List<Supplier> LS = S.Suppliers.ToList();
-            ts.Complete();
 
-            return LS;
-        }
+    public List<Supplier> ListAllSuppliers()
+    {
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        List<Supplier> LS = EFBS.ListAllSuppliers();
+        return LS;
     }
 
-    public Supplier getSupplier(string supplierCode)
+    
+    public Supplier GetSupplierGivenSupplierCode(string supplierCode)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
-            ts.Complete();
-
-            return s;
-        }
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        Supplier s = EFBS.GetSupplierGivenSupplierCode(supplierCode);
+        return s;
     }
 
-    public void updateSupplier(Supplier supplier)
+
+    public void UpdateSupplier(Supplier supplier)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            S.Entry(supplier).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        EFBS.UpdateSupplier(supplier);
     }
 
-    public void deleteSupplier(string supplierCode)
+    //DAO
+    public void DeleteSupplier(string supplierCode)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
-            s.ActiveStatus = "N";
-            S.Entry(s).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        EFBS.DeleteSupplier(supplierCode);
     }
 
-    public void createSupplier(Supplier supplier)
+    //DAO
+    public void CreateSupplier(Supplier supplier)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            S.Suppliers.Add(supplier);
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        EFBS.CreateSupplier(supplier);
     }
 }

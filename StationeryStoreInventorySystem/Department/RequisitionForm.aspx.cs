@@ -86,7 +86,8 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        int RequestedBy = (int)Session["empID"];
+        //int RequestedBy = (int)Session["empID"];
+        int RequestedBy = 1027;
         if (GridView2.Rows.Count <= 0)
         {
             Response.Write("<script>alert('You have not requested any item yet!');</script>");

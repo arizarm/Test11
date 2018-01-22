@@ -32,11 +32,11 @@ public partial class StationeryEntities : DbContext
     public virtual DbSet<Employee> Employees { get; set; }
     public virtual DbSet<Item> Items { get; set; }
     public virtual DbSet<Item_PurchaseOrder> Item_PurchaseOrder { get; set; }
-    public virtual DbSet<PriceList> PriceLists { get; set; }
     public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     public virtual DbSet<Requisition> Requisitions { get; set; }
     public virtual DbSet<Requisition_Item> Requisition_Item { get; set; }
     public virtual DbSet<Retrieval> Retrievals { get; set; }
     public virtual DbSet<StockCard> StockCards { get; set; }
     public virtual DbSet<Supplier> Suppliers { get; set; }
+    public virtual DbSet<PriceList> PriceLists { get; set; }
 }

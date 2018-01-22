@@ -228,6 +228,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
         TenderPriceDropDownList.EditIndex = -1;
         populateTenderSupplyList();
     }
+
+
+    protected void SupplierPhoneNoTextBox_TextChanged(object sender, EventArgs e)
+    {
+        PhoneNoValidator.Enabled = true;
+    }
 }
 
 public class tenderListObj

@@ -9,13 +9,20 @@ using System.Web;
 /// </summary>
 public class EFBroker_PriceList
 {
+    StationeryEntities dbInstance;
+
+    public EFBroker_PriceList()
+    {
+        if (dbInstance == null)
+            dbInstance = new StationeryEntities();
+    }
+
     public void AddPriceListItem(PriceList obj)
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            S.PriceLists.Add(obj);
-            S.SaveChanges();
+            dbInstance.PriceLists.Add(obj);
+            dbInstance.SaveChanges();
             ts.Complete();
         }
     }
@@ -24,10 +31,9 @@ public class EFBroker_PriceList
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
             DateTime dt = DateTime.Now;
             string latestYear = dt.Year.ToString();
-            List<PriceList> lpl = S.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
+            List<PriceList> lpl = dbInstance.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
             ts.Complete();
             return lpl;
         }
@@ -37,10 +43,9 @@ public class EFBroker_PriceList
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            PriceList pl = S.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
-            S.PriceLists.Remove(pl);
-            S.SaveChanges();
+            PriceList pl = dbInstance.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
+            dbInstance.PriceLists.Remove(pl);
+            dbInstance.SaveChanges();
             ts.Complete();
         }
     }

@@ -9,12 +9,19 @@ using System.Web;
 /// </summary>
 public class EFBroker_Supplier
 {
+    StationeryEntities dbInstance;
+
+    public EFBroker_Supplier()
+    {
+        if (dbInstance == null)
+            dbInstance = new StationeryEntities();
+    }
+
     public List<Supplier> ListAllSuppliers()
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            List<Supplier> LS = S.Suppliers.ToList();
+            List<Supplier> LS = dbInstance.Suppliers.ToList();
             ts.Complete();
             return LS;
         }
@@ -24,8 +31,7 @@ public class EFBroker_Supplier
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
+            Supplier s = dbInstance.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
             ts.Complete();
 
             return s;
@@ -36,9 +42,8 @@ public class EFBroker_Supplier
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            S.Entry(supplier).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
+            dbInstance.Entry(supplier).State = System.Data.Entity.EntityState.Modified;
+            dbInstance.SaveChanges();
             ts.Complete();
         }
     }
@@ -47,11 +52,10 @@ public class EFBroker_Supplier
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
+            Supplier s = dbInstance.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
             s.ActiveStatus = "N";
-            S.Entry(s).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
+            dbInstance.Entry(s).State = System.Data.Entity.EntityState.Modified;
+            dbInstance.SaveChanges();
             ts.Complete();
         }
     }
@@ -60,9 +64,8 @@ public class EFBroker_Supplier
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            S.Suppliers.Add(supplier);
-            S.SaveChanges();
+            dbInstance.Suppliers.Add(supplier);
+            dbInstance.SaveChanges();
             ts.Complete();
         }
     }

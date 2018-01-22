@@ -37,4 +37,24 @@ public static class Utility
             Console.ReadLine();
         }
     }
+    public static bool checkIsTempDepHead(Employee e)
+    {
+        DateTime today = DateTime.Now;
+        if (e.IsTempHead == "Y")
+        {
+            if(today >= e.StartDate && today <= e.EndDate )
+            {
+                return true;
+            }
+           else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
+ }
+

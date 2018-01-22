@@ -63,9 +63,9 @@
                     <%-- Report Menu --%>
                     <asp:Label ID="lblReport" runat="server" CssClass="CategoryHeader">Report</asp:Label>
                     <asp:HyperLink ID="hLinkReorderReport" runat="server" NavigateUrl="~/ReorderReport.aspx" CssClass="hyperLinkCategoryStyle">Reorder Report</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkRequisitionTrend" runat="server" NavigateUrl="~/RequisitionTrendReport.aspx" CssClass="hyperLinkCategoryStyle">Requisition Trend</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionTrend" runat="server" NavigateUrl="~/TrendReport.aspx?type=RTR" CssClass="hyperLinkCategoryStyle">Requisition Trend</asp:HyperLink>
                     <asp:HyperLink ID="hLinkInventoryStatus" runat="server" NavigateUrl="~/InventoryStatusReport.aspx" CssClass="hyperLinkCategoryStyle">Inventory Status</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkReorderTrend" runat="server" NavigateUrl="~/ReorderTrendReport.aspx" CssClass="hyperLinkCategoryStyle">Reorder Trend</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkReorderTrend" runat="server" NavigateUrl="~/TrendReport.aspx?type=ROR" CssClass="hyperLinkCategoryStyle">Reorder Trend</asp:HyperLink>
                     
                     <%-- Purchase Order Menu --%>                    
                     <asp:Label ID="lblPruchaseOrder" runat="server" CssClass="CategoryHeader">Purchase Order</asp:Label>

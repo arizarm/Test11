@@ -1,0 +1,663 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class RequisitionTrend : System.Web.UI.Page
+{
+    string reportToSelect;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            reportToSelect = Request.QueryString["type"];
+            switch (reportToSelect)
+            {
+                case "RTR":
+                    displayCommonComponents();
+                    DepartmentLabel.Visible = true;
+                    DepartmentRadioButtonList.Visible = true;
+                    SplitReportRadioButtonList.Visible = true;
+                    HeaderLabel.Text = "Requisition Trend Report";
+                    break;
+                case "ROR":
+                    displayCommonComponents();
+                    SupplierLabel.Visible = true;
+                    SupplierRadioButtonList.Visible = true;
+                    SplitRORReportRadioButtonList.Visible = true;
+                    HeaderLabel.Text = "Reorder Trend Report";
+                    break;
+            }
+            List<string> catAdded = new List<string>();
+            ViewState["catAdded"] = catAdded;
+            ViewState["catSel"] = 0;
+
+            List<string> dateAdded = new List<string>();
+            ViewState["dateAdded"] = dateAdded;
+            ViewState["durSel"] = 0;
+
+            List<string> sharedListAdded = new List<string>();
+            ViewState["sharedListAdded"] = sharedListAdded;
+            ViewState["sharedListSel"] = 0;
+        }
+    }
+
+    protected void displayCommonComponents()
+    {
+        MainTable.Visible = true;
+        DurationLabel.Visible = true;
+        SelectCategoryLabel.Visible = true;
+        DurationRadioButtonList.Visible = true;
+        CategoryRadioButtonList.Visible = true;
+        SplitLabel.Visible = true;
+        GenerateButton.Visible = true;
+    }
+
+    protected void DurationRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int selectedIndex = DurationRadioButtonList.SelectedIndex;
+        switch (selectedIndex)
+        {
+            case 0:
+                FromLabel.Visible = false;
+                FromDropDownList.Visible = false;
+                DurationDropDownList.Visible = false;
+                DurationAddButton.Visible = false;
+                DurationGridView.Visible = false;
+                ViewState["durSel"] = 0;
+                break;
+            case 1:
+                FromLabel.Visible = true;
+                FromDropDownList.Visible = true;
+                DurationDropDownList.Visible = false;
+                DurationAddButton.Visible = false;
+                DurationGridView.Visible = false;
+                ViewState["durSel"] = 1;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> allMonths = grtc.getRequisitionsUpTo2MonthsAgo();
+                FromDropDownList.DataSource = allMonths;
+                FromDropDownList.DataBind();
+                break;
+            case 2:
+                FromLabel.Visible = false;
+                FromDropDownList.Visible = false;
+                DurationDropDownList.Visible = true;
+                DurationAddButton.Visible = true;
+                DurationGridView.Visible = true;
+                ViewState["durSel"] = 2;
+                GenerateRequisitionTrendController grtc1 = new GenerateRequisitionTrendController();
+                List<string> fromMths = grtc1.getUniqueRequisitionMonths();
+                DurationDropDownList.DataSource = fromMths;
+                DurationDropDownList.DataBind();
+                break;
+        }
+    }
+
+    protected void CategoryRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int selectedIndex = CategoryRadioButtonList.SelectedIndex;
+        switch (selectedIndex)
+        {
+            case 0:
+                CategoryDropDownList.Visible = false;
+                CategoryAddButton.Visible = false;
+                CategoryGridView.Visible = false;
+                ViewState["catSel"] = 0;
+                break;
+            case 1:
+                CategoryDropDownList.Visible = true;
+                CategoryAddButton.Visible = true;
+                CategoryGridView.Visible = true;
+                ViewState["catSel"] = 1;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> catNames = grtc.getAllCategoryNames();
+                CategoryDropDownList.DataSource = catNames;
+                CategoryDropDownList.DataBind();
+                break;
+        }
+    }
+
+    protected void DepartmentRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int selectedIndex = DepartmentRadioButtonList.SelectedIndex;
+        switch (selectedIndex)
+        {
+            case 0:
+                SharedDropDownList.Visible = false;
+                SharedAddButton.Visible = false;
+                SharedGridView.Visible = false;
+                ViewState["sharedListSel"] = 0;
+                break;
+            case 1:
+                SharedDropDownList.Visible = true;
+                SharedAddButton.Visible = true;
+                SharedGridView.Visible = true;
+                ViewState["sharedListSel"] = 1;
+                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                List<string> deptNames = grtc.getAllDepartmentNames();
+                SharedDropDownList.DataSource = deptNames;
+                SharedDropDownList.DataBind();
+                break;
+        }
+
+    }
+
+    protected void SupplierRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int selectedIndex = SupplierRadioButtonList.SelectedIndex;
+        switch (selectedIndex)
+        {
+            case 0:
+                SharedDropDownList.Visible = false;
+                SharedAddButton.Visible = false;
+                SharedGridView.Visible = false;
+                ViewState["supplierAdded"] = 0;
+                break;
+            case 1:
+                SharedDropDownList.Visible = true;
+                SharedAddButton.Visible = true;
+                SharedGridView.Visible = true;
+                ViewState["supplierAdded"] = 1;
+                GenerateReorderTrendController grtc = new GenerateReorderTrendController();
+                List<string> supplierNames = grtc.getAllSupplierNames();
+                SharedDropDownList.DataSource = supplierNames;
+                SharedDropDownList.DataBind();
+                break;
+        }
+
+    }
+
+
+    protected void CategoryAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = CategoryDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["catAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["catAdded"]).Add(addMe);
+            CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+            CategoryGridView.DataBind();
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["catAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["catAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.CategoryAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["catAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["catAdded"]).Add(addMe);
+                    CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+                    CategoryGridView.DataBind();
+                    break;
+                }
+            }
+        }
+    }
+
+    protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
+    {
+        //get row position of item
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["catAdded"]).RemoveAt(row.RowIndex);
+        CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
+        CategoryGridView.DataBind();
+    }
+
+    protected void RemoveSharedBtn_Click(object sender, EventArgs e)
+    {
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["sharedListAdded"]).RemoveAt(row.RowIndex);
+        SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+        SharedGridView.DataBind();
+    }
+
+    protected void SharedAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = SharedDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["sharedListAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
+            SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+            SharedGridView.DataBind();
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["sharedListAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["sharedListAdded"])[i].ToString() == addMe)
+                {
+                    if (reportToSelect == "RTR")
+                        Response.Write("<script>alert('" + Message.DepartmentAlreadyInList + "');</script>");
+                    else if (reportToSelect == "ROR")
+                        Response.Write("<script>alert('" + Message.SupplierAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["sharedListAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
+                    SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+                    SharedGridView.DataBind();
+                    break;
+                }
+            }
+        }
+    }
+
+
+    protected void DurationAddButton_Click(object sender, EventArgs e)
+    {
+        string addMe = DurationDropDownList.SelectedItem.Text;
+
+        if (((List<string>)ViewState["dateAdded"]).Count == 0)
+        {
+            ((List<string>)ViewState["dateAdded"]).Add(addMe);
+            DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+            DurationGridView.DataBind();
+        }
+        else if (((List<string>)ViewState["dateAdded"]).Count == 1 || (((List<string>)ViewState["dateAdded"]).Count == 2))
+        {
+            for (int i = 0; i < ((List<string>)ViewState["dateAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["dateAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.DateAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["dateAdded"]).Add(addMe);
+                    DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+                    DurationGridView.DataBind();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ((List<string>)ViewState["dateAdded"]).Count; i++)
+            {
+                if (((List<string>)ViewState["dateAdded"])[i].ToString() == addMe)
+                {
+                    Response.Write("<script>alert('" + Message.DateAlreadyInList + "');</script>");
+                    break;
+                }
+                if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
+                {
+                    ((List<string>)ViewState["dateAdded"]).RemoveAt(0);
+                    ((List<string>)ViewState["dateAdded"]).Add(addMe);
+                    DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+                    DurationGridView.DataBind();
+                    break;
+                }
+            }
+        }
+
+    }
+
+    protected void RemoveDurationBtn_Click(object sender, EventArgs e)
+    {
+        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+
+        ((List<string>)ViewState["dateAdded"]).RemoveAt(row.RowIndex);
+        DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
+        DurationGridView.DataBind();
+    }
+
+    protected void GenerateButton_Click(object sender, EventArgs e)
+    {
+        bool areAllFieldsValid = verifyAllCustomFieldsAreValid();
+        reportToSelect = Request.QueryString["type"];
+        if (reportToSelect == "RTR")
+        {
+
+            if (areAllFieldsValid)
+            {
+                GenerateRequisitionTrendController genRTC = new GenerateRequisitionTrendController();
+                List<string> deptSelected = getSelectedDepartments();
+                List<string> catSelected = getSelectedCategories();
+                List<string> duratnSelected = getSelectedDuration();
+
+                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
+
+                int splitBySelected = SplitReportRadioButtonList.SelectedIndex;
+                if (splitBySelected == 0)
+                {
+                    foreach (string dept in deptSelected)
+                    {
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                        string categoryName;
+                        string departmentName = dept;
+                        int month1 = 0, month2 = 0, month3 = 0;
+
+                        foreach (string cat in catSelected)
+                        {
+                            categoryName = cat;
+                            TrendReport input;
+
+                            if (duratnSelected.Count == 1)
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
+                                basicReportObjects.Add(input);
+                            }
+                            else if (duratnSelected.Count == 2)
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                basicReportObjects.Add(input);
+                            }
+                            else
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                month3 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                basicReportObjects.Add(input);
+                            }
+                        }
+                        ListOfBROs.Add(basicReportObjects);
+                    }
+                }
+                else
+                {
+                    foreach (string cat in catSelected)
+                    {
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                        string categoryName = cat;
+                        string departmentName = "";
+                        int month1 = 0, month2 = 0, month3 = 0;
+
+                        foreach (string dept in deptSelected)
+                        {
+                            departmentName = dept;
+                            TrendReport input;
+                            if (duratnSelected.Count == 1)
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
+                                basicReportObjects.Add(input);
+                            }
+                            else if (duratnSelected.Count == 2)
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                basicReportObjects.Add(input);
+                            }
+                            else
+                            {
+                                month1 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                month2 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                month3 = genRTC.getTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
+                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                basicReportObjects.Add(input);
+                            }
+
+                        }
+                        ListOfBROs.Add(basicReportObjects);
+                    }
+                }
+                Session["reportsToDisplay"] = ListOfBROs;
+                Session["typeOfReport"] = splitBySelected;
+                Response.Redirect("TrendReportDisplay.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('" + Message.CustomFieldsNotSelected + "');</script>");
+            }
+        }
+        else if (reportToSelect == "ROR")
+        {
+
+            if (areAllFieldsValid)
+            {
+                GenerateReorderTrendController genRTC = new GenerateReorderTrendController();
+                List<string> duratnSelected = getSelectedDuration();
+                List<string> catSelected = getSelectedCategories();
+                List<string> supplierSelected = getSelectedSuppliers();
+
+                List<List<TrendReport>> ListOfBROs = new List<List<TrendReport>>();
+
+                int splitBySelected = SplitRORReportRadioButtonList.SelectedIndex;
+                if (splitBySelected == 0)
+                {
+                    foreach (string suppl in supplierSelected)
+                    {
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                        string categoryName;
+                        string supplierName = suppl;
+                        int month1 = 0, month2 = 0, month3 = 0;
+
+                        foreach (string cat in catSelected)
+                        {
+                            categoryName = cat;
+                            TrendReport input;
+
+                            if (duratnSelected.Count == 1)
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
+                                basicReportObjects.Add(input);
+                            }
+                            else if (duratnSelected.Count == 2)
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                basicReportObjects.Add(input);
+                            }
+                            else
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                month3 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                basicReportObjects.Add(input);
+                            }
+                        }
+                        ListOfBROs.Add(basicReportObjects);
+                    }
+                    Session["typeOfReport"] = 2;
+                }
+                else
+                {
+                    foreach (string cat in catSelected)
+                    {
+                        List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                        string categoryName = cat;
+                        string supplierName = "";
+                        int month1 = 0, month2 = 0, month3 = 0;
+
+                        foreach (string suppl in supplierSelected)
+                        {
+                            supplierName = suppl;
+                            TrendReport input;
+                            if (duratnSelected.Count == 1)
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
+                                basicReportObjects.Add(input);
+                            }
+                            else if (duratnSelected.Count == 2)
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                basicReportObjects.Add(input);
+                            }
+                            else
+                            {
+                                month1 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                month2 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                month3 = genRTC.getTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
+                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                basicReportObjects.Add(input);
+                            }
+
+                        }
+                        ListOfBROs.Add(basicReportObjects);
+                    }
+                    Session["typeOfReport"] = 3;
+                }
+                Session["reportsToDisplay"] = ListOfBROs;
+
+                Response.Redirect("TrendReportDisplay.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('" + Message.CustomFieldsNotSelected + "');</script>");
+            }
+        }
+    }
+
+    private List<string> getSelectedSuppliers()
+    {
+        int selectedSuppl = (int)ViewState["sharedListSel"];
+        List<string> supplNames = new List<string>();
+        GenerateReorderTrendController grtc = new GenerateReorderTrendController();
+        switch (selectedSuppl)
+        {
+            case 0:
+                supplNames = grtc.getAllSupplierNames();
+                return supplNames;
+            case 1:
+                foreach (string gvr in (List<string>)ViewState["sharedListAdded"])
+                {
+                    supplNames.Add(gvr);
+                }
+                return supplNames;
+            default:
+                return supplNames;
+        }
+    }
+
+    protected List<string> getSelectedDepartments()
+    {
+        int selectedDept = (int)ViewState["sharedListSel"];
+        List<string> deptNames = new List<string>();
+        GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+        switch (selectedDept)
+        {
+            case 0:
+                deptNames = grtc.getAllDepartmentNames();
+                return deptNames;
+            case 1:
+                foreach (string gvr in (List<string>)ViewState["sharedListAdded"])
+                {
+                    deptNames.Add(gvr);
+                }
+                return deptNames;
+            default:
+                return deptNames;
+        }
+    }
+
+    protected List<string> getSelectedCategories()
+    {
+        int selectedCat = (int)ViewState["catSel"];
+        List<string> catNames = new List<string>();
+        GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+        switch (selectedCat)
+        {
+            case 0:
+                catNames = grtc.getAllCategoryNames();
+                return catNames;
+            case 1:
+                foreach (string gvr in (List<string>)ViewState["catAdded"])
+                {
+                    catNames.Add(gvr);
+                }
+                return catNames;
+            default:
+                return catNames;
+        }
+    }
+
+    protected List<string> getSelectedDuration()
+    {
+        int selectedDuration = (int)ViewState["durSel"];
+        List<string> months = new List<string>();
+        GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+        switch (selectedDuration)
+        {
+            case 0:
+                DateTime dt = DateTime.Now.AddMonths(-2);
+                for (int i = 0; i < 3; i++)
+                {
+                    string mthYr = dt.ToString("MMMM") + " " + dt.Year;
+                    months.Add(mthYr);
+                    dt = dt.AddMonths(1);
+                }
+                return months;
+            case 1:
+                string fromMonth = (string)ViewState["FromMonth"];
+                months = grtc.get3MonthsFromGivenMonth(fromMonth);
+                return months;
+            case 2:
+                List<DateTime> period = new List<DateTime>();
+                foreach (string m in (List<string>)ViewState["dateAdded"])
+                {
+                    string[] bm = m.Trim().Split(' ');
+                    DateTime datte = new DateTime(int.Parse(bm[1]), DateTime.ParseExact(bm[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
+                    period.Add(datte);
+                }
+                period = period.OrderBy(e => e).ToList();
+                foreach (DateTime dtime in period)
+                {
+                    string month = dtime.ToString("MMMM");
+                    string yr = dtime.Year.ToString();
+                    string mYr = month + " " + yr;
+                    months.Add(mYr);
+                }
+                return months;
+            default:
+                return months;
+        }
+    }
+
+    protected bool verifyAllCustomFieldsAreValid()
+    {
+        bool areAllFieldsValid = true;
+
+        if ((int)ViewState["durSel"] == 2)
+        {
+            if (DurationGridView.Rows.Count == 0)
+                areAllFieldsValid = false;
+        }
+
+        if ((int)ViewState["catSel"] == 1)
+        {
+            if (CategoryGridView.Rows.Count == 0)
+                areAllFieldsValid = false;
+        }
+
+        if ((int)ViewState["sharedListSel"] == 1)
+        {
+            if (SharedGridView.Rows.Count == 0)
+                areAllFieldsValid = false;
+        }
+
+        return areAllFieldsValid;
+    }
+
+
+    protected void FromDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ViewState["FromMonth"] = FromDropDownList.SelectedValue;
+    }
+}

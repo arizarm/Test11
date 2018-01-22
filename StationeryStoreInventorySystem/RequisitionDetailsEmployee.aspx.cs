@@ -14,35 +14,36 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        
+            id = Convert.ToInt32(Request.QueryString["id"]);
         //int id = 24;
-
+        
 
         r = RequisitionControl.getRequisition(id);
-        int empid = Convert.ToInt32(r.RequestedBy);
+        int empid =Convert.ToInt32(r.RequestedBy);
         Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 
         if (!IsPostBack)
         {
-
             showAllItems();
-            if (r.Status != "Pending")
+            if(r.Status=="Rejected" || r.Status=="Closed")
             {
                 Cancel.Visible = false;
                 Add.Visible = false;
-                Update.Visible = false;
+            }
 
+            DropDownList2.DataSource = RequisitionControl.getItem();
+            DropDownList2.DataBind();
+
+            if(r.Status!="Pending")
+            {
                 if (r.Remarks != null)
                     Label8.Text = r.Remarks.ToString();
                 else
                     Label8.Text = "-";
             }
-
-            DropDownList2.DataSource = RequisitionControl.getItem();
-            DropDownList2.DataBind();
         }
 
         des = DropDownList2.SelectedItem.ToString();
@@ -67,9 +68,6 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         GridView1.DataSource = q.ToList();
         GridView1.DataBind();
-
-        GridView2.DataSource = q.ToList();
-        GridView2.DataBind();
     }
 
     protected void Cancel_Click(object sender, EventArgs e)
@@ -91,7 +89,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Add_Click(object sender, EventArgs e)
     {
         Panel1.Visible = true;
-
+        
     }
 
     protected void New_Click(object sender, EventArgs e)
@@ -100,35 +98,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
         string code = RequisitionControl.getCode(des);
         int qty = Convert.ToInt32(TextBox1.Text);
 
-        if (GridView1.Rows.Count <= 0)
-        {
-            RequisitionControl.addItemToRequisition(code, qty, id);
-        }
+        RequisitionControl.addItemToRequisition(code, qty, id);
 
-        else
-        {
-            bool isEqual = false;
-            string truCode = "";
-            foreach (GridViewRow row in GridView1.Rows)
-            {
-                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
-                string item = labelDes.Text;
-
-                if (des.Equals(item))
-                {
-                    isEqual = true;
-                    truCode = RequisitionControl.getCode(des);
-                }
-            }
-            if (isEqual)
-            {
-                RequisitionControl.editRequisitionItemQty(id, truCode, qty);
-            }
-            else
-            {
-                RequisitionControl.addItemToRequisition(code, qty, id);
-            }
-        }
 
         showAllItems();
     }
@@ -184,22 +155,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
         GridView1.EditIndex = -1;
         showAllItems();
     }
-    protected void Update_Click(object sender, EventArgs e)
-    {
-        Add.Visible = true;
-        GridView1.Visible = true;
-        GridView2.Visible = false;
-        Update.Visible = false;
-        Save.Visible = true;
-    }
-    protected void Save_Click(object sender, EventArgs e)
-    {
-        Save.Visible = false;
-        Update.Visible = true;
-        GridView2.Visible = true;
-        GridView1.Visible = false;
-        Add.Visible = false;
-        Panel1.Visible = false;
-    }
+
 }
+
 

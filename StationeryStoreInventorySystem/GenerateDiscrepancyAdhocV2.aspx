@@ -11,12 +11,12 @@
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
-                        <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("Key.Key.ItemCode") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='P001'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>
-                        <asp:Label ID="lblDesc" runat="server" Text='<%# Bind("Key.Key.Description") %>'></asp:Label>
+                        <asp:Label ID="Label2" runat="server" Text='2B Pencil'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>               
                 <asp:TemplateField HeaderText="Unit of Measure">
@@ -24,37 +24,31 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.Key.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text='Box'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Quantity in Stock" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.Key.BalanceQty") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='10'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Actual Quantity" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblActual" runat="server" Text='<%# Bind("Key.Value") %>'></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text='9'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Adjustment" ItemStyle-HorizontalAlign="Center">
+                <asp:TemplateField HeaderText="Remarks">
+                    <EditItemTemplate>
+                        
+                    </EditItemTemplate>
                     <ItemTemplate>
-                        <% %>
-                        <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Remarks (Max 100 characters)" ValidateRequestMode="Enabled">
-                    <ItemTemplate>
-                        <asp:TextBox ID="txtRemarks" runat="server" Width="300" MaxLength="100"></asp:TextBox>
+                        <asp:TextBox ID="txtRemarks" runat="server"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <asp:Label ID="Label1" runat="server" ForeColor="Red" Text=""></asp:Label>
         <br />
-        <asp:Label ID="Label5" runat="server" ForeColor="Red" Text=""></asp:Label>
-        <br />
-        <asp:Button ID="Button2" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>     
+        <asp:Button ID="Button2" runat="server" Text="Submit Discrepancy List"  CssClass="button"/>     
     </div>
 </asp:Content>
 

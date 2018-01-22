@@ -7,19 +7,68 @@ using System.Web.UI.WebControls;
 
 public partial class RegenerateRequest : System.Web.UI.Page
 {
+    static DateTime date;
+    static string depName;
+    static string requestedBy;
+    static string status = "Priority";
+
+    static List<RequestedItem> shortfallItem;
+    List<RequestedItem> regenerateItem = new List<RequestedItem>();    
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        GridView1.Visible = true;
-        //Item i1 = new Item("C010","Clips Double 2",5);
-        //Item i2= new Item("S002", "Short Hand Book", 2);
-        //Item i3 = new Item("P049", "Pad Positit 2 x 4", 3);
+        if (!IsPostBack)
+        {
+            date = (DateTime)Session["RegenerateDate"];
+            depName = (string)Session["RegenerateDep"];
+            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+            requestedBy = DisbursementCotrol.getDepRep(depName);
+            gvRegenerate.DataSource = shortfallItem;
+            gvRegenerate.DataBind();
+        }
 
-        //List<Item> itemList = new List<Item>();
-        //itemList.Add(i1);
-        //itemList.Add(i2);
-        //itemList.Add(i3);
+        lblReqDate.Text = date.ToLongDateString();
+        lblDepartment.Text = depName;
+        lblReqBy.Text = requestedBy;
 
-        //GridView1.DataSource = itemList;
-        GridView1.DataBind();
+    }
+
+    protected void CheckAll_CheckedChanged(object sender, EventArgs e)
+    {
+        if (((CheckBox)gvRegenerate.HeaderRow.FindControl("CheckAll")).Checked)
+        {
+            foreach (GridViewRow row in gvRegenerate.Rows)
+            {
+                ((CheckBox)row.FindControl("CheckBox")).Checked = true;
+            }
+        }
+
+        if (!((CheckBox)gvRegenerate.HeaderRow.FindControl("CheckAll")).Checked)
+        {
+            foreach (GridViewRow row in gvRegenerate.Rows)
+            {
+                ((CheckBox)row.FindControl("CheckBox")).Checked = false;
+            }
+        }
+    }
+
+    protected void btnReGenReq_Click(object sender, EventArgs e)
+    {
+        foreach(GridViewRow r in gvRegenerate.Rows)
+        {
+            if( ( (CheckBox) r.FindControl("CheckBox")).Checked)
+            {
+                int i = r.RowIndex;
+                regenerateItem.Add(shortfallItem[i]);
+            }
+        }
+        DisbursementCotrol.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
+
+        ModalPopupExtender1.Show();
+    }
+
+    protected void btnOkay_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/DisbursementList.aspx");
     }
 }

@@ -4,29 +4,37 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
+    <script>function ConfirmApproval(objMsg) {
+    if (confirm(objMsg)) {
+        alert("execute code.");
+        return true;
+    }
+    else
+        return false;
+}</script>
     <h2 class="mainPageHeader">Details Disbursement List</h2>
     
     <table style="width: 30%;">
         <tr>
             <td><b>Date :<br /><br /></b></td>
-            <td><asp:Label ID="lblDate" runat="server" Text="Label"></asp:Label><br /><br /></td>
+            <td><asp:Label ID="lblDate" runat="server"></asp:Label><br /><br /></td>
         </tr>
         <tr>
             <td><b>Time :</b><br /><br /></td>
-            <td><asp:Label ID="lblTime" runat="server" Text="Label"></asp:Label><br /><br /></td>
+            <td><asp:Label ID="lblTime" runat="server" ></asp:Label><br /><br /></td>
         </tr>
         <tr>
             <td><b>Department :</b><br /><br /></td>
-            <td><asp:Label ID="lblDepartment" runat="server" Text="Label"></asp:Label><br /><br /></td>
+            <td><asp:Label ID="lblDepartment" runat="server"></asp:Label><br /><br /></td>
         </tr>
          <tr>
             <td><b>Collection Point :</b><br /><br /></td>
-            <td><asp:Label ID="lblColPoint" runat="server" Text="Label"></asp:Label><br /><br /></td>
+            <td><asp:Label ID="lblColPoint" runat="server" ></asp:Label><br /><br /></td>
         </tr>
     </table>        
                  
 
-    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns="false">
+    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns ="false">
         <Columns>                
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>

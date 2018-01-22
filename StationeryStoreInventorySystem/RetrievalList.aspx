@@ -5,10 +5,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   <div>
         <h2 class="mainPageHeader">Pending Retrieval List</h2>
-           <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
+      <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
+           <asp:Button ID="SearchBtn" runat="server" Text="Search"/>
+           <asp:Button ID="Display" runat="server" Text="Display All" />
     </div>
        <div>        
-         <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid"  AutoGenerateColumns="False">
+         <asp:GridView ID="GridView1" runat="server" Width="100%" CssClass="mGrid"  AutoGenerateColumns="False">
             <Columns>
                
             <asp:TemplateField HeaderText="Date">
@@ -16,9 +18,8 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("RetrievedDate") %>'></asp:Label>
-                        <%--<asp:Label ID="Label1" runat="server" Text='<%# Bind(Convert.ToDateTime(Eval("RetrievedDate")).ToLongDateString())%>'</asp:Label>--%>
-                        </ItemTemplate>
+                        <asp:Label ID="Label4" runat="server" Text="Pending"></asp:Label>
+                    </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Retrieval No">
@@ -26,8 +27,8 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RetrievalID") %>'></asp:Label>
-          </ItemTemplate>
+                        <asp:LinkButton ID="LinkButton2" runat="server" Text='<%# Bind("needed") %>'></asp:LinkButton>
+                    </ItemTemplate>
                 </asp:TemplateField>
 
                 
@@ -36,7 +37,7 @@
                         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("RetrievedBy") %>'></asp:Label>
+                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("name") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>                
 

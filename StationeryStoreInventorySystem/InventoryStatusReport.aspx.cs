@@ -10,8 +10,6 @@ public partial class InventoryStatusReport : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        InventoryCrystalReport cr = new InventoryCrystalReport();
-        cr.SetDataSource(InventoryReportItem.getInventoryReportItems());
-        CrystalReportViewer1.ReportSource = cr;
+
     }
 }

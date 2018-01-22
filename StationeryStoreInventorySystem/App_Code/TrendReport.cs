@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Summary description for TrendReport
-/// </summary>
 public class TrendReport
 {
     string supplanddeptName;
@@ -49,7 +46,7 @@ public class TrendReport
         this.Month3Name = "";
     }
 
-    public string DepartmentName
+    public string SupplierAndDepartmentName
     {
         get
         {

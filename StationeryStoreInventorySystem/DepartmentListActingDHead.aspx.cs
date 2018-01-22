@@ -74,7 +74,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
         int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
         DeptBusinessLogic.UpdateDeptRep(dcode, empid);
 
-        lblMessage.Text = "Update Successfully!";
+        Response.Redirect("DepartmentDetailInfo.aspx");
 
 
     }

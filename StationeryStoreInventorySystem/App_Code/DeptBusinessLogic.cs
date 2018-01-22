@@ -8,29 +8,29 @@ using System.Web;
 /// </summary>
 public class DeptBusinessLogic
 {
-   
-        //
-        // TODO: Add constructor logic here
-        //
-        public static List<Department> GetDepartList()
-         {
-             using (StationeryEntities smodel = new StationeryEntities())
-                {
-                    
-                    return smodel.Departments.ToList<Department>();
-                }
 
-         }
+    //
+    // TODO: Add constructor logic here
+    //
+    public static List<Department> GetDepartList()
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
 
-     public static List<Employee> GetEmployeeList()
-         {
-             using (StationeryEntities smodel = new StationeryEntities())
-                {
-                    
-                    return smodel.Employees.ToList<Employee>();
-                }
+            return smodel.Departments.ToList<Department>();
+        }
 
-         }
+    }
+
+    public static List<Employee> GetEmployeeList()
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+
+            return smodel.Employees.ToList<Employee>();
+        }
+
+    }
 
     public static Department GetDepartByDepCode(string depCode)
     {
@@ -47,12 +47,12 @@ public class DeptBusinessLogic
         using (StationeryEntities smodel = new StationeryEntities())
         {
 
-            return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role =="DepartmentHead").First();
+            return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "DepartmentHead").First();
         }
 
     }
 
-   
+
 
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {
@@ -60,32 +60,47 @@ public class DeptBusinessLogic
         {
 
             return smodel.Employees.Where
-                    (p => p.DeptCode == deptcode && p.Role=="Employee" && p.EmpID != a).ToList<Employee>();
+                    (p => p.DeptCode == deptcode && p.Role == "Employee" && p.EmpID != a).ToList<Employee>();
         }
 
     }
+
 
     public static Employee GetEmployeeListForActingDHeadSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
 
-            Employee e=smodel.Employees.Where
-                    (p => p.DeptCode == deptcode && p.IsTempHead=="Y").First();
-            
+            Employee e = smodel.Employees.Where
+                    (p => p.DeptCode == deptcode && p.IsTempHead == "Y").First();
+
             return e;
-           
+
         }
 
     }
 
-    public static List<Employee> GetEmployeeListForDRep(string deptcode,int a)
+    public static int GetEmployeeListForActingDHeadSelectedCount(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
 
             return smodel.Employees.Where
-                    (p => p.DeptCode == deptcode && p.IsTempHead=="N" && p.Role != "DepartmentHead" && p.EmpID!=a).ToList<Employee>();
+                    (p => p.DeptCode == deptcode && p.IsTempHead == "Y").Count();
+
+            
+
+        }
+
+    }
+
+    public static List<Employee> GetEmployeeListForDRep(string deptcode, int a)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+
+            return smodel.Employees.Where
+                    (p => p.DeptCode == deptcode && p.IsTempHead == "N" && p.Role != "DepartmentHead" && p.EmpID != a).ToList<Employee>();
         }
 
     }
@@ -96,7 +111,7 @@ public class DeptBusinessLogic
         {
 
             Employee e = smodel.Employees.Where
-                    (p => p.DeptCode == deptcode && p.Role== "Representative").First();
+                    (p => p.DeptCode == deptcode && p.Role == "Representative").First();
             return e;
 
         }
@@ -109,7 +124,7 @@ public class DeptBusinessLogic
         {
 
             return smodel.CollectionPoints.ToList<CollectionPoint>();
-                    
+
         }
 
     }
@@ -119,21 +134,21 @@ public class DeptBusinessLogic
         {
 
             var d = smodel.Departments.Where(p => p.DeptCode == deptcode)
-                            .Join(smodel.CollectionPoints,p=>p.CollectionLocationID,c=>c.CollectionLocationID,(p,c)=>new { Department = p, CollectionPoint = c})
-                            .Select(a=>new { a.CollectionPoint.CollectionPoint1}).First();
+                            .Join(smodel.CollectionPoints, p => p.CollectionLocationID, c => c.CollectionLocationID, (p, c) => new { Department = p, CollectionPoint = c })
+                            .Select(a => new { a.CollectionPoint.CollectionPoint1 }).First();
             return d.CollectionPoint1;
 
-            
+
 
         }
 
     }
 
-    public static void UpdateCollectionPoint(string depcode,int? collectpoint)
+    public static void UpdateCollectionPoint(string depcode, int? collectpoint)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
-            Department dept = smodel.Departments.Where(p => p.DeptCode== depcode).First<Department>();
+            Department dept = smodel.Departments.Where(p => p.DeptCode == depcode).First<Department>();
             dept.CollectionLocationID = collectpoint;
             smodel.SaveChanges();
         }
@@ -150,35 +165,60 @@ public class DeptBusinessLogic
                 Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
                 emp.Role = "Representative";
                 smodel.SaveChanges();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                
+
             }
         }
     }
 
-    public static void UpdateActingDHead(string depcode, int empid,string sdate,string edate)
+    public static void UpdateActingDHead(string depcode, int empid, string sdate, string edate)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
             try
             {
-                Employee orgemp = smodel.Employees.Where(q => q.DeptCode == depcode && q.IsTempHead=="Y").First<Employee>();
-                orgemp.IsTempHead="N";
-                orgemp.StartDate = null;
-                orgemp.EndDate = null;
-                Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
-                emp.IsTempHead="Y";
-               
-                emp.StartDate =Convert.ToDateTime(sdate);
-                emp.EndDate = Convert.ToDateTime(edate);
-                smodel.SaveChanges();
+                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(depcode) <= 0)
+                {
+                    Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
+                    emp.IsTempHead = "Y";
+
+                    emp.StartDate = Convert.ToDateTime(sdate);
+                    emp.EndDate = Convert.ToDateTime(edate);
+                    smodel.SaveChanges();
+                }
+                else
+                {
+
+
+                    Employee orgemp = smodel.Employees.Where(q => q.DeptCode == depcode && q.IsTempHead == "Y").First<Employee>();
+                    orgemp.IsTempHead = "N";
+                    orgemp.StartDate = null;
+                    orgemp.EndDate = null;
+                    Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
+                    emp.IsTempHead = "Y";
+
+                    emp.StartDate = Convert.ToDateTime(sdate);
+                    emp.EndDate = Convert.ToDateTime(edate);
+                    smodel.SaveChanges();
+                }
             }
             catch (Exception e)
             {
-               
+
             }
         }
     }
 
+    public static void UpdateRevoke()
+    {
+        StationeryEntities context = new StationeryEntities();
+        Employee emp = context.Employees.Where(em => em.IsTempHead.Equals("Y")).FirstOrDefault();
+        emp.IsTempHead = "N";
+        emp.StartDate = null;
+        emp.EndDate = null;
+        context.SaveChanges();
+       
+    }
 }

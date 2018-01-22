@@ -26,7 +26,7 @@ public static class Utility
 
             sc.Host = "smtp.gmail.com";
             sc.Port = 587;
-            sc.Credentials = new System.Net.NetworkCredential("iss.team11.stationery@gmail.com", "password");
+            sc.Credentials = new System.Net.NetworkCredential("iss.team11.stationery@gmail.com", "123!@#iss");
             sc.EnableSsl = true; // runtime encrypt the SMTP communications using SSL
             sc.Send(m);
             Console.ReadLine();

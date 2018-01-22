@@ -8,16 +8,16 @@ using System.Web.UI.WebControls;
 public partial class DepartmentListActingDHead : System.Web.UI.Page
 {
     static string dcode = "BDTD";
-    Employee empActingDHead = DeptBusinessLogic.getEmployeeListForActingDHeadSelected(dcode);
-    Employee empDRep = DeptBusinessLogic.getEmployeeListForDRepSelected(dcode);
+    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
+    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
     protected void Page_Load(object sender, EventArgs e)
     {
 
         Session["deptcode"] = dcode;
         if (!IsPostBack)
         {
-            Department dept = DeptBusinessLogic.getDepartByDepCode(dcode);
-            Employee emp = DeptBusinessLogic.getEmployeeByDeptCode(dcode);
+            Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
+            Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
 
             string aheadname = empActingDHead.EmpName;
             string dname = dept.DeptName;
@@ -47,15 +47,15 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
             //UpdateDeptRp
             string empDRepname = empDRep.EmpName;
-            DropDownListDRep.DataSource = DeptBusinessLogic.getEmployeeListForDRep(dcode, empid);
+            DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, empid);
             DropDownListDRep.DataTextField = "EmpName";
             DropDownListDRep.DataValueField = "EmpID";
             DropDownListDRep.DataBind();
             DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
 
             //UpdateCollectionPoint
-            string empCollectionname = DeptBusinessLogic.getDepartmentForCollectionPointSelected(dcode);
-            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.getCollectionPointList();
+            string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
             DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
             DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
             DropDownListCollectionPoint.DataBind();

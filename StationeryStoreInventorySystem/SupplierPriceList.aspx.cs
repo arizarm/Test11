@@ -33,7 +33,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
                 TextBox1.Text = S.SupplierCode;
                 TextBox2.Text = S.SupplierName;
                 TextBox3.Text = S.SupplierContactName;
-                TextBox4.Text = S.SupplierPhone;
+                SupplierPhoneNoTextBox.Text = S.SupplierPhone;
                 TextBox5.Text = S.SupplierFax;
                 TextBox6.Text = S.SupplierAddress;
                 TextBox8.Text = S.SupplierEmail;
@@ -58,24 +58,24 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         Supplier S = new Supplier();
         S.SupplierCode = TextBox1.Text;
-        S.SupplierName = TextBox2.Text ;
-        S.SupplierContactName = TextBox3.Text ;
-        S.SupplierPhone = TextBox4.Text ;
-        S.SupplierFax = TextBox5.Text ;
-        S.SupplierAddress = TextBox6.Text ;
-        S.SupplierEmail = TextBox8.Text ;
-        S.ActiveStatus = TextBox9.Text ;
+        S.SupplierName = TextBox2.Text;
+        S.SupplierContactName = TextBox3.Text;
+        S.SupplierPhone = SupplierPhoneNoTextBox.Text;
+        S.SupplierFax = TextBox5.Text;
+        S.SupplierAddress = TextBox6.Text;
+        S.SupplierEmail = TextBox8.Text;
+        S.ActiveStatus = TextBox9.Text;
         slc.updateSupplier(S);
         Response.Write("<script>alert('" + Message.UpdateSuccessful + "');</script>");
     }
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
-            slc.deleteSupplier(code);
+        slc.deleteSupplier(code);
 
         Response.Write(@"
          <script>
-        alert('"+ Message.InactiveSuccessful + "'); window.location = '" + "SupplierList.aspx" + @"';    
+        alert('" + Message.InactiveSuccessful + "'); window.location = '" + "SupplierList.aspx" + @"';    
             </script>");
     }
 
@@ -98,7 +98,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
                 pl.SupplierRank = int.Parse(PriorityRankList.SelectedValue);
             if (!ValidatorUtil.isEmpty(TextBox11.Text))
                 pl.TenderYear = (TextBox11.Text);
-            
+
             mplc.addPriceListItem(pl);
             defaultDropDownListRestore();
             populateTenderSupplyList();
@@ -216,7 +216,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
         //get description of item for this supplier
         System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
-        string itemDesc = itemDescLabel.Text;               
+        string itemDesc = itemDescLabel.Text;
 
         //get the pricelist composite primary key
         PriceList pl = mplc.getPriceListObjForGivenDescNSupplier(itemDesc, code);
@@ -227,6 +227,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
         TenderPriceDropDownList.EditIndex = -1;
         populateTenderSupplyList();
+    }
+
+
+    protected void SupplierPhoneNoTextBox_TextChanged(object sender, EventArgs e)
+    {
+        PhoneNoValidator.Enabled = true;
     }
 }
 

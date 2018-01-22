@@ -1,65 +1,225 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
-/// <summary>
-/// Summary description for DisbursementCotrol
-/// </summary>
 public class DisbursementCotrol
 {
     static StationeryEntities context = new StationeryEntities();
-    static List<Disbursement> testDisb;
-    static List<disbursementListItems> disbursementListItems;
-    static disbursementListItems item;
+
+    static string disbID;
+
+    static List<Disbursement> disbursement = new List<Disbursement>();
+
+    static DisbursementListItems disbursementListItems;
+    static List<DisbursementListItems> disbursementListItemsList;
+
+    static List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
+
+    static DisbursementDetailListItems disbursementDetailListItems;
+    static List<DisbursementDetailListItems> disbursementDetailListItemsList;
 
 
-    public static List<disbursementListItems> gvDisbursementPopulate()
+    //GET DISBURSEMENT LIST TO DISPLAY
+    public static List<DisbursementListItems> gvDisbursementPopulate()
     {
-        testDisb = new List<Disbursement>();
-        disbursementListItems = new List<disbursementListItems>();
+        //create new list
+        disbursementListItemsList = new List<DisbursementListItems>();
 
-        testDisb = context.Disbursements.ToList();
+        //get all disbursement data
+        disbursement = context.Disbursements.Include("Department").ToList();
 
+        //attributes to display
         string disbId;
         string depName;
         string collectionPoint;
         string collectionDate;
         string collectionTime;
         string depCode;
-        int colId;
 
-        for (int i = 0; i < testDisb.Count; i++)
+        //for each disbursement 
+        for (int i = 0; i < disbursement.Count; i++)
         {
-            disbId = testDisb[i].DisbursementID.ToString();
+            //get disbursement id
+            disbId = disbursement[i].DisbursementID.ToString();
 
-            depCode = testDisb[i].DeptCode;
-            depName = context.Departments.Where(x => x.DeptCode.Equals(depCode)).Select(x => x.DeptName).First().ToString();
+            //get deparment name
+            depCode = disbursement[i].DeptCode;
+            depName = disbursement[i].Department.DeptName;
 
-            collectionDate = testDisb[i].CollectionDate.Value.ToLongDateString();
-            collectionTime = testDisb[i].CollectionTime.ToString();
+            //get formatted collection date
+            collectionDate = disbursement[i].CollectionDate.Value.ToLongDateString();
 
-            colId = Convert.ToInt32(context.Departments.Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionLocationID).First().ToString());
-            collectionPoint = context.CollectionPoints.Where(x => x.CollectionLocationID.Equals(colId)).Select(x => x.CollectionPoint1).First().ToString();
+            //get collection time
+            collectionTime = disbursement[i].CollectionTime.ToString();
 
-            item = new disbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);
-            disbursementListItems.Add(item);
+            //get collection point
+            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).First().ToString();
+            
+            //put all data to display class
+            disbursementListItems = new DisbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);
+
+            //add display data to list
+            disbursementListItemsList.Add(disbursementListItems);
         }
 
-        return disbursementListItems;
+        //return list to display
+        return disbursementListItemsList;
     }
 
-    public static List<string> gvDisbursementDetailPopulate(string disbId)
+    //GET DISBURSEMENT DETAIL OBJECT TO DISPLAY
+    public static DisbursementListItems DisbursementListItemsObj(string disbId)
     {
-        List<string> date = new List<string>();
+        disbID = disbId;
 
-        foreach(disbursementListItems i in disbursementListItems)
+        //get selected disbursement data
+        DisbursementListItems disbItem = null;
+        if (disbursementListItems.DisbId == disbID)
         {
-            if(i.DisbId.ToString() == disbId)
-            {
-                date.Add(i.CollectionDate.ToString());
-            }            
+            disbItem = disbursementListItems;
         }
-        return date;
+        return disbItem;
     }
+
+    //GET DISBURSEMENT DETAIL LIST TO DISPLAY
+    public static List<DisbursementDetailListItems> gvDisbursementDetailPopulate()
+    {
+        disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
+
+        disbursementDetail = context.Disbursement_Item.Include("Item").Where(x => x.DisbursementID.ToString().Equals(disbID)).ToList();
+
+        string itemDesc;
+        int reqQty;
+        int actualQty;
+        string remarks;
+        string itemCode;
+
+        foreach (Disbursement_Item disbDetails in disbursementDetail)
+        {
+            itemCode = disbDetails.ItemCode;
+            itemDesc = disbDetails.Item.Description;
+            actualQty = (int)disbDetails.ActualQty;
+            remarks = disbDetails.Remarks;
+            reqQty = (int)disbDetails.TotalRequestedQty;
+
+            disbursementDetailListItems = new DisbursementDetailListItems(itemCode, itemDesc, reqQty, actualQty, remarks);
+
+            disbursementDetailListItemsList.Add(disbursementDetailListItems);
+        }
+        return disbursementDetailListItemsList;
+    }
+
+    //VERIFY ACCESS CODE
+    public static bool checkAccessCode(string accessCode)
+    {
+        if ((context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.AccessCode).First().ToString()).Equals(accessCode))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }      
+    }
+
+    //Get earliest date for regenerate requisition
+    public static DateTime getRegenrateDate()
+    {
+        List<string> dateList = new List<string>();
+
+        dateList = context.Requisitions.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.RequestDate.ToString()).ToList();
+
+        DateTime inputDate = new DateTime();
+        DateTime earliestDate = new DateTime();
+
+        foreach (string dateString in dateList)
+        {
+            inputDate = DateTime.Parse(dateString);
+
+            if (earliestDate.ToString().Equals("1/1/0001 12:00:00 AM"))
+            {
+                earliestDate = DateTime.Parse(dateString);
+            }
+            else
+            {
+                if (inputDate.CompareTo(earliestDate) < 0)
+                {
+                    earliestDate = inputDate;
+                }
+            }
+        }
+        return earliestDate;
+    }
+
+
+    //get Department Representative Name by Department Name
+    public static string getDepRep(string depName)
+    {
+        return context.Employees.Include("Department").Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First().ToString();
+    }
+
+    //get Employee ID by Employee Name
+    public static int getEmpIdbyEmpName(string empName)
+    {
+        return context.Employees.Where(x => x.EmpName.Equals(empName)).Select(x => x.EmpID).First();
+    }
+
+
+    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int RequestedBy)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition r = new Requisition();
+
+            //to pass from previous form
+            r.RequestDate = date;
+            r.Status = status;
+            r.RequestedBy = RequestedBy;
+
+            context.Requisitions.Add(r);
+            context.SaveChanges();
+
+            foreach (RequestedItem i in item)
+            {
+                int qty = i.Quantity;
+
+                string code = i.Code;
+
+                Requisition_Item ri = new Requisition_Item();
+                ri.RequisitionID = r.RequisitionID;
+                ri.ItemCode = code;
+                ri.RequestedQty = qty;
+                context.Requisition_Item.Add(ri);
+                context.SaveChanges();
+            }
+            ts.Complete();
+        }
+    }
+
+    //ADD REQUISITION ITEM
+    public static void addItemToRequisition(string code, int qty, int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition_Item ri = new Requisition_Item();
+            ri.RequisitionID = id;
+            ri.ItemCode = code;
+            ri.RequestedQty = qty;
+            context.Requisition_Item.Add(ri);
+            context.SaveChanges();
+        }
+    }
+
+    //Regenerate Requisition
+    //public static void RegenerateRequisition()
+    //{
+    //   Requisition_Item ri = new Requisition_Item();
+    //        ri.RequisitionID = id;
+    //        ri.ItemCode = code;
+    //        ri.RequestedQty = qty;
+    //        context.Requisition_Item.Add(ri);
+    //        context.SaveChanges();
+    //}   
 }

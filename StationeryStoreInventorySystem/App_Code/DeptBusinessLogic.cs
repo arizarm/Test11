@@ -8,6 +8,20 @@ using System.Web;
 /// </summary>
 public class DeptBusinessLogic
 {
+<<<<<<< HEAD
+=======
+   
+        //
+        // TODO: Add constructor logic here
+        //
+        public static List<Department> getDepartList()
+         {
+             using (StationeryEntities smodel = new StationeryEntities())
+                {
+                    
+                    return smodel.Departments.ToList<Department>();
+                }
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
 
     //
     // TODO: Add constructor logic here
@@ -17,6 +31,7 @@ public class DeptBusinessLogic
         using (StationeryEntities smodel = new StationeryEntities())
         {
 
+<<<<<<< HEAD
             return smodel.Departments.ToList<Department>();
         }
 
@@ -33,6 +48,9 @@ public class DeptBusinessLogic
     }
 
     public static Department GetDepartByDepCode(string depCode)
+=======
+    public static Department getDepartByDepCode(string depCode)
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -42,7 +60,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee GetDHeadByDeptCode(string depCode)
+    public static Employee getEmployeeByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -51,10 +69,14 @@ public class DeptBusinessLogic
         }
 
     }
+<<<<<<< HEAD
 
 
 
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
+=======
+    public static List<Employee> getEmployeeListForActingDHead(string deptcode, int a)
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -65,8 +87,12 @@ public class DeptBusinessLogic
 
     }
 
+<<<<<<< HEAD
 
     public static Employee GetEmployeeListForActingDHeadSelected(string deptcode)
+=======
+    public static Employee getEmployeeListForActingDHeadSelected(string deptcode)
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -94,7 +120,11 @@ public class DeptBusinessLogic
 
     }
 
+<<<<<<< HEAD
     public static List<Employee> GetEmployeeListForDRep(string deptcode, int a)
+=======
+    public static List<Employee> getEmployeeListForDRep(string deptcode,int a)
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -105,7 +135,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee GetEmployeeListForDRepSelected(string deptcode)
+    public static Employee getEmployeeListForDRepSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -118,7 +148,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static List<CollectionPoint> GetCollectionPointList()
+    public static List<CollectionPoint> getCollectionPointList()
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -128,7 +158,7 @@ public class DeptBusinessLogic
         }
 
     }
-    public static string GetDepartmentForCollectionPointSelected(string deptcode)
+    public static string getDepartmentForCollectionPointSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -144,7 +174,11 @@ public class DeptBusinessLogic
 
     }
 
+<<<<<<< HEAD
     public static void UpdateCollectionPoint(string depcode, int? collectpoint)
+=======
+    public static void UpdateCollectionPoint(string depcode,int collectpoint)
+>>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {

@@ -92,10 +92,8 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
                 reqNo.Add((row.FindControl("lblrequisitionNo") as Label).Text);
             }
         }
-
-        Session["reqNo"] = reqNo;
-        Response.Redirect("RequisitionDetails.aspx");
-
+       // Session["reqNo"] = Convert.ToInt32(reqNo); //Convert.ToInt32(reqNo)
+       // RequisitionControl.AddDisbursemen_Item(reqNo);
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

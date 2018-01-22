@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -14,7 +15,6 @@
         <EntityTypeShape EntityType="StationeryModel.Employee" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryModel.Item" Width="1.5" PointX="10.5" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryModel.Item_PurchaseOrder" Width="1.5" PointX="12.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StationeryModel.PriceList" Width="1.5" PointX="12.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryModel.Requisition" Width="1.5" PointX="15" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StationeryModel.Requisition_Item" Width="1.5" PointX="17.25" PointY="14.25" IsExpanded="true" />
@@ -38,13 +38,14 @@
         <AssociationConnector Association="StationeryModel.FK__Requisiti__Reque__2E1BDC42" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__Retrieval__Retri__22AA2996" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__Item_Purc__ItemC__3B75D760" ManuallyRouted="false" />
-        <AssociationConnector Association="StationeryModel.FK__PriceList__ItemC__1FCDBCEB" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__Requisiti__ItemC__32E0915F" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__StockCard__ItemC__4316F928" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__Item_Purc__Purch__3A81B327" ManuallyRouted="false" />
-        <AssociationConnector Association="StationeryModel.FK__PriceList__Suppl__1ED998B2" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__PurchaseO__Suppl__35BCFE0A" ManuallyRouted="false" />
         <AssociationConnector Association="StationeryModel.FK__Requisiti__Requi__31EC6D26" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StationeryModel.PriceList" Width="1.5" PointX="12.75" PointY="6.5" />
+        <AssociationConnector Association="StationeryModel.FK__PriceList__ItemC__4AB81AF0" />
+        <AssociationConnector Association="StationeryModel.FK__PriceList__Suppl__49C3F6B7" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

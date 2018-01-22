@@ -20,6 +20,46 @@ public class ItemBusinessLogic
         // TODO: Add constructor logic here
         //
     }
+    public Item AddItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
+    {
+        Item item = new Item();
+        int level, qty;
+        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+        {
+            return null;
+        }
+        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
+        {
+            return null;
+        }
+        else if (itemDB.GetItembyItemCode(itemCode) != null)
+        {
+            return null;
+        }
+        else
+        {
+            Category cat = categoryDB.GetCategorybyName(categoryName);
+            if (cat == null)
+            {
+                AddCategory(categoryName);
+                cat = categoryDB.GetCategorybyName(categoryName);
+            }
+
+            item.ItemCode = itemCode;
+            item.Category = cat;
+            item.Description = description;
+            item.ReorderLevel = level;
+            item.ReorderQty = qty;
+            item.UnitOfMeasure = UOM;
+            item.Bin = bin;
+            item.ActiveStatus = "Y";
+            item.BalanceQty = 0;
+            itemDB.AddItem(item);
+            //iList.Add(item);
+            //Session["itemlist"] = iList;
+        }
+        return item;
+    }
     public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Category category = GetCategorybyName(categoryName);

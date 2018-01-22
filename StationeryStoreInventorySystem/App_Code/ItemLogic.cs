@@ -2,32 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data;
-using System.Reflection;
 
 /// <summary>
-/// Summary description for ItemBusinessLogic
+/// Summary description for ItemLogic
 /// </summary>
-public class ItemBusinessLogic
+public class ItemLogic
 {
     StationeryEntities inventoryDB;
-    public ItemBusinessLogic()
+    public ItemLogic()
     {
-        inventoryDB = new StationeryEntities();
+        inventoryDB=new StationeryEntities();
         //
         // TODO: Add constructor logic here
         //
     }
-    public void updateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public void updateItem(string itemCode, int categoryID,string description,int reorderLevel,int reorderQty,string unitOfMeasure)
     {
         Item i = getItem(itemCode);
-        Category category = getCategorybyName(categoryName);
+        Category category = getCategorybyID(categoryID);
         i.CategoryID = category.CategoryID;
         i.Description = description;
         i.ReorderLevel = reorderLevel;
         i.ReorderQty = reorderQty;
         i.UnitOfMeasure = unitOfMeasure;
-        i.Bin = bin;
         inventoryDB.SaveChanges();
         return;
     }
@@ -48,13 +45,6 @@ public class ItemBusinessLogic
         i.ActiveStatus = "N";
         inventoryDB.SaveChanges();
     }
-    public List<Item> getItemList()
-    {
-        List<Item> itemList = inventoryDB.Items
-            .Where(db => db.ActiveStatus == "Y")
-            .ToList();
-        return itemList;
-    }
     public List<Item> getCatalogueList()
     {
         List<Item> catalogue =
@@ -66,7 +56,7 @@ public class ItemBusinessLogic
     }
     public List<Category> getCategoryList()
     {
-        List<Category> categories = inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
+        List<Category> categories= inventoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
         return categories;
     }
     public Category getCategorybyID(int categoryID)
@@ -80,11 +70,9 @@ public class ItemBusinessLogic
         Category cat = inventoryDB.Categories.Where(x => x.CategoryName == i).FirstOrDefault();
         return cat;
     }
-    public void addCategory(string categoryName)
+    public void addCategory(Category category)
     {
-        Category cat = new Category();
-        cat.CategoryName = categoryName;
-        inventoryDB.Categories.Add(cat);
+        inventoryDB.Categories.Add(category);
         inventoryDB.SaveChanges();
     }
     public List<string> getDistinctUOMList()

@@ -13,8 +13,8 @@ public partial class SupplierList : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            SupplierListController slc = new SupplierListController();
-            List<Supplier> LS = slc.listAllSuppliers();
+            SupplierListController Slc = new SupplierListController();
+            List<Supplier> LS = Slc.ListAllSuppliers();
 
             GridView1.DataSource = LS;
             GridView1.DataBind();

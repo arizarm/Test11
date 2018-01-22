@@ -13,23 +13,23 @@ using System.Data.Entity.Infrastructure;
 
 public partial class SupplierPriceList : System.Web.UI.Page
 {
-    string code;
-    SupplierListController slc = new SupplierListController();
-    MaintainPriceListController mplc = new MaintainPriceListController();
-    ArrayList tenderSupplyList;
+    string Code;
+    SupplierListController Slc = new SupplierListController();
+    MaintainPriceListController Mplc = new MaintainPriceListController();
+    ArrayList TenderSupplyList;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
             //get string parameter from URL
-            code = Request.QueryString["SupplierCode"];
-            tenderSupplyList = new ArrayList();
+            Code = Request.QueryString["SupplierCode"];
+            TenderSupplyList = new ArrayList();
 
             if (!IsPostBack)
             {
                 //Set Default Supplier Info on Page
-                Supplier S = slc.getSupplier(code);
+                Supplier S = Slc.GetSupplier(Code);
                 TextBox1.Text = S.SupplierCode;
                 TextBox2.Text = S.SupplierName;
                 TextBox3.Text = S.SupplierContactName;
@@ -41,9 +41,9 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
 
                 //Populate dropdownlists for Item and Category
-                defaultDropDownListRestore();
+                DefaultDropDownListRestore();
                 //Populate dropdownlist for TenderSupply
-                populateTenderSupplyList();
+                PopulateTenderSupplyList();
             }
         }
         catch (InvalidOperationException)
@@ -65,13 +65,13 @@ public partial class SupplierPriceList : System.Web.UI.Page
         S.SupplierAddress = TextBox6.Text;
         S.SupplierEmail = TextBox8.Text;
         S.ActiveStatus = TextBox9.Text;
-        slc.updateSupplier(S);
+        Slc.UpdateSupplier(S);
         Response.Write("<script>alert('" + Message.UpdateSuccessful + "');</script>");
     }
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
-        slc.deleteSupplier(code);
+        Slc.DeleteSupplier(Code);
 
         Response.Write(@"
          <script>
@@ -89,19 +89,19 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         try
         {
-            PriceList pl = new PriceList();
-            pl.SupplierCode = code;
-            pl.ItemCode = mplc.getItemCodeForGivenItemName(ItemDropDownList.SelectedItem.Value);
+            PriceList Pl = new PriceList();
+            Pl.SupplierCode = Code;
+            Pl.ItemCode = Mplc.GetItemCodeForGivenItemName(ItemDropDownList.SelectedItem.Value);
             if (!ValidatorUtil.isEmpty(TextBox7.Text))
-                pl.Price = decimal.Parse(TextBox7.Text);
+                Pl.Price = decimal.Parse(TextBox7.Text);
             if (!(PriorityRankList.SelectedValue == "NA"))
-                pl.SupplierRank = int.Parse(PriorityRankList.SelectedValue);
+                Pl.SupplierRank = int.Parse(PriorityRankList.SelectedValue);
             if (!ValidatorUtil.isEmpty(TextBox11.Text))
-                pl.TenderYear = (TextBox11.Text);
+                Pl.TenderYear = (TextBox11.Text);
 
-            mplc.addPriceListItem(pl);
-            defaultDropDownListRestore();
-            populateTenderSupplyList();
+            Mplc.AddPriceListItem(Pl);
+            DefaultDropDownListRestore();
+            PopulateTenderSupplyList();
             Response.Write("<script>alert('" + Message.SuccessfulItemAdd + "');</script>");
         }
         catch (DbUpdateException)
@@ -118,13 +118,13 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         if ((CategoryDropDownList.SelectedIndex != 0))
         {
-            List<string> shortlistedItems = mplc.getAllItemNamesForGivenCat(CategoryDropDownList.SelectedItem.Value.ToString());
-            ItemDropDownList.DataSource = shortlistedItems;
+            List<string> ShortlistedItems = Mplc.GetAllItemNamesForGivenCat(CategoryDropDownList.SelectedItem.Value.ToString());
+            ItemDropDownList.DataSource = ShortlistedItems;
             ItemDropDownList.DataBind();
         }
         else
         {
-            defaultDropDownListRestore();
+            DefaultDropDownListRestore();
         }
     }
 
@@ -132,29 +132,29 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         if (ItemDropDownList.SelectedIndex != 0)
         {
-            string catName = mplc.getCatForGivenItem(ItemDropDownList.SelectedItem.Value.ToString());
-            CategoryDropDownList.SelectedValue = catName;
+            string CatName = Mplc.GetCatForGivenItem(ItemDropDownList.SelectedItem.Value.ToString());
+            CategoryDropDownList.SelectedValue = CatName;
         }
         else
         {
-            defaultDropDownListRestore();
+            DefaultDropDownListRestore();
         }
     }
 
-    protected void defaultDropDownListRestore()
+    protected void DefaultDropDownListRestore()
     {
-        List<string> itemList = mplc.getAllItemNames();
-        ItemDropDownList.DataSource = itemList;
+        List<string> ItemList = Mplc.GetAllItemNames();
+        ItemDropDownList.DataSource = ItemList;
         ItemDropDownList.DataBind();
         ItemDropDownList.Items.Insert(0, new ListItem("Select", "NA"));
 
-        List<string> catList = mplc.getAllCatNames();
-        CategoryDropDownList.DataSource = catList;
+        List<string> CatList = Mplc.GetAllCatNames();
+        CategoryDropDownList.DataSource = CatList;
         CategoryDropDownList.DataBind();
         CategoryDropDownList.Items.Insert(0, new ListItem("Select", "NA"));
 
-        List<int> rank = new List<int>() { 1, 2, 3 };
-        PriorityRankList.DataSource = rank;
+        List<int> Rank = new List<int>() { 1, 2, 3 };
+        PriorityRankList.DataSource = Rank;
         PriorityRankList.DataBind();
         PriorityRankList.Items.Insert(0, new ListItem("Select", "NA"));
 
@@ -162,36 +162,36 @@ public partial class SupplierPriceList : System.Web.UI.Page
         TextBox11.Text = "";
     }
 
-    protected void populateTenderSupplyList()
+    protected void PopulateTenderSupplyList()
     {
-        List<PriceList> lpl = mplc.getSupplierPriceList(code);
+        List<PriceList> Lpl = Mplc.GetSupplierPriceList(Code);
         //populate tender supply list
-        for (int i = 0; i < lpl.Count; i++)
+        for (int i = 0; i < Lpl.Count; i++)
         {
-            string itemDesc = mplc.getItemNameForGivenItemCode(lpl[i].ItemCode);
-            string itemPrice = "$" + lpl[i].Price + "/" + mplc.getUnitOfMeasureForGivenItemCode(lpl[i].ItemCode) + "  ";
-            ViewState["oldPrice"] = itemPrice;
-            tenderListObj A = new tenderListObj(itemDesc, itemPrice);
-            tenderSupplyList.Add(A);
+            string ItemDesc = Mplc.GetItemNameForGivenItemCode(Lpl[i].ItemCode);
+            string ItemPrice = "$" + Lpl[i].Price + "/" + Mplc.GetUnitOfMeasureForGivenItemCode(Lpl[i].ItemCode) + "  ";
+            ViewState["oldPrice"] = ItemPrice =;
+            TenderListObj A = new TenderListObj(ItemDesc, ItemPrice);
+            TenderSupplyList.Add(A);
         }
-        TenderPriceDropDownList.DataSource = tenderSupplyList;
+        TenderPriceDropDownList.DataSource = TenderSupplyList;
         TenderPriceDropDownList.DataBind();
     }
 
     protected void ItemDelete_Click(object sender, EventArgs e)
     {
         //get description of item for this supplier
-        GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
-        string itemP = TenderPriceDropDownList.DataKeys[row.RowIndex].Value.ToString();
+        GridViewRow Row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+        string ItemP = TenderPriceDropDownList.DataKeys[Row.RowIndex].Value.ToString();
 
         //get the pricelist composite primary key
-        PriceList pl = mplc.getPriceListObjForGivenDescNSupplier(itemP, code);
-        string itemCode = pl.ItemCode;
-        string tenderY = pl.TenderYear;
+        PriceList Pl = Mplc.GetPriceListObjForGivenDescNSupplier(ItemP, Code);
+        string ItemCode = Pl.ItemCode;
+        string TenderY = Pl.TenderYear;
         //delete by giving the cpk
-        mplc.removePriceListObject(code, itemCode, tenderY);
+        Mplc.RemovePriceListObject(Code, ItemCode, TenderY);
         //repopulate tender list
-        populateTenderSupplyList();
+        PopulateTenderSupplyList();
 
         Response.Write("<script>alert('" + Message.DeleteSuccessful + "');</script>");
     }
@@ -199,34 +199,34 @@ public partial class SupplierPriceList : System.Web.UI.Page
     protected void TenderPriceDropDownList_RowEditing(object sender, GridViewEditEventArgs e)
     {
         TenderPriceDropDownList.EditIndex = e.NewEditIndex;
-        populateTenderSupplyList();
+        PopulateTenderSupplyList();
     }
 
     protected void TenderPriceDropDownList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
         TenderPriceDropDownList.EditIndex = -1;
-        populateTenderSupplyList();
+        PopulateTenderSupplyList();
     }
 
     protected void TenderPriceDropDownList_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         //get new price
         System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("NewPriceTextBox");
-        string newPrice = newPriceTB.Text;
+        string NewPrice = newPriceTB.Text;
 
         //get description of item for this supplier
-        System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
-        string itemDesc = itemDescLabel.Text;
+        System.Web.UI.WebControls.Label ItemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
+        string ItemDesc = ItemDescLabel.Text;
 
         //get the pricelist composite primary key
-        PriceList pl = mplc.getPriceListObjForGivenDescNSupplier(itemDesc, code);
-        string itemCode = pl.ItemCode;
-        string tenderY = pl.TenderYear;
+        PriceList Pl = Mplc.GetPriceListObjForGivenDescNSupplier(ItemDesc, Code);
+        string ItemCode = Pl.ItemCode;
+        string TenderY = Pl.TenderYear;
 
-        mplc.updatePrice(newPrice, code, itemCode, tenderY);
+        Mplc.UpdatePrice(NewPrice, Code, ItemCode, TenderY);
 
         TenderPriceDropDownList.EditIndex = -1;
-        populateTenderSupplyList();
+        PopulateTenderSupplyList();
     }
 
 
@@ -242,24 +242,24 @@ public partial class SupplierPriceList : System.Web.UI.Page
     }
 }
 
-public class tenderListObj
+public class TenderListObj
 {
-    string itemD, itemP;
-    public tenderListObj(string iD, string iP)
+    string ItemD, ItemP;
+    public TenderListObj(string iD, string iP)
     {
-        this.itemD = iD;
-        this.itemP = iP;
+        this.ItemD = iD;
+        this.ItemP = iP;
     }
 
     public string ItemDescription
     {
-        get { return itemD; }
-        set { itemD = value; }
+        get { return ItemD; }
+        set { ItemD = value; }
     }
 
     public string ItemPrice
     {
-        get { return itemP; }
-        set { itemP = value; }
+        get { return ItemP; }
+        set { ItemP = value; }
     }
 }

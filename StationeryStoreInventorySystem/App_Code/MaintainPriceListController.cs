@@ -9,7 +9,8 @@ using System.Web;
 /// </summary>
 public class MaintainPriceListController
 {
-    public List<string> getAllItemNames()
+    //DAO
+    public List<string> GetAllItemNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -20,7 +21,8 @@ public class MaintainPriceListController
         }
     }
 
-    public List<string> getAllCatNames()
+    //DAO
+    public List<string> GetAllCatNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -31,7 +33,8 @@ public class MaintainPriceListController
         }
     }
 
-    public List<string> getAllItemNamesForGivenCat(string cat)
+    //Break into 2. DAO(ItemDescAndCat) AND BizLogic(getItemDescForCat)
+    public List<string> GetAllItemNamesForGivenCat(string cat)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -43,7 +46,8 @@ public class MaintainPriceListController
         }
     }
 
-    public string getCatForGivenItem(string name)
+    //DAO(CombinedEntities) and BizLogic(passing method)
+    public string GetCatForGivenItem(string name)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -55,7 +59,8 @@ public class MaintainPriceListController
         }
     }
 
-    public string getItemCodeForGivenItemName(string name)
+    //DAO
+    public string GetItemCodeForGivenItemName(string name)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -66,7 +71,8 @@ public class MaintainPriceListController
         }
     }
 
-    public void addPriceListItem(PriceList obj)
+    //DAO
+    public void AddPriceListItem(PriceList obj)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -77,7 +83,7 @@ public class MaintainPriceListController
         }
     }
 
-    public List<PriceList> getSupplierPriceList(string supplierCode)
+    public List<PriceList> GetSupplierPriceList(string supplierCode)
     {
         //only display pricelist for current year data
         using (TransactionScope ts = new TransactionScope())
@@ -91,7 +97,7 @@ public class MaintainPriceListController
         }
     }
 
-    public string getItemNameForGivenItemCode(string itemCode)
+    public string GetItemNameForGivenItemCode(string itemCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -102,7 +108,7 @@ public class MaintainPriceListController
         }
     }
 
-    public string getUnitOfMeasureForGivenItemCode(string itemCode)
+    public string GetUnitOfMeasureForGivenItemCode(string itemCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -113,7 +119,8 @@ public class MaintainPriceListController
         }
     }
 
-    public PriceList getPriceListObjForGivenDescNSupplier(string desc, string supplierCode)
+
+    public PriceList GetPriceListObjForGivenDescNSupplier(string desc, string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -126,7 +133,8 @@ public class MaintainPriceListController
         }
     }
 
-    public void removePriceListObject(string firstCPK, string secondCPK, string thirdCPK)
+    //DAO
+    public void RemovePriceListObject(string firstCPK, string secondCPK, string thirdCPK)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -138,7 +146,8 @@ public class MaintainPriceListController
         }
     }
 
-    public void updatePrice(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
+    //can break into 2 DAO(updateEntry) BizLogic(UpdatePrice)
+    public void UpdatePrice(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
     {
         using (TransactionScope ts = new TransactionScope())
         {

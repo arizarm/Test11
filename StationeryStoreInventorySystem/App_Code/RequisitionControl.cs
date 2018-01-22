@@ -170,11 +170,8 @@ public class RequisitionControl
                     };
             foreach (var x in q)
             {
-                Requisition_ItemList r = new Requisition_ItemList();
-                r.Description = x.Description;
-                r.ReqQty = x.RequestedQty;
-                r.Uom = x.UnitOfMeasure;
-                r.Status = x.Status;
+                Requisition_ItemList r = new Requisition_ItemList(x.Description,x.RequestedQty,x.UnitOfMeasure,x.Status);
+                rlist.Add(r);
             }
         }
         return rlist;

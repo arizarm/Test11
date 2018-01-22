@@ -13,7 +13,7 @@ public partial class DepartmentList : System.Web.UI.Page
         {
 
             StationeryEntities smodel = new StationeryEntities();
-            GridViewDept.DataSource = DeptBusinessLogic.getDepartList();
+            GridViewDept.DataSource = DeptBusinessLogic.GetDepartList();
             GridViewDept.DataBind();
 
         }

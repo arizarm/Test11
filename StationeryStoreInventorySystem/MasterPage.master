@@ -29,57 +29,37 @@
                 <div class="col-s">
                     <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
                 </div>
-
             </div>
 
             <div class="content row">
-                <div class="left-col">
-
-                    <%-- Requisition Menu --%>
-                    <asp:Label ID="lblRequisition" runat="server" CssClass="CategoryHeader">Requisition</asp:Label>
-                    <asp:HyperLink ID="hLinkRequisitionForm" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/RequisitionForm.aspx">Requisition Form</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkRequisitionList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>
-
-                    <%-- Retrieval Menu --%>                    
-                    <asp:Label ID="lblRetrieval" runat="server" CssClass="CategoryHeader">Retrieval</asp:Label>
-                    <asp:HyperLink ID="hLinkRetrievalForm" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/RetrievalForm.aspx">Retrieval List</asp:HyperLink>
-                    
-                    <%-- Disbursement Menu --%>                    
-                    <asp:Label ID="lblDisbursement" runat="server" CssClass="CategoryHeader">Disbursement</asp:Label>
-                    <asp:HyperLink ID="hLinkDisbursementList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DisbursementList.aspx">Disbursement List</asp:HyperLink>
-                                        
-                    <%-- Stock Menu --%>   
-                    <asp:Label ID="lblStock" runat="server" CssClass="CategoryHeader">Stock</asp:Label>
-                    <asp:HyperLink ID="hLinkDiscrepency" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/GenerateDiscrepancy.aspx">Discrepency</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkAdjustment" runat="server" NavigateUrl="~/StockAdjustment.aspx" CssClass="hyperLinkCategoryStyle">Adjustment</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkStockCard" runat="server" NavigateUrl="~/StoreCard.aspx" CssClass="hyperLinkCategoryStyle">Stock Card</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkStationaryCatalogue" runat="server" NavigateUrl="~/StationeryCatalogue.aspx" CssClass="hyperLinkCategoryStyle">Stationary Catalogue</asp:HyperLink>
-                    
-                    <%-- Department Menu --%> 
-                    <asp:Label ID="lblDepartment" runat="server" CssClass="CategoryHeader">Department</asp:Label>
-                    <asp:HyperLink ID="hLinkDepartmentList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentList.aspx">Department List</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkDepartmentDetail" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/UpdateDeprtmentforDHead.aspx">Department Detail</asp:HyperLink>
-                    
-                    <%-- Report Menu --%>
-                    <asp:Label ID="lblReport" runat="server" CssClass="CategoryHeader">Report</asp:Label>
-                    <asp:HyperLink ID="hLinkReorderReport" runat="server" NavigateUrl="~/ReorderReport.aspx" CssClass="hyperLinkCategoryStyle">Reorder Report</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkRequisitionTrend" runat="server" NavigateUrl="~/TrendReport.aspx?type=RTR" CssClass="hyperLinkCategoryStyle">Requisition Trend</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkInventoryStatus" runat="server" NavigateUrl="~/InventoryStatusReport.aspx" CssClass="hyperLinkCategoryStyle">Inventory Status</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkReorderTrend" runat="server" NavigateUrl="~/TrendReport.aspx?type=ROR" CssClass="hyperLinkCategoryStyle">Reorder Trend</asp:HyperLink>
-                    
-                    <%-- Purchase Order Menu --%>                    
-                    <asp:Label ID="lblPruchaseOrder" runat="server" CssClass="CategoryHeader">Purchase Order</asp:Label>
-                    <asp:HyperLink ID="hLinkPurchaseOrder" runat="server" NavigateUrl="~/PurchaseOrderForm.aspx" CssClass="hyperLinkCategoryStyle">Purchase Order Form</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkPurchaseOrderList" runat="server" NavigateUrl="~/PurchaseOrderList.aspx" CssClass="hyperLinkCategoryStyle">Purchase Order List</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkPurchaseOrderListClerk" runat="server" NavigateUrl="~/PurchaseOrderListClerk.aspx" CssClass="hyperLinkCategoryStyle">Purchase Order List</asp:HyperLink>
-                    
-                    <%-- Supplier Menu --%> 
-                    <asp:Label ID="lblSupplier" runat="server" CssClass="CategoryHeader">Supplier</asp:Label>
-                    <asp:HyperLink ID="hLinkSupplierList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierList.aspx">Supplier List</asp:HyperLink>
-                    <asp:HyperLink ID="hLinkSupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierCreate.aspx">Add New Supplier</asp:HyperLink>
-                    
-
+                <!-- Menu For Department Head -->
+                <div class="left-col" id="DepHeadMenu" runat="server">
+                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
+                     <asp:HyperLink ID="HyperLink3" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentListDHead.aspx">Requisition Form</asp:HyperLink>
                 </div>
+
+                <!-- Menu For Departement Representative -->
+                <div class="left-col" id="DepRepMenu" runat="server">
+                </div>
+
+                <!-- Menu For Department Member -->
+                <div class="left-col" id="DepMember" runat="server">
+                </div>
+
+                <!-- Menu For Store Manager -->
+                <div class="left-col" id="StoreManMenu" runat="server">
+                </div>
+
+                <!-- Menu For Store Supervisor -->
+                <div class="left-col" id="StoreSuperMenu" runat="server">
+                </div>
+
+
+                <!-- Menu For Store Clerk -->
+                <div class="left-col" id="StoreClerkMenu" runat="server">
+                </div>
+
                 <div class="right-col">
                     <div class="contentMain">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

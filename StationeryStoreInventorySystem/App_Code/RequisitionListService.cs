@@ -15,7 +15,8 @@ public class RequisitionListService : IRequisitionListService
         
         foreach(ReqisitionListItem r in rlist)
         {
-            wlist.Add(WCFRequisitionListItem.Make(r.RequisitionNo.ToString(), r.Department, r.Status, r.EmployeeName, r.Date ));
+            wlist.Add(WCFRequisitionListItem.Make(r.Date, r.RequisitionNo.ToString(), r.Department, r.Status,r.EmployeeName));
+            //wlist.Add(WCFRequisitionListItem.Make(r.RequisitionNo.ToString(), r.Department, r.Status, r.EmployeeName, r.Date ));
         }
         return wlist;
     }

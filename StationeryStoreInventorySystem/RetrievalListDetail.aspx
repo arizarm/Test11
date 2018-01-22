@@ -5,82 +5,40 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader"> Retrieval List
     </h2>
-    <div>
+ <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
+    <p class="mainPageHeader"> &nbsp;</p>
 
-        <asp:Table ID="Table1" runat="server" BorderStyle="Double" HorizontalAlign="Center">
-            <asp:TableHeaderRow>
-                <asp:TableHeaderCell BorderStyle="Dashed">Bin #</asp:TableHeaderCell>
-                <asp:TableHeaderCell BorderStyle="Dashed">Stationery Description</asp:TableHeaderCell>
-                <asp:TableHeaderCell BorderStyle="Dashed">Total Quantity Requested</asp:TableHeaderCell>
-                <asp:TableHeaderCell BorderStyle="Dashed">Total Quantity Retrieved</asp:TableHeaderCell>
-            </asp:TableHeaderRow>
-            <asp:TableRow>
-                <asp:TableCell>3</asp:TableCell>
-                <asp:TableCell>Staplet</asp:TableCell>
-                <asp:TableCell>10</asp:TableCell>
-                <asp:TableCell>
-                    <table>
-                        <tr>
-                            <td>
-                                <asp:TextBox ID="TextBox1" runat="server" Text="9"></asp:TextBox></td>
-                            <td>
-                              
-                        </tr>
-                    </table>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>4</asp:TableCell>
-                <asp:TableCell>Pencil</asp:TableCell>
-                <asp:TableCell>20</asp:TableCell>
-                <asp:TableCell>
-                    <table>
-                        <tr>
-                            <td>
-                                <asp:TextBox ID="TextBox2" runat="server" Text="20"></asp:TextBox></td>
-                            <td>
-                              
-                        </tr>
-                    </table>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>20</asp:TableCell>
-                <asp:TableCell>Paper</asp:TableCell>
-                <asp:TableCell>3</asp:TableCell>
-                <asp:TableCell>
-                    <table>
-                        <tr>
-                            <td>
-                                <asp:TextBox ID="TextBox3" runat="server" Text="3"></asp:TextBox></td>
-                            <td>
-                              
-                        </tr>
-                    </table>
-                </asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow><asp:TableCell></asp:TableCell></asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="4" HorizontalAlign="Right">
-                    <asp:Button ID="Button3" runat="server" Text="Save" CssClass="button"/>
-                &nbsp;&nbsp;&nbsp; 
-                
-                    <asp:Button ID="Button4" runat="server" Text="Generate Disbursment List" CssClass="button"/>
-                </asp:TableCell>
-            </asp:TableRow>
-        </asp:Table>
 
-    </div>
+    <asp:GridView ID="gvRe" runat="server" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Bin#">
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("bin") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Description">
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("description") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Quantity Requested">
+                <ItemTemplate>
+                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("totalRequestedQty") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Quantity Retrieved">
+                <ItemTemplate>
+                    <asp:TextBox ID="txtRetrieved" runat="server"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
 
-    <%--        <table  align="right">
-            <tr>
-                <td>
-                    <asp:Button ID="Button1" runat="server" Text="Save All" />
-                </td>
-                <td>
-                    <asp:Button ID="Button2" runat="server" Text="Generate Disbursment Form" />
-                </td>
-            </tr>
-        </table>--%>
+     <asp:Button ID="Save" runat="server"  Text="Save" CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="FinalizeDisbursmentList"  runat="server"  Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" style="height: 47px" />
+
 </asp:Content>
 

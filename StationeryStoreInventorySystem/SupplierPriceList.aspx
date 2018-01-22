@@ -132,6 +132,7 @@
                     <asp:TableCell>Price: </asp:TableCell>
                     <asp:TableCell>
                         <asp:TextBox ID="TextBox7" runat="server" ></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TextBox7" ValidationExpression="(\d{0,4})(.\d{0,2})"></asp:RegularExpressionValidator>
                     </asp:TableCell>
                 </asp:TableRow>
                <asp:TableRow />
@@ -173,7 +174,8 @@
                     <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label>
                         </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBox10" runat="server" Text='<%# Eval("ItemPrice") %>'></asp:TextBox>
+                        <asp:TextBox ID="NewPriceTextBox" runat="server" OnTextChanged="NewPriceTextBox_TextChanged"></asp:TextBox>
+                        <asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="NewPriceTextBox" ValidationExpression="(\d{0,4})(.\d{0,2})" ForeColor="Red"></asp:RegularExpressionValidator>
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField><ItemTemplate>

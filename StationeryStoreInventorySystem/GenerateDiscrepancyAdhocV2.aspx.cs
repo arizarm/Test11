@@ -77,9 +77,16 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
-                    if ((bool)Session["monthly"] == true)
+                    if(Session["monthly"] != null)
                     {
-                        d.Status = "Monthly";
+                        if ((bool)Session["monthly"] == true)
+                        {
+                            d.Status = "Monthly";
+                        }
+                        else
+                        {
+                            d.Status = "Pending";
+                        }
                     }
                     else
                     {

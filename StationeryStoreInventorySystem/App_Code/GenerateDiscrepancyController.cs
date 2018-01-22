@@ -91,6 +91,12 @@ public class GenerateDiscrepancyController
         return prices;
     }
 
+    public static List<PriceList> GetPriceListsByItemCode(string itemCode)
+    {   //goes to price list broker
+        List<PriceList> sList = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
+        return sList;
+    }
+
     public static Employee GetEmployeeByRole(string role)
     {  //goes to employee broker
         Employee e = context.Employees.Where(x => x.Role == role).First();
@@ -119,7 +125,7 @@ public class GenerateDiscrepancyController
     }
 
     public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
-    {
+    {   //goes to discrepancy broker
         List<Discrepency> d = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
         if (d.Count != 0)
         {
@@ -150,4 +156,6 @@ public class GenerateDiscrepancyController
         }
         context.SaveChanges();
     }
+
+    
 }

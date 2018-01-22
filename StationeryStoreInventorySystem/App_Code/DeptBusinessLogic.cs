@@ -8,20 +8,6 @@ using System.Web;
 /// </summary>
 public class DeptBusinessLogic
 {
-<<<<<<< HEAD
-=======
-   
-        //
-        // TODO: Add constructor logic here
-        //
-        public static List<Department> getDepartList()
-         {
-             using (StationeryEntities smodel = new StationeryEntities())
-                {
-                    
-                    return smodel.Departments.ToList<Department>();
-                }
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
 
     //
     // TODO: Add constructor logic here
@@ -31,7 +17,6 @@ public class DeptBusinessLogic
         using (StationeryEntities smodel = new StationeryEntities())
         {
 
-<<<<<<< HEAD
             return smodel.Departments.ToList<Department>();
         }
 
@@ -48,9 +33,6 @@ public class DeptBusinessLogic
     }
 
     public static Department GetDepartByDepCode(string depCode)
-=======
-    public static Department getDepartByDepCode(string depCode)
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -60,7 +42,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee getEmployeeByDeptCode(string depCode)
+    public static Employee GetDHeadByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -69,14 +51,10 @@ public class DeptBusinessLogic
         }
 
     }
-<<<<<<< HEAD
 
 
 
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
-=======
-    public static List<Employee> getEmployeeListForActingDHead(string deptcode, int a)
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -87,12 +65,8 @@ public class DeptBusinessLogic
 
     }
 
-<<<<<<< HEAD
 
     public static Employee GetEmployeeListForActingDHeadSelected(string deptcode)
-=======
-    public static Employee getEmployeeListForActingDHeadSelected(string deptcode)
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -114,17 +88,13 @@ public class DeptBusinessLogic
             return smodel.Employees.Where
                     (p => p.DeptCode == deptcode && p.IsTempHead == "Y").Count();
 
-            
+
 
         }
 
     }
 
-<<<<<<< HEAD
     public static List<Employee> GetEmployeeListForDRep(string deptcode, int a)
-=======
-    public static List<Employee> getEmployeeListForDRep(string deptcode,int a)
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -135,7 +105,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static Employee getEmployeeListForDRepSelected(string deptcode)
+    public static Employee GetEmployeeListForDRepSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -148,7 +118,7 @@ public class DeptBusinessLogic
 
     }
 
-    public static List<CollectionPoint> getCollectionPointList()
+    public static List<CollectionPoint> GetCollectionPointList()
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -158,7 +128,7 @@ public class DeptBusinessLogic
         }
 
     }
-    public static string getDepartmentForCollectionPointSelected(string deptcode)
+    public static string GetDepartmentForCollectionPointSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -174,11 +144,7 @@ public class DeptBusinessLogic
 
     }
 
-<<<<<<< HEAD
     public static void UpdateCollectionPoint(string depcode, int? collectpoint)
-=======
-    public static void UpdateCollectionPoint(string depcode,int collectpoint)
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
@@ -253,6 +219,6 @@ public class DeptBusinessLogic
         emp.StartDate = null;
         emp.EndDate = null;
         context.SaveChanges();
-       
+
     }
 }

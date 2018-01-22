@@ -40,7 +40,29 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script src="Content/JavaScript.js"></script>
-      
+      <script type="text/javascript">
+        $(function () {
+
+ $("#txtSDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-0:+2", // You can set the year range as per as your need
+               dateFormat: 'dd-M-yy'
+
+           }).val()
+           $("#txtEDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-0:+2", // You can set the year range as per as your need
+               dateFormat: 'dd-M-yy'
+           }).val()
+
+
+
+
+        });
+    </script>
+
     <table class="auto-style5">
             <tr>
                 <th colspan="2" class="updateDeptHead"> <h2 class="auto-style1">Update Department Info</h2></th>
@@ -79,7 +101,8 @@
                 <td class="auto-style2">Acting Department Head :</td>
                 <td>
                     <asp:DropDownList ID="DropDownListActingDHead" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListActingDHead_SelectedIndexChanged">
-                       
+                      
+
                     </asp:DropDownList>
                     
                 </td>
@@ -89,7 +112,7 @@
                 <td class="auto-style2">Assignment Start Date :</td>
                 <td>
                     <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
                     
                     
                    
@@ -103,9 +126,9 @@
 
       
                     <asp:CompareValidator ID="CompareEndTodayValidator" Operator="GreaterThan" type="String" 
-                        ControltoValidate="txtSDate" ErrorMessage="The 'Start Date' must be after today" runat="server" ForeColor="#FF3300" /><br />
+                        ControltoValidate="txtSDate" ErrorMessage="The 'Start Date' must be after today" runat="server" ForeColor="#FF3300" Enabled="False" /><br />
                     <asp:TextBox ID="txtEDate" runat="server" ClientIDMode="Static"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
                    
                 </td>
             </tr>          
@@ -115,7 +138,7 @@
                 <td class="auto-style7">
                     <asp:CompareValidator ID="cmpStartAndEndDates" runat="server" Display="Dynamic"
     Operator="GreaterThan" ControlToValidate="txtEDate" ControlToCompare="txtSDate"
-    ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" />
+    ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" Enabled="False" />
                     
                     <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListDRep_SelectedIndexChanged">
                         
@@ -134,7 +157,8 @@
                 <td></td>
                 <td class="auto-style2">
                     <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click"/>
-                </td>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </td>
                 
             </tr>
             

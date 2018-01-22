@@ -22,6 +22,7 @@ public partial class SupplierList : System.Web.UI.Page
             if ((string)Session["userType"] == "Store Supervisor" || (string)Session["userType"] == "Store Manager")
             {
                 Label2.Enabled = true;
+                Label2.Visible = true;
             }
         }
     }

@@ -9,20 +9,6 @@ using System.Web;
 /// </summary>
 public class EFBroker_Supplier
 {
-    private static EFBroker_Supplier DbInstance;
-
-    private EFBroker_Supplier()
-    {
-        StationeryEntities SE = new StationeryEntities();
-    }
-
-    public static EFBroker_Supplier getInstance()
-    {
-        if (DbInstance == null)
-            DbInstance = new EFBroker_Supplier();
-        return DbInstance;
-    }
-
     public List<Supplier> ListAllSuppliers()
     {
         using (TransactionScope ts = new TransactionScope())
@@ -30,8 +16,54 @@ public class EFBroker_Supplier
             StationeryEntities S = new StationeryEntities();
             List<Supplier> LS = S.Suppliers.ToList();
             ts.Complete();
-
             return LS;
+        }
+    }
+
+    public Supplier GetSupplierGivenSupplierCode(string supplierCode)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities S = new StationeryEntities();
+            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
+            ts.Complete();
+
+            return s;
+        }
+    }
+
+    public void UpdateSupplier(Supplier supplier)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities S = new StationeryEntities();
+            S.Entry(supplier).State = System.Data.Entity.EntityState.Modified;
+            S.SaveChanges();
+            ts.Complete();
+        }
+    }
+
+    public void DeleteSupplier(string supplierCode)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities S = new StationeryEntities();
+            Supplier s = S.Suppliers.Where(x => x.SupplierCode == supplierCode).First();
+            s.ActiveStatus = "N";
+            S.Entry(s).State = System.Data.Entity.EntityState.Modified;
+            S.SaveChanges();
+            ts.Complete();
+        }
+    }
+
+    public void CreateSupplier(Supplier supplier)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities S = new StationeryEntities();
+            S.Suppliers.Add(supplier);
+            S.SaveChanges();
+            ts.Complete();
         }
     }
 

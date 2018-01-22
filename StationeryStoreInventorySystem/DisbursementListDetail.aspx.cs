@@ -22,7 +22,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         {
             gvDisbDetail.DataSource = DisbursementCotrol.gvDisbursementDetailPopulate();
             gvDisbDetail.DataBind();
-        }
+        }      
     }
 
 
@@ -32,42 +32,43 @@ public partial class DisbursementListDetail : System.Web.UI.Page
 
         if (DisbursementCotrol.checkAccessCode(txtAccessCode.Text))
         {
-            message = "Disbursement Acknowledgement Successful!";
+            //message = "Disbursement Acknowledgement Successful!";
+            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+          
+            List<RequestedItem> shortfallItem = new List<RequestedItem>();
+            RequestedItem reqItem;
+
+            foreach (GridViewRow r in gvDisbDetail.Rows)
+            {
+                int actualQty = Convert.ToInt32((r.FindControl("txtactualQty") as TextBox).Text);
+                int reqQty = Convert.ToInt32((r.FindControl("lblreqQty") as Label).Text);
+
+                if (actualQty < reqQty)
+                {
+                    string iCode = (r.FindControl("hdnflditemCode") as HiddenField).Value;
+                    string iDesc = (r.FindControl("lblitemDesc") as Label).Text;
+                    int shortfallQty = reqQty - actualQty;
+                    string uom = RequisitionControl.getUOM(iDesc);
+                    reqItem = new RequestedItem(iCode, iDesc, shortfallQty, uom);
+                    shortfallItem.Add(reqItem);
+                }
+            }
+            if (shortfallItem.Count != 0)
+            {
+                Session["RegenerateDate"] = DisbursementCotrol.getRegenrateDate();
+                Session["RegenerateDep"] = lblDepartment.Text;
+                Session["RegrenerateItems"] = shortfallItem;
+                Response.Redirect("~/RegenerateRequest.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/DisbursementList.aspx");
+            }
         }
         else
         {
             message = "Incorrect Access Code!";
-        }
-        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
-
-
-        List<RegenerateRequestItems> shortfallItem = new List<RegenerateRequestItems>();
-        RegenerateRequestItems regReq;
-
-        foreach (GridViewRow r in gvDisbDetail.Rows)
-        {
-            int actualQty = Convert.ToInt32((r.FindControl("txtactualQty") as TextBox).Text);
-            int reqQty = Convert.ToInt32((r.FindControl("lblreqQty") as Label).Text);
-                        
-            if (actualQty < reqQty)
-            {
-                string iCode = (r.FindControl("hdnflditemCode") as HiddenField).Value;
-                string iDesc = (r.FindControl("lblitemDesc") as Label).Text;
-                int shortfallQty = reqQty - actualQty;  
-                regReq = new RegenerateRequestItems(iCode, iDesc, shortfallQty);
-                shortfallItem.Add(regReq);
-            }
-        }
-        if (shortfallItem.Count != 0)
-        {
-            Session["RegenerateDate"] = DisbursementCotrol.getRegenrateDate();
-            Session["RegenerateDep"] = lblDepartment.Text;
-            Session["RegrenerateItems"] = shortfallItem;
-            Response.Redirect("~/RegenerateRequest.aspx");
-        }
-        else
-        {
-            Response.Redirect("~/DisbursementList.aspx");
+            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
         }
     }
 }

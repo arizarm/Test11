@@ -4,6 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
+    <script>function ConfirmApproval(objMsg) {
+    if (confirm(objMsg)) {
+        alert("execute code.");
+        return true;
+    }
+    else
+        return false;
+}</script>
     <h2 class="mainPageHeader">Details Disbursement List</h2>
     
     <table style="width: 30%;">

@@ -7,20 +7,30 @@ using System.Web.UI.WebControls;
 
 public partial class RegenerateRequest : System.Web.UI.Page
 {
+    static DateTime date;
+    static string depName;
+    static string requestedBy;
+    static string status = "Priority";
+
+    static List<RequestedItem> shortfallItem;
+    List<RequestedItem> regenerateItem = new List<RequestedItem>();    
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        string date = (string) Session["RegenerateDate"];
-        string depName = (string)Session["RegenerateDep"];
-        lblReqDate.Text = date;
-        lblDepartment.Text = depName;
-        lblReqBy.Text = DisbursementCotrol.getDepRep(depName);
-        string status = "Prioirty";
-        List<RegenerateRequestItems> shortfallItem = (List < RegenerateRequestItems >) Session["RegrenerateItems"];
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
+            date = (DateTime)Session["RegenerateDate"];
+            depName = (string)Session["RegenerateDep"];
+            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+            requestedBy = DisbursementCotrol.getDepRep(depName);
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
-        }        
+        }
+
+        lblReqDate.Text = date.ToLongDateString();
+        lblDepartment.Text = depName;
+        lblReqBy.Text = requestedBy;
+
     }
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
@@ -40,5 +50,25 @@ public partial class RegenerateRequest : System.Web.UI.Page
                 ((CheckBox)row.FindControl("CheckBox")).Checked = false;
             }
         }
+    }
+
+    protected void btnReGenReq_Click(object sender, EventArgs e)
+    {
+        foreach(GridViewRow r in gvRegenerate.Rows)
+        {
+            if( ( (CheckBox) r.FindControl("CheckBox")).Checked)
+            {
+                int i = r.RowIndex;
+                regenerateItem.Add(shortfallItem[i]);
+            }
+        }
+        DisbursementCotrol.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
+
+        ModalPopupExtender1.Show();
+    }
+
+    protected void btnOkay_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/DisbursementList.aspx");
     }
 }

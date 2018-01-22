@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 public class DisbursementCotrol
@@ -120,15 +121,15 @@ public class DisbursementCotrol
         {
             return false;
         }      
-    }   
-    
+    }
+
     //Get earliest date for regenerate requisition
-    public static string getRegenrateDate()
+    public static DateTime getRegenrateDate()
     {
         List<string> dateList = new List<string>();
 
         dateList = context.Requisitions.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.RequestDate.ToString()).ToList();
-        
+
         DateTime inputDate = new DateTime();
         DateTime earliestDate = new DateTime();
 
@@ -142,19 +143,73 @@ public class DisbursementCotrol
             }
             else
             {
-                if(inputDate.CompareTo(earliestDate) < 0)
+                if (inputDate.CompareTo(earliestDate) < 0)
                 {
                     earliestDate = inputDate;
                 }
-            }           
+            }
         }
-        return earliestDate.ToLongDateString();
+        return earliestDate;
     }
 
-    //get Department Representative Name
+
+    //get Department Representative Name by Department Name
     public static string getDepRep(string depName)
     {
         return context.Employees.Include("Department").Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First().ToString();
+    }
+
+    //get Employee ID by Employee Name
+    public static int getEmpIdbyEmpName(string empName)
+    {
+        return context.Employees.Where(x => x.EmpName.Equals(empName)).Select(x => x.EmpID).First();
+    }
+
+
+    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int RequestedBy)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Requisition r = new Requisition();
+
+            //to pass from previous form
+            r.RequestDate = date;
+            r.Status = status;
+            r.RequestedBy = RequestedBy;
+
+            context.Requisitions.Add(r);
+            context.SaveChanges();
+
+            foreach (RequestedItem i in item)
+            {
+                int qty = i.Quantity;
+
+                string code = i.Code;
+
+                Requisition_Item ri = new Requisition_Item();
+                ri.RequisitionID = r.RequisitionID;
+                ri.ItemCode = code;
+                ri.RequestedQty = qty;
+                context.Requisition_Item.Add(ri);
+                context.SaveChanges();
+            }
+            ts.Complete();
+        }
+    }
+
+    //ADD REQUISITION ITEM
+    public static void addItemToRequisition(string code, int qty, int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition_Item ri = new Requisition_Item();
+            ri.RequisitionID = id;
+            ri.ItemCode = code;
+            ri.RequestedQty = qty;
+            context.Requisition_Item.Add(ri);
+            context.SaveChanges();
+        }
     }
 
     //Regenerate Requisition
@@ -166,5 +221,5 @@ public class DisbursementCotrol
     //        ri.RequestedQty = qty;
     //        context.Requisition_Item.Add(ri);
     //        context.SaveChanges();
-    //}
+    //}   
 }

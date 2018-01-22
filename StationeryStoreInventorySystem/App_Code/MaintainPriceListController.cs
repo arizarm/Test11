@@ -9,24 +9,19 @@ using System.Web;
 /// </summary>
 public class MaintainPriceListController
 {
-    //DAO
     public List<string> GetAllItemNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities s = new StationeryEntities();
-            List<string> items = s.Items.Select(x => x.Description).ToList();
-            ts.Complete();
+            EFBroker_Item EFBI = new EFBroker_Item();
+            List<string> items = EFBI.GetActiveItemList().Select(c => c.Description).ToList();
             return items;
-        }
     }
 
-    //public List<string> GetAllCategoryNames()
-    //{
-    //    //EFBroker_Category EFBC = new EFBroker_Category();
-    //    //List<string> categories = EFBC.GetAllCategoryNames();
-    //    //return categories;
-    //}
+    public List<string> GetAllCategoryNames()
+    {
+        EFBroker_Category EFBC = new EFBroker_Category();
+        List<string> categories = EFBC.GetAllCategoryNames();
+        return categories;
+    }
 
     //Break into 2. DAO(ItemDescAndCat) AND BizLogic(getItemDescForCat)
     public List<string> GetAllItemNamesForGivenCat(string cat)
@@ -125,15 +120,7 @@ public class MaintainPriceListController
     //can break into 2 DAO(updateEntry) BizLogic(UpdatePrice)
     public void UpdatePrice(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            decimal price = Decimal.Parse(newPrice);
-            PriceList pl = S.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
-            pl.Price = price;
-            S.Entry(pl).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        EFBPL.UpdatePriceListObject(newPrice, firstCPK, secondCPK, thirdCPK);
     }
 }

@@ -14,8 +14,9 @@
     Unit of Measure: <asp:Label ID="lblUom" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
     1st Supplier: <asp:Label ID="lblSupp1" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
     2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label><br />
+    3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label>
     <br />
+    <%--
     <table border="1">
         <tr>
             <td style="width:10%">Transaction Date</td>
@@ -59,29 +60,29 @@
             <td>+ 500</td>
             <td>954</td>
        
-    </table>
+    </table>--%>
     <br />
      <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Transaction Date">
                 <ItemTemplate>
-                    <asp:Label ID="lblDate" runat="server"></asp:Label>
+                    <asp:Label ID="lblDate" runat="server" Text='<%# Bind("TransDate") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Transaction Details">
                 <ItemTemplate>
-                    <asp:Label ID="lblDetails" runat="server"></asp:Label>
+                    <asp:Label ID="lblDetails" runat="server" Text='<%# Bind("TransDetails") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Quantity">
                 <ItemTemplate>
-                    <asp:Label ID="lblQty" runat="server"></asp:Label>
+                    <asp:Label ID="lblQty" runat="server" Text='<%# Bind("Quantity") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Balance">
                 <ItemTemplate>
-                    <asp:Label ID="lblBalance" runat="server"></asp:Label>
+                    <asp:Label ID="lblBalance" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

@@ -10,36 +10,36 @@ using System.Globalization;
 /// </summary>
 public class GenerateRequisitionTrendController
 {
-    public List<string> getAllCategoryNames()
+    public List<string> GetAllCategoryNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities se = new StationeryEntities();
-            List<string> allCats = se.Categories.Select(c => c.CategoryName).ToList();
+            StationeryEntities SE = new StationeryEntities();
+            List<string> allCats = SE.Categories.Select(c => c.CategoryName).ToList();
             ts.Complete();
             return allCats;
         }
     }
 
-    public List<string> getAllDepartmentNames()
+    public List<string> GetAllDepartmentNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities se = new StationeryEntities();
-            List<string> allDepts = se.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
+            StationeryEntities SE = new StationeryEntities();
+            List<string> allDepts = SE.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
             ts.Complete();
             return allDepts;
         }
     }
 
     //(1a) below will be in DAO/ bizcontroller
-    public List<DateTime?> getAllRequisitionMonths()
+    public List<DateTime?> GetAllRequisitionMonths()
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities se = new StationeryEntities();
+            StationeryEntities SE = new StationeryEntities();
 
-            List<DateTime?> allMonths = se.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
+            List<DateTime?> allMonths = SE.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
 
             ts.Complete();
             return allMonths;
@@ -47,18 +47,18 @@ public class GenerateRequisitionTrendController
     }
 
     //(1b) below will be in useCaseController
-    public List<string> getUniqueRequisitionMonths()
+    public List<string> GetUniqueRequisitionMonths()
     {
-        List<DateTime?> allMonths = getAllRequisitionMonths();
+        List<DateTime?> allMonths = GetAllRequisitionMonths();
 
         List<string> allMonthsInString = new List<string>();
         List<string> uniqueMonths = new List<string>();
 
-        foreach (DateTime d in allMonths)
+        foreach (DateTime D in allMonths)
         {
-            string month = d.ToString("MMMM");
-            string year = d.Year.ToString();
-            string entry = month + " " + year;
+            string month = D.ToString("MMMM");
+            string year = D.Year.ToString();
+            string entry = month + " " + month;
 
             allMonthsInString.Add(entry);
         }
@@ -69,26 +69,26 @@ public class GenerateRequisitionTrendController
     }
 
     //(1c) below will be in useCaseController
-    public List<string> getRequisitionsUpTo2MonthsAgo()
+    public List<string> GetRequisitionsUpTo2MonthsAgo()
     {
-        List<DateTime?> allMonths = getAllRequisitionMonths();
+        List<DateTime?> allMonths = GetAllRequisitionMonths();
 
         List<string> allMonthsInString = new List<string>();
         List<string> uniqueMonths = new List<string>();
 
         DateTime maxMonth = DateTime.Now.AddMonths(-2);
 
-        foreach (DateTime d in allMonths)
+        foreach (DateTime D in allMonths)
         {
-            if (d > maxMonth)
+            if (D > maxMonth)
                 continue;
             else
             {
-                string month = d.ToString("MMMM");
-                string year = d.Year.ToString();
-                string entry = month + " " + year;
+                string Month = D.ToString("MMMM");
+                string Year = D.Year.ToString();
+                string Entry = Month + " " + Year;
 
-                allMonthsInString.Add(entry);
+                allMonthsInString.Add(Entry);
             }
         }
 
@@ -97,42 +97,42 @@ public class GenerateRequisitionTrendController
         return uniqueMonths;
     }
 
-    public List<string> get3MonthsFromGivenMonth(string month)
+    public List<string> Get3MonthsFromGivenMonth(string month)
     {
         List<string> listOfMth = new List<string>();
 
         string[] givenDate = month.Split(' ');
         //Format of date given is in 'Month Year'. Split to get each separately
-        DateTime dt = new DateTime(int.Parse(givenDate[1]), DateTime.ParseExact(givenDate[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
+        DateTime DT = new DateTime(int.Parse(givenDate[1]), DateTime.ParseExact(givenDate[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
         //Put it back together to get next 2 months data, then split again to get months in string
         listOfMth.Add(month);
         for (int i = 0; i < 2; i++)
         {
-            dt = dt.AddMonths(1);
-            string mth = dt.ToString("MMMM");
-            string yr = dt.Year.ToString();
-            string mthyr = mth + " " + yr;
-            listOfMth.Add(mthyr);
+            DT = DT.AddMonths(1);
+            string Month = DT.ToString("MMMM");
+            string year = DT.Year.ToString();
+            string monthYear = Month + " " + year;
+            listOfMth.Add(monthYear);
         }
         return listOfMth;
     }
 
-    public int getTotalRequisitionByCategoryGivenMonth(string month, string dept, string cat)
+    public int GetTotalRequisitionByCategoryGivenMonth(string month, string dept, string cat)
     {
-        List<DateTime> startEndDate = getStartDateEndDateForGivenMonth(month);
+        List<DateTime> startEndDate = GetStartDateEndDateForGivenMonth(month);
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities se = new StationeryEntities();
+            StationeryEntities SE = new StationeryEntities();
 
-            var totalR = from ri in se.Requisition_Item
-                         from r in se.Requisitions
-                         from i in se.Items
-                         from d in se.Departments
-                         from e in se.Employees
-                         from c in se.Categories
+            var TotalR = from ri in SE.Requisition_Item
+                         from r in SE.Requisitions
+                         from i in SE.Items
+                         from d in SE.Departments
+                         from e in SE.Employees
+                         from c in SE.Categories
                          where ri.ItemCode == i.ItemCode
                          where ri.RequisitionID == r.RequisitionID
                          where r.ApprovedBy == e.EmpID
@@ -144,7 +144,7 @@ public class GenerateRequisitionTrendController
                          where r.RequestDate <= endDate
                          select ri.RequestedQty;
 
-            int? requisitionsForGivenMonth = totalR.Sum();
+            int? requisitionsForGivenMonth = TotalR.Sum();
 
             int returnedQ = 0;
             if (requisitionsForGivenMonth > 0)
@@ -156,16 +156,16 @@ public class GenerateRequisitionTrendController
     }
 
     //getTotalRequisitionByCategoryGivenMonth() needs this function
-    protected List<DateTime> getStartDateEndDateForGivenMonth(string month)
+    protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)
     {
-        List<DateTime> dtList = new List<DateTime>();
+        List<DateTime> DTList = new List<DateTime>();
         string[] date = month.Split(' ');
 
-        DateTime dtStartDate = new DateTime(int.Parse(date[1]), DateTime.ParseExact(date[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
-        DateTime dtEndDate = dtStartDate.AddMonths(1).AddDays(-1);
+        DateTime DTStartDate = new DateTime(int.Parse(date[1]), DateTime.ParseExact(date[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
+        DateTime DTEndDate = DTStartDate.AddMonths(1).AddDays(-1);
 
-        dtList.Add(dtStartDate); dtList.Add(dtEndDate);
+        DTList.Add(DTStartDate); DTList.Add(DTEndDate);
 
-        return dtList;
+        return DTList;
     }
 }

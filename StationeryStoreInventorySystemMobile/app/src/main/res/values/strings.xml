@@ -8,4 +8,7 @@
     <string name="disbursement">Disbursement</string>
     <string name="discrepancy">Generate Discrepancy</string>
     <string name="update_dep">Department Details</string>
+    <string name="quantity">Quantity</string>
+    <string name="reqDate">Requested Date: </string>
+    <string name="reqBy">Requested By: </string>
 </resources>

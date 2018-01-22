@@ -8,11 +8,12 @@ using System.Web.UI.WebControls;
 public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 {
     static string dcode = "BDTD";
-
+    static string empRole = "DepartementHead";
     protected void Page_Load(object sender, EventArgs e)
     {
 
         Session["deptcode"] = dcode;
+        
         if (!IsPostBack)
         {
             if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
@@ -80,10 +81,15 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
     {
 
         Session["deptcode"] = dcode;
+        Session["empRole"] = empRole;
 
-        if (Session["userType"] == "All")
+        if (Session["empRole"].ToString() == "DepartementHead")
         {
             Response.Redirect("DepartmentListDHead.aspx");
+        }
+        else if (Session["empRole"].ToString() == "Representative")
+        {
+            Response.Redirect("DepartmentListDRep.aspx");
         }
         else
         {

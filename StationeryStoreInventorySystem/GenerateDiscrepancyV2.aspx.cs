@@ -59,6 +59,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             GridView2.DataBind();
         }
 
+        if (Request.UrlReferrer.ToString().Contains("AddItemDiscrepancy"))
+        {    //Load full list after adding an item
+            ShowAll();
+        }
 
         Label1.Text = "";
     }
@@ -164,38 +168,14 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button5_Click(object sender, EventArgs e)
     {
-        List<Item> iList = new List<Item>();
-        iList = GenerateDiscrepancyController.GetAllItems();
-        Dictionary<Item, String> displayItems = new Dictionary<Item, String>();
-
-        foreach (Item i in iList)
-        {
-            //If a monthly inventory check discrepancy is not yet approved, the sum of only
-            //discrepancies starting from the monthly one will be displayed
-            Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
-            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-            if (dMonthly == null)
-            {
-                string adjStr = GetAdjustmentString(dList);
-                displayItems.Add(i, adjStr);
-            }
-            else
-            {
-                string adjStr = GetPartialAdjustmentString(dList, dMonthly);
-                displayItems.Add(i, adjStr);
-            }
-        }
-
-        GridView1.DataSource = displayItems;
-        GridView1.DataBind();
-
-        foreach (GridViewRow row in GridView1.Rows)
-        {
-            HyperLink link = row.FindControl("lnkItem") as HyperLink;
-            Label lbl = row.FindControl("lblItemCode1") as Label;
-            string itemCode = lbl.Text;
-            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
-        }
+        ShowAll();
+    }
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        Dictionary<Item, String> empty = new Dictionary<Item, String>();
+        Session["discrepancyList"] = empty;
+        GridView2.DataSource = empty;
+        GridView2.DataBind();
     }
     private void ErrorClear()
     {
@@ -381,12 +361,40 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         return adjStr;
     }
 
-    protected void Button6_Click(object sender, EventArgs e)
+    private void ShowAll()
     {
-        Dictionary<Item, String> empty = new Dictionary<Item, String>();
-        Session["discrepancyList"] = empty;
-        GridView2.DataSource = empty;
-        GridView2.DataBind();
+        List<Item> iList = new List<Item>();
+        iList = GenerateDiscrepancyController.GetAllItems();
+        Dictionary<Item, String> displayItems = new Dictionary<Item, String>();
+
+        foreach (Item i in iList)
+        {
+            //If a monthly inventory check discrepancy is not yet approved, the sum of only
+            //discrepancies starting from the monthly one will be displayed
+            Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            if (dMonthly == null)
+            {
+                string adjStr = GetAdjustmentString(dList);
+                displayItems.Add(i, adjStr);
+            }
+            else
+            {
+                string adjStr = GetPartialAdjustmentString(dList, dMonthly);
+                displayItems.Add(i, adjStr);
+            }
+        }
+
+        GridView1.DataSource = displayItems;
+        GridView1.DataBind();
+
+        foreach (GridViewRow row in GridView1.Rows)
+        {
+            HyperLink link = row.FindControl("lnkItem") as HyperLink;
+            Label lbl = row.FindControl("lblItemCode1") as Label;
+            string itemCode = lbl.Text;
+            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+        }
     }
 }
 

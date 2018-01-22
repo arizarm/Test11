@@ -8,22 +8,17 @@ using System.Web.UI.WebControls;
 public partial class DepartmentListDHead : System.Web.UI.Page
 {
     static string dcode = "BDTD";
-<<<<<<< HEAD:StationeryStoreInventorySystem/DepartmentListDHead.aspx.cs
 
-    
+
     Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-=======
-    Employee empActingDHead = DeptBusinessLogic.getEmployeeListForActingDHeadSelected(dcode);
-    Employee empDRep = DeptBusinessLogic.getEmployeeListForDRepSelected(dcode);
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b:StationeryStoreInventorySystem/Department/DepartmentListDHead.aspx.cs
     protected void Page_Load(object sender, EventArgs e)
     {
 
         Session["deptcode"] = dcode;
         if (!IsPostBack)
         {
-            Department dept = DeptBusinessLogic.getDepartByDepCode(dcode);
-            Employee emp = DeptBusinessLogic.getEmployeeByDeptCode(dcode);
+            Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
+            Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
 
 
             string dname = dept.DeptName;
@@ -47,11 +42,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
             int empRid = empDRep.EmpID;//ForDeptRep Id
 
-<<<<<<< HEAD:StationeryStoreInventorySystem/DepartmentListDHead.aspx.cs
             //UpdateActingDHead  
             if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
             {
-                
+
                 DropDownListActingDHead.DataSource = DeptBusinessLogic.GetEmployeeListForActingDHead(dcode, empRid);
                 DropDownListActingDHead.DataTextField = "EmpName";
                 DropDownListActingDHead.DataValueField = "EmpID";
@@ -65,7 +59,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 }
 
 
-                int empid = 0 ;
+                int empid = 0;
                 string empDRepname = empDRep.EmpName;
                 DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, empid);
                 DropDownListDRep.DataTextField = "EmpName";
@@ -118,28 +112,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 DropDownListDRep.DataBind();
                 DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
             }
-=======
-            //UpdateActingDHead   
-            string empActingDHeadname = empActingDHead.EmpName;
-            int empid = empActingDHead.EmpID;
-            DropDownListActingDHead.DataSource = DeptBusinessLogic.getEmployeeListForActingDHead(dcode, empRid);
-            DropDownListActingDHead.DataTextField = "EmpName";
-            DropDownListActingDHead.DataValueField = "EmpID";
-            DropDownListActingDHead.DataBind();
-            DropDownListActingDHead.Items.FindByText(empActingDHeadname).Selected = true;
-
-            //UpdateDeptRp
-            string empDRepname = empDRep.EmpName;
-            DropDownListDRep.DataSource = DeptBusinessLogic.getEmployeeListForDRep(dcode, empid);
-            DropDownListDRep.DataTextField = "EmpName";
-            DropDownListDRep.DataValueField = "EmpID";
-            DropDownListDRep.DataBind();
-            DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
->>>>>>> 1821b3f2585af8eb28971f23e40bd9d9c081c68b:StationeryStoreInventorySystem/Department/DepartmentListDHead.aspx.cs
 
             //UpdateCollectionPoint
-            string empCollectionname = DeptBusinessLogic.getDepartmentForCollectionPointSelected(dcode);
-            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.getCollectionPointList();
+            string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
             DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
             DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
             DropDownListCollectionPoint.DataBind();
@@ -162,9 +138,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
             if (Convert.ToInt32(DropDownListActingDHead.SelectedValue) == 0)
             {
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0){
+                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
+                {
                     DeptBusinessLogic.UpdateRevoke();
-                    
+
                 }
 
             }
@@ -180,7 +157,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 string sdate = txtSDate.Text;
                 string edate = txtEDate.Text;
                 DeptBusinessLogic.UpdateActingDHead(dcode, Aempid, sdate, edate);
-                
+
 
             }
             Response.Redirect("DepartmentDetailInfo.aspx");
@@ -201,7 +178,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
         int a = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
         //lblFax.Text = a.ToString();
-        DropDownListDRep.DataSource = DeptBusinessLogic.getEmployeeListForDRep(dcode, a);
+        DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, a);
         DropDownListDRep.DataBind();
         DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
         if (a == 0)
@@ -210,10 +187,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             RequiredFieldValidator2.Enabled = false;
             CompareEndTodayValidator.Enabled = false;
             cmpStartAndEndDates.Enabled = false;
-            txtSDate.Text ="";
+            txtSDate.Text = "";
             txtSDate.Enabled = false;
             txtEDate.Text = "";
-           txtEDate.Enabled = false;
+            txtEDate.Enabled = false;
         }
         else
         {

@@ -170,6 +170,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         {
             string itemDesc = mplc.getItemNameForGivenItemCode(lpl[i].ItemCode);
             string itemPrice = "$" + lpl[i].Price + "/" + mplc.getUnitOfMeasureForGivenItemCode(lpl[i].ItemCode) + "  ";
+            ViewState["oldPrice"] = itemPrice;
             tenderListObj A = new tenderListObj(itemDesc, itemPrice);
             tenderSupplyList.Add(A);
         }
@@ -210,9 +211,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
     protected void TenderPriceDropDownList_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         //get new price
-        System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("TextBox10");
-        string newPriceText = newPriceTB.Text;
-        string newPrice = newPriceText.Substring(1, 5);
+        System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("NewPriceTextBox");
+        string newPrice = newPriceTB.Text;
 
         //get description of item for this supplier
         System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
@@ -233,6 +233,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
     protected void SupplierPhoneNoTextBox_TextChanged(object sender, EventArgs e)
     {
         PhoneNoValidator.Enabled = true;
+    }
+
+
+    protected void NewPriceTextBox_TextChanged(object sender, EventArgs e)
+    {
+        //NewPriceRangeValidator.Enabled = true;
     }
 }
 

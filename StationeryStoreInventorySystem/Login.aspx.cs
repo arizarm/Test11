@@ -30,6 +30,7 @@ public partial class Login : System.Web.UI.Page
             Employee emp = EmployeeController.GetEmployeeByEmail(email);
             Session["empID"] = emp.EmpID;
             Session["empRole"] = emp.Role;
+            Session["emp"] = emp;
 
             Label4.Text = "Success User";
 
@@ -45,6 +46,7 @@ public partial class Login : System.Web.UI.Page
     protected void NavigateMain()
     {
         string role = Session["empRole"].ToString();
+        Employee e = (Employee)Session["emp"];
 
         if (role == "Store Clerk")
         {
@@ -54,17 +56,17 @@ public partial class Login : System.Web.UI.Page
         {
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
-        else if (role == "DepartmentHead")
+        else if (role == "DepartmentHead" || Utility.checkIsTempDepHead(e))
         {
-            Response.Redirect("~/RequisitionListDepartment.aspx");
+            Response.Redirect("~/Department/RequisitionListDepartment.aspx");
         }
         else if (role == "Employee")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm.aspx");
         }
         else if (role == "Representative")
         {
-            Response.Redirect("~/RegenerateRequest.aspx");
+            Response.Redirect("~/Department/RequisitionForm.aspx");
         }
     }
     protected void Button2_Click(object sender, EventArgs e)

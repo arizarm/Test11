@@ -8,13 +8,13 @@
    <h2 class="mainPageHeader">Stock Card</h2></div>
     <br />
     <br />
-    <asp:Label ID="Label2" runat="server" Text="Item Code: P085" Font-Size="Medium" ></asp:Label><br />
-    <asp:Label ID="Label3" runat="server" Text="Item Description: PENCIL 2B, Eraser end" Font-Size="Medium"></asp:Label><br />
-    <asp:Label ID="Label4" runat="server" Text="Bin#: A7" Font-Size="Medium"></asp:Label><br />
-    <asp:Label ID="Label5" runat="server" Text="UOM: Box" Font-Size="Medium"></asp:Label><br />
-    <asp:Label ID="Label6" runat="server" Text="1st Supplier: BANES" Font-Size="Medium"></asp:Label><br />
-    <asp:Label ID="Label7" runat="server" Text="2nd Supplier: CHEP" Font-Size="Medium"></asp:Label><br />
-    <asp:Label ID="Label8" runat="server" Text="3rd Supplier: ALPHA" Font-Size="Medium" ></asp:Label><br />
+    Item Code: <asp:Label ID="lblItemCode" runat="server" Text="" Font-Size="Medium" ></asp:Label><br />
+    Item Name: <asp:Label ID="lblItemName" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    Bin: <asp:Label ID="lblBin" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    Unit of Measure: <asp:Label ID="lblUom" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    1st Supplier: <asp:Label ID="lblSupp1" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label><br />
     <br />
     <table border="1">
         <tr>
@@ -62,6 +62,30 @@
     </table>
     <br />
      <br />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Transaction Date">
+                <ItemTemplate>
+                    <asp:Label ID="lblDate" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Transaction Details">
+                <ItemTemplate>
+                    <asp:Label ID="lblDetails" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Quantity">
+                <ItemTemplate>
+                    <asp:Label ID="lblQty" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Balance">
+                <ItemTemplate>
+                    <asp:Label ID="lblBalance" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
     
 </asp:Content>
 

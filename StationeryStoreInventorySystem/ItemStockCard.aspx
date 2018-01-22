@@ -16,51 +16,6 @@
     2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
     3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label>
     <br />
-    <%--
-    <table border="1">
-        <tr>
-            <td style="width:10%">Transaction Date</td>
-            <td style="width:10%">Transaction Details</td>
-            <td style="width:10%">Quantity</td>
-            <td style="width:10%">Balance</td>
-        </tr>
-        <tr aria-readonly="true">
-            <td>02/01/2000</td>
-            <td>Supplier - BANE</td>
-            <td>+ 500</td>
-            <td>550</td>
-        </tr>
-        <tr>
-            <td>03/01/2000</td>
-            <td>English Department</td>
-            <td>- 20</td>
-            <td>530</td>
-        </tr>
-        <tr>
-            <td>08/01/2000</td>
-            <td>Stock Adjustment 001/001/2000</td>
-            <td>ADJ + 4</td>
-            <td>534</td>
-        </tr>
-        <tr>
-            <td>09/01/2000</td>
-            <td>Electronic/Electric Engineering Department</td>
-            <td>- 30</td>
-            <td>504</td>
-        </tr>
-        <tr>
-            <td>09/01/2000</td>
-            <td>Admninistration Department.</td>
-            <td>- 50</td>
-            <td>454</td>
-        </tr>
-        <tr>
-            <td>14/01/2000</td>
-            <td>Supplier - BANE</td>
-            <td>+ 500</td>
-            <td>954</td>
-       
-    </table>--%>
     <br />
      <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">

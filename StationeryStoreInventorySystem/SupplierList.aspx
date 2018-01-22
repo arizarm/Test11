@@ -6,7 +6,7 @@
     <asp:Label ID="Label1" runat="server" Text="Supplier List" CssClass="mainPageHeader" Font-Bold="true" Font-Size="X-Large"/>
     <br /><br /> 
     <a href="SupplierCreate.aspx">
-        <asp:Label ID="Label2" runat="server" Text="+ Add New" Font-Size="Large" Enabled="false"/></a>
+        <asp:Label ID="Label2" runat="server" Text="+ Add New" Font-Size="Large" Enabled="false" Visible="false"/></a>
     <br /> <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" >
         <Columns>

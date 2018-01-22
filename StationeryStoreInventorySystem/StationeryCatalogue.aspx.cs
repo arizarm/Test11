@@ -10,31 +10,22 @@ public partial class StationeryCatalogue : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        ItemLogic ilogic = new ItemLogic();
         GridView1.DataSource = ilogic.getCatalogueList();
-        List<Category> catList = ilogic.getCategoryList();
+        List <Category> catList = ilogic.getCategoryList();
         Category temp = new Category();
         temp.CategoryID = 0;
         temp.CategoryName = "Other";
         catList.Add(temp);
-        DropDownListCategory.DataSource = catList;
-        DropDownListCategory.DataTextField = "CategoryName";
-        DropDownListCategory.DataValueField = "CategoryID";
+        DropDownListUOM.DataSource = catList;
         List<string> UOMList = ilogic.getDistinctUOMList();
         UOMList.Add("Other");
-        DropDownListUOM.DataSource = UOMList;
+        DropDownListCategory.DataSource = UOMList;
         if (!IsPostBack)
         {
-            //for employee
-            Panel1.Visible = false;
-            GridView1.Columns[0].Visible = false;
-            GridView1.Columns[3].Visible = false;
-            GridView1.Columns[4].Visible = false;
-            GridView1.Columns[6].Visible = false;
-            GridView1.Columns[7].Visible = false;
             GridView1.DataBind();
             DropDownListUOM.DataBind();
-            DropDownListCategory.DataBind();
+            DropDownListCategory.DataBind();  
         }
 
     }
@@ -84,7 +75,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void editRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        ItemLogic ilogic = new ItemLogic();
         GridView1.EditIndex = index;
         GridView1.DataBind();
         GridViewRowCollection a = GridView1.Rows;
@@ -108,7 +99,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void removeRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        ItemLogic ilogic = new ItemLogic();
         Label r = (Label)GridView1.Rows[index].FindControl("Label1");
         string output = r.Text;
         ilogic.removeItem(output);
@@ -116,17 +107,18 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void updateRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        ItemLogic ilogic = new ItemLogic();
         GridViewRow row = GridView1.Rows[index];
         Label itemCode = (Label)row.FindControl("Label1");
         DropDownList categoryList = (DropDownList)row.FindControl("DropDownList3");
+        int categoryID = Convert.ToInt32(categoryList.SelectedValue);
         TextBox description = (TextBox)row.FindControl("TextBox6");
         TextBox reorderLevel = (TextBox)row.FindControl("TextBox9");
         int level = Convert.ToInt32(reorderLevel.Text);
         TextBox reorderQty = (TextBox)row.FindControl("TextBox8");
         int qty = Convert.ToInt32(reorderQty.Text);
         DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownList4");
-        ilogic.updateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue);
+        ilogic.updateItem(itemCode.Text, categoryID, description.Text, level, qty, unitMeasure.SelectedValue);
         cancelEdit();
     }
     protected void cancelEdit()
@@ -137,7 +129,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
     {
         bool failure = false, success = true;
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
+        ItemLogic ilogic = new ItemLogic();
         Item item = new Item();
         int level, qty;
         if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
@@ -175,7 +167,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void addCategory(string categoryName)
     {
-        ItemBusinessLogic iLogic = new ItemBusinessLogic();
+        ItemLogic iLogic = new ItemLogic();
         Category cat = new Category();
         cat.CategoryName = categoryName;
         iLogic.addCategory(cat);
@@ -186,38 +178,27 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         //addItem("itemcode","test","test","10","10","test");
         string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
 
-
-        if (Page.IsValid)
+        if (!DropDownListCategory.SelectedValue.Equals("Other"))
         {
-            itemCode = TextBoxItemNo.Text;
-            description = TextBoxDesc.Text;
-            reorderLevel = TextBoxReLvl.Text;
-            reorderQty = TextBoxReQty.Text;
-            categoryName = TextBoxCategory.Text;
-            uom = TextBoxUOM.Text;
-            if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom))
-            {
-                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = "";
-                refreshPage();
-            }
-            
+            TextBoxCategory.Text = DropDownListCategory.SelectedValue;
         }
-        return;
-    }
-
-    protected void DropDownListCategory_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (!DropDownListCategory.SelectedValue.Equals("0"))
-        {
-            TextBoxCategory.Text = DropDownListCategory.SelectedItem.Text;
-        }
-    }
-
-    protected void DropDownListUOM_SelectedIndexChanged(object sender, EventArgs e)
-    {
         if (!DropDownListUOM.SelectedValue.Equals("Other"))
         {
-            TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
+            TextBoxUOM.Text= DropDownListUOM.SelectedValue;
         }
+        if (Page.IsValid) { 
+        itemCode = TextBoxItemNo.Text;
+        description = TextBoxDesc.Text;
+        reorderLevel = TextBoxReLvl.Text;
+        reorderQty = TextBoxReQty.Text;
+        categoryName = TextBoxCategory.Text;
+        uom = TextBoxUOM.Text;
+        addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom);
+        }
+        else
+        {
+
+        }
+        return;
     }
 }

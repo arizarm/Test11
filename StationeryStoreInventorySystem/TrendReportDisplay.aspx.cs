@@ -29,9 +29,9 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 
                     //Only Report Type that will appear differs
 
-                    //RequisitionTrendByDept cr1 = new RequisitionTrendByDept();
-                    //crv1.ReportSource = cr1;
-                    //cr1.SetDataSource(list);
+                    RequisitionTrendByDept cr1 = new RequisitionTrendByDept();
+                    crv1.ReportSource = cr1;
+                    cr1.SetDataSource(list);
                 }
 
                 break;
@@ -51,10 +51,10 @@ public partial class TrendReportDisplay : System.Web.UI.Page
                     //Only Report Type that will appear differs
 
 
-                    //RequisitionTrendByCat cr1 = new RequisitionTrendByCat();
+                    RequisitionTrendByCat cr1 = new RequisitionTrendByCat();
 
-                    //crv1.ReportSource = cr1;
-                    //cr1.SetDataSource(list);
+                    crv1.ReportSource = cr1;
+                    cr1.SetDataSource(list);
 
                 }
                 break;
@@ -74,10 +74,10 @@ public partial class TrendReportDisplay : System.Web.UI.Page
                     //Only Report Type that will appear differs
 
 
-                    //RORSupplier cr1 = new RORSupplier();
+                    RORSupplier cr1 = new RORSupplier();
 
-                    //crv1.ReportSource = cr1;
-                    //cr1.SetDataSource(list);
+                    crv1.ReportSource = cr1;
+                    cr1.SetDataSource(list);
 
                 }
                 break;
@@ -97,10 +97,10 @@ public partial class TrendReportDisplay : System.Web.UI.Page
                     //Only Report Type that will appear differs
 
 
-                    //RequisitionTrendByCat cr1 = new RequisitionTrendByCat();
+                    RORCategory cr1 = new RORCategory();
 
-                    //crv1.ReportSource = cr1;
-                    //cr1.SetDataSource(list);
+                    crv1.ReportSource = cr1;
+                    cr1.SetDataSource(list);
 
                 }
                 break;

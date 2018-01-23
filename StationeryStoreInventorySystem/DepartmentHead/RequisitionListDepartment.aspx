@@ -56,8 +56,8 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
+                <asp:HyperLinkField HeaderText="Reject/Approve" DataNavigateUrlFields="RequisitionNo"
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Details"/>
             </Columns>
 
         </asp:GridView>

@@ -13,7 +13,7 @@
             <asp:BoundField DataField="SupplierCode" HeaderText="Supplier Code" ItemStyle-Width="7.5%">
 <ItemStyle Width="7.5%"></ItemStyle>
             </asp:BoundField>
-            <asp:HyperLinkField DataNavigateUrlFields="SupplierCode" DataNavigateUrlFormatString="~\SupplierPriceList.aspx?SupplierCode={0}" DataTextField="SupplierName" HeaderText="Supplier Name" />
+            <asp:HyperLinkField DataNavigateUrlFields="SupplierCode" DataNavigateUrlFormatString="~\Store\SupplierPriceList.aspx?SupplierCode={0}" DataTextField="SupplierName" HeaderText="Supplier Name" />
             <asp:BoundField DataField="SupplierContactName" HeaderText="Supplier Contact Name" ControlStyle-Width="7.5%" >
 <ControlStyle Width="7.5%"></ControlStyle>
             </asp:BoundField>

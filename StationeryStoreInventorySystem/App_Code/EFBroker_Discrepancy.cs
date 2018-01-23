@@ -44,6 +44,15 @@ public class EFBroker_Discrepancy
         }
         return d;
     }
+    public Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
+    {   //goes to discrepancy broker
+        Discrepency d;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            d = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").OrderByDescending(x => x.Date).FirstOrDefault();
+        }
+        return d;
+    }
     public List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
     {   //goes to discrepancy broker
         List<Discrepency> dList = new List<Discrepency>();
@@ -53,13 +62,22 @@ public class EFBroker_Discrepancy
         }
         return dList;
     }
-    public Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
-    {   //goes to discrepancy broker
-        Discrepency d;
+    public List<Discrepency> GetPendingDiscrepancyList()
+    {
+        List<Discrepency> dList = new List<Discrepency>();
         using (StationeryEntities context = new StationeryEntities())
         {
-            d = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").OrderByDescending(x=> x.Date).FirstOrDefault();
+            dList = context.Discrepencies.Where(x => x.Status == "Pending").ToList();
         }
-        return d;
+        return dList;
+    }
+    public List<Discrepency> GetMonthlyDiscrepancyList()
+    {
+        List<Discrepency> dList = new List<Discrepency>();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            dList = context.Discrepencies.Where(x => x.Status == "Monthly").ToList();
+        }
+        return dList;
     }
 }

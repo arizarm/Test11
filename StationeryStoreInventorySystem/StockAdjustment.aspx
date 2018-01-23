@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-        <h1 class="mainPageHeader">Adjustment Voucher</h1>
+    <%--<h1 class="mainPageHeader">Adjustment Voucher</h1>
     <p>&nbsp;</p>
     <p>
         Voucher : A192746 <br />
@@ -54,6 +54,78 @@
     </p>
     <p>
         <asp:Button ID="Button1" runat="server" Text="Issue Ticket" CssClass="button" />
-    </p>
+    </p>--%>
+
+    <h1 class="mainPageHeader">Stock Adjustment Approval</h1>
+    <br />
+    <%if (GridView1.Rows.Count > 0)
+        { %>
+    <h4>Monthly Inventory Check Discrepancies</h4>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+        <Columns>
+            <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
+                <ItemTemplate>
+                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Code">
+                <ItemTemplate>
+                    <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("Value.ItemCode") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Name">
+                <ItemTemplate>
+                    <asp:Label ID="lblItemName" runat="server" Text='<%# Bind("Value.Description") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Adjustment">
+                <ItemTemplate>
+                    <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Reason">
+                <ItemTemplate>
+                    <asp:Label ID="lblReason" runat="server" Text='<%# Bind("Key.Remarks") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <br />
+    <asp:Button ID="Button1" runat="server" Text="Approve" CssClass="button"/>
+    <br />
+    <br />
+    <%} %>
+    <h4>Discrepancies Pending Approval</h4>
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
+        <Columns>
+            <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
+                <ItemTemplate>
+                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Code">
+                <ItemTemplate>
+                    <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("Value.ItemCode") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Item Name">
+                <ItemTemplate>
+                    <asp:Label ID="lblItemName" runat="server" Text='<%# Bind("Value.Description") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Adjustment">
+                <ItemTemplate>
+                    <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Reason">
+                <ItemTemplate>
+                    <asp:Label ID="lblReason" runat="server" Text='<%# Bind("Key.Remarks") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <br />
+    <asp:Button ID="Button2" runat="server" Text="Approve" CssClass="button"/>
     </asp:Content>
 

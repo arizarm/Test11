@@ -81,6 +81,7 @@ public partial class ItemStockCard : System.Web.UI.Page
                             scdr.Quantity = GetQuantityString((int)sc.Qty);
                         }
                         scdr.Balance = (int)sc.Balance;
+                        scDisplayList.Add(scdr);
                     }
                 }
 

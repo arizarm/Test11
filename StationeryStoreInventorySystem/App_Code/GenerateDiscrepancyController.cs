@@ -142,6 +142,18 @@ public class GenerateDiscrepancyController
         return context.Discrepencies.Where(x => x.DiscrepencyID == id).First();
     }
 
+    public static List<Discrepency> GetAllPendingDiscrepancies()
+    {
+        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Pending").ToList();
+        return dList;
+    }
+
+    public static List<Discrepency> GetAllPendingMonthlyDiscrepancies()
+    {
+        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Monthly").ToList();
+        return dList;
+    }
+
     public static Disbursement GetDisbursementById(int id)
     {   //goes to disbursement broker
         return context.Disbursements.Where(x => x.DisbursementID == id).First();
@@ -183,7 +195,7 @@ public class GenerateDiscrepancyController
     }
 
     public static Department GetDepartmentByDeptCode(string deptCode)
-    {
+    {    //goes to department broker
         return context.Departments.Where(x => x.DeptCode == deptCode).First();
     }
     

@@ -105,31 +105,14 @@ public class GenerateRequisitionTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-            var TotalR = from ri in EFBroker_Requisition.GetRequisitionItemList()
-                         from r in EFBroker_Requisition.GetAllRequisitionList()
-                         from i in EFBroker_Item.GetItemList()
-                         from d in EFBroker_Department.GetDepartmentList()
-                         from e in EFBroker_Employee.GetEmployeeList()
-                         from c in EFBroker_Category.GetCategoryList()
-                         where ri.ItemCode == i.ItemCode
-                         where ri.RequisitionID == r.RequisitionID
-                         where r.ApprovedBy == e.EmpID
-                         where e.DeptCode == d.DeptCode
-                         where d.DeptName == dept
-                         where i.CategoryID == c.CategoryID
-                         where c.CategoryName == cat
-                         where r.RequestDate >= startDate
-                         where r.RequestDate <= endDate
-                         select ri.RequestedQty;
-
-            int? requisitionsForGivenMonth = TotalR.Sum();
+        int? requisitionsForGivenMonth = EFBroker_Report.GetRequisitionsForGivenMonth(startDate, endDate, dept, cat);
 
             int returnedQ = 0;
             if (requisitionsForGivenMonth > 0)
                 returnedQ = (int)requisitionsForGivenMonth;
-
             return returnedQ;
-        }
+        
+    }
     
 
     //getTotalRequisitionByCategoryGivenMonth() needs this function

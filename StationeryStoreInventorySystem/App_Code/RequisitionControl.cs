@@ -142,12 +142,29 @@ public class RequisitionControl
     }
 
     //FIND REQUISITION BY ID
+    public static ReqisitionListItem getRequisitionForApprove(int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition r = (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
+            date = r.RequestDate.Value.ToLongDateString();
+            requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
+            status = r.Status.ToString();
+            int empCode = Convert.ToInt32(r.RequestedBy);
+            employeeName = context.Employees.Where(x => x.EmpID == empCode).Select(x => x.EmpName).First().ToString();
+            return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
+        }
+
+    }
+    
+    //FIND REQUISITION BY ID
     public static Requisition getRequisition(int id)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return (context.Requisitions.Where(r => r.RequisitionID.Equals(id))).FirstOrDefault();
+            return (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
         }
+
     }
     public static List<Requisition_ItemList> getList(int id)
     {

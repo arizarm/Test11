@@ -140,7 +140,7 @@
     Operator="GreaterThan" ControlToValidate="txtEDate" ControlToCompare="txtSDate"
     ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" Enabled="False" />
                     
-                    <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListDRep_SelectedIndexChanged">
+                    <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True">
                         
                     </asp:DropDownList>
                 </td>

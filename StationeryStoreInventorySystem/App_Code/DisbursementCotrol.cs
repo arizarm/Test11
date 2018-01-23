@@ -28,7 +28,7 @@ public class DisbursementCotrol
         disbursementListItemsList = new List<DisbursementListItems>();
 
         //get all disbursement data
-        disbursement = context.Disbursements.Include("Department").ToList();
+        disbursement = EFBroker_Disbursement.GetAllDisbursementList();
 
         //attributes to display
         string disbId;
@@ -55,7 +55,7 @@ public class DisbursementCotrol
             collectionTime = disbursement[i].CollectionTime.ToString();
 
             //get collection point
-            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).First().ToString();
+            collectionPoint = DeptBusinessLogic.GetCollectionPointbyDeptCode(depCode);
 
             //put all data to display class
             disbursementListItems = new DisbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);

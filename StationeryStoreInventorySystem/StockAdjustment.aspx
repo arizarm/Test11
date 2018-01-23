@@ -65,8 +65,13 @@
         <Columns>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+                        <asp:ListItem Text="Approve"></asp:ListItem>
+                        <asp:ListItem Text="Reject"></asp:ListItem>
+                    </asp:RadioButtonList>
                 </ItemTemplate>
+
+<ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Item Code">
                 <ItemTemplate>
@@ -96,7 +101,7 @@
         </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Approve" CssClass="button"/>
+    <asp:Button ID="Button1" runat="server" Text="Process Monthly Discrepancies" CssClass="button" OnClick="Button1_Click"/>
     <br />
     <br />
     <%} %>
@@ -145,7 +150,7 @@
         </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="Button2" runat="server" Text="Approve" CssClass="button"/>
+    <asp:Button ID="Button2" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="Button2_Click"/>
     <%} %>
     </asp:Content>
 

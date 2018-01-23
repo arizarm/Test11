@@ -80,12 +80,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
         int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
         DeptBusinessLogic.UpdateCollectionPoint(dcode, c);
 
-        Response.Redirect("DepartmentDetailInfo.aspx");
-
+        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
 
     }
-
-
-
-
 }

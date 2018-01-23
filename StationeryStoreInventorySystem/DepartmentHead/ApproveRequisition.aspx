@@ -6,17 +6,22 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="RequisitionListDepartment.aspx"><-Back</a>
+    <asp:Button ID="backButton" runat="server" Text="Button" OnClick="backButton_Click" />
     <br />
     <br />
 
     Requested By:
+    <strong>
     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    </strong>
     <br />
     Requested Date:
+    <strong>
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+    </strong>
     <br />
-    <strong>Status:
+    Status:
+    <strong>
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     </strong>
 

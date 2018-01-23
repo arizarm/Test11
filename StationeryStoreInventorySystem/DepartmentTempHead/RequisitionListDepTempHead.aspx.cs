@@ -16,7 +16,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 Employee emp = (Employee)Session["emp"];
                
                 //Dep Temp Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending",emp.DeptCode);
                 GridView1.DataBind();
             }
             else
@@ -28,10 +28,19 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string selectedStatus = DropDownList1.SelectedValue;
+        if (Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
 
-        GridView1.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
+            string selectedStatus = DropDownList1.SelectedValue;
+
+        GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
         GridView1.DataBind();
+        }
+        else
+        {
+            Utility.logout();
+        }
 
     }
     protected void SearchBtn_Click(object sender, EventArgs e)

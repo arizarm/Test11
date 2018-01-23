@@ -85,7 +85,7 @@ public class EFBroker_Discrepancy
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            Discrepency d = GetDiscrepancyById(id);
+            Discrepency d = context.Discrepencies.Where(x => x.DiscrepencyID == id).First();
             d.Status = action;
             context.SaveChanges();
         }

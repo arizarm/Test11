@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
+using System.
 
 /// <summary>
 /// Summary description for EFBroker_Requisition
@@ -12,25 +13,25 @@ public class EFBroker_Requisition
     public EFBroker_Requisition()
     {
     }
-    //public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
-    //{
-    //    DateTime earliest;
-    //    using (StationeryEntities context = new StationeryEntities())
-    //    {
-    //        earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).FirstOrDefault();
-    //    }
-    //    return earliest;
-    //}
-    //// alternative
-    //public List<DateTime> GetDateTimeListbyDisbID(int disbID)
-    //{
-    //    List<DateTime> dateList;
-    //    using (StationeryEntities context = new StationeryEntities())
-    //    {
-    //        dateList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).ToList();
-    //    }
-    //    return dateList;
-    //}
+    public static string GetEarliestReqDateTimebyDisbID(int disbID)
+    {
+        string earliest;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderByDescending(x => x.RequestDate).Select(x=> x.RequestDate.ToString() ).FirstOrDefault());
+        }
+        return earliest;
+    }
+    // alternative
+    public static List<string> GetDateTimeListbyDisbID(int disbID)
+    {
+        List<string> dateStringList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            dateStringList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => x.RequestDate.ToString()).ToList();
+        }
+        return dateStringList;
+    }
     public static void AddItemToRequisition(Requisition_Item item)
     {
         using (StationeryEntities context = new StationeryEntities())

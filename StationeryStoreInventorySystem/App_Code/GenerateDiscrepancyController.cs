@@ -10,6 +10,10 @@ public class GenerateDiscrepancyController
 {
     private static EFBroker_Item items = new EFBroker_Item();
     private static EFBroker_PriceList pricelists = new EFBroker_PriceList();
+    private static EFBroker_Discrepancy discrepencies = new EFBroker_Discrepancy();
+    private static EFBroker_Disbursement disbursements = new EFBroker_Disbursement();
+    private static EFBroker_Disbursement_Item disbursement_Items = new EFBroker_Disbursement_Item();
+    private static EFBroker_StockCard stockCards = new EFBroker_StockCard();
     private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
@@ -105,84 +109,68 @@ public class GenerateDiscrepancyController
 
     public static void SaveDiscrepancies(List<Discrepency> dList)
     {    //goes to discrepancy broker
-        foreach (Discrepency d in dList)
-        {
-            context.Discrepencies.Add(d);
-        }
-        context.SaveChanges();
+        discrepencies.SaveDiscrepencies(dList);
     }
 
     public static int GetDiscrepancyID(Discrepency d)
     {   //goes to discrepancy broker
-        return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
+        return discrepencies.GetDiscrepancyID(d);
     }
 
     public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        List<Discrepency> dList = new List<Discrepency>();
-        dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Pending").ToList();
-        return dList;
+        return discrepencies.GetPendingDiscrepanciesByItemCode(itemCode);
     }
 
     public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        List<Discrepency> dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
-        if (dList.Count != 0)
-        {
-            return dList[0];
-        }
-        else
-        {
-            return null;
-        }
+        return discrepencies.GetPendingMonthlyDiscrepancyByItemCode(itemCode);
     }
 
     public static Discrepency GetDiscrepancyById(int id)
     {   //goes to discrepancy broker
-        return context.Discrepencies.Where(x => x.DiscrepencyID == id).First();
+        return discrepencies.GetDiscrepancyById(id);
     }
 
     public static List<Discrepency> GetAllPendingDiscrepancies()
     {
-        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Pending").ToList();
-        return dList;
+        return discrepencies.GetPendingDiscrepancyList();
     }
 
     public static List<Discrepency> GetAllPendingMonthlyDiscrepancies()
     {
-        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Monthly").ToList();
-        return dList;
+        return discrepencies.GetMonthlyDiscrepancyList();
     }
 
     public static Disbursement GetDisbursementById(int id)
     {   //goes to disbursement broker
-        return context.Disbursements.Where(x => x.DisbursementID == id).First();
+        return disbursements.GetDisbursmentbyDisbID(id);
     }
 
     public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
     {   //not needed
-        return context.Disbursement_Item.Where(x => x.DisbursementID == id && x.ItemCode == itemCode).First();
+        return disbursement_Items.GetDisbursementItem(id, itemCode);
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)
     {   //goes to stock card broker
-        return context.StockCards.Where(x => x.ItemCode == itemCode).ToList();
+        return stockCards.GetStockCardsByItemCode(itemCode);
     }
 
-    public static void UpdateStockCards(List<Discrepency> dList)
-    {   //not needed
-        foreach (Discrepency d in dList)
-        {
-            StockCard sc = new StockCard();
-            sc.ItemCode = d.ItemCode;
-            sc.TransactionType = "Discrepancy";
-            sc.Qty = d.AdjustmentQty;
-            sc.Balance = GetStockCardsByItemCode(d.ItemCode).Last().Balance + d.AdjustmentQty;
-            sc.TransactionDetailID = GetDiscrepancyID(d);
-            context.StockCards.Add(sc);
-        }
-        context.SaveChanges();
-    }
+    //public static void UpdateStockCards(List<Discrepency> dList)
+    //{   //not needed
+    //    foreach (Discrepency d in dList)
+    //    {
+    //        StockCard sc = new StockCard();
+    //        sc.ItemCode = d.ItemCode;
+    //        sc.TransactionType = "Discrepancy";
+    //        sc.Qty = d.AdjustmentQty;
+    //        sc.Balance = GetStockCardsByItemCode(d.ItemCode).Last().Balance + d.AdjustmentQty;
+    //        sc.TransactionDetailID = GetDiscrepancyID(d);
+    //        context.StockCards.Add(sc);
+    //    }
+    //    context.SaveChanges();
+    //}
 
     public static PurchaseOrder GetPurchaseOrderById(int id)
     {   //goes to purchase order broker

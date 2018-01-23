@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web;
 
 /// <summary>
@@ -8,32 +9,32 @@ using System.Web;
 /// </summary>
 public class EFBroker_Requisition
 {
+    StationeryEntities dbInstance;
+
     public EFBroker_Requisition()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        if(dbInstance == null)
+            dbInstance = new StationeryEntities();
     }
-    public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
-    {
-        DateTime earliest;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x = x.RequestDate).FirstOrDefault();
-        }
-        return earliest;
-
-    }
-    // alternative
-    public List<DateTime> GetDateTimeListbyDisbID(int disbID)
-    {
-        List<DateTime> dateList;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            dateList = context.Requisitions.Where(x => x.Disbursement == disbID).OrderBy(x => x.RequestDate).Select(x = x.RequestDate).ToList();
-        }
-        return dateList;
-    }
+    //public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
+    //{
+    //    DateTime earliest;
+    //    using (StationeryEntities context = new StationeryEntities())
+    //    {
+    //        earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).FirstOrDefault();
+    //    }
+    //    return earliest;
+    //}
+    //// alternative
+    //public List<DateTime> GetDateTimeListbyDisbID(int disbID)
+    //{
+    //    List<DateTime> dateList;
+    //    using (StationeryEntities context = new StationeryEntities())
+    //    {
+    //        dateList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).ToList();
+    //    }
+    //    return dateList;
+    //}
     public void AddItemToRequisition(Requisition_Item item)
     {
         using (StationeryEntities context = new StationeryEntities())
@@ -42,5 +43,16 @@ public class EFBroker_Requisition
             context.SaveChanges();
         }
         return;
+    }
+
+    public List<DateTime?> GetAllFinalisedRequisitionMonths()
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            List<DateTime?> allMonths = dbInstance.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
+
+            ts.Complete();
+            return allMonths;
+        }
     }
 }

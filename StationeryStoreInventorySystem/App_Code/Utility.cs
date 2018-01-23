@@ -11,7 +11,7 @@ using System.Web.Security;
 /// <summary>
 /// Summary description for Utility
 /// </summary>
-public static class Utility
+public static class Utility 
 {
     public static void sendMail(string mailReceiver,string mailSubject,string mailBody)
     {
@@ -58,10 +58,10 @@ public static class Utility
     public static void logout()
     {
         FormsAuthentication.SignOut();
-        Session.Remove("emp");
-        Session.Remove("empRole");
-        Session.Remove("empID");
-        Response.Redirect("~/Login.aspx");
+        HttpContext.Current.Session.Remove("emp");
+        HttpContext.Current.Session.Remove("empRole");
+        HttpContext.Current.Session.Remove("empID");
+        HttpContext.Current.Response.Redirect("~/Login.aspx");
     }
 }
 

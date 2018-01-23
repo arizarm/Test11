@@ -11,6 +11,8 @@ public partial class StockAdjustment : System.Web.UI.Page
     List<Discrepency> monthly;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
         monthly = GenerateDiscrepancyController.GetAllPendingMonthlyDiscrepancies();
         List<Discrepency> pending = GenerateDiscrepancyController.GetAllPendingDiscrepancies();
 
@@ -59,6 +61,8 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
         GridView2.DataSource = pendingSource;
         GridView2.DataBind();
+
+        }
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -92,7 +96,7 @@ public partial class StockAdjustment : System.Web.UI.Page
 
     private void ProcessApprovalAndRejections(GridView gdv)
     {
-        Dictionary<KeyValuePair<Discrepency, Item>, bool> summary = new Dictionary<KeyValuePair<Discrepency, Item>, bool>();
+        Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
         foreach (GridViewRow row in gdv.Rows)
         {
             RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
@@ -100,20 +104,19 @@ public partial class StockAdjustment : System.Web.UI.Page
             if(rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
             {
                 string itemCode = (row.FindControl("lblItemCode") as Label).Text;
-                string discID = (row.FindControl("lblDiscID") as Label).Text;
-                //Item i = EFBroker_Item.GetItemByItemCode(itemCode);
-                //Discrepency d = EFBroker_Discrepe
-                KeyValuePair<Discrepency, Item> kvp = new KeyValuePair<Discrepency, Item>();
+                int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
+                Item i = (new EFBroker_Item()).GetItembyItemCode(itemCode);
+                Discrepency d = (new EFBroker_Discrepancy()).GetDiscrepancyById(discID);
+                KeyValuePair<Discrepency, Item> kvp = new KeyValuePair<Discrepency, Item>(d, i);
                 if (rbl.SelectedIndex == 0)
                 {
-                    summary.Add(kvp, true);
+                    summary.Add(kvp, "Approve");
                 }
                 else if (rbl.SelectedIndex == 1)
                 {
-                    summary.Add(kvp, false);
+                    summary.Add(kvp, "Reject");
                 }
             }
-            
         }
         Session["discrepancySummary"] = summary;
         Response.Redirect("~/StockAdjustmentSummary.aspx");

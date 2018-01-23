@@ -28,15 +28,11 @@ public class GenerateReorderTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities se = new StationeryEntities();
-
-            var totalR = from ip in se.Item_PurchaseOrder
-                         from po in se.PurchaseOrders
-                         from c in se.Categories
-                         from i in se.Items
-                         from s in se.Suppliers
+            var totalR = from ip in EFBroker_PurchaseOrder.GetPurchaseOrderItemList()
+                         from po in EFBroker_PurchaseOrder.GetPurchaseOrderList()
+                         from c in EFBroker_Category.GetCategoryList()
+                         from i in EFBroker_Item.GetItemList()
+                         from s in EFBroker_Supplier.ListAllSuppliers()
                          where ip.PurchaseOrderID == po.PurchaseOrderID
                          where ip.ItemCode == i.ItemCode
                          where po.OrderDate >= startDate
@@ -53,9 +49,7 @@ public class GenerateReorderTrendController
             if (reorderForGivenMonth > 0)
                 returnedQ = (int)reorderForGivenMonth;
 
-            ts.Complete();
-            return returnedQ;
-        }
+            return returnedQ;        
     }
 
     protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)

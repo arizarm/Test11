@@ -14,7 +14,8 @@ public class GenerateDiscrepancyController
     private static EFBroker_Disbursement disbursements = new EFBroker_Disbursement();
     private static EFBroker_Disbursement_Item disbursement_Items = new EFBroker_Disbursement_Item();
     private static EFBroker_StockCard stockCards = new EFBroker_StockCard();
-    private static StationeryEntities context = new StationeryEntities();
+    private static DeptBusinessLogic depLogic = new DeptBusinessLogic();
+    //private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
         //
@@ -103,8 +104,9 @@ public class GenerateDiscrepancyController
 
     public static Employee GetEmployeeByRole(string role)
     {  //goes to employee broker
-        Employee e = context.Employees.Where(x => x.Role == role).First();
-        return e;
+        List<Employee> list;
+        list = DeptBusinessLogic.GetEmployeeListByRole(role);
+        return list.FirstOrDefault();
     }
 
     public static void SaveDiscrepancies(List<Discrepency> dList)
@@ -174,17 +176,17 @@ public class GenerateDiscrepancyController
 
     public static PurchaseOrder GetPurchaseOrderById(int id)
     {   //goes to purchase order broker
-        return context.PurchaseOrders.Where(x => x.PurchaseOrderID == id).First();
+        return EFBroker_PurchaseOrder.GetPurchaseOrderById(id);
     }
 
     public static Item_PurchaseOrder GetPurchaseOrderItem(int poID, string itemCode)
     {   //goes to item_purchaseorder broker
-        return context.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == poID && x.ItemCode == itemCode).First();
+        return EFBroker_PurchaseOrder.GetPurchaseOrderItem(poID, itemCode);
     }
 
     public static Department GetDepartmentByDeptCode(string deptCode)
     {    //goes to department broker
-        return context.Departments.Where(x => x.DeptCode == deptCode).First();
+        return DeptBusinessLogic.GetDepartByDepCode(deptCode);
     }
     
 }

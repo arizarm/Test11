@@ -19,7 +19,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
         //int id = 24;
 
 
-        r = RequisitionControl.getRequisition(id);
+        Requisition r = RequisitionControl.getRequisition(id);
         int empid = Convert.ToInt32(r.RequestedBy);
         Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();

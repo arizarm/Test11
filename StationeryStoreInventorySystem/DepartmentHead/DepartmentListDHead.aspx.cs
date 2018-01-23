@@ -87,22 +87,6 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 DropDownListActingDHead.Items.FindByText(empActingDHeadname).Selected = true;
                 DropDownListActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
 
-                //if (DropDownListActingDHead.SelectedValue == "0")
-                //{
-                //    txtSDate.Enabled = false;
-                //    txtEDate.Enabled = false;
-                //    RequiredFieldValidator1.Enabled = false;
-                //    RequiredFieldValidator2.Enabled = false;
-                //    CompareEndTodayValidator.Enabled = false;
-                //    cmpStartAndEndDates.Enabled = false;
-
-                //}
-
-
-
-
-
-
                 //UpdateDeptRp
                 int empid = empActingDHead.EmpID;
                 string empDRepname = empDRep.EmpName;
@@ -160,7 +144,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
 
             }
-            Response.Redirect("DepartmentDetailInfo.aspx");
+            Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
 
         }
         else
@@ -177,7 +161,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
         string empDRepname = empDRep.EmpName;
 
         int a = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-        //lblFax.Text = a.ToString();
+
         DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, a);
         DropDownListDRep.DataBind();
         DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
@@ -204,22 +188,4 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
     }
 
-
-
-    protected void DropDownListDRep_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        //Session["deptcode"] = dcode;
-        //string empActingDHeadname = empActingDHead.EmpName;
-        //int a = Convert.ToInt16(DropDownListDRep.SelectedValue);
-        //lblFax.Text = a.ToString();
-        //DropDownListActingDHead.DataSource = DeptBusinessLogic.getEmployeeListForActingDHead(dcode, a);
-        //DropDownListActingDHead.DataBind();
-        // DropDownListActingDHead.Items.FindByText(empActingDHeadname).Selected = true;
-
-    }
-
-    protected void BtnCancel_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("DepartmentDetailInfo.aspx");
-    }
 }

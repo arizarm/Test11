@@ -12,15 +12,13 @@ public class GenerateReorderTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        EFBroker_Category EFBC = new EFBroker_Category();
-        List<string> allCats = EFBC.GetAllCategoryNames();
+        List<string> allCats = EFBroker_Category.GetAllCategoryNames();
         return allCats;
     }
 
     public List<string> GetAllSupplierNames()
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        List<string> allSupls = EFBS.ListAllSuppliers().Select(c => c.SupplierName).ToList();
+        List<string> allSupls = EFBroker_Supplier.ListAllSuppliers().Select(c => c.SupplierName).ToList();
         return allSupls;
     }
 

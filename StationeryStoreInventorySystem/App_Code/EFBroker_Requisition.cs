@@ -31,7 +31,7 @@ public class EFBroker_Requisition
     //    }
     //    return dateList;
     //}
-    public void AddItemToRequisition(Requisition_Item item)
+    public static void AddItemToRequisition(Requisition_Item item)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -41,7 +41,7 @@ public class EFBroker_Requisition
         return;
     }
 
-    public List<DateTime?> GetAllFinalisedRequisitionMonths()
+    public static List<DateTime?> GetAllFinalisedRequisitionMonths()
     {
         using (TransactionScope ts = new TransactionScope())
         {

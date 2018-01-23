@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -75,7 +76,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
 
     @Override
     public void onClick(View v) {
-        final Requisition r = new Requisition(rid, "1027", "Hey Yo!");
+        final Requisition r = new Requisition(rid, "1006",  "Approved", "Hey Yo!");
         //r.put("RequisitionNo",rid);
         //r.put("ApprovedBy","1027");
         //.put("Remarks","Hey Yo!");
@@ -103,7 +104,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
 
             @Override
             protected void onPostExecute(Void result){
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
             }
         }.execute(r);
     }

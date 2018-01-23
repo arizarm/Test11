@@ -28,22 +28,7 @@ public class GenerateReorderTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-            var totalR = from ip in EFBroker_PurchaseOrder.GetPurchaseOrderItemList()
-                         from po in EFBroker_PurchaseOrder.GetPurchaseOrderList()
-                         from c in EFBroker_Category.GetCategoryList()
-                         from i in EFBroker_Item.GetItemList()
-                         from s in EFBroker_Supplier.ListAllSuppliers()
-                         where ip.PurchaseOrderID == po.PurchaseOrderID
-                         where ip.ItemCode == i.ItemCode
-                         where po.OrderDate >= startDate
-                         where po.OrderDate <= endDate
-                         where po.SupplierCode == s.SupplierCode
-                         where i.CategoryID == c.CategoryID
-                         where c.CategoryName == cat
-                         where s.SupplierName == supplier
-                         select ip.OrderQty;
-
-            int? reorderForGivenMonth = totalR.Sum();
+        int? reorderForGivenMonth = EFBroker_Report.GetReordersForGivenMonth(startDate, endDate, supplier, cat);
 
             int returnedQ = 0;
             if (reorderForGivenMonth > 0)

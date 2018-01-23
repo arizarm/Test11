@@ -98,7 +98,7 @@ public class GenerateDiscrepancyController
     public static Employee GetEmployeeByRole(string role)
     {  //goes to employee broker
         List<Employee> list;
-        list = DeptBusinessLogic.GetEmployeeListByRole(role);
+        list = EFBroker_DeptEmployee.GetEmployeeListByRole(role);
         return list.FirstOrDefault();
     }
 
@@ -179,7 +179,7 @@ public class GenerateDiscrepancyController
 
     public static Department GetDepartmentByDeptCode(string deptCode)
     {    //goes to department broker
-        return DeptBusinessLogic.GetDepartByDepCode(deptCode);
+        return EFBroker_DeptEmployee.GetDepartByDepCode(deptCode);
     }
     
 }

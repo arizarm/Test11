@@ -79,11 +79,11 @@ public partial class Login : System.Web.UI.Page
         }
         else if (role == "DepartmentHead")
         {        
-            Response.Redirect("~/DepartmentHead/RequisitionListDepartment.aspx");
+            Response.Redirect("~/DepartmentHead/RequisitionListDepHead.aspx");
         }
         else if(role == "DepartmentTempHead")
         {
-            Response.Redirect("~/DepartmentTempHead/RequisitionListDepartment.aspx");
+            Response.Redirect("~/DepartmentTempHead/RequisitionListDepTempHead.aspx");
         }
         else if (role == "Employee")
         {

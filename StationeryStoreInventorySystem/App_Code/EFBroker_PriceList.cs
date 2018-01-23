@@ -9,7 +9,7 @@ using System.Web;
 /// </summary>
 public class EFBroker_PriceList
 {
-    StationeryEntities dbInstance;
+    static StationeryEntities dbInstance;
 
     public EFBroker_PriceList()
     {
@@ -17,7 +17,7 @@ public class EFBroker_PriceList
             dbInstance = new StationeryEntities();
     }
 
-    public void AddPriceListItem(PriceList obj)
+    public static void AddPriceListItem(PriceList obj)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -27,7 +27,7 @@ public class EFBroker_PriceList
         }
     }
 
-    public List<PriceList> GetCurrentYearSupplierPriceList(string supplierCode)
+    public static List<PriceList> GetCurrentYearSupplierPriceList(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -39,7 +39,7 @@ public class EFBroker_PriceList
         }
     }
 
-    public void RemovePriceListObject(string firstCPK, string secondCPK, string thirdCPK)
+    public static void RemovePriceListObject(string firstCPK, string secondCPK, string thirdCPK)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -50,7 +50,7 @@ public class EFBroker_PriceList
         }
     }
 
-    public void UpdatePriceListObject(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
+    public static void UpdatePriceListObject(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -63,7 +63,7 @@ public class EFBroker_PriceList
             ts.Complete();
         }
     }
-    public List<PriceList> GetPriceListByItemCode(string itemCode)
+    public static List<PriceList> GetPriceListByItemCode(string itemCode)
     {   //goes to price list broker
         List<PriceList> prices;
         using (StationeryEntities context = new StationeryEntities())

@@ -9,7 +9,7 @@ using System.Web;
 /// </summary>
 public class EFBroker_Supplier
 {
-    StationeryEntities dbInstance;
+    static StationeryEntities dbInstance;
 
     public EFBroker_Supplier()
     {
@@ -17,7 +17,7 @@ public class EFBroker_Supplier
             dbInstance = new StationeryEntities();
     }
 
-    public List<Supplier> ListAllSuppliers()
+    public static List<Supplier> ListAllSuppliers()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -27,7 +27,7 @@ public class EFBroker_Supplier
         }
     }
 
-    public Supplier GetSupplierGivenSupplierCode(string supplierCode)
+    public static Supplier GetSupplierGivenSupplierCode(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -38,7 +38,7 @@ public class EFBroker_Supplier
         }
     }
 
-    public void UpdateSupplier(Supplier supplier)
+    public static void UpdateSupplier(Supplier supplier)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -48,7 +48,7 @@ public class EFBroker_Supplier
         }
     }
 
-    public void DeleteSupplier(string supplierCode)
+    public static void DeleteSupplier(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -60,7 +60,7 @@ public class EFBroker_Supplier
         }
     }
 
-    public void CreateSupplier(Supplier supplier)
+    public static void CreateSupplier(Supplier supplier)
     {
         using (TransactionScope ts = new TransactionScope())
         {

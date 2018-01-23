@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
     Button btnApprove;
     Button btnReject;
     SimpleAdapter sa;
+    String rid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         btnApprove = (Button) findViewById(R.id.btnApprove);
         btnReject = (Button) findViewById(R.id.btnReject);
         Intent i = getIntent();
-        String rid = i.getStringExtra("RequisitionNo");
+        rid = i.getStringExtra("RequisitionNo");
         TextView reqBy = (TextView) findViewById(R.id.reqByData);
         TextView reqDate = (TextView) findViewById(R.id.reqDateData);
 
@@ -48,7 +50,12 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         reqDate.setText(date);
 
         btnApprove.setOnClickListener(this);
-        btnReject.setOnClickListener(this);
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         //reqBy.setText();
         final ListView lv = (ListView) findViewById(R.id.detailListView);
         lv.setClickable(false);
@@ -69,11 +76,36 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
 
     @Override
     public void onClick(View v) {
+        final Requisition r = new Requisition(rid, "1006",  "Approved", "Hey Yo!");
+        //r.put("RequisitionNo",rid);
+        //r.put("ApprovedBy","1027");
+        //.put("Remarks","Hey Yo!");
+/*        new AsyncTask<String,Void,Void>(){
+            @Override
+            protected Requisition doInBackground(String...param){
+                return Requisition.getRequisition(param[0]);
+            }
+            protected void onPostExecute(Requisition result){
+                show(result);
+            }
+        }.execute(rid);*/
 
-/*        EditText remarks = (EditText) findViewById(R.id.remarksText);
+
+/*      EditText remarks = (EditText) findViewById(R.id.remarksText);
         Button save = (Button) findViewById(R.id.btnSave);
         remarks.setVisibility(View.VISIBLE);
         save.setVisibility(View.VISIBLE);*/
+        new AsyncTask<Requisition,Void,Void>(){
+            @Override
+            protected Void doInBackground(Requisition...params) {
+                Requisition.approveRequisition(params[0]);
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(Void result){
+                Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
+            }
+        }.execute(r);
     }
 }

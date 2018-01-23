@@ -92,7 +92,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
             string empRole = empSession.Role;
 
 
-            if (empRole == "DepartementHead")
+            if (empRole == "DepartmentHead")
             {
                 Response.Redirect("~/DepartmentHead/DepartmentListDHead.aspx");
             }

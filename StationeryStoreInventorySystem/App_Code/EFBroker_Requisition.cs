@@ -9,12 +9,8 @@ using System.Web;
 /// </summary>
 public class EFBroker_Requisition
 {
-    StationeryEntities dbInstance;
-
     public EFBroker_Requisition()
     {
-        if(dbInstance == null)
-            dbInstance = new StationeryEntities();
     }
     //public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
     //{
@@ -49,6 +45,7 @@ public class EFBroker_Requisition
     {
         using (TransactionScope ts = new TransactionScope())
         {
+            StationeryEntities dbInstance = new StationeryEntities();
             List<DateTime?> allMonths = dbInstance.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
 
             ts.Complete();

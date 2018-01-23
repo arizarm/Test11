@@ -10,7 +10,7 @@ using System.Globalization;
 /// </summary>
 public class GenerateReorderTrendController
 {
-    public List<string> getAllCategoryNames()
+    public List<string> GetAllCategoryNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -21,7 +21,7 @@ public class GenerateReorderTrendController
         }
     }
 
-    public List<string> getAllSupplierNames()
+    public List<string> GetAllSupplierNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -32,9 +32,9 @@ public class GenerateReorderTrendController
         }
     }
 
-    public int getTotalReorderByCategoryGivenMonth(string month, string supplier, string cat)
+    public int GetTotalReorderByCategoryGivenMonth(string month, string supplier, string cat)
     {
-        List<DateTime> startEndDate = getStartDateEndDateForGivenMonth(month);
+        List<DateTime> startEndDate = GetStartDateEndDateForGivenMonth(month);
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
@@ -68,7 +68,7 @@ public class GenerateReorderTrendController
         }
     }
 
-    protected List<DateTime> getStartDateEndDateForGivenMonth(string month)
+    protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)
     {
         List<DateTime> dtList = new List<DateTime>();
         string[] date = month.Split(' ');

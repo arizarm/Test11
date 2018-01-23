@@ -9,28 +9,18 @@ using System.Web;
 /// </summary>
 public class MaintainPriceListController
 {
-    //DAO
     public List<string> GetAllItemNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            List<string> items = S.Items.Select(x => x.Description).ToList();
-            ts.Complete();
+            EFBroker_Item EFBI = new EFBroker_Item();
+            List<string> items = EFBI.GetActiveItemList().Select(c => c.Description).ToList();
             return items;
-        }
     }
 
-    //DAO
-    public List<string> GetAllCatNames()
+    public List<string> GetAllCategoryNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            List<string> categories = S.Categories.Select(c => c.CategoryName).ToList();
-            ts.Complete();
-            return categories;
-        }
+        EFBroker_Category EFBC = new EFBroker_Category();
+        List<string> categories = EFBC.GetAllCategoryNames();
+        return categories;
     }
 
     //Break into 2. DAO(ItemDescAndCat) AND BizLogic(getItemDescForCat)
@@ -38,9 +28,9 @@ public class MaintainPriceListController
     {
         using (TransactionScope ts = new TransactionScope())
         {
-            StationeryEntities S = new StationeryEntities();
-            int catID = S.Categories.Where(c => c.CategoryName == cat).Select(x => x.CategoryID).First();
-            List<string> itemFGC = S.Items.Where(y => y.CategoryID == catID).Select(z => z.Description).ToList();
+            StationeryEntities s = new StationeryEntities();
+            int catID = s.Categories.Where(c => c.CategoryName == cat).Select(x => x.CategoryID).First();
+            List<string> itemFGC = s.Items.Where(y => y.CategoryID == catID).Select(z => z.Description).ToList();
             ts.Complete();
             return itemFGC;
         }
@@ -74,27 +64,15 @@ public class MaintainPriceListController
     //DAO
     public void AddPriceListItem(PriceList obj)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            S.PriceLists.Add(obj);
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        EFBPL.AddPriceListItem(obj);
     }
 
-    public List<PriceList> GetSupplierPriceList(string supplierCode)
+    public List<PriceList> GetCurrentYearSupplierPriceList(string supplierCode)
     {
-        //only display pricelist for current year data
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            DateTime dt = DateTime.Now;
-            string latestYear = dt.Year.ToString();
-            List<PriceList> lpl = S.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
-            ts.Complete();
-            return lpl;
-        }
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        List<PriceList> lpl = EFBPL.GetCurrentYearSupplierPriceList(supplierCode);
+        return lpl;
     }
 
     public string GetItemNameForGivenItemCode(string itemCode)
@@ -133,31 +111,16 @@ public class MaintainPriceListController
         }
     }
 
-    //DAO
     public void RemovePriceListObject(string firstCPK, string secondCPK, string thirdCPK)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            PriceList pl = S.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
-            S.PriceLists.Remove(pl);
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        EFBPL.RemovePriceListObject(firstCPK, secondCPK, thirdCPK);
     }
 
     //can break into 2 DAO(updateEntry) BizLogic(UpdatePrice)
     public void UpdatePrice(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            decimal price = Decimal.Parse(newPrice);
-            PriceList pl = S.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
-            pl.Price = price;
-            S.Entry(pl).State = System.Data.Entity.EntityState.Modified;
-            S.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        EFBPL.UpdatePriceListObject(newPrice, firstCPK, secondCPK, thirdCPK);
     }
 }

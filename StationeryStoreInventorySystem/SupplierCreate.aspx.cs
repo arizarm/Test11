@@ -26,8 +26,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
         S.SupplierEmail = TextBox7.Text;
         S.ActiveStatus = TextBox8.Text;
 
-        SupplierListController Slc = new SupplierListController();
-        Slc.CreateSupplier(S);
+        SupplierListController slc = new SupplierListController();
+        slc.CreateSupplier(S);
         Page.ClientScript.RegisterStartupScript(Page.GetType(), "my", "alert('" + Message.SupplierSuccessfulAdd + "');", true);
         //Response.Write("<script>alert('" + Message.SupplierSuccessfulAdd + "');</script>");
 

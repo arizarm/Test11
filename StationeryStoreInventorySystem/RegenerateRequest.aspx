@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RegenerateRequest.aspx.cs" Inherits="RegenerateRequest" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%--<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>--%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -8,7 +8,7 @@
 
    
    
-<asp:ScriptManager ID="ScriptManager1" runat="server">
+<%--<asp:ScriptManager ID="ScriptManager1" runat="server">
 </asp:ScriptManager>
  
 <!-- ModalPopupExtender -->
@@ -21,7 +21,7 @@
 <asp:Panel ID="Panel1" runat="server" CssClass="modalPopup" align="center"  style = "display:none">
     Regeneration of Requisition Successful!<br />
     <asp:Button ID="btnOkay" Width="60" runat="server" Text="Okay" OnClick="btnOkay_Click" UseSubmitBehavior="false" />
-</asp:Panel>
+</asp:Panel>--%>
     
      <h2 class="mainPageHeader">Regenerate Requisition  </h2>
    
@@ -72,5 +72,6 @@
              </Columns>
         </asp:GridView>
     <asp:Button ID="btnReGenReq" runat="server" Text="Generate Requisition" CssClass="button" OnClick="btnReGenReq_Click"/>
-</asp:Content>
 
+    <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="button" OnClick="btnCancel_Click"/>
+</asp:Content>

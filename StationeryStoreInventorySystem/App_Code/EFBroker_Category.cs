@@ -8,37 +8,54 @@ using System.Web;
 /// </summary>
 public class EFBroker_Category
 {
-    StationeryEntities categoryDB;
     public EFBroker_Category()
     {
-        categoryDB = new StationeryEntities();
         //
         // TODO: Add constructor logic here
         //
     }
     public List<Category> GetCategoryList()
     {
-        List<Category> categories = categoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
+        List<Category> categories;
+        using(StationeryEntities categoryDB = new StationeryEntities()) { 
+        categories = categoryDB.Categories.OrderBy(x => x.CategoryID).ToList();
+        }
         return categories;
     }
     public List<string> GetAllCategoryNames()
     {
-        List<string> categoryNames = categoryDB.Categories.Select(x => x.CategoryName).ToList();
+        List<string> categoryNames;
+        using (StationeryEntities categoryDB = new StationeryEntities())
+        {
+            categoryNames = categoryDB.Categories.Select(x => x.CategoryName).ToList();
+        }
         return categoryNames;
     }
     public Category GetCategorybyID(int categoryID)
     {
-        Category cat = categoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
+        Category cat;
+        using (StationeryEntities categoryDB = new StationeryEntities())
+        {
+            cat = categoryDB.Categories.Where(x => x.CategoryID == categoryID).FirstOrDefault();
+        }
         return cat;
     }
     public Category GetCategorybyName(string categoryName)
     {
-        Category cat = categoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
+        Category cat;
+        using (StationeryEntities categoryDB = new StationeryEntities())
+        {
+            cat = categoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
+        }
         return cat;
     }
     public void AddCategory(Category category)
     {
-        categoryDB.Categories.Add(category);
-        categoryDB.SaveChanges();
+        using (StationeryEntities categoryDB = new StationeryEntities())
+        {
+            categoryDB.Categories.Add(category);
+            categoryDB.SaveChanges();
+        }
+        return;
     }
 }

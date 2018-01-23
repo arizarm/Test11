@@ -7,13 +7,14 @@ using System.Web.UI.WebControls;
 
 public partial class InventoryStatusReport : System.Web.UI.Page
 {
+    ItemBusinessLogic ilogic;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         //InventoryCrystalReport cr = new InventoryCrystalReport();
         //cr.SetDataSource(InventoryReportItem.getInventoryReportItems());
         //CrystalReportViewer1.ReportSource = cr;
-        GridView1.DataSource = InventoryReportItem.GetInventoryReportItems();
+        GridView1.DataSource = ilogic.GetInventoryReportItemList();
         GridView1.DataBind();
     }
 }

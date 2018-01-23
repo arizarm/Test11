@@ -83,6 +83,17 @@ public class ItemBusinessLogic
     {
         return itemDB.GetCatalogueList();
     }
+    public List<InventoryReportItem> GetInventoryReportItemList()
+    {
+        List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
+        List<Item> iList = GetItemList();
+        foreach (Item i in iList)
+        {
+            InventoryReportItem rItem = new InventoryReportItem(i);
+            reportItemList.Add(rItem);
+        }
+        return reportItemList;
+    }
     public List<Category> GetCategoryList()
     {
         return categoryDB.GetCategoryList();

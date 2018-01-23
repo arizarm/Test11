@@ -56,7 +56,7 @@ public class DisbursementCotrol
 
             //get collection point
             collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).First().ToString();
-            
+
             //put all data to display class
             disbursementListItems = new DisbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);
 
@@ -120,7 +120,7 @@ public class DisbursementCotrol
         else
         {
             return false;
-        }      
+        }
     }
 
     //Get earliest date for regenerate requisition
@@ -165,39 +165,6 @@ public class DisbursementCotrol
         return context.Employees.Where(x => x.EmpName.Equals(empName)).Select(x => x.EmpID).First();
     }
 
-
-    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int RequestedBy)
-    {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition r = new Requisition();
-
-            //to pass from previous form
-            r.RequestDate = date;
-            r.Status = status;
-            r.RequestedBy = RequestedBy;
-
-            context.Requisitions.Add(r);
-            context.SaveChanges();
-
-            foreach (RequestedItem i in item)
-            {
-                int qty = i.Quantity;
-
-                string code = i.Code;
-
-                Requisition_Item ri = new Requisition_Item();
-                ri.RequisitionID = r.RequisitionID;
-                ri.ItemCode = code;
-                ri.RequestedQty = qty;
-                context.Requisition_Item.Add(ri);
-                context.SaveChanges();
-            }
-            ts.Complete();
-        }
-    }
-
     //ADD REQUISITION ITEM
     public static void addItemToRequisition(string code, int qty, int id)
     {
@@ -212,14 +179,60 @@ public class DisbursementCotrol
         }
     }
 
-    //Regenerate Requisition
-    //public static void RegenerateRequisition()
-    //{
-    //   Requisition_Item ri = new Requisition_Item();
-    //        ri.RequisitionID = id;
-    //        ri.ItemCode = code;
-    //        ri.RequestedQty = qty;
-    //        context.Requisition_Item.Add(ri);
-    //        context.SaveChanges();
-    //}   
+    //Get Current Disbursement
+    public static Disbursement GetCurrentDisbursement()
+    {
+        return context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).First();
+    }
+
+
+    //update Disbursement final actual quantity
+    public static void UpdateDisbursementActualQty(List<int> ActualQty)
+    {
+        Disbursement d = GetCurrentDisbursement();
+
+        int i = 0;
+        foreach (Disbursement_Item di in d.Disbursement_Item)
+        {
+            di.ActualQty = ActualQty[i];
+            i++;
+        }
+        context.SaveChanges();
+    }
+
+    //update Disbursement Status
+    public static void UpdateDisbursementStatus()
+    {
+        Disbursement d = GetCurrentDisbursement();
+        d.Status = "Completed";
+        context.SaveChanges();
+    }
+
+    //Add disbursement transaction to Stockcard 
+    public static void AddStockCardTransaction()
+    {
+        Disbursement d = GetCurrentDisbursement();
+        string transactionType = "Disbursement";
+        int transId = Convert.ToInt32(disbID);
+
+        string itemCode;
+        int Qty;
+        int balance;
+
+        foreach (Disbursement_Item dI in d.Disbursement_Item)
+        {
+            itemCode = dI.ItemCode;
+            Qty = (int) dI.ActualQty;
+            balance = (int)context.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.BalanceQty).First() - Qty;
+
+            StockCard sc = new StockCard();
+            sc.ItemCode = itemCode;
+            sc.TransactionType = transactionType;
+            sc.Qty = Qty;
+            sc.Balance = balance;
+            sc.TransactionDetailID = transId;
+            context.StockCards.Add(sc);
+            context.SaveChanges();
+        }        
+    }
 }

@@ -21,40 +21,26 @@ public class MaintainPriceListController
         return categories;
     }
 
-    //Break into 2. DAO(ItemDescAndCat) AND BizLogic(getItemDescForCat)
     public List<string> GetAllItemNamesForGivenCat(string cat)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities s = new StationeryEntities();
-            int catID = s.Categories.Where(c => c.CategoryName == cat).Select(x => x.CategoryID).First();
-            List<string> itemFGC = s.Items.Where(y => y.CategoryID == catID).Select(z => z.Description).ToList();
-            ts.Complete();
-            return itemFGC;
-        }
+        int catID = EFBroker_Category.GetCategoryList().Where(c => c.CategoryName == cat).Select(x => x.CategoryID).FirstOrDefault();
+        List<string> itemFGC = EFBroker_Item.GetItemsbyCategoryID(catID).Select(z => z.Description).ToList();
+        return itemFGC;
     }
 
-    //DAO(CombinedEntities) and BizLogic(passing method)
     public string GetCatForGivenItem(string name)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            int catFGI = S.Items.Where(x => x.Description == name).Select(c => c.CategoryID).First().Value;
-            string catFGI2 = S.Categories.Where(z => z.CategoryID == catFGI).Select(d => d.CategoryName).First();
-            ts.Complete();
-            return catFGI2;
-        }
+        int? catFGI = EFBroker_Item.GetItembyDescription(name).CategoryID;
+        string catFGI2 = EFBroker_Category.GetCategoryList().Where(z => z.CategoryID == catFGI).Select(d => d.CategoryName).FirstOrDefault();
+        return catFGI2;
     }
 
-    //DAO
     public string GetItemCodeForGivenItemName(string name)
     {
         string itemCode = EFBroker_Item.GetItembyDescription(name).ItemCode;
         return itemCode;
     }
 
-    //DAO
     public void AddPriceListItem(PriceList obj)
     {
         EFBroker_PriceList.AddPriceListItem(obj);
@@ -92,7 +78,6 @@ public class MaintainPriceListController
         EFBroker_PriceList.RemovePriceListObject(firstCPK, secondCPK, thirdCPK);
     }
 
-    //can break into 2 DAO(updateEntry) BizLogic(UpdatePrice)
     public void UpdatePrice(string newPrice, string firstCPK, string secondCPK, string thirdCPK)
     {
         EFBroker_PriceList.UpdatePriceListObject(newPrice, firstCPK, secondCPK, thirdCPK);

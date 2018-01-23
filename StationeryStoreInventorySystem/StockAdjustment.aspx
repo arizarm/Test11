@@ -63,6 +63,11 @@
     <h4>Monthly Inventory Check Discrepancies</h4>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
         <Columns>
+            <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
+                <ItemTemplate>
+                    <asp:Label ID="lblDiscID" runat="server" Text='<%# Bind("Key.DiscrepencyID") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
                     <asp:RadioButtonList ID="RadioButtonList1" runat="server">
@@ -77,26 +82,37 @@
                 <ItemTemplate>
                     <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("Value.ItemCode") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="90px" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Item Name">
                 <ItemTemplate>
                     <asp:Label ID="lblItemName" runat="server" Text='<%# Bind("Value.Description") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="175px" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
                     <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle HorizontalAlign="Center" Width="90px" />
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="Total Discrepancy Amount">
+            <asp:TemplateField HeaderText="Unit of Measure">
+                <ItemTemplate>
+                    <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Value.UnitOfMeasure") %>'></asp:Label>
+                </ItemTemplate>
+                <ItemStyle HorizontalAlign="Center" Width="90px" />
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Discrepancy Amount ($)">
                 <ItemTemplate>
                     <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("Key.TotalDiscrepencyAmount") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="150px" HorizontalAlign="Center" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Reason">
                 <ItemTemplate>
                     <asp:Label ID="lblReason" runat="server" Text='<%# Bind("Key.Remarks") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="400px" />
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
@@ -110,6 +126,11 @@
     <h4>Discrepancies Pending Approval</h4>
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
         <Columns>
+            <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
+                <ItemTemplate>
+                    <asp:Label ID="lblDiscID" runat="server" Text='<%# Bind("Key.DiscrepencyID") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
                     <asp:RadioButtonList ID="RadioButtonList1" runat="server">
@@ -124,28 +145,38 @@
                 <ItemTemplate>
                     <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("Value.ItemCode") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="90px" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Item Name">
                 <ItemTemplate>
                     <asp:Label ID="lblItemName" runat="server" Text='<%# Bind("Value.Description") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="175px" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
                     <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
                 </ItemTemplate>
-                <ItemStyle HorizontalAlign="Center" />
+                <ItemStyle HorizontalAlign="Center" Width="90px" />
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Unit of Measure">
+                <ItemTemplate>
+                    <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Value.UnitOfMeasure") %>'></asp:Label>
+                </ItemTemplate>
+                <ItemStyle HorizontalAlign="Center" Width="90px" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Total Discrepancy Amount ($)">
                 <ItemTemplate>
                     <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("Key.TotalDiscrepencyAmount") %>'></asp:Label>
                 </ItemTemplate>
-                <ItemStyle HorizontalAlign="Center" />
+                <HeaderStyle HorizontalAlign="Center" />
+                <ItemStyle HorizontalAlign="Center" Width="150px" Wrap="True" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Reason">
                 <ItemTemplate>
                     <asp:Label ID="lblReason" runat="server" Text='<%# Bind("Key.Remarks") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle Width="400px" />
             </asp:TemplateField>
         </Columns>
     </asp:GridView>

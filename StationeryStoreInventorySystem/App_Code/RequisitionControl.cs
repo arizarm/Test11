@@ -46,14 +46,14 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
-        rlist = EFBroker_Requisition.GetAllPriorityRequisitions();
+        rlist = EFBroker_Requisition.GetAllRequisitionsByStatus("Priority");
         return PopulateGridView(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayApproved()
     {
         rlist = new List<Requisition>();
-        rlist = EFBroker_Requisition.GetAllApprovedRequisitions();
+        rlist = EFBroker_Requisition.GetAllRequisitionsByStatus("Approved");
         return PopulateGridView(rlist);
     }
 
@@ -118,10 +118,7 @@ public class RequisitionControl
     //GET LAST REQUISITION
     public static String getLastReq()
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Requisitions.OrderByDescending(r => r.RequisitionID).Select(r => r.RequisitionID).FirstOrDefault().ToString();
-        }
+        return EFBroker_Requisition.GetLatestRequisitionID();
     }
 
     //GET ITEM DESCRIPTION BY ITEM CODE
@@ -136,171 +133,119 @@ public class RequisitionControl
     //FIND REQUISITION WITH PENDING STATUS
     public static List<Requisition> getRequisitionList()
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Requisitions.Where(x => x.Status == "Pending").ToList<Requisition>();
-        }
+        return EFBroker_Requisition.GetAllRequisitionsByStatus("Pending");
     }
 
     //FIND REQUISITION BY ID
     public static ReqisitionListItem getRequisitionForApprove(int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition r = (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
-            date = r.RequestDate.Value.ToLongDateString();
-            requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
-            status = r.Status.ToString();
-            int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
-            return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
-        }
-
+        Requisition r = EFBroker_Requisition.GetRequisitionByID(id);
+        date = r.RequestDate.Value.ToLongDateString();
+        requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
+        status = r.Status.ToString();
+        int empCode = Convert.ToInt32(r.RequestedBy);
+        employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+        return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
     }
-    
+
     //FIND REQUISITION BY ID
     public static Requisition getRequisition(int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
-        }
-
+        return EFBroker_Requisition.GetRequisitionByID(id);
     }
+    //public static List<Requisition_ItemList> getList(int id)
+    //{
+    //    List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
+    //    using (StationeryEntities context = new StationeryEntities())
+    //    {
+    //        var q = from i in context.Items
+    //                join ri in context.Requisition_Item
+    //                on i.ItemCode equals ri.ItemCode
+    //                join rt in context.Requisitions
+    //                on ri.RequisitionID equals rt.RequisitionID
+    //                where ri.RequisitionID == id
+    //                select new
+    //                {
+    //                    i.Description,
+    //                    ri.RequestedQty,
+    //                    i.UnitOfMeasure,
+    //                    rt.Status
+    //                };
+    //        foreach (var x in q)
+    //        {
+    //            Requisition_ItemList r = new Requisition_ItemList(x.Description, x.RequestedQty, x.UnitOfMeasure, x.Status);
+    //            rlist.Add(r);
+    //        }
+    //    }
+    //    return rlist;
+    //}
     public static List<Requisition_ItemList> getList(int id)
     {
         List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
-        using (StationeryEntities context = new StationeryEntities())
+        List<Requisition_Item> tlist = EFBroker_Requisition.GetRequisitionItemListbyReqID(id);
+        foreach(Requisition_Item x in tlist)
         {
-            var q = from i in context.Items
-                    join ri in context.Requisition_Item
-                    on i.ItemCode equals ri.ItemCode
-                    join rt in context.Requisitions
-                    on ri.RequisitionID equals rt.RequisitionID
-                    where ri.RequisitionID == id
-                    select new
-                    {
-                        i.Description,
-                        ri.RequestedQty,
-                        i.UnitOfMeasure,
-                        rt.Status
-                    };
-            foreach (var x in q)
-            {
-                Requisition_ItemList r = new Requisition_ItemList(x.Description,x.RequestedQty,x.UnitOfMeasure,x.Status);
-                rlist.Add(r);
-            }
+            Requisition_ItemList r = new Requisition_ItemList(x.Item.Description, x.RequestedQty, x.Item.UnitOfMeasure, x.Requisition.Status);
+            rlist.Add(r);
         }
         return rlist;
     }
-
     //CANCEL REQUISITION
     public static void cancelRejectRequisition(int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
-            r.Status = "Rejected";
-            r.Remarks = "Request cancelled";
-            context.SaveChanges();
-        }
+        EFBroker_Requisition.CancelRejectRequisition(id);
     }
 
     //SEARCH REQUISITION BY STATUS
-    public static List<ReqisitionListItem> getRequisitionListByStatus(String status)
+    public static List<ReqisitionListItem> getRequisitionListByStatus(string status)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            List<Requisition> rlist = context.Requisitions.Where(x => x.Status == status).ToList<Requisition>();
-            return PopulateGridViewForDepartment(rlist);
-        }
+        List<Requisition> rlist = EFBroker_Requisition.GetAllRequisitionsByStatus(status);
+        return PopulateGridViewForDepartment(rlist);
     }
 
     //FIND REQUISITION ITEM BY REQUISITION ID
     public static Requisition_Item findRequisitionID(int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Requisition_Item.Where(ri => ri.RequisitionID.Equals(id)).FirstOrDefault();
-        }
+        return EFBroker_Requisition.FindReqItemsByReqID(id).FirstOrDefault();
     }
 
     //FIND REQUISITION ITEM BY REQUISITION ID AND ITEM CODE
     public static Requisition_Item findByReqIDItemCode(int id, string des)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            string code = context.Items.Where(i => i.Description.Equals(des)).Select(i => i.ItemCode).FirstOrDefault();
-            return context.Requisition_Item.Where(ri => ri.ItemCode.Equals(code)).Where(ri => ri.RequisitionID.Equals(id)).FirstOrDefault();
-        }
+        return EFBroker_Requisition.FindReqItemsByReqIDItemDescription(id, des).FirstOrDefault();
     }
 
     //REMOVE REQUISITION
     public static void removeRequisitionItem(int id, string code)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition_Item ri = context.Requisition_Item.Where(r => r.RequisitionID.Equals(id)).Where(r => r.ItemCode.Equals(code)).FirstOrDefault();
-            context.Requisition_Item.Remove(ri);
-            context.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Requisition.removeRequisitionItem(id, code);
     }
 
     //UPDATE REQUISITION ITEM
     public static void updateRequisitionItem(int id, string code, int qty)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition_Item ri = context.Requisition_Item.Where(r => r.RequisitionID.Equals(id)).Where(r => r.ItemCode.Equals(code)).FirstOrDefault();
-            ri.RequestedQty = qty;
-            context.Entry(ri).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Requisition.UpdateRequisitionItem(id, code, qty);
     }
 
     //ADD REQUISITION ITEM
     public static void addItemToRequisition(string code, int qty, int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition_Item ri = new Requisition_Item();
-            ri.RequisitionID = id;
-            ri.ItemCode = code;
-            ri.RequestedQty = qty;
-            context.Requisition_Item.Add(ri);
-            context.SaveChanges();
-        }
+        Requisition_Item ri = new Requisition_Item();
+        ri.RequisitionID = id;
+        ri.ItemCode = code;
+        ri.RequestedQty = qty;
+        EFBroker_Requisition.AddItemToRequisition(ri);
     }
 
+
     //CHANGE REQUISITION STATUS
-    public static void approveRequisition(int id, string reason,int empID)
+    public static void approveRequisition(int id, string reason, int empID)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
-            r.Remarks = reason;
-            r.RequisitionID = id;
-            r.Status = "Approved";
-            r.ApprovedBy = empID;
-            context.SaveChanges();
-        }
+        EFBroker_Requisition.ApproveRequisition(id, reason, empID);
     }
     public static void rejectRequisition(int id, string reason, int empID)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
-            r.Remarks = reason;
-            r.RequisitionID = id;
-            r.ApprovedBy = empID;
-            r.Status = "Rejected";
-            r.Remarks = "Rejected By Head";
-            context.SaveChanges();
-        }
+        EFBroker_Requisition.RejectRequisition(id, reason, empID);
     }
     public static List<ReqisitionListItem> PopulateGridViewForDepartment(List<Requisition> rlist)
     {
@@ -320,56 +265,20 @@ public class RequisitionControl
 
     public static void editRequisitionItemQty(int id, string code, int qty)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition_Item ri = context.Requisition_Item.Where(i => i.RequisitionID.Equals(id)).Where(i => i.ItemCode.Equals(code)).FirstOrDefault();
-            ri.RequestedQty += qty;
-            context.SaveChanges();
-            ts.Complete();
-        }
+        EFBroker_Requisition.EditRequisitionItemQty(id, code, qty);
     }
 
-    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int RequestedBy)
+    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int requestedBy)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities context = new StationeryEntities();
-            Requisition r = new Requisition();
-
-            //to pass from previous form
-            r.RequestDate = date;
-            r.Status = status;
-            r.RequestedBy = RequestedBy;
-
-            context.Requisitions.Add(r);
-            context.SaveChanges();
-
-            foreach (RequestedItem i in item)
-            {
-                int qty = i.Quantity;
-
-                string code = i.Code;
-
-                Requisition_Item ri = new Requisition_Item();
-                ri.RequisitionID = r.RequisitionID;
-                ri.ItemCode = code;
-                ri.RequestedQty = qty;
-                context.Requisition_Item.Add(ri);
-                context.SaveChanges();
-            }
-            ts.Complete();
-        }
+        EFBroker_Requisition.AddNewRequisition(item, date, status, requestedBy);
     }
 
     // get requisition by emp ID
     public static List<ReqisitionListItem> getRequisitionListByID(int empCode)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            rlist = new List<Requisition>();
-            rlist = context.Requisitions.Where(x => x.RequestedBy == empCode).ToList<Requisition>();
-            return PopulateGridView(rlist);
-        }
-    } 
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.GetRequisitionListByRequestorID(empCode);
+        return PopulateGridView(rlist);
+
+    }
 }

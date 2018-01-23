@@ -14,26 +14,25 @@ public class EFBroker_Requisition
         // TODO: Add constructor logic here
         //
     }
-    public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
-    {
-        DateTime earliest;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x = x.RequestDate).FirstOrDefault();
-        }
-        return earliest;
-
-    }
-    // alternative
-    public List<DateTime> GetDateTimeListbyDisbID(int disbID)
-    {
-        List<DateTime> dateList;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            dateList = context.Requisitions.Where(x => x.Disbursement == disbID).OrderBy(x => x.RequestDate).Select(x = x.RequestDate).ToList();
-        }
-        return dateList;
-    }
+    //public DateTime GetEarliestReqDateTimebyDisbID(int disbID)
+    //{
+    //    DateTime earliest;
+    //    using (StationeryEntities context = new StationeryEntities())
+    //    {
+    //        earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).FirstOrDefault();
+    //    }
+    //    return earliest;
+    //}
+    //// alternative
+    //public List<DateTime> GetDateTimeListbyDisbID(int disbID)
+    //{
+    //    List<DateTime> dateList;
+    //    using (StationeryEntities context = new StationeryEntities())
+    //    {
+    //        dateList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => new { x.RequestDate }).ToList();
+    //    }
+    //    return dateList;
+    //}
     public void AddItemToRequisition(Requisition_Item item)
     {
         using (StationeryEntities context = new StationeryEntities())

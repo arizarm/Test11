@@ -10,6 +10,7 @@ public class GenerateDiscrepancyController
 {
     private static EFBroker_Item items = new EFBroker_Item();
     private static EFBroker_PriceList pricelists = new EFBroker_PriceList();
+    private static EFBroker_Discrepancy discrepencies = new EFBroker_Discrepancy();
     private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
@@ -105,41 +106,27 @@ public class GenerateDiscrepancyController
 
     public static void SaveDiscrepancies(List<Discrepency> dList)
     {    //goes to discrepancy broker
-        foreach (Discrepency d in dList)
-        {
-            context.Discrepencies.Add(d);
-        }
-        context.SaveChanges();
+        discrepencies.SaveDiscrepencies(dList);
     }
 
     public static int GetDiscrepancyID(Discrepency d)
     {   //goes to discrepancy broker
-        return context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).First();
+        return discrepencies.GetDiscrepancyID(d);
     }
 
     public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        List<Discrepency> dList = new List<Discrepency>();
-        dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Pending").ToList();
-        return dList;
+        return discrepencies.GetPendingDiscrepanciesByItemCode(itemCode);
     }
 
     public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        List<Discrepency> dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
-        if (dList.Count != 0)
-        {
-            return dList[0];
-        }
-        else
-        {
-            return null;
-        }
+        return discrepencies.GetPendingMonthlyDiscrepancyByItemCode(itemCode);
     }
 
     public static Discrepency GetDiscrepancyById(int id)
     {   //goes to discrepancy broker
-        return context.Discrepencies.Where(x => x.DiscrepencyID == id).First();
+        return discrepencies.GetDiscrepancyById(id);
     }
 
     public static List<Discrepency> GetAllPendingDiscrepancies()

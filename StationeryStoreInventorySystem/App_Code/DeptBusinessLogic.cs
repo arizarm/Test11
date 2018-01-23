@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -38,6 +39,32 @@ public class DeptBusinessLogic
         {
 
             return smodel.Departments.Where(x => x.DeptCode == depCode).First();
+        }
+
+    }
+
+    public static IList GetDepartDetailInfoList()
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+
+            return smodel.Departments.Join(smodel.CollectionPoints,
+                d => d.CollectionLocationID, c => c.CollectionLocationID,
+                (d, c) => new { Department = d, CollectionPoint = c }).
+                Join(smodel.Employees.Where(e => e.Role == "DepartmentHead"),
+                f => f.Department.DeptCode, e => e.DeptCode,
+                (f, e) => new { f.Department, f.CollectionPoint, Employee = e }).
+                Select(x => new
+                {
+                    x.Department.DeptCode,
+                    x.Department.DeptName,
+                    x.Employee.EmpName,
+                    x.Department.DeptContactName,
+                    x.CollectionPoint.CollectionPoint1,
+                    x.Department.DeptTelephone,
+                    x.Department.DeptFax
+                }).ToList ();
+            
         }
 
     }

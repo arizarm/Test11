@@ -27,7 +27,7 @@
                     <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />                  
                 </asp:HyperLink>
                 <asp:Label ID="LoginUserName" runat="server" Text="Label" class ="loginUser"></asp:Label>                           
-                <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
+                <asp:Button ID="btnSignOut" Style="width: 38%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
             </div>
 
             <div class="content row">
@@ -81,6 +81,7 @@
                     <asp:HyperLink ID="ReorderTrendClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
                     <asp:HyperLink ID="RequisitionTrendClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
                     <asp:HyperLink ID="SupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/SupplierList.aspx">Supplier List</asp:HyperLink>     
+                    <asp:HyperLink ID="HyperLink14" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentList.aspx">Department</asp:HyperLink>     
                 </div>
 
                 <div class="right-col">

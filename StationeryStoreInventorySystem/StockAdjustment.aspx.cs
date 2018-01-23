@@ -20,7 +20,19 @@ public partial class StockAdjustment : System.Web.UI.Page
         foreach(Discrepency d in monthly)
         {
             Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
-            monthlySource.Add(d, i);
+            decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
+            if (Session["empRole"] != null)
+            {
+                string role = (string) Session["empRole"];
+                if(Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                {
+                    monthlySource.Add(d, i);
+                }
+                else if(Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                {
+                    monthlySource.Add(d, i);
+                }
+            }
         }
         GridView1.DataSource = monthlySource;
         GridView1.DataBind();
@@ -28,7 +40,22 @@ public partial class StockAdjustment : System.Web.UI.Page
         foreach(Discrepency d in pending)
         {
             Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
-            pendingSource.Add(d, i);
+            decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
+            if (Session["empRole"] != null)
+            {
+                if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                {
+                    pendingSource.Add(d, i);
+                }
+                else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                {
+                    pendingSource.Add(d, i);
+                }
+            }
+            else
+            {
+                
+            }
         }
         GridView2.DataSource = pendingSource;
         GridView2.DataBind();
@@ -44,9 +71,8 @@ public partial class StockAdjustment : System.Web.UI.Page
             {
                 if (kvp.Key.ItemCode == d.ItemCode && kvp.Key.DiscrepencyID < d.DiscrepencyID)
                 {
-                    CheckBox chk = e.Row.FindControl("CheckBox1") as CheckBox;
-                    chk.Enabled = false;
-                    chk.Visible = false;
+                    RadioButtonList rbl = e.Row.FindControl("RadioButtonList1") as RadioButtonList;
+                    rbl.Enabled = false;
                 }
             }
         }

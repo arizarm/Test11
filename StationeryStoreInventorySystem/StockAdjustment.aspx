@@ -83,6 +83,11 @@
                     <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Discrepancy Amount">
+                <ItemTemplate>
+                    <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("Key.TotalDiscrepencyAmount") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Reason">
                 <ItemTemplate>
                     <asp:Label ID="lblReason" runat="server" Text='<%# Bind("Key.Remarks") %>'></asp:Label>
@@ -95,13 +100,20 @@
     <br />
     <br />
     <%} %>
+    <%if (GridView2.Rows.Count > 0)
+        { %>
     <h4>Discrepancies Pending Approval</h4>
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+                        <asp:ListItem Text="Approve"></asp:ListItem>
+                        <asp:ListItem Text="Reject"></asp:ListItem>
+                    </asp:RadioButtonList>
                 </ItemTemplate>
+
+<ItemStyle HorizontalAlign="Center" Width="100px"></ItemStyle>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Item Code">
                 <ItemTemplate>
@@ -117,6 +129,13 @@
                 <ItemTemplate>
                     <asp:Label ID="lblAdj" runat="server" Text='<%# Bind("Key.AdjustmentQty") %>'></asp:Label>
                 </ItemTemplate>
+                <ItemStyle HorizontalAlign="Center" />
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Total Discrepancy Amount ($)">
+                <ItemTemplate>
+                    <asp:Label ID="lblAmount" runat="server" Text='<%# Bind("Key.TotalDiscrepencyAmount") %>'></asp:Label>
+                </ItemTemplate>
+                <ItemStyle HorizontalAlign="Center" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Reason">
                 <ItemTemplate>
@@ -127,5 +146,6 @@
     </asp:GridView>
     <br />
     <asp:Button ID="Button2" runat="server" Text="Approve" CssClass="button"/>
+    <%} %>
     </asp:Content>
 

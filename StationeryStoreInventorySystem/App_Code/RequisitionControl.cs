@@ -341,4 +341,15 @@ public class RequisitionControl
             ts.Complete();
         }
     }
+
+    // get requisition by emp ID
+    public static List<ReqisitionListItem> getRequisitionListByID(int empCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = new List<Requisition>();
+            rlist = context.Requisitions.Where(x => x.RequestedBy == empCode).ToList<Requisition>();
+            return PopulateGridView(rlist);
+        }
+    } 
 }

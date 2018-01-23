@@ -12,24 +12,16 @@ public class GenerateReorderTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities se = new StationeryEntities();
-            List<string> allCats = se.Categories.Select(c => c.CategoryName).ToList();
-            ts.Complete();
-            return allCats;
-        }
+        EFBroker_Category EFBC = new EFBroker_Category();
+        List<string> allCats = EFBC.GetAllCategoryNames();
+        return allCats;
     }
 
     public List<string> GetAllSupplierNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities se = new StationeryEntities();
-            List<string> allSupls = se.Suppliers.Select(c => c.SupplierName).ToList();
-            ts.Complete();
-            return allSupls;
-        }
+        EFBroker_Supplier EFBS = new EFBroker_Supplier();
+        List<string> allSupls = EFBS.ListAllSuppliers().Select(c => c.SupplierName).ToList();
+        return allSupls;
     }
 
     public int GetTotalReorderByCategoryGivenMonth(string month, string supplier, string cat)

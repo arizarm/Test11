@@ -9,18 +9,15 @@ using System.Web;
 /// </summary>
 public class EFBroker_PriceList
 {
-    static StationeryEntities dbInstance;
-
     public EFBroker_PriceList()
     {
-        if (dbInstance == null)
-            dbInstance = new StationeryEntities();
     }
 
     public static void AddPriceListItem(PriceList obj)
     {
         using (TransactionScope ts = new TransactionScope())
         {
+            StationeryEntities dbInstance = new StationeryEntities();
             dbInstance.PriceLists.Add(obj);
             dbInstance.SaveChanges();
             ts.Complete();
@@ -31,6 +28,7 @@ public class EFBroker_PriceList
     {
         using (TransactionScope ts = new TransactionScope())
         {
+            StationeryEntities dbInstance = new StationeryEntities();
             DateTime dt = DateTime.Now;
             string latestYear = dt.Year.ToString();
             List<PriceList> lpl = dbInstance.PriceLists.Where(x => x.SupplierCode == supplierCode).Where(y => y.TenderYear == latestYear).ToList();
@@ -43,6 +41,7 @@ public class EFBroker_PriceList
     {
         using (TransactionScope ts = new TransactionScope())
         {
+            StationeryEntities dbInstance = new StationeryEntities();
             PriceList pl = dbInstance.PriceLists.Where(x => x.SupplierCode == firstCPK).Where(y => y.ItemCode == secondCPK).Where(z => z.TenderYear == thirdCPK).First();
             dbInstance.PriceLists.Remove(pl);
             dbInstance.SaveChanges();

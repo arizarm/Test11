@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.IO;
+using System.Web.Security;
 
 /// <summary>
 /// Summary description for Utility
@@ -54,5 +55,13 @@ public static class Utility
             return false;
         }
     }
- }
+    public static void logout()
+    {
+        FormsAuthentication.SignOut();
+        Session.Remove("emp");
+        Session.Remove("empRole");
+        Session.Remove("empID");
+        Response.Redirect("~/Login.aspx");
+    }
+}
 

@@ -8,6 +8,8 @@ using System.Web;
 /// </summary>
 public class GenerateDiscrepancyController
 {
+    private static EFBroker_Item items = new EFBroker_Item();
+    private static EFBroker_PriceList pricelists = new EFBroker_PriceList();
     private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
@@ -70,12 +72,12 @@ public class GenerateDiscrepancyController
 
     public static List<Item> GetAllItems()
     {   //goes to item broker
-        return context.Items.Where(x => x.ActiveStatus == "Y").OrderBy(x => x.ItemCode).ToList();
+        return items.GetActiveItemList();
     }
 
     public static Item GetItemByItemCode(string itemCode)
     {   //goes to item broker
-        Item i = context.Items.Where(x => x.ItemCode == itemCode && x.ActiveStatus == "Y").First();
+        Item i = items.GetActiveItembyItemCode(itemCode);
         return i;
     }
 
@@ -87,14 +89,12 @@ public class GenerateDiscrepancyController
 
     public static List<PriceList> GetPricesByItemCode(string itemCode)
     {   //goes to price list broker
-        List<PriceList> prices = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
-        return prices;
+        return pricelists.GetPriceListByItemCode(itemCode);
     }
 
     public static List<PriceList> GetPriceListsByItemCode(string itemCode)
     {   //goes to price list broker
-        List<PriceList> sList = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
-        return sList;
+        return pricelists.GetPriceListByItemCode(itemCode);
     }
 
     public static Employee GetEmployeeByRole(string role)

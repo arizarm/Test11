@@ -9,7 +9,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Session["discrepancySummary"] != null)
+        if (Session["discrepancySummary"] != null)
         {
             Dictionary<KeyValuePair<Discrepency, Item>, String> summary = null;
             try
@@ -31,7 +31,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        foreach(GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in GridView1.Rows)
         {
             int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
             string action = (row.FindControl("lblAction") as Label).Text;
@@ -39,21 +39,25 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById(discID);
             if (d.Status == "Monthly")
             {
-                List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(d.ItemCode);
-
-                foreach (Discrepency d2 in dList)
+                if (action == "Approved")
                 {
-                    if (d2.DiscrepencyID < d.DiscrepencyID)
+                    List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(d.ItemCode);
+
+                    foreach (Discrepency d2 in dList)
                     {
-                        EFBroker_Discrepancy.ProcessDiscrepancy(d2.DiscrepencyID, "Resolved");
+                        if (d2.DiscrepencyID < d.DiscrepencyID)
+                        {   //Negating discrepancies reported before the monthly discrepancy after it is approved
+                            EFBroker_Discrepancy.ProcessDiscrepancy(d2.DiscrepencyID, "Resolved");
+                        }
                     }
                 }
+
             }
 
             EFBroker_Discrepancy.ProcessDiscrepancy(discID, action);
 
             StockCard sc = new StockCard();
-            
+
 
             StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();
 
@@ -63,7 +67,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             sc.Balance = lastEntry.Balance + d.AdjustmentQty;
             sc.TransactionDetailID = d.DiscrepencyID;
 
-            //EFBroker_StockCard.AddStockTransaction(sc);
+            EFBroker_StockCard.ResolveDiscrepancy(sc, sc.ItemCode, (int)sc.Balance);
         }
 
         Response.Redirect("~/StockAdjustment.aspx");

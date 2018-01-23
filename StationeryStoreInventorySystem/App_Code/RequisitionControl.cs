@@ -168,11 +168,17 @@ public class RequisitionControl
         return PopulateGridViewForDepartment(rlist);
     }
 
-    public static List<ReqisitionListItem> getRequisitionListByIDAndStatus(int empID,string status)
+    public static List<ReqisitionListItem> getRequisitionListByEmpIDAndStatus(int empID,string status)
     {
-        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByIDAndStatus(empID,status);
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByEmpIDAndStatus(empID,status);
         return PopulateGridViewForDepartment(rlist);
-    }  
+    }
+    public static List<ReqisitionListItem> getRequisitionListByStatusAndDepCode(string status, string depCode)
+    {
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(status, depCode);
+        return PopulateGridViewForDepartment(rlist);
+    }
+    
 
     //FIND REQUISITION ITEM BY REQUISITION ID
     public static Requisition_Item findRequisitionID(int id)
@@ -210,7 +216,7 @@ public class RequisitionControl
 
 
     //CHANGE REQUISITION STATUS
-    public static void approveRequisition(int id, string reason, int empID)
+    public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
     }

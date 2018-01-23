@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for EFBroker_Item
@@ -22,6 +23,21 @@ public class EFBroker_Item
             inventoryDB.SaveChanges();
         }
         return;
+    }
+    public static void AddItemAndCategory(Item item, string categoryName)
+    {
+        Category cat = new Category();
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            cat.CategoryName = categoryName;
+            context.Categories.Add(cat);
+            cat = context.Categories.Where(x => x.CategoryName.Equals(categoryName)).First();
+            item.Category = cat;
+            context.Items.Add(item);
+            context.SaveChanges();
+            ts.Complete();
+        }
     }
     public static Item GetItembyItemCode(string itemCode)
     {

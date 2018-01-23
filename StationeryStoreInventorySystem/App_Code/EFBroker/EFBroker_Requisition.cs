@@ -76,7 +76,7 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
-    public static List<Requisition> getRequisitionListByIDAndStatus(int empID,string status)
+    public static List<Requisition> getRequisitionListByEmpIDAndStatus(int empID,string status)
     {
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
@@ -85,8 +85,19 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
+    public static List<Requisition> getRequisitionListByStatusAndDepCode( string status ,string depCode)
+    {
+        List<Requisition> rlist;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = context.Requisitions.Where(x => x.Status == status && x.DeptCode == depCode).ToList();
+        }
+        return rlist;
+    }
 
     
+
+
     public static List<Requisition> GetAllRequisitionList()
     {
         List<Requisition> rList;
@@ -217,7 +228,7 @@ public class EFBroker_Requisition
             ts.Complete();
         }
     }
-    public static void ApproveRequisition(int id, string reason, int empID)
+    public static void ApproveRequisition(int id, string reason, int? empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -226,6 +237,8 @@ public class EFBroker_Requisition
             r.RequisitionID = id;
             r.Status = "Approved";
             r.ApprovedBy = empID;
+
+            context.Entry(r).State= System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
         return;
@@ -239,7 +252,7 @@ public class EFBroker_Requisition
             r.RequisitionID = id;
             r.ApprovedBy = empID;
             r.Status = "Rejected";
-            r.Remarks = "Rejected By Head";
+            //r.Remarks = "Rejected By Head";
             context.SaveChanges();
         }
     }

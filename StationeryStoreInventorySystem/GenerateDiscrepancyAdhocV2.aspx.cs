@@ -37,6 +37,10 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     fullDiscrepancies.Add(kvp, adjustment);
                 }
             }
+            else
+            {
+                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+            }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
         }
@@ -72,8 +76,15 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
                     Discrepency d = new Discrepency();
                     d.ItemCode = itemCode;
-                    //d.RequestedBy = (int)Session["empID"];
-                    d.RequestedBy = 1005;     //note this
+                    if(Session["empID"] != null)
+                    {
+                        int empID = (int)Session["empID"];
+                        d.RequestedBy = empID;
+                    }
+                    else
+                    {
+                        Utility.logout();
+                    }
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
@@ -151,7 +162,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 string managerEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
-            //Utility.sendMail("etedwin123@gmail.com", "New Discrepancies Notification", "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+            
             Response.Redirect("https://www.google.com.sg");
         }
     }

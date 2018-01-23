@@ -61,9 +61,9 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
     }*/
 
     @Override
-    public void onItemClick(AdapterView<?> av, View v, int position, long id) {
+    public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         try {
-        RequisitionListItem b = (RequisitionListItem) av.getAdapter().getItem(position);
+            RequisitionListItem b = (RequisitionListItem) av.getAdapter().getItem(position);
             Intent intent = new Intent(this, RequisitionDetailActivity.class);
             intent.putExtra("RequisitionNo", b.get("Date").toString());
             startActivity(intent);

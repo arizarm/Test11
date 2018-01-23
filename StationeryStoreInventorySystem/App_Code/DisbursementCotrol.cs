@@ -128,7 +128,7 @@ public class DisbursementCotrol
     {
         List<string> dateList = new List<string>();
 
-        dateList = context.Requisitions.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.RequestDate.ToString()).ToList();
+        dateList = context.Requisitions.Where(x => x.DisbursementID.ToString().Equals(disbID)).OrderBy(x=> x.RequestDate).Select(x => x.RequestDate.ToString()).ToList();
 
         DateTime inputDate = new DateTime();
         DateTime earliestDate = new DateTime();
@@ -195,8 +195,7 @@ public class DisbursementCotrol
         foreach (Disbursement_Item di in d.Disbursement_Item)
         {
             di.ActualQty = ActualQty[i];
-            i++;
-        }
+            i++;        }
         context.SaveChanges();
     }
 

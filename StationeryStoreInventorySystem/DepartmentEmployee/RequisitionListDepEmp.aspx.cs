@@ -51,7 +51,6 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
-
     }
 
 

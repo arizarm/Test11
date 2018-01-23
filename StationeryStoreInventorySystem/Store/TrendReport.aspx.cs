@@ -408,7 +408,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 }
                 Session["reportsToDisplay"] = basicReportObjects;
                 Session["typeOfReport"] = splitBySelected;
-                Response.Redirect("TrendReportDisplay.aspx");
+                Response.Redirect("~/Store/TrendReportDisplay.aspx");
             }
             else
             {
@@ -507,7 +507,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 }
                 Session["reportsToDisplay"] = basicReportObjects;
 
-                Response.Redirect("TrendReportDisplay.aspx");
+                Response.Redirect("~/Store/TrendReportDisplay.aspx");
             }
             else
             {

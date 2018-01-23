@@ -126,15 +126,42 @@ public class GenerateDiscrepancyController
 
     public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        List<Discrepency> d = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
-        if (d.Count != 0)
+        List<Discrepency> dList = context.Discrepencies.Where(x => x.ItemCode == itemCode && x.Status == "Monthly").ToList();
+        if (dList.Count != 0)
         {
-            return d[0];
+            return dList[0];
         }
         else
         {
             return null;
         }
+    }
+
+    public static Discrepency GetDiscrepancyById(int id)
+    {   //goes to discrepancy broker
+        return context.Discrepencies.Where(x => x.DiscrepencyID == id).First();
+    }
+
+    public static List<Discrepency> GetAllPendingDiscrepancies()
+    {
+        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Pending").ToList();
+        return dList;
+    }
+
+    public static List<Discrepency> GetAllPendingMonthlyDiscrepancies()
+    {
+        List<Discrepency> dList = context.Discrepencies.Where(x => x.Status == "Monthly").ToList();
+        return dList;
+    }
+
+    public static Disbursement GetDisbursementById(int id)
+    {   //goes to disbursement broker
+        return context.Disbursements.Where(x => x.DisbursementID == id).First();
+    }
+
+    public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
+    {   //not needed
+        return context.Disbursement_Item.Where(x => x.DisbursementID == id && x.ItemCode == itemCode).First();
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)
@@ -143,7 +170,7 @@ public class GenerateDiscrepancyController
     }
 
     public static void UpdateStockCards(List<Discrepency> dList)
-    {   //goes to stock card broker
+    {   //not needed
         foreach (Discrepency d in dList)
         {
             StockCard sc = new StockCard();
@@ -157,5 +184,19 @@ public class GenerateDiscrepancyController
         context.SaveChanges();
     }
 
+    public static PurchaseOrder GetPurchaseOrderById(int id)
+    {   //goes to purchase order broker
+        return context.PurchaseOrders.Where(x => x.PurchaseOrderID == id).First();
+    }
+
+    public static Item_PurchaseOrder GetPurchaseOrderItem(int poID, string itemCode)
+    {   //goes to item_purchaseorder broker
+        return context.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == poID && x.ItemCode == itemCode).First();
+    }
+
+    public static Department GetDepartmentByDeptCode(string deptCode)
+    {    //goes to department broker
+        return context.Departments.Where(x => x.DeptCode == deptCode).First();
+    }
     
 }

@@ -63,8 +63,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             sc.Balance = lastEntry.Balance + d.AdjustmentQty;
             sc.TransactionDetailID = d.DiscrepencyID;
 
-            EFBroker_StockCard.AddStockTransaction(sc);
-            
+            //EFBroker_StockCard.AddStockTransaction(sc);
         }
 
         Response.Redirect("~/StockAdjustment.aspx");

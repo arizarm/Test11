@@ -24,4 +24,14 @@ public class EFBroker_Department
         }
     }
 
+    public static List<Department> GetDepartmentList()
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities SE = new StationeryEntities();
+            List<Department> allDepts = SE.Departments.ToList();
+            ts.Complete();
+            return allDepts;
+        }
+    }
 }

@@ -31,7 +31,7 @@ public class EFBroker_Discrepancy
         int id;
         using (StationeryEntities context = new StationeryEntities())
         {
-            id= context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).FirstOrDefault();
+            id = context.Discrepencies.Where(x => x.ItemCode == d.ItemCode && x.RequestedBy == d.RequestedBy && x.Date == d.Date && x.AdjustmentQty == d.AdjustmentQty && x.Remarks == d.Remarks).Select(x => x.DiscrepencyID).FirstOrDefault();
         }
         return id;
     }
@@ -79,5 +79,15 @@ public class EFBroker_Discrepancy
             dList = context.Discrepencies.Where(x => x.Status == "Monthly").ToList();
         }
         return dList;
+    }
+
+    public static void ProcessDiscrepancy(int id, string action)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Discrepency d = GetDiscrepancyById(id);
+            d.Status = action;
+            context.SaveChanges();
+        }
     }
 }

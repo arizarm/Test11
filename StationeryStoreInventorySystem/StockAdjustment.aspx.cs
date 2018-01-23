@@ -105,16 +105,16 @@ public partial class StockAdjustment : System.Web.UI.Page
             {
                 string itemCode = (row.FindControl("lblItemCode") as Label).Text;
                 int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
-                Item i = (new EFBroker_Item()).GetItembyItemCode(itemCode);
-                Discrepency d = (new EFBroker_Discrepancy()).GetDiscrepancyById(discID);
+                Item i = EFBroker_Item.GetItembyItemCode(itemCode);
+                Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById(discID);
                 KeyValuePair<Discrepency, Item> kvp = new KeyValuePair<Discrepency, Item>(d, i);
                 if (rbl.SelectedIndex == 0)
                 {
-                    summary.Add(kvp, "Approve");
+                    summary.Add(kvp, "Approved");
                 }
                 else if (rbl.SelectedIndex == 1)
                 {
-                    summary.Add(kvp, "Reject");
+                    summary.Add(kvp, "Rejected");
                 }
             }
         }

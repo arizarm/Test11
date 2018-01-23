@@ -13,15 +13,15 @@ public partial class StockAdjustment : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-        monthly = GenerateDiscrepancyController.GetAllPendingMonthlyDiscrepancies();
-        List<Discrepency> pending = GenerateDiscrepancyController.GetAllPendingDiscrepancies();
+        monthly = EFBroker_Discrepancy.GetMonthlyDiscrepancyList();
+        List<Discrepency> pending = EFBroker_Discrepancy.GetPendingDiscrepancyList();
 
         Dictionary<Discrepency, Item> monthlySource = new Dictionary<Discrepency, Item>();
         Dictionary<Discrepency, Item> pendingSource = new Dictionary<Discrepency, Item>();
 
         foreach (Discrepency d in monthly)
         {
-            Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
+            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
             if (Session["empRole"] != null)
             {
@@ -41,7 +41,7 @@ public partial class StockAdjustment : System.Web.UI.Page
 
         foreach (Discrepency d in pending)
         {
-            Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
+            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
             if (Session["empRole"] != null)
             {

@@ -14,7 +14,7 @@ public partial class ItemStockCardList : System.Web.UI.Page
 
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-        List<Item> iList = GenerateDiscrepancyController.GetAllItems();
+        List<Item> iList = EFBroker_Item.GetActiveItemList();
         List<Item> searchResults = new List<Item>();
         string searchString = SearchBox.Text.ToLower();
         foreach(Item i in iList)
@@ -29,7 +29,7 @@ public partial class ItemStockCardList : System.Web.UI.Page
 
     protected void Display_Click(object sender, EventArgs e)
     {
-        List<Item> iList = GenerateDiscrepancyController.GetAllItems();
+        List<Item> iList = EFBroker_Item.GetActiveItemList();
         BindGrid(iList);
     }
 

@@ -10,12 +10,12 @@ using System.Reflection;
 /// </summary>
 public class ItemBusinessLogic
 {
-    EFBroker_Item itemDB;
-    EFBroker_Category categoryDB;
+    //EFBroker_Item EFBroker_Item;
+    //EFBroker_Category categoryDB;
     public ItemBusinessLogic()
     {
-        itemDB = new EFBroker_Item();
-        categoryDB = new EFBroker_Category();
+        //EFBroker_Item = new EFBroker_Item();
+        //categoryDB = new EFBroker_Category();
         //
         // TODO: Add constructor logic here
         //
@@ -32,17 +32,17 @@ public class ItemBusinessLogic
         {
             return null;
         }
-        else if (itemDB.GetItembyItemCode(itemCode) != null)
+        else if (EFBroker_Item.GetItembyItemCode(itemCode) != null)
         {
             return null;
         }
         else
         {
-            Category cat = categoryDB.GetCategorybyName(categoryName);
+            Category cat = EFBroker_Category.GetCategorybyName(categoryName);
             if (cat == null)
             {
                 AddCategory(categoryName);
-                cat = categoryDB.GetCategorybyName(categoryName);
+                cat = EFBroker_Category.GetCategorybyName(categoryName);
             }
 
             item.ItemCode = itemCode;
@@ -54,7 +54,7 @@ public class ItemBusinessLogic
             item.Bin = bin;
             item.ActiveStatus = "Y";
             item.BalanceQty = 0;
-            itemDB.AddItem(item);
+            EFBroker_Item.AddItem(item);
             //iList.Add(item);
             //Session["itemlist"] = iList;
         }
@@ -63,25 +63,25 @@ public class ItemBusinessLogic
     public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Category category = GetCategorybyName(categoryName);
-        itemDB.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
+        EFBroker_Item.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
         return;
     }
     public Item GetItembyItemCode(string itemCode)
     {
-        return itemDB.GetItembyItemCode(itemCode);
+        return EFBroker_Item.GetItembyItemCode(itemCode);
     }
     public void RemoveItem(string itemCode)
     {
-        itemDB.RemoveItem(itemCode);
+        EFBroker_Item.RemoveItem(itemCode);
         return;
     }
     public List<Item> GetItemList()
     {
-        return itemDB.GetActiveItemList();
+        return EFBroker_Item.GetActiveItemList();
     }
     public List<Item> GetCatalogueList()
     {
-        return itemDB.GetCatalogueList();
+        return EFBroker_Item.GetCatalogueList();
     }
     public List<InventoryReportItem> GetInventoryReportItemList()
     {
@@ -96,27 +96,27 @@ public class ItemBusinessLogic
     }
     public List<Category> GetCategoryList()
     {
-        return categoryDB.GetCategoryList();
+        return EFBroker_Category.GetCategoryList();
     }
     public Category GetCategorybyID(int categoryID)
     {
-        return categoryDB.GetCategorybyID(categoryID);
+        return EFBroker_Category.GetCategorybyID(categoryID);
     }
     public Category GetCategorybyName(string categoryName)
     {
         string i = FirstUpperCase(categoryName);
-        return categoryDB.GetCategorybyName(i);
+        return EFBroker_Category.GetCategorybyName(i);
     }
     public void AddCategory(string categoryName)
     {
         string i = FirstUpperCase(categoryName);
         Category cat = new Category();
         cat.CategoryName = i;
-        categoryDB.AddCategory(cat);
+        EFBroker_Category.AddCategory(cat);
     }
     public List<string> GetDistinctUOMList()
     {
-        return itemDB.GetDistinctUOMList();
+        return EFBroker_Item.GetDistinctUOMList();
     }
     public string FirstUpperCase(string s)
     {

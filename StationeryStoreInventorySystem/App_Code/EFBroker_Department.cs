@@ -9,15 +9,11 @@ using System.Web;
 /// </summary>
 public class EFBroker_Department
 {
-    StationeryEntities dbInstance;
-
     public EFBroker_Department()
     {
-        if (dbInstance == null)
-            dbInstance = new StationeryEntities();
     }
 
-    public List<string> GetAllDepartmentNames()
+    public static List<string> GetAllDepartmentNames()
     {
         using (TransactionScope ts = new TransactionScope())
         {

@@ -12,22 +12,19 @@ public class GenerateRequisitionTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        EFBroker_Category EFBC = new EFBroker_Category();
-        List<string> allCategoryNames = EFBC.GetAllCategoryNames();
+        List<string> allCategoryNames = EFBroker_Category.GetAllCategoryNames();
         return allCategoryNames;
     }
 
     public List<string> GetAllDepartmentNames()
     {
-        EFBroker_Department EFBD = new EFBroker_Department();
-        List<string> allDepts = EFBD.GetAllDepartmentNames();
+        List<string> allDepts = EFBroker_Department.GetAllDepartmentNames();
         return allDepts;
     }
 
     public List<DateTime?> GetAllRequisitionMonths()
     {
-        EFBroker_Requisition EFBR = new EFBroker_Requisition();
-        List<DateTime?> allMonths = EFBR.GetAllFinalisedRequisitionMonths();
+        List<DateTime?> allMonths = EFBroker_Requisition.GetAllFinalisedRequisitionMonths();
         return allMonths;
     }
 

@@ -12,37 +12,32 @@ public class SupplierListController
 
     public List<Supplier> ListAllSuppliers()
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        List<Supplier> LS = EFBS.ListAllSuppliers();
+        List<Supplier> LS = EFBroker_Supplier.ListAllSuppliers();
         return LS;
     }
 
     
     public Supplier GetSupplierGivenSupplierCode(string supplierCode)
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        Supplier s = EFBS.GetSupplierGivenSupplierCode(supplierCode);
+        Supplier s = EFBroker_Supplier.GetSupplierGivenSupplierCode(supplierCode);
         return s;
     }
 
 
     public void UpdateSupplier(Supplier supplier)
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        EFBS.UpdateSupplier(supplier);
+        EFBroker_Supplier.UpdateSupplier(supplier);
     }
 
     //DAO
     public void DeleteSupplier(string supplierCode)
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        EFBS.DeleteSupplier(supplierCode);
+        EFBroker_Supplier.DeleteSupplier(supplierCode);
     }
 
     //DAO
     public void CreateSupplier(Supplier supplier)
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        EFBS.CreateSupplier(supplier);
+        EFBroker_Supplier.CreateSupplier(supplier);
     }
 }

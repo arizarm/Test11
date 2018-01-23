@@ -149,7 +149,6 @@ public class RequisitionControl
             return (context.Requisitions.Where(r => r.RequisitionID.Equals(id))).FirstOrDefault();
         }
     }
-
     public static List<Requisition_ItemList> getList(int id)
     {
         List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();

@@ -52,4 +52,38 @@ public class EFBroker_Requisition
             return allMonths;
         }
     }
+    public static List<Requisition> GetAllApprovedOrPriorityReq()
+    {
+        List<Requisition> rList;
+        rList = GetAllApprovedRequisitions();
+        rList.AddRange(GetAllPriorityRequisitions());
+        return rList;
+    }
+    public static List<Requisition> GetAllApprovedRequisitions()
+    {
+        List<Requisition> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.Requisitions.Where(x => x.Status == "Approved").ToList();
+        }
+        return rList;
+    }
+    public static List<Requisition> GetAllPriorityRequisitions()
+    {
+        List<Requisition> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.Requisitions.Where(x => x.Status == "Priority").ToList();
+        }
+        return rList;
+    }
+    public static List<Requisition> GetAllRequisitionList()
+    {
+        List<Requisition> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.Requisitions.ToList();
+        }
+        return rList;
+    }
 }

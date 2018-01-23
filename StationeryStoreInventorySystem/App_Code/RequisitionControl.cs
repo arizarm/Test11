@@ -32,28 +32,28 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplayAll()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Priority" || x.Status == "Approved").ToList();
+        rlist = EFBroker_Requisition.GetAllApprovedOrPriorityReq();
         return PopulateGridView(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayAllDepartment()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.ToList();
+        rlist = EFBroker_Requisition.GetAllRequisitionList();
         return PopulateGridViewForDepartment(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Priority").ToList();
+        rlist = EFBroker_Requisition.GetAllPriorityRequisitions();
         return PopulateGridView(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayApproved()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Approved").ToList();
+        rlist = EFBroker_Requisition.GetAllApprovedRequisitions();
         return PopulateGridView(rlist);
     }
 
@@ -87,9 +87,10 @@ public class RequisitionControl
             status = r.Status.ToString();
 
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
-            depCode = context.Employees.Where(x => x.EmpID.Equals(requestedBy)).Select(x => x.DeptCode).First().ToString();
+            Department dep = DeptBusinessLogic.GetDepartByEmpID(requestedBy);
+            depCode = dep.DeptCode;
 
-            department = context.Departments.Where(x => x.DeptCode.Equals(depCode)).Select(x => x.DeptName).First().ToString();
+            department = dep.DeptName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, "");
             itemList.Add(item);
         }
@@ -151,7 +152,7 @@ public class RequisitionControl
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
             int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = context.Employees.Where(x => x.EmpID == empCode).Select(x => x.EmpName).First().ToString();
+            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
             return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
         }
 
@@ -310,7 +311,7 @@ public class RequisitionControl
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
             int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = context.Employees.Where(x => x.EmpID == empCode).Select(x => x.EmpName).First().ToString();
+            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
             itemList.Add(item);
         }

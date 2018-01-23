@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for DeptBusinessLogic
@@ -21,7 +22,16 @@ public class DeptBusinessLogic
         }
 
     }
-
+    public static List<string> GetAllDepartmentNames()
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities SE = new StationeryEntities();
+            List<string> allDepts = SE.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
+            ts.Complete();
+            return allDepts;
+        }
+    }
     public static List<Employee> GetEmployeeList()
     {
         using (StationeryEntities smodel = new StationeryEntities())

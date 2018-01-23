@@ -99,20 +99,13 @@ public class RequisitionControl
     //GET ITEM DESCRIPTION
     public static List<String> getItem()
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Items.Where(i => i.ActiveStatus.Equals("Y")).Select(i => i.Description).ToList();
-
-        }
+        return EFBroker_Item.GetActiveItemDescriptionList();
     }
 
     //GET ITEM UOM
     public static String getUOM(string item)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Items.Where(i => i.Description.Equals(item)).Select(i => i.UnitOfMeasure).FirstOrDefault();
-        }
+        return EFBroker_Item.GetUnitbyItemDesc(item);
     }
 
     //GET LAST REQUISITION
@@ -124,10 +117,7 @@ public class RequisitionControl
     //GET ITEM DESCRIPTION BY ITEM CODE
     public static String getCode(string item)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            return context.Items.Where(i => i.Description.Equals(item)).Select(i => i.ItemCode).FirstOrDefault();
-        }
+        return EFBroker_Item.GetItembyDescription(item).ItemCode;
     }
 
     //FIND REQUISITION WITH PENDING STATUS

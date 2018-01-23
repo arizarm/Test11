@@ -86,6 +86,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void AddNewItemButton_Click(object sender, EventArgs e)
     {
+        string Year = DateTime.Now.Year.ToString();
+        TextBox11.Text = Year;
         Table3.Visible = true;
         AddNewItemButton.Visible = false;
     }

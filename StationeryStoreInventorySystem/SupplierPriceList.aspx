@@ -152,7 +152,7 @@
                     <asp:Label ID="ItemDesLabel" runat="server" Text='<%# Eval("ItemDescription") %>'></asp:Label></ItemTemplate></asp:TemplateField><asp:TemplateField HeaderText ="Item Price" ItemStyle-Width ="80%">
                     <ItemTemplate>
                     <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label></ItemTemplate><EditItemTemplate>
-                        <asp:TextBox ID="NewPriceTextBox" runat="server" OnTextChanged="NewPriceTextBox_TextChanged"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="NewPriceTextBox" ValidationExpression="(\d{0,4})([.]{0,1}\d{0,2})" ForeColor="Red"></asp:RegularExpressionValidator></EditItemTemplate></asp:TemplateField><asp:TemplateField><ItemTemplate>
+                        <asp:TextBox ID="NewPriceTextBox" runat="server" OnTextChanged="NewPriceTextBox_TextChanged"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="NewPriceTextBox" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ForeColor="Red" /></EditItemTemplate></asp:TemplateField><asp:TemplateField><ItemTemplate>
                     <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CommandName="Edit" />
                                    </ItemTemplate>
                     <EditItemTemplate>

@@ -8,13 +8,6 @@ using System.Web;
 /// </summary>
 public class GenerateDiscrepancyController
 {
-    private static EFBroker_Item items = new EFBroker_Item();
-    private static EFBroker_PriceList pricelists = new EFBroker_PriceList();
-    private static EFBroker_Discrepancy discrepencies = new EFBroker_Discrepancy();
-    private static EFBroker_Disbursement disbursements = new EFBroker_Disbursement();
-    private static EFBroker_Disbursement_Item disbursement_Items = new EFBroker_Disbursement_Item();
-    private static EFBroker_StockCard stockCards = new EFBroker_StockCard();
-    private static DeptBusinessLogic depLogic = new DeptBusinessLogic();
     //private static StationeryEntities context = new StationeryEntities();
     public GenerateDiscrepancyController()
     {
@@ -77,12 +70,12 @@ public class GenerateDiscrepancyController
 
     public static List<Item> GetAllItems()
     {   //goes to item broker
-        return items.GetActiveItemList();
+        return EFBroker_Item.GetActiveItemList();
     }
 
     public static Item GetItemByItemCode(string itemCode)
     {   //goes to item broker
-        Item i = items.GetActiveItembyItemCode(itemCode);
+        Item i = EFBroker_Item.GetActiveItembyItemCode(itemCode);
         return i;
     }
 
@@ -94,12 +87,12 @@ public class GenerateDiscrepancyController
 
     public static List<PriceList> GetPricesByItemCode(string itemCode)
     {   //goes to price list broker
-        return pricelists.GetPriceListByItemCode(itemCode);
+        return EFBroker_PriceList.GetPriceListByItemCode(itemCode);
     }
 
     public static List<PriceList> GetPriceListsByItemCode(string itemCode)
     {   //goes to price list broker
-        return pricelists.GetPriceListByItemCode(itemCode);
+        return EFBroker_PriceList.GetPriceListByItemCode(itemCode);
     }
 
     public static Employee GetEmployeeByRole(string role)
@@ -111,52 +104,52 @@ public class GenerateDiscrepancyController
 
     public static void SaveDiscrepancies(List<Discrepency> dList)
     {    //goes to discrepancy broker
-        discrepencies.SaveDiscrepencies(dList);
+        EFBroker_Discrepancy.SaveDiscrepencies(dList);
     }
 
     public static int GetDiscrepancyID(Discrepency d)
     {   //goes to discrepancy broker
-        return discrepencies.GetDiscrepancyID(d);
+        return EFBroker_Discrepancy.GetDiscrepancyID(d);
     }
 
     public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        return discrepencies.GetPendingDiscrepanciesByItemCode(itemCode);
+        return EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(itemCode);
     }
 
     public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
     {   //goes to discrepancy broker
-        return discrepencies.GetPendingMonthlyDiscrepancyByItemCode(itemCode);
+        return EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(itemCode);
     }
 
     public static Discrepency GetDiscrepancyById(int id)
     {   //goes to discrepancy broker
-        return discrepencies.GetDiscrepancyById(id);
+        return EFBroker_Discrepancy.GetDiscrepancyById(id);
     }
 
     public static List<Discrepency> GetAllPendingDiscrepancies()
     {
-        return discrepencies.GetPendingDiscrepancyList();
+        return EFBroker_Discrepancy.GetPendingDiscrepancyList();
     }
 
     public static List<Discrepency> GetAllPendingMonthlyDiscrepancies()
     {
-        return discrepencies.GetMonthlyDiscrepancyList();
+        return EFBroker_Discrepancy.GetMonthlyDiscrepancyList();
     }
 
     public static Disbursement GetDisbursementById(int id)
     {   //goes to disbursement broker
-        return disbursements.GetDisbursmentbyDisbID(id);
+        return EFBroker_Disbursement.GetDisbursmentbyDisbID(id);
     }
 
     public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
     {   //not needed
-        return disbursement_Items.GetDisbursementItem(id, itemCode);
+        return EFBroker_Disbursement.GetDisbursementItem(id, itemCode);
     }
 
     public static List<StockCard> GetStockCardsByItemCode(string itemCode)
     {   //goes to stock card broker
-        return stockCards.GetStockCardsByItemCode(itemCode);
+        return EFBroker_StockCard.GetStockCardsByItemCode(itemCode);
     }
 
     //public static void UpdateStockCards(List<Discrepency> dList)

@@ -41,7 +41,33 @@ public class DeptBusinessLogic
         }
 
     }
-
+    public static Department GetDepartByEmpID(int empID)
+    {
+        Department dep;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            dep=smodel.Employees.Where(x => x.EmpID == empID).Select(x=>x.Department).FirstOrDefault();
+        }
+        return dep;
+    }
+    public static string GetCollectionPointbyDeptCode(string depCode)
+    {
+        string collectionPoint;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).FirstOrDefault();
+        }
+        return collectionPoint;
+    }
+    public static List<Employee> GetEmployeeListByRole(string role)
+    {  //goes to employee broker
+        List<Employee> e;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+             e = context.Employees.Where(x => x.Role == role).ToList();
+        }
+        return e;
+    }
     public static Employee GetDHeadByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -51,9 +77,22 @@ public class DeptBusinessLogic
         }
 
     }
-
-
-
+    public static Employee GetDeptRepByDeptCode(string depName)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
+        }
+    }
+    public static Employee GetEmployeebyEmpID(int empID)
+    {
+        Employee e;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            e = smodel.Employees.Where(x => x.EmpID == empID).FirstOrDefault();
+        }
+        return e;
+    }
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {
         using (StationeryEntities smodel = new StationeryEntities())

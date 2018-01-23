@@ -37,6 +37,10 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     fullDiscrepancies.Add(kvp, adjustment);
                 }
             }
+            else
+            {
+                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+            }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
         }
@@ -60,7 +64,17 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             {
                 if (remarks.Length <= maxChars)
                 {
-                    List<PriceList> itemPrices = GenerateDiscrepancyController.GetPricesByItemCode(itemCode);
+                    List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
+                    List<PriceList> itemPrices = new List<PriceList>();
+
+                    foreach(PriceList pl in plHistory)
+                    {    //Get only currently active suppliers for an item
+                        if(pl.TenderYear == DateTime.Now.Year.ToString())
+                        {
+                            itemPrices.Add(pl);
+                        }
+                    }
+
                     decimal totalPrice = 0;
 
                     foreach (PriceList pl in itemPrices)
@@ -72,8 +86,15 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
                     Discrepency d = new Discrepency();
                     d.ItemCode = itemCode;
-                    //d.RequestedBy = (int)Session["empID"];
-                    d.RequestedBy = 1005;     //note this
+                    if(Session["empID"] != null)
+                    {
+                        int empID = (int)Session["empID"];
+                        d.RequestedBy = empID;
+                    }
+                    else
+                    {
+                        Utility.logout();
+                    }
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
@@ -95,11 +116,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
                     if(d.TotalDiscrepencyAmount < 250)
                     {
-                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").EmpID;
+                        d.ApprovedBy = DeptBusinessLogic.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                     }
                     else
                     {
-                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").EmpID;
+                        d.ApprovedBy = DeptBusinessLogic.GetEmployeeListByRole("Store Manager")[0].EmpID;
                     }
                     dList.Add(d);
                 }
@@ -122,7 +143,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
         if (complete)
         {
-            GenerateDiscrepancyController.SaveDiscrepancies(dList);
+            EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
             Session["discrepancyList"] = null;
             Session["monthly"] = null;
@@ -143,15 +164,15 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
             if (informSupervisor)
             {
-                string supervisorEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").Email;
+                string supervisorEmail = DeptBusinessLogic.GetEmployeeListByRole("Store Supervisor")[0].Email;
                 Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             }
             if (informManager)
             {
-                string managerEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").Email;
+                string managerEmail = DeptBusinessLogic.GetEmployeeListByRole("Store Manager")[0].Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
-            //Utility.sendMail("etedwin123@gmail.com", "New Discrepancies Notification", "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+            
             Response.Redirect("https://www.google.com.sg");
         }
     }

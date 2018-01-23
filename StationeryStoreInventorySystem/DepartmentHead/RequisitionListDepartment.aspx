@@ -11,7 +11,8 @@
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
     </div>
     <div>
-        <asp:DropDownList ID="DropDownList1" runat="server" CssClass="align-right" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
+        <asp:Label ID="Label2" runat="server" Text="To View Requisition by Status : "></asp:Label>
+        <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Selected="True" >Select Status</asp:ListItem>
             <asp:ListItem Value="Pending">Pending Approval</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
@@ -20,7 +21,88 @@
         </asp:DropDownList>
     </div>
     <div>
+        <h3>All Requisition list for Department Head</h3>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
+            DataKeyNames="RequisitionNo" CssClass="mGrid">
+            <Columns>
+
+                <asp:TemplateField HeaderText="RequestDate">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
+
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="RequestedBy">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
+
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+
+                <asp:TemplateField HeaderText="Status">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:HyperLinkField HeaderText="Reject/Approve" DataNavigateUrlFields="RequisitionNo"
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Details"/>
+            </Columns>
+
+        </asp:GridView>
+
+         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False"
+            DataKeyNames="RequisitionNo" CssClass="mGrid">
+            <Columns>
+
+                <asp:TemplateField HeaderText="RequestDate">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
+
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="RequestedBy">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
+
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+
+                <asp:TemplateField HeaderText="Status">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
+            </Columns>
+
+        </asp:GridView>
+
+        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False"
             DataKeyNames="RequisitionNo" CssClass="mGrid">
             <Columns>
 
@@ -60,45 +142,6 @@
 
         </asp:GridView>
 
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid">
-            <Columns>
-
-                <asp:TemplateField HeaderText="RequestDate">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
-
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="RequestedBy">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
-
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-
-                <asp:TemplateField HeaderText="Status">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Status") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
-            </Columns>
-
-        </asp:GridView>
     </div>
 </asp:Content>
 

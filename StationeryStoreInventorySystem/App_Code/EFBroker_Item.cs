@@ -14,7 +14,7 @@ public class EFBroker_Item
         // TODO: Add constructor logic here
         //
     }
-    public void AddItem(Item item)
+    public static void AddItem(Item item)
     {
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
@@ -23,7 +23,7 @@ public class EFBroker_Item
         }
         return;
     }
-    public Item GetItembyItemCode(string itemCode)
+    public static Item GetItembyItemCode(string itemCode)
     {
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
@@ -31,7 +31,15 @@ public class EFBroker_Item
             return result;
         }
     }
-    public Item GetItembyDescription(string description)
+    public static Item GetActiveItembyItemCode(string itemCode)
+    {
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode && x.ActiveStatus == "Y").FirstOrDefault();
+            return result;
+        }
+    }
+    public static Item GetItembyDescription(string description)
     {
         Item result;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -40,7 +48,7 @@ public class EFBroker_Item
         }
         return result;
     }
-    public void RemoveItem(string itemCode)
+    public static void RemoveItem(string itemCode)
     {
 
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -51,7 +59,7 @@ public class EFBroker_Item
         }
         return;
     }
-    public List<Item> GetItemsbyCategoryID(int categoryID)
+    public static List<Item> GetItemsbyCategoryID(int categoryID)
     {
         List<Item> itemList;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -60,7 +68,7 @@ public class EFBroker_Item
             return itemList;
         }
     }
-    public List<Item> GetItemList()
+    public static List<Item> GetItemList()
     {
         List<Item> itemList;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -69,16 +77,16 @@ public class EFBroker_Item
         }
         return itemList;
     }
-    public List<Item> GetActiveItemList()
+    public static List<Item> GetActiveItemList()
     {
         List<Item> itemList;
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y").ToList();
+            itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y").OrderBy(x => x.ItemCode).ToList();
         }
         return itemList;
     }
-    public List<Item> GetCatalogueList()
+    public static List<Item> GetCatalogueList()
     {
         List<Item> catalogue;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -91,7 +99,7 @@ public class EFBroker_Item
         }
         return catalogue;
     }
-    public List<string> GetDistinctUOMList()
+    public static List<string> GetDistinctUOMList()
     {
         List<string> uom;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -100,7 +108,7 @@ public class EFBroker_Item
         }
         return uom;
     }
-    public string GetUnitbyItemCode(string itemCode)
+    public static string GetUnitbyItemCode(string itemCode)
     {
         string unit;
         using (StationeryEntities inventoryDB = new StationeryEntities())
@@ -109,7 +117,7 @@ public class EFBroker_Item
         }
         return unit;
     }
-    public void UpdateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public static void UpdateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Item i;
         using (StationeryEntities inventoryDB = new StationeryEntities())

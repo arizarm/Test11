@@ -12,38 +12,20 @@ public class GenerateRequisitionTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-            List<string> allCats = SE.Categories.Select(c => c.CategoryName).ToList();
-            ts.Complete();
-            return allCats;
-        }
+        List<string> allCategoryNames = EFBroker_Category.GetAllCategoryNames();
+        return allCategoryNames;
     }
 
     public List<string> GetAllDepartmentNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-            List<string> allDepts = SE.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
-            ts.Complete();
-            return allDepts;
-        }
+        List<string> allDepts = EFBroker_Department.GetAllDepartmentNames();
+        return allDepts;
     }
 
-    //(1a) below will be in DAO/ bizcontroller
     public List<DateTime?> GetAllRequisitionMonths()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-
-            List<DateTime?> allMonths = SE.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
-
-            ts.Complete();
-            return allMonths;
-        }
+        List<DateTime?> allMonths = EFBroker_Requisition.GetAllFinalisedRequisitionMonths();
+        return allMonths;
     }
 
     //(1b) below will be in useCaseController
@@ -123,16 +105,12 @@ public class GenerateRequisitionTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-
-            var TotalR = from ri in SE.Requisition_Item
-                         from r in SE.Requisitions
-                         from i in SE.Items
-                         from d in SE.Departments
-                         from e in SE.Employees
-                         from c in SE.Categories
+            var TotalR = from ri in EFBroker_Requisition.GetRequisitionItemList()
+                         from r in EFBroker_Requisition.GetAllRequisitionList()
+                         from i in EFBroker_Item.GetItemList()
+                         from d in EFBroker_Department.GetDepartmentList()
+                         from e in EFBroker_Employee.GetEmployeeList()
+                         from c in EFBroker_Category.GetCategoryList()
                          where ri.ItemCode == i.ItemCode
                          where ri.RequisitionID == r.RequisitionID
                          where r.ApprovedBy == e.EmpID
@@ -150,10 +128,9 @@ public class GenerateRequisitionTrendController
             if (requisitionsForGivenMonth > 0)
                 returnedQ = (int)requisitionsForGivenMonth;
 
-            ts.Complete();
             return returnedQ;
         }
-    }
+    
 
     //getTotalRequisitionByCategoryGivenMonth() needs this function
     protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)

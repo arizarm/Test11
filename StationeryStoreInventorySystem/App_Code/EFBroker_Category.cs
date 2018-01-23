@@ -14,7 +14,7 @@ public class EFBroker_Category
         // TODO: Add constructor logic here
         //
     }
-    public List<Category> GetCategoryList()
+    public static List<Category> GetCategoryList()
     {
         List<Category> categories;
         using(StationeryEntities categoryDB = new StationeryEntities()) { 
@@ -22,7 +22,7 @@ public class EFBroker_Category
         }
         return categories;
     }
-    public List<string> GetAllCategoryNames()
+    public static List<string> GetAllCategoryNames()
     {
         List<string> categoryNames;
         using (StationeryEntities categoryDB = new StationeryEntities())
@@ -31,7 +31,7 @@ public class EFBroker_Category
         }
         return categoryNames;
     }
-    public Category GetCategorybyID(int categoryID)
+    public static Category GetCategorybyID(int categoryID)
     {
         Category cat;
         using (StationeryEntities categoryDB = new StationeryEntities())
@@ -40,7 +40,7 @@ public class EFBroker_Category
         }
         return cat;
     }
-    public Category GetCategorybyName(string categoryName)
+    public static Category GetCategorybyName(string categoryName)
     {
         Category cat;
         using (StationeryEntities categoryDB = new StationeryEntities())
@@ -49,7 +49,7 @@ public class EFBroker_Category
         }
         return cat;
     }
-    public void AddCategory(Category category)
+    public static void AddCategory(Category category)
     {
         using (StationeryEntities categoryDB = new StationeryEntities())
         {

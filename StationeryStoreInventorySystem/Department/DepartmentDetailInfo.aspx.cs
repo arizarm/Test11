@@ -7,100 +7,115 @@ using System.Web.UI.WebControls;
 
 public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 {
-    static string dcode = "BDTD";
-    static string empRole = "DepartementHead";
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        Session["deptcode"] = dcode;
-        
         if (!IsPostBack)
         {
-            if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+            if (Session["emp"] != null)
             {
+                Employee empSession = (Employee)Session["emp"];
+                string dcode = empSession.DeptCode;
+                string empRole = empSession.Role;
+                string tempHead = empSession.IsTempHead;
+
+                if(empRole=="Employee" && tempHead == "N")
+                {
+                    btnUpdate.Visible = false;
+                    
+                }
+
+                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                {
+                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
+                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
+
+                    string aheadname = "No Acting Head";
+                    string detpRname = empDRep.EmpName;
+                    string dname = dept.DeptName;
+                    string contactname = dept.DeptContactName;
+                    string telephone = dept.DeptTelephone;
+                    string fax = dept.DeptFax;
+                    string dheadname = emp.EmpName;
+                    string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
 
 
-                Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
+                    lblDeptName.Text = dname;
+                    lblContactName.Text = contactname;
+                    lblPhone.Text = telephone;
+                    lblFax.Text = fax;
+                    lblHeadname.Text = dheadname;
 
-                string aheadname = "No Acting Head";
-                string detpRname = empDRep.EmpName;
-                string dname = dept.DeptName;
-                string contactname = dept.DeptContactName;
-                string telephone = dept.DeptTelephone;
-                string fax = dept.DeptFax;
-                string dheadname = emp.EmpName;
-                string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+                    lblActingDHead.Text = aheadname;
+                    lblActingDHead.ForeColor = System.Drawing.Color.Red;
+                    lblDeptRep.Text = detpRname;
+                    lblCollectPoint.Text = empCollectionname;
 
-                
-                lblDeptName.Text = dname;
-                lblContactName.Text = contactname;
-                lblPhone.Text = telephone;
-                lblFax.Text = fax;
-                lblHeadname.Text = dheadname;
+                }
+                else
+                {
+                    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
+                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
 
-                lblActingDHead.Text = aheadname;
-                lblActingDHead.ForeColor = System.Drawing.Color.Red;
-                lblDeptRep.Text = detpRname;
-                lblCollectPoint.Text = empCollectionname;
+                    string aheadname = empActingDHead.EmpName;
+                    string detpRname = empDRep.EmpName;
+                    string dname = dept.DeptName;
+                    string contactname = dept.DeptContactName;
+                    string telephone = dept.DeptTelephone;
+                    string fax = dept.DeptFax;
+                    string dheadname = emp.EmpName;
+                    string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
 
-            }
+
+                    lblDeptName.Text = dname;
+                    lblContactName.Text = contactname;
+                    lblPhone.Text = telephone;
+                    lblFax.Text = fax;
+                    lblHeadname.Text = dheadname;
+                    lblActingDHead.Text = aheadname;
+                    lblDeptRep.Text = detpRname;
+                    lblCollectPoint.Text = empCollectionname;
+                }
+
+            }//ispostback
             else
             {
-                Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
-                Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-
-                string aheadname = empActingDHead.EmpName;
-                string detpRname = empDRep.EmpName;
-                string dname = dept.DeptName;
-                string contactname = dept.DeptContactName;
-                string telephone = dept.DeptTelephone;
-                string fax = dept.DeptFax;
-                string dheadname = emp.EmpName;
-                string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
-
-
-                lblDeptName.Text = dname;
-                lblContactName.Text = contactname;
-                lblPhone.Text = telephone;
-                lblFax.Text = fax;
-                lblHeadname.Text = dheadname;
-                lblActingDHead.Text = aheadname;
-                lblDeptRep.Text = detpRname;
-                lblCollectPoint.Text = empCollectionname;
+                Utility.logout();
             }
 
         }
-
     }
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
-
-        Session["deptcode"] = dcode;
-        Session["empRole"] = empRole;
-
-        if (Session["empRole"].ToString() == "DepartementHead")
+        if (Session["emp"] != null)
         {
-            Response.Redirect("DepartmentListDHead.aspx");
-        }
-        else if (Session["empRole"].ToString() == "Representative")
-        {
-            Response.Redirect("DepartmentListDRep.aspx");
+            Employee empSession = (Employee)Session["emp"];
+            string dcode = empSession.DeptCode;
+            string empRole = empSession.Role;
+
+
+            if (empRole == "DepartmentHead")
+            {
+                Response.Redirect("~/DepartmentHead/DepartmentListDHead.aspx");
+            }
+            else if (empRole == "Representative")
+            {
+                Response.Redirect("~/DepartmentRepresentative/DepartmentListDRep.aspx");
+            }
+            else if (empRole == "DepartmentTempHead")
+            {
+                Response.Redirect("~/DepartmentTempHead/DepartmentListActingDHead.aspx");
+            }
         }
         else
         {
-            Response.Redirect("DepartmentListActingDHead.aspx");
+            Utility.logout();
         }
-
-
     }
-
-
-
-
 }
 

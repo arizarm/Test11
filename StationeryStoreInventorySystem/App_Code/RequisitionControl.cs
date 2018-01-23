@@ -32,28 +32,28 @@ public class RequisitionControl
     public static List<ReqisitionListItem> DisplayAll()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Priority" || x.Status == "Approved").ToList();
+        rlist = EFBroker_Requisition.GetAllApprovedOrPriorityReq();
         return PopulateGridView(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayAllDepartment()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.ToList();
+        rlist = EFBroker_Requisition.GetAllRequisitionList();
         return PopulateGridViewForDepartment(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Priority").ToList();
+        rlist = EFBroker_Requisition.GetAllPriorityRequisitions();
         return PopulateGridView(rlist);
     }
 
     public static List<ReqisitionListItem> DisplayApproved()
     {
         rlist = new List<Requisition>();
-        rlist = context.Requisitions.Where(x => x.Status == "Approved").ToList();
+        rlist = EFBroker_Requisition.GetAllApprovedRequisitions();
         return PopulateGridView(rlist);
     }
 
@@ -87,9 +87,10 @@ public class RequisitionControl
             status = r.Status.ToString();
 
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
-            depCode = context.Employees.Where(x => x.EmpID.Equals(requestedBy)).Select(x => x.DeptCode).First().ToString();
+            Department dep = DeptBusinessLogic.GetDepartByEmpID(requestedBy);
+            depCode = dep.DeptCode;
 
-            department = context.Departments.Where(x => x.DeptCode.Equals(depCode)).Select(x => x.DeptName).First().ToString();
+            department = dep.DeptName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, "");
             itemList.Add(item);
         }
@@ -142,12 +143,29 @@ public class RequisitionControl
     }
 
     //FIND REQUISITION BY ID
+    public static ReqisitionListItem getRequisitionForApprove(int id)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Requisition r = (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
+            date = r.RequestDate.Value.ToLongDateString();
+            requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
+            status = r.Status.ToString();
+            int empCode = Convert.ToInt32(r.RequestedBy);
+            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+            return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
+        }
+
+    }
+    
+    //FIND REQUISITION BY ID
     public static Requisition getRequisition(int id)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return (context.Requisitions.Where(r => r.RequisitionID.Equals(id))).FirstOrDefault();
+            return (context.Requisitions.Where(x => x.RequisitionID.Equals(id))).FirstOrDefault();
         }
+
     }
     public static List<Requisition_ItemList> getList(int id)
     {
@@ -259,7 +277,7 @@ public class RequisitionControl
     }
 
     //CHANGE REQUISITION STATUS
-    public static void approveRequisition(int id, string reason)
+    public static void approveRequisition(int id, string reason,int empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -267,16 +285,18 @@ public class RequisitionControl
             r.Remarks = reason;
             r.RequisitionID = id;
             r.Status = "Approved";
+            r.ApprovedBy = empID;
             context.SaveChanges();
         }
     }
-    public static void rejectRequisition(int id, string reason)
+    public static void rejectRequisition(int id, string reason, int empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
             Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
             r.Remarks = reason;
             r.RequisitionID = id;
+            r.ApprovedBy = empID;
             r.Status = "Rejected";
             r.Remarks = "Rejected By Head";
             context.SaveChanges();
@@ -291,7 +311,7 @@ public class RequisitionControl
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
             int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = context.Employees.Where(x => x.EmpID == empCode).Select(x => x.EmpName).First().ToString();
+            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
             itemList.Add(item);
         }
@@ -341,4 +361,15 @@ public class RequisitionControl
             ts.Complete();
         }
     }
+
+    // get requisition by emp ID
+    public static List<ReqisitionListItem> getRequisitionListByID(int empCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = new List<Requisition>();
+            rlist = context.Requisitions.Where(x => x.RequestedBy == empCode).ToList<Requisition>();
+            return PopulateGridView(rlist);
+        }
+    } 
 }

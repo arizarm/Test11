@@ -216,7 +216,7 @@ public class RequisitionControl
 
 
     //CHANGE REQUISITION STATUS
-    public static void approveRequisition(int id, string reason, int empID)
+    public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -51,6 +52,33 @@ public class EFBroker_DeptEmployee
         }
 
     }
+<<<<<<< HEAD:StationeryStoreInventorySystem/App_Code/DeptBusinessLogic.cs
+
+    public static IList GetDepartDetailInfoList()
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+
+            return smodel.Departments.Join(smodel.CollectionPoints,
+                d => d.CollectionLocationID, c => c.CollectionLocationID,
+                (d, c) => new { Department = d, CollectionPoint = c }).
+                Join(smodel.Employees.Where(e => e.Role == "DepartmentHead"),
+                f => f.Department.DeptCode, e => e.DeptCode,
+                (f, e) => new { f.Department, f.CollectionPoint, Employee = e }).
+                Select(x => new
+                {
+                    x.Department.DeptCode,
+                    x.Department.DeptName,
+                    x.Employee.EmpName,
+                    x.Department.DeptContactName,
+                    x.CollectionPoint.CollectionPoint1,
+                    x.Department.DeptTelephone,
+                    x.Department.DeptFax
+                }).ToList ();
+            
+        }
+
+=======
     public static Department GetDepartByEmpID(int empID)
     {
         Department dep;
@@ -59,6 +87,7 @@ public class EFBroker_DeptEmployee
             dep=smodel.Employees.Where(x => x.EmpID == empID).Select(x=>x.Department).FirstOrDefault();
         }
         return dep;
+>>>>>>> 78d17ece77be94045f99549cd09a91f32f56e79d:StationeryStoreInventorySystem/App_Code/EFBroker/EFBroker_DeptEmployee.cs
     }
     public static string GetCollectionPointbyDeptCode(string depCode)
     {

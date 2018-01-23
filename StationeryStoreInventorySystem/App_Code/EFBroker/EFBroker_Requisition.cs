@@ -228,7 +228,7 @@ public class EFBroker_Requisition
             ts.Complete();
         }
     }
-    public static void ApproveRequisition(int id, string reason, int empID)
+    public static void ApproveRequisition(int id, string reason, int? empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -237,6 +237,8 @@ public class EFBroker_Requisition
             r.RequisitionID = id;
             r.Status = "Approved";
             r.ApprovedBy = empID;
+
+            context.Entry(r).State= System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
         return;
@@ -250,7 +252,7 @@ public class EFBroker_Requisition
             r.RequisitionID = id;
             r.ApprovedBy = empID;
             r.Status = "Rejected";
-            r.Remarks = "Rejected By Head";
+            //r.Remarks = "Rejected By Head";
             context.SaveChanges();
         }
     }

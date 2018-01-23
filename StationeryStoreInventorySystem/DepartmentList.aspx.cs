@@ -12,8 +12,13 @@ public partial class DepartmentList : System.Web.UI.Page
         if (!IsPostBack)
         {
 
+<<<<<<< HEAD
+
+            GridViewDept.DataSource = DeptBusinessLogic.GetDepartDetailInfoList();
+=======
             StationeryEntities smodel = new StationeryEntities();
             GridViewDept.DataSource = EFBroker_DeptEmployee.GetDepartList();
+>>>>>>> 78d17ece77be94045f99549cd09a91f32f56e79d
             GridViewDept.DataBind();
 
         }

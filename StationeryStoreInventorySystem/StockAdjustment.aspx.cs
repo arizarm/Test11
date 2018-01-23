@@ -17,18 +17,18 @@ public partial class StockAdjustment : System.Web.UI.Page
         Dictionary<Discrepency, Item> monthlySource = new Dictionary<Discrepency, Item>();
         Dictionary<Discrepency, Item> pendingSource = new Dictionary<Discrepency, Item>();
 
-        foreach(Discrepency d in monthly)
+        foreach (Discrepency d in monthly)
         {
             Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
             if (Session["empRole"] != null)
             {
-                string role = (string) Session["empRole"];
-                if(Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                string role = (string)Session["empRole"];
+                if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
                 {
                     monthlySource.Add(d, i);
                 }
-                else if(Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
                 {
                     monthlySource.Add(d, i);
                 }
@@ -37,7 +37,7 @@ public partial class StockAdjustment : System.Web.UI.Page
         GridView1.DataSource = monthlySource;
         GridView1.DataBind();
 
-        foreach(Discrepency d in pending)
+        foreach (Discrepency d in pending)
         {
             Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
@@ -95,20 +95,25 @@ public partial class StockAdjustment : System.Web.UI.Page
         Dictionary<KeyValuePair<Discrepency, Item>, bool> summary = new Dictionary<KeyValuePair<Discrepency, Item>, bool>();
         foreach (GridViewRow row in gdv.Rows)
         {
-            if (row.RowType == DataControlRowType.DataRow)
-            {
-                KeyValuePair<Discrepency, Item> kvp = (KeyValuePair<Discrepency, Item>)row.DataItem;
-                RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
 
-                if(rbl.SelectedIndex == 0)
+            if(rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
+            {
+                string itemCode = (row.FindControl("lblItemCode") as Label).Text;
+                string discID = (row.FindControl("lblDiscID") as Label).Text;
+                //Item i = EFBroker_Item.GetItemByItemCode(itemCode);
+                //Discrepency d = EFBroker_Discrepe
+                KeyValuePair<Discrepency, Item> kvp = new KeyValuePair<Discrepency, Item>();
+                if (rbl.SelectedIndex == 0)
                 {
                     summary.Add(kvp, true);
                 }
-                else if(rbl.SelectedIndex == 1)
+                else if (rbl.SelectedIndex == 1)
                 {
                     summary.Add(kvp, false);
                 }
             }
+            
         }
         Session["discrepancySummary"] = summary;
         Response.Redirect("~/StockAdjustmentSummary.aspx");

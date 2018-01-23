@@ -63,6 +63,11 @@
     <h4>Monthly Inventory Check Discrepancies</h4>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
         <Columns>
+            <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
+                <ItemTemplate>
+                    <asp:Label ID="lblDiscID" runat="server" Text='<%# Bind("Key.DiscrepencyID") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
                     <asp:RadioButtonList ID="RadioButtonList1" runat="server">

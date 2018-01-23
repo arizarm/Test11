@@ -43,6 +43,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
+
+            if(Session["monthly"] != null)
+            {
+                if((bool) Session["monthly"] == false)
+                {
+                    GridView1.Columns[4].Visible = false;
+                }
+            }
         }
         Label1.Text = "";
         Label5.Text = "";

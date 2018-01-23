@@ -16,8 +16,8 @@ public partial class ItemStockCard : System.Web.UI.Page
 
         if (!ValidatorUtil.isEmpty(itemCode))
         {
-            Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-            List<PriceList> plList = GenerateDiscrepancyController.GetPriceListsByItemCode(itemCode);
+            Item item = EFBroker_Item.GetItembyItemCode(itemCode);
+            List<PriceList> plList = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
             if (item != null && plList.Count > 0)
             {
                 lblItemCode.Text = item.ItemCode;
@@ -50,7 +50,7 @@ public partial class ItemStockCard : System.Web.UI.Page
                     }
                 }
 
-                List<StockCard> scList = GenerateDiscrepancyController.GetStockCardsByItemCode(itemCode);
+                List<StockCard> scList = EFBroker_StockCard.GetStockCardsByItemCode(itemCode);
                 List<StockCardDisplayRow> scDisplayList = new List<StockCardDisplayRow>();
 
                 foreach (StockCard sc in scList)
@@ -60,24 +60,24 @@ public partial class ItemStockCard : System.Web.UI.Page
                         StockCardDisplayRow scdr = new StockCardDisplayRow();
                         if (sc.TransactionType == adjustment)
                         {
-                            Discrepency d = GenerateDiscrepancyController.GetDiscrepancyById((int)sc.TransactionDetailID);
+                            Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById((int)sc.TransactionDetailID);
                             scdr.TransDate = ((DateTime)d.Date).ToShortDateString();
                             scdr.TransDetails = "Adjustment Id. " + sc.TransactionDetailID;
                             scdr.Quantity = "ADJ " + GetQuantityString((int)sc.Qty);
                         }
                         else if (sc.TransactionType == purchase)
                         {
-                            PurchaseOrder po = GenerateDiscrepancyController.GetPurchaseOrderById((int)sc.TransactionDetailID);
+                            PurchaseOrder po = EFBroker_PurchaseOrder.GetPurchaseOrderById((int)sc.TransactionDetailID);
                             scdr.TransDate = ((DateTime)po.ExpectedDate).ToShortDateString();
                             scdr.TransDetails = "Supplier - " + po.SupplierCode;
-                            Item_PurchaseOrder ipo = GenerateDiscrepancyController.GetPurchaseOrderItem(po.PurchaseOrderID, itemCode);
+                            Item_PurchaseOrder ipo = EFBroker_PurchaseOrder.GetPurchaseOrderItem(po.PurchaseOrderID, itemCode);
                             scdr.Quantity = GetQuantityString((int)sc.Qty);
                         }
                         else if (sc.TransactionType == disbursement)
                         {
-                            Disbursement db = GenerateDiscrepancyController.GetDisbursementById((int)sc.TransactionDetailID);
+                            Disbursement db = EFBroker_Disbursement.GetDisbursmentbyDisbID((int)sc.TransactionDetailID);
                             scdr.TransDate = ((DateTime)db.CollectionDate).ToShortDateString();
-                            scdr.TransDetails = GenerateDiscrepancyController.GetDepartmentByDeptCode(db.DeptCode).DeptName;
+                            scdr.TransDetails = DeptBusinessLogic.GetDepartByDepCode(db.DeptCode).DeptName;
                             scdr.Quantity = GetQuantityString((int)sc.Qty);
                         }
                         scdr.Balance = (int)sc.Balance;

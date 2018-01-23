@@ -32,4 +32,25 @@ public class EFBroker_PurchaseOrder
         }
         return poItem;
     }
+
+    public static List<PurchaseOrder> GetPurchaseOrderList()
+    {
+        List<PurchaseOrder> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.PurchaseOrders.ToList();
+        }
+        return rList;
+    }
+
+    public static List<Item_PurchaseOrder> GetPurchaseOrderItemList()
+    {
+        List<Item_PurchaseOrder> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.Item_PurchaseOrder.ToList();
+        }
+        return rList;
+    }
+
 }

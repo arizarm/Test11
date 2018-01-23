@@ -66,6 +66,8 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
             RequisitionListItem b = (RequisitionListItem) av.getAdapter().getItem(position);
             Intent intent = new Intent(this, RequisitionDetailActivity.class);
             intent.putExtra("RequisitionNo", b.get("Date").toString());
+            intent.putExtra("Date", b.get("EmployeeName").toString());
+            intent.putExtra("Requestor", b.get("Status").toString());
             startActivity(intent);
         }catch (Exception e){
             Log.e("tag tag",e.toString() );

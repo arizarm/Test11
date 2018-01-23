@@ -18,16 +18,19 @@
                     <ItemTemplate>
                         <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("ItemCode") %>'></asp:Label>
                     </ItemTemplate>
+                    <ItemStyle Width="100px" />
                 </asp:TemplateField>                 
                 <asp:TemplateField HeaderText="Item Description">                                   
                     <ItemTemplate>
                         <asp:HyperLink ID="lnkStockCard" runat="server" NavigateUrl="" Text='<%# Bind("Description") %>'></asp:HyperLink>
                     </ItemTemplate>
+                    <ItemStyle Width="400px" />
                 </asp:TemplateField>
                <asp:TemplateField HeaderText="Bin#">                                   
                     <ItemTemplate>
                         <asp:Label ID="lblBin" runat="server" Text='<%# Bind("Bin") %>'></asp:Label>
                     </ItemTemplate>
+                    <ItemStyle Width="100px" />
                 </asp:TemplateField> 
                
              </Columns>

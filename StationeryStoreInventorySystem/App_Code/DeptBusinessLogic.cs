@@ -41,6 +41,15 @@ public class DeptBusinessLogic
         }
 
     }
+    public static Department GetDepartByEmpID(int empID)
+    {
+        Department dep;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            dep=smodel.Employees.Where(x => x.EmpID == empID).Select(x=>x.Department).FirstOrDefault();
+        }
+        return dep;
+    }
     public static string GetCollectionPointbyDeptCode(string depCode)
     {
         string collectionPoint;
@@ -74,6 +83,15 @@ public class DeptBusinessLogic
         {
             return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
         }
+    }
+    public static Employee GetEmployeebyEmpID(int empID)
+    {
+        Employee e;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            e = smodel.Employees.Where(x => x.EmpID == empID).FirstOrDefault();
+        }
+        return e;
     }
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {

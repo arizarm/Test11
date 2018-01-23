@@ -71,8 +71,8 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         int adjustment = 0;
         if (Int32.TryParse(txtAdj.Text, out adjustment))
         {
-            if (adjustment != 0)
-            {
+            //if (adjustment != 0)
+            //{
                 int actualQuantity = (int)item.BalanceQty + adjustment;
                 string adjStr = "";
 
@@ -93,11 +93,11 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
                 discrepancies.Add(item, adjStr);
                 Session["discrepancyList"] = discrepancies;
                 Response.Redirect("~/GenerateDiscrepancyV2.aspx");
-            }
-            else
-            {
-                Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
-            }
+            //}
+            //else
+            //{
+            //    Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
+            //}
         }
         else
         {

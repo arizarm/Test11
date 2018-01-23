@@ -14,6 +14,13 @@ public class EFBroker_Disbursement
         // TODO: Add constructor logic here
         //
     }
+    public static List<Retrieval> GetAllRetrievalList()
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Retrievals.ToList();
+        }
+    }
     public static List<Disbursement> GetAllDisbursementList()
     {
         List<Disbursement> disbursements = new List<Disbursement>();
@@ -43,7 +50,7 @@ public class EFBroker_Disbursement
         return accessCode;
     }
     public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty)
-    {  
+    {
         int i = 0;
         using (StationeryEntities context = new StationeryEntities())
         {

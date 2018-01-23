@@ -41,7 +41,15 @@ public class DeptBusinessLogic
         }
 
     }
-
+    public static List<Employee> GetEmployeeListByRole(string role)
+    {  //goes to employee broker
+        List<Employee> e;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+             e = context.Employees.Where(x => x.Role == role).ToList();
+        }
+        return e;
+    }
     public static Employee GetDHeadByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())

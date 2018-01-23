@@ -54,7 +54,7 @@ public partial class StockAdjustment : System.Web.UI.Page
             }
             else
             {
-                
+                Utility.logout();
             }
         }
         GridView2.DataSource = pendingSource;
@@ -76,6 +76,42 @@ public partial class StockAdjustment : System.Web.UI.Page
                 }
             }
         }
+    }
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        GridView gdv = GridView1;
+        ProcessApprovalAndRejections(gdv);
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        GridView gdv = GridView2;
+        ProcessApprovalAndRejections(gdv);
+    }
+
+    private void ProcessApprovalAndRejections(GridView gdv)
+    {
+        Dictionary<KeyValuePair<Discrepency, Item>, bool> summary = new Dictionary<KeyValuePair<Discrepency, Item>, bool>();
+        foreach (GridViewRow row in gdv.Rows)
+        {
+            if (row.RowType == DataControlRowType.DataRow)
+            {
+                KeyValuePair<Discrepency, Item> kvp = (KeyValuePair<Discrepency, Item>)row.DataItem;
+                RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+
+                if(rbl.SelectedIndex == 0)
+                {
+                    summary.Add(kvp, true);
+                }
+                else if(rbl.SelectedIndex == 1)
+                {
+                    summary.Add(kvp, false);
+                }
+            }
+        }
+        Session["discrepancySummary"] = summary;
+        Response.Redirect("~/StockAdjustmentSummary.aspx");
     }
 }
 

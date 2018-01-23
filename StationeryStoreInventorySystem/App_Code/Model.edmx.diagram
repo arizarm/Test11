@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
@@ -46,6 +45,7 @@
         <EntityTypeShape EntityType="StationeryModel.PriceList" Width="1.5" PointX="12.75" PointY="6.5" />
         <AssociationConnector Association="StationeryModel.FK__PriceList__ItemC__4AB81AF0" />
         <AssociationConnector Association="StationeryModel.FK__PriceList__Suppl__49C3F6B7" />
+        <AssociationConnector Association="StationeryModel.FK_Requisition_Department" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

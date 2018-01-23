@@ -43,6 +43,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
+
+            if(Session["monthly"] != null)
+            {
+                if((bool) Session["monthly"] == false)
+                {
+                    GridView1.Columns[4].Visible = false;
+                }
+            }
         }
         Label1.Text = "";
         Label5.Text = "";
@@ -64,7 +72,17 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             {
                 if (remarks.Length <= maxChars)
                 {
-                    List<PriceList> itemPrices = GenerateDiscrepancyController.GetPricesByItemCode(itemCode);
+                    List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
+                    List<PriceList> itemPrices = new List<PriceList>();
+
+                    foreach(PriceList pl in plHistory)
+                    {    //Get only currently active suppliers for an item
+                        if(pl.TenderYear == DateTime.Now.Year.ToString())
+                        {
+                            itemPrices.Add(pl);
+                        }
+                    }
+
                     decimal totalPrice = 0;
 
                     foreach (PriceList pl in itemPrices)
@@ -106,11 +124,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
                     if(d.TotalDiscrepencyAmount < 250)
                     {
-                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").EmpID;
+                        d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                     }
                     else
                     {
-                        d.ApprovedBy = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").EmpID;
+                        d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].EmpID;
                     }
                     dList.Add(d);
                 }
@@ -133,7 +151,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
         if (complete)
         {
-            GenerateDiscrepancyController.SaveDiscrepancies(dList);
+            EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
             Session["discrepancyList"] = null;
             Session["monthly"] = null;
@@ -154,12 +172,12 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
             if (informSupervisor)
             {
-                string supervisorEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Supervisor").Email;
+                string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
                 Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             }
             if (informManager)
             {
-                string managerEmail = GenerateDiscrepancyController.GetEmployeeByRole("Store Manager").Email;
+                string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
             

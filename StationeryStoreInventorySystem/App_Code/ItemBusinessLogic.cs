@@ -38,15 +38,8 @@ public class ItemBusinessLogic
         }
         else
         {
-            Category cat = EFBroker_Category.GetCategorybyName(categoryName);
-            if (cat == null)
-            {
-                AddCategory(categoryName);
-                cat = EFBroker_Category.GetCategorybyName(categoryName);
-            }
-
+            categoryName = FirstUpperCase(categoryName);
             item.ItemCode = itemCode;
-            item.Category = cat;
             item.Description = description;
             item.ReorderLevel = level;
             item.ReorderQty = qty;
@@ -54,15 +47,24 @@ public class ItemBusinessLogic
             item.Bin = bin;
             item.ActiveStatus = "Y";
             item.BalanceQty = 0;
-            EFBroker_Item.AddItem(item);
-            //iList.Add(item);
-            //Session["itemlist"] = iList;
+            Category cat = EFBroker_Category.GetCategorybyName(categoryName);
+            if (cat != null)
+            {
+                item.Category = cat;
+                EFBroker_Item.AddItem(item);
+            }
+            else
+            {
+                EFBroker_Item.AddItemAndCategory(item, categoryName);
+                cat = EFBroker_Category.GetCategorybyName(categoryName);
+                item.Category = cat;
+            }
         }
         return item;
     }
     public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
-        Category category = GetCategorybyName(categoryName);
+        Category category = EFBroker_Category.GetCategorybyName(categoryName);
         EFBroker_Item.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
         return;
     }
@@ -101,18 +103,6 @@ public class ItemBusinessLogic
     public Category GetCategorybyID(int categoryID)
     {
         return EFBroker_Category.GetCategorybyID(categoryID);
-    }
-    public Category GetCategorybyName(string categoryName)
-    {
-        string i = FirstUpperCase(categoryName);
-        return EFBroker_Category.GetCategorybyName(i);
-    }
-    public void AddCategory(string categoryName)
-    {
-        string i = FirstUpperCase(categoryName);
-        Category cat = new Category();
-        cat.CategoryName = i;
-        EFBroker_Category.AddCategory(cat);
     }
     public List<string> GetDistinctUOMList()
     {

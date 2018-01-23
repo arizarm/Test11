@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
-/// Summary description for DeptBusinessLogic
+/// Summary description for EFBroker_DeptEmployee
 /// </summary>
-public class DeptBusinessLogic
+public class EFBroker_DeptEmployee
 {
 
     //
@@ -22,7 +23,16 @@ public class DeptBusinessLogic
         }
 
     }
-
+    public static List<string> GetAllDepartmentNames()
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities SE = new StationeryEntities();
+            List<string> allDepts = SE.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
+            ts.Complete();
+            return allDepts;
+        }
+    }
     public static List<Employee> GetEmployeeList()
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -42,6 +52,7 @@ public class DeptBusinessLogic
         }
 
     }
+<<<<<<< HEAD:StationeryStoreInventorySystem/App_Code/DeptBusinessLogic.cs
 
     public static IList GetDepartDetailInfoList()
     {
@@ -67,6 +78,16 @@ public class DeptBusinessLogic
             
         }
 
+=======
+    public static Department GetDepartByEmpID(int empID)
+    {
+        Department dep;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            dep=smodel.Employees.Where(x => x.EmpID == empID).Select(x=>x.Department).FirstOrDefault();
+        }
+        return dep;
+>>>>>>> 78d17ece77be94045f99549cd09a91f32f56e79d:StationeryStoreInventorySystem/App_Code/EFBroker/EFBroker_DeptEmployee.cs
     }
     public static string GetCollectionPointbyDeptCode(string depCode)
     {
@@ -101,6 +122,15 @@ public class DeptBusinessLogic
         {
             return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
         }
+    }
+    public static Employee GetEmployeebyEmpID(int empID)
+    {
+        Employee e;
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            e = smodel.Employees.Where(x => x.EmpID == empID).FirstOrDefault();
+        }
+        return e;
     }
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {
@@ -227,7 +257,7 @@ public class DeptBusinessLogic
         {
             try
             {
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(depcode) <= 0)
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(depcode) <= 0)
                 {
                     Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
                     emp.IsTempHead = "Y";

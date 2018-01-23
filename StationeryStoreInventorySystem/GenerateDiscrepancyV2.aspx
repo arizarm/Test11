@@ -15,7 +15,7 @@
            {%>
         
         <h2>Discrepancy List</h2>
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <EditItemTemplate>

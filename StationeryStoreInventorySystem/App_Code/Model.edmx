@@ -145,6 +145,7 @@
           <Property Name="RequestDate" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="10" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="DeptCode" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Requisition_Item">
           <Key>
@@ -476,6 +477,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Requisition_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptCode" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="DeptCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="StationeryModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CollectionPoint" EntityType="Self.CollectionPoint" Schema="dbo" store:Type="Tables" />
@@ -589,6 +602,10 @@
             <End Role="Item" EntitySet="Item" />
             <End Role="StockCard" EntitySet="StockCard" />
           </AssociationSet>
+          <AssociationSet Name="FK_Requisition_Department" Association="Self.FK_Requisition_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -624,6 +641,7 @@
           <NavigationProperty Name="CollectionPoint" Relationship="Self.FK__Departmen__Colle__1273C1CD" FromRole="Department" ToRole="CollectionPoint" />
           <NavigationProperty Name="Disbursements" Relationship="Self.FK__Disbursem__DeptC__267ABA7A" FromRole="Department" ToRole="Disbursement" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__DeptCo__15502E78" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="Requisitions" Relationship="StationeryModel.FK_Requisition_Department" FromRole="Department" ToRole="Requisition" />
         </EntityType>
         <EntityType Name="Disbursement">
           <Key>
@@ -761,6 +779,8 @@
           <NavigationProperty Name="Employee" Relationship="Self.FK__Requisiti__Appro__2F10007B" FromRole="Requisition" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="Self.FK__Requisiti__Reque__2E1BDC42" FromRole="Requisition" ToRole="Employee" />
           <NavigationProperty Name="Requisition_Item" Relationship="Self.FK__Requisiti__Requi__31EC6D26" FromRole="Requisition" ToRole="Requisition_Item" />
+          <Property Name="DeptCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="StationeryModel.FK_Requisition_Department" FromRole="Requisition" ToRole="Department" />
         </EntityType>
         <EntityType Name="Requisition_Item">
           <Key>
@@ -1188,6 +1208,10 @@
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PriceList" EntitySet="PriceLists" />
           </AssociationSet>
+          <AssociationSet Name="FK_Requisition_Department" Association="StationeryModel.FK_Requisition_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PriceList">
           <Key>
@@ -1224,6 +1248,18 @@
             </Principal>
             <Dependent Role="PriceList">
               <PropertyRef Name="SupplierCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requisition_Department">
+          <End Type="StationeryModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="StationeryModel.Requisition" Role="Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptCode" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="DeptCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1361,6 +1397,7 @@
           <EntitySetMapping Name="Requisitions">
             <EntityTypeMapping TypeName="StationeryModel.Requisition">
               <MappingFragment StoreEntitySet="Requisition">
+                <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
                 <ScalarProperty Name="RequisitionID" ColumnName="RequisitionID" />
                 <ScalarProperty Name="DisbursementID" ColumnName="DisbursementID" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />

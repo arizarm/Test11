@@ -86,20 +86,27 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        //int RequestedBy = (int)Session["empID"];
-        int RequestedBy = 1027;
-        if (GridView2.Rows.Count <= 0)
+        if (Session["emp"] != null)
         {
-            Response.Write("<script>alert('You have not requested any item yet!');</script>");
+            Employee emp = (Employee)Session["emp"];
+            int RequestedBy = emp.EmpID;
+            string DeptCode = emp.DeptCode;
+            if (GridView2.Rows.Count <= 0)
+            {
+                Response.Write("<script>alert('You have not requested any item yet!');</script>");
+            }
+            else
+            {
+                RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
+            }
+            //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
+            //Server.Transfer("RequisitionListDepartment.aspx", true);
+            Response.Redirect("RequisitionListDepartment.aspx");
         }
         else
         {
-            RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy);
+            Utility.logout();
         }
-        //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
-        //Server.Transfer("RequisitionListDepartment.aspx", true);
-        Response.Redirect("RequisitionListDepartment.aspx");
-
     }
 
     protected void Delete_Click(object sender, EventArgs e)
@@ -146,5 +153,4 @@ public partial class RequisitionForm : System.Web.UI.Page
         GridView2.EditIndex = -1;
         bindGrid();
     }
-
 }

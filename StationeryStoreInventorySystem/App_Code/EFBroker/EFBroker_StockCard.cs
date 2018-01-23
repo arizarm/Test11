@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for EFBroker_StockCard
@@ -29,6 +30,18 @@ public class EFBroker_StockCard
         {
             context.StockCards.Add(stockCard);
             context.SaveChanges();
+        }
+    }
+    public static void ResolveDiscrepancy(StockCard newEntry, string itemCode, int newBalance)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            Item i = context.Items.Where(x => x.ItemCode == itemCode).First();
+            i.BalanceQty = newBalance;
+            context.StockCards.Add(newEntry);
+            context.SaveChanges();
+            ts.Complete();
         }
     }
 }

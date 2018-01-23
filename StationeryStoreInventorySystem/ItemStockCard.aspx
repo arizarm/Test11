@@ -18,6 +18,8 @@
     <br />
     <br />
      <br />
+    <%if (GridView1.Rows.Count > 0)
+        { %>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Transaction Date">
@@ -42,6 +44,10 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-    
+    <%}
+    else
+    { %>
+    <h4>No transaction history found</h4>
+    <%} %>
 </asp:Content>
 

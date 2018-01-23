@@ -28,7 +28,7 @@
     position: absolute;
     top: 0px;
     right: 15px;
-    margin: 2% 10px;
+    margin: 2% 4%;
     max-width: 25%;
     color: #3c763d;
     text-decoration: solid;
@@ -82,7 +82,7 @@
     position: absolute;
     top: 0px;
     right: 15px;
-    margin: 4% 2px;
+    margin: 4% 4%;
     background-color: rgba(100,150,40,1);
     max-width: 10%;
     color: #fff;
@@ -103,8 +103,7 @@
 }
 
     .hyperLinkCategoryStyle:hover {
-        background-color: white;
-        
+        background-color: white;   
         transition: all 0.8s;
         text-decoration:none;
        color:rgba(100,150,40,1);

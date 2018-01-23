@@ -55,7 +55,7 @@ public class DisbursementCotrol
             collectionTime = disbursement[i].CollectionTime.ToString();
 
             //get collection point
-            collectionPoint = DeptBusinessLogic.GetCollectionPointbyDeptCode(depCode);
+            collectionPoint = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode);
 
             //put all data to display class
             disbursementListItems = new DisbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);
@@ -129,9 +129,16 @@ public class DisbursementCotrol
     public static DateTime getRegenrateDate()
     {
         int disbIDInt = Convert.ToInt32(disbID);
+        List<DateTime?> dates = new List<DateTime?>();
         List<string> dateList = new List<string>();
-        dateList = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
-
+        dates = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
+        foreach(DateTime d in dates)
+        {
+            if (d != null)
+            {
+                dateList.Add(d.ToLongDateString());
+            }
+        }
         DateTime inputDate = new DateTime();
         DateTime earliestDate = new DateTime();
 
@@ -158,7 +165,7 @@ public class DisbursementCotrol
     //get Department Representative Name by Department Name
     public static Employee getDepRep(string depName)
     {
-        return DeptBusinessLogic.GetDeptRepByDeptCode(depName);
+        return EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
     }
 
 

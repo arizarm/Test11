@@ -22,7 +22,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
             date = (DateTime)Session["RegenerateDate"];
             depName = (string)Session["RegenerateDep"];
             shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];            
-            requestedBy = DisbursementCotrol.getDepRep(depName);
+            //requestedBy = DisbursementCotrol.getDepRep(depName);
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
         }
@@ -62,7 +62,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
                 regenerateItem.Add(shortfallItem[i]);
             }
         }
-        RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
+        //RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
 
         redirectCheck();
 

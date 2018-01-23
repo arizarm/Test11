@@ -12,7 +12,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> EmployeeList()
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.GetEmployeeList();
+        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeList();
 
         foreach (Employee e in elist)
         {
@@ -26,8 +26,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetDeptHead(string dcode)
     {
 
-        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
+        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+        Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -36,8 +36,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetActingDHead(string dcode)
     {
 
-        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
+        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+        Employee emp = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -46,7 +46,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> ListForActingDHead(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.GetEmployeeListForActingDHead(dcode, Convert.ToInt16(id));
+        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -60,8 +60,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetDeptRep(string dcode)
     {
 
-        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
-        Employee emp = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+        Employee emp = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -70,7 +70,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> ListForDeptRep(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = DeptBusinessLogic.GetEmployeeListForDRep(dcode, Convert.ToInt16(id));
+        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -92,7 +92,7 @@ public class DeptService : IDeptService
             StartDate = Convert.ToDateTime(e.StartDate),
             EndDate = Convert.ToDateTime(e.EndDate)
         };
-        DeptBusinessLogic.UpdateActingDHead(e.DeptCode, e.Eid, e.StartDate, e.EndDate);
+        EFBroker_DeptEmployee.UpdateActingDHead(e.DeptCode, e.Eid, e.StartDate, e.EndDate);
     }
 
     public void UpdateDeptRep(WCFEmployee e)
@@ -103,7 +103,7 @@ public class DeptService : IDeptService
             DeptCode = e.DeptCode,
             Role = e.Role,
         };
-        DeptBusinessLogic.UpdateDeptRep(e.DeptCode, e.Eid);
+        EFBroker_DeptEmployee.UpdateDeptRep(e.DeptCode, e.Eid);
     }
 
     //End Employee Function Part
@@ -113,7 +113,7 @@ public class DeptService : IDeptService
     public List<WCFDept> DepartmentList()
     {
         List<WCFDept> wlist = new List<WCFDept>();
-        List<Department> dlist = DeptBusinessLogic.GetDepartList();
+        List<Department> dlist = EFBroker_DeptEmployee.GetDepartList();
 
         foreach (Department d in dlist)
         {
@@ -125,8 +125,8 @@ public class DeptService : IDeptService
 
     public WCFDept GetDeptInfo(string dcode)
     {
-        string collectpoint = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
-        Department d = DeptBusinessLogic.GetDepartByDepCode(dcode);
+        string collectpoint = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
 
         return WCFDept.Make(d.DeptCode, collectpoint, d.DeptName, d.DeptContactName, d.DeptTelephone, d.DeptFax);
     }
@@ -138,7 +138,7 @@ public class DeptService : IDeptService
     public List<WCFCollectPoint> CollectionPointList()
     {
         List<WCFCollectPoint> wlist = new List<WCFCollectPoint>();
-        List<CollectionPoint> clist = DeptBusinessLogic.GetCollectionPointList();
+        List<CollectionPoint> clist = EFBroker_DeptEmployee.GetCollectionPointList();
 
         foreach (CollectionPoint c in clist)
         {
@@ -155,7 +155,7 @@ public class DeptService : IDeptService
             DeptCode = d.DeptCode,
             CollectionLocationID = Convert.ToInt16(d.Collectid)
         };
-        DeptBusinessLogic.UpdateCollectionPoint(dept.DeptCode, dept.CollectionLocationID);
+        EFBroker_DeptEmployee.UpdateCollectionPoint(dept.DeptCode, dept.CollectionLocationID);
     }
 
     //End Collection Function Part

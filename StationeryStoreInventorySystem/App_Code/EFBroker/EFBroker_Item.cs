@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for EFBroker_Item
@@ -22,6 +23,21 @@ public class EFBroker_Item
             inventoryDB.SaveChanges();
         }
         return;
+    }
+    public static void AddItemAndCategory(Item item, string categoryName)
+    {
+        Category cat = new Category();
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            cat.CategoryName = categoryName;
+            context.Categories.Add(cat);
+            cat = context.Categories.Where(x => x.CategoryName.Equals(categoryName)).First();
+            item.Category = cat;
+            context.Items.Add(item);
+            context.SaveChanges();
+            ts.Complete();
+        }
     }
     public static Item GetItembyItemCode(string itemCode)
     {
@@ -108,12 +124,28 @@ public class EFBroker_Item
         }
         return uom;
     }
+    public static List<string> GetActiveItemDescriptionList()
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Items.Where(i => i.ActiveStatus.Equals("Y")).Select(i => i.Description).ToList();
+        }
+    }
     public static string GetUnitbyItemCode(string itemCode)
     {
         string unit;
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            unit = inventoryDB.Items.Where(x => x.ItemCode == itemCode).Select(x => x.UnitOfMeasure).FirstOrDefault();
+            unit = inventoryDB.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.UnitOfMeasure).FirstOrDefault();
+        }
+        return unit;
+    }
+    public static string GetUnitbyItemDesc(string itemDesc)
+    {
+        string unit;
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            unit = inventoryDB.Items.Where(x => x.Description.Equals(itemDesc)).Select(x => x.UnitOfMeasure).FirstOrDefault();
         }
         return unit;
     }

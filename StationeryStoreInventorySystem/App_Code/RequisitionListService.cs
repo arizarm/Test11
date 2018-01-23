@@ -37,11 +37,11 @@ public class RequisitionListService : IRequisitionListService
         Requisition r = new Requisition()
         {
             RequisitionID = Convert.ToInt32(requisition.RequisitionNo),
-            Status = "Approved",
+            ApprovedBy = Convert.ToInt32(requisition.ApprovedBy),
             Remarks=requisition.Remarks,
         };
 
-        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks,1);
+        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks, r.ApprovedBy);
     }
 
     public void Reject(WCFRequisition requisition)

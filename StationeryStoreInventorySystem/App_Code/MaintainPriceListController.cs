@@ -52,13 +52,9 @@ public class MaintainPriceListController
     //DAO
     public string GetItemCodeForGivenItemName(string name)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            string IC = S.Items.Where(x => x.Description == name).Select(c => c.ItemCode).First();
-            ts.Complete();
-            return IC;
-        }
+        EFBroker_Item EFBI = new EFBroker_Item();
+        string itemCode = EFBI.GetItembyDescription(name).ItemCode;
+        return itemCode;
     }
 
     //DAO
@@ -77,38 +73,27 @@ public class MaintainPriceListController
 
     public string GetItemNameForGivenItemCode(string itemCode)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            string IC = S.Items.Where(x => x.ItemCode == itemCode).Select(c => c.Description).First();
-            ts.Complete();
-            return IC;
-        }
+        EFBroker_Item EFBI = new EFBroker_Item();
+        string itemName = EFBI.GetItembyItemCode(itemCode).Description;
+        return itemName;
     }
 
     public string GetUnitOfMeasureForGivenItemCode(string itemCode)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            string IC = S.Items.Where(x => x.ItemCode == itemCode).Select(c => c.UnitOfMeasure).First();
-            ts.Complete();
-            return IC;
-        }
+        EFBroker_Item EFBI = new EFBroker_Item();
+        string unitOfMeasure = EFBI.GetUnitbyItemCode(itemCode);
+        return unitOfMeasure;
     }
 
 
     public PriceList GetPriceListObjForGivenDescNSupplier(string desc, string supplierCode)
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities S = new StationeryEntities();
-            string itemCode = S.Items.Where(b => b.Description == desc).Select(d => d.ItemCode).First();
-            DateTime dt = DateTime.Now;
-            PriceList pl = S.PriceLists.Where(x => x.ItemCode == itemCode).Where(e => e.SupplierCode == supplierCode).Where(f => f.TenderYear == dt.Year.ToString()).First();
-            ts.Complete();
-            return pl;
-        }
+        EFBroker_Item EFBI = new EFBroker_Item();
+        string itemCode = EFBI.GetItembyDescription(desc).ItemCode;
+
+        EFBroker_PriceList EFBPL = new EFBroker_PriceList();
+        PriceList pl = EFBPL.GetCurrentYearSupplierPriceList(supplierCode).Where(c => c.ItemCode == itemCode).FirstOrDefault();
+        return pl;
     }
 
     public void RemovePriceListObject(string firstCPK, string secondCPK, string thirdCPK)

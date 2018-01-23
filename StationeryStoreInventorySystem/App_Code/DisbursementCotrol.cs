@@ -87,7 +87,8 @@ public class DisbursementCotrol
     {
         disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
 
-        disbursementDetail = context.Disbursement_Item.Include("Item").Where(x => x.DisbursementID.ToString().Equals(disbID)).ToList();
+        int disbIDInt = Convert.ToInt32(disbID);
+        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbIDInt);
 
         string itemDesc;
         int reqQty;
@@ -113,7 +114,8 @@ public class DisbursementCotrol
     //VERIFY ACCESS CODE
     public static bool checkAccessCode(string accessCode)
     {
-        if ((context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.AccessCode).First().ToString()).Equals(accessCode))
+        int disbIDInt = Convert.ToInt32(disbID);
+        if (EFBroker_Disbursement.GetAccessCodebyDisbID(disbIDInt).Equals(accessCode))
         {
             return true;
         }
@@ -154,9 +156,9 @@ public class DisbursementCotrol
 
 
     //get Department Representative Name by Department Name
-    public static string getDepRep(string depName)
+    public static Employee getDepRep(string depName)
     {
-        return context.Employees.Include("Department").Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First().ToString();
+        return DeptBusinessLogic.GetDeptRepByDeptCode(depName);
     }
 
     //get Employee ID by Employee Name

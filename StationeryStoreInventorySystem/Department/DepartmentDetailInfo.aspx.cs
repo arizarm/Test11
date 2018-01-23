@@ -18,6 +18,13 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                 Employee empSession = (Employee)Session["emp"];
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
+                string tempHead = empSession.IsTempHead;
+
+                if(empRole=="Employee" && tempHead == "N")
+                {
+                    btnUpdate.Visible = false;
+                    
+                }
 
                 if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {

@@ -17,7 +17,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         string itemCode = Request.QueryString["itemCode"];
         if (!ValidatorUtil.isEmpty(itemCode))
         {
-            Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
+            Item item = EFBroker_Item.GetItembyItemCode(itemCode);
 
             if (item != null)
             {
@@ -60,7 +60,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         //    }
         //}
 
-        Item item = GenerateDiscrepancyController.GetItemByItemCode(lblItemCode.Text);
+        Item item = EFBroker_Item.GetItembyItemCode(lblItemCode.Text);
 
         int adjustment = 0;
         if (Int32.TryParse(txtAdj.Text, out adjustment))

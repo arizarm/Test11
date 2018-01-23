@@ -86,8 +86,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-
-        //GenerateDiscrepancyList();
         if (itemError == false)
         {
             //foreach (GridViewRow row in GridView2.Rows)
@@ -137,7 +135,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     protected void Button4_Click(object sender, EventArgs e)
     {
         List<Item> iList = new List<Item>();
-        iList = GenerateDiscrepancyController.GetAllItems();
+        iList = EFBroker_Item.GetActiveItemList();
 
         Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
         string search = txtSearch.Text.ToLower();
@@ -148,8 +146,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             {
                 //If a monthly inventory check discrepancy is not yet approved, the sum of only
                 //discrepancies starting from the monthly one will be displayed
-                Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
-                List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+                Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+                List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
                 if (dMonthly == null)
                 {
 
@@ -202,27 +200,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             string txtActual = (row.FindControl("txtActual") as TextBox).Text;
             string itemCode = (row.FindControl("lblItemCode1") as Label).Text;
             bool error = false;
-            //string mode = "Monthly";
-
-            //switch (RadioButtonList1.SelectedIndex)
-            //{
-            //    case 0:
-            //        mode = "Monthly";
-            //        break;
-            //    case 1:
-            //        mode = "Adhoc";
-            //        break;
-            //}
-
-            //bool monthlyCheckPass = true;    //Functions as ticked, but only if
-            //                                 //the page mode is on Monthly
-            //if (mode == "Monthly")           //If adhoc, ticked is ignored
-            //{
-            //    if (ticked)
-            //    {
-            //        monthlyCheckPass = false;
-            //    }
-            //}
 
             if (!ticked)   //If a row is not checked
             {
@@ -240,7 +217,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         string[] holderContents = holder.Text.Split(' ');
                         string quantity = holderContents[0];
                         int adj = actualQuantity - Int32.Parse(quantity);
-                        Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
+                        Item item = EFBroker_Item.GetItembyItemCode(itemCode);
                         //InventoryItem invItem = new InventoryItem(item, quantity);
                         string actual = actualQuantity.ToString();
                         if (adj != 0)
@@ -302,7 +279,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
         Session["itemError"] = itemError;
 
-        if (GridView1.Rows.Count == GenerateDiscrepancyController.GetAllItems().Count)
+        if (GridView1.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
         {
             Session["monthly"] = true;
         }
@@ -367,15 +344,15 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     private void ShowAll()
     {
         List<Item> iList = new List<Item>();
-        iList = GenerateDiscrepancyController.GetAllItems();
+        iList = EFBroker_Item.GetActiveItemList();
         Dictionary<Item, String> displayItems = new Dictionary<Item, String>();
 
         foreach (Item i in iList)
         {
             //If a monthly inventory check discrepancy is not yet approved, the sum of only
             //discrepancies starting from the monthly one will be displayed
-            Discrepency dMonthly = GenerateDiscrepancyController.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
-            List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+            List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
             if (dMonthly == null)
             {
                 string adjStr = GetAdjustmentString(dList);

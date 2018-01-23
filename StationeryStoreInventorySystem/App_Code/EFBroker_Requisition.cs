@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-using System.
 
 /// <summary>
 /// Summary description for EFBroker_Requisition
@@ -18,7 +17,7 @@ public class EFBroker_Requisition
         string earliest;
         using (StationeryEntities context = new StationeryEntities())
         {
-            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderByDescending(x => x.RequestDate).Select(x=> x.RequestDate.ToString() ).FirstOrDefault());
+            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderByDescending(x => x.RequestDate).Select(x=> x.RequestDate.ToString() ).FirstOrDefault();
         }
         return earliest;
     }

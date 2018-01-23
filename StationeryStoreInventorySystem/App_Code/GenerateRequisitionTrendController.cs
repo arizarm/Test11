@@ -105,16 +105,12 @@ public class GenerateRequisitionTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-
-            var TotalR = from ri in SE.Requisition_Item
-                         from r in SE.Requisitions
-                         from i in SE.Items
-                         from d in SE.Departments
-                         from e in SE.Employees
-                         from c in SE.Categories
+            var TotalR = from ri in EFBroker_Requisition.GetRequisitionItemList()
+                         from r in EFBroker_Requisition.GetAllRequisitionList()
+                         from i in EFBroker_Item.GetItemList()
+                         from d in EFBroker_Department.GetDepartmentList()
+                         from e in EFBroker_Employee.GetEmployeeList()
+                         from c in EFBroker_Category.GetCategoryList()
                          where ri.ItemCode == i.ItemCode
                          where ri.RequisitionID == r.RequisitionID
                          where r.ApprovedBy == e.EmpID
@@ -132,10 +128,9 @@ public class GenerateRequisitionTrendController
             if (requisitionsForGivenMonth > 0)
                 returnedQ = (int)requisitionsForGivenMonth;
 
-            ts.Complete();
             return returnedQ;
         }
-    }
+    
 
     //getTotalRequisitionByCategoryGivenMonth() needs this function
     protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)

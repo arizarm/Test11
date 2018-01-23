@@ -23,9 +23,9 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
 
-                Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-                Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+                Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
 
                 string dname = dept.DeptName;
                 string contactname = dept.DeptContactName;
@@ -58,10 +58,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 int empRid = empDRep.EmpID;//ForDeptRep Id
 
                 //UpdateActingDHead  
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {
 
-                    DropDownListActingDHead.DataSource = DeptBusinessLogic.GetEmployeeListForActingDHead(dcode, empRid);
+                    DropDownListActingDHead.DataSource = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, empRid);
                     DropDownListActingDHead.DataTextField = "EmpName";
                     DropDownListActingDHead.DataValueField = "EmpID";
                     DropDownListActingDHead.DataBind();
@@ -76,7 +76,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                     int empid = 0;
                     string empDRepname = empDRep.EmpName;
-                    DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, empid);
+                    DropDownListDRep.DataSource = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, empid);
                     DropDownListDRep.DataTextField = "EmpName";
                     DropDownListDRep.DataValueField = "EmpID";
                     DropDownListDRep.DataBind();
@@ -85,7 +85,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 else
                 {
 
-                    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
 
                     string empActingDHeadname = empActingDHead.EmpName;
                     string startdate = empActingDHead.StartDate.GetValueOrDefault().Date.ToShortDateString();
@@ -98,7 +98,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     //    cmpToday.Enabled = false;
                     //}else { cmpToday.Enabled = true; }
 
-                    DropDownListActingDHead.DataSource = DeptBusinessLogic.GetEmployeeListForActingDHead(dcode, empRid);
+                    DropDownListActingDHead.DataSource = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, empRid);
                     DropDownListActingDHead.DataTextField = "EmpName";
                     DropDownListActingDHead.DataValueField = "EmpID";
                     DropDownListActingDHead.DataBind();
@@ -108,7 +108,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     //UpdateDeptRp
                     int empid = empActingDHead.EmpID;
                     string empDRepname = empDRep.EmpName;
-                    DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, empid);
+                    DropDownListDRep.DataSource = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, empid);
                     DropDownListDRep.DataTextField = "EmpName";
                     DropDownListDRep.DataValueField = "EmpID";
                     DropDownListDRep.DataBind();
@@ -116,8 +116,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 }
 
                 //UpdateCollectionPoint
-                string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
+                string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                DropDownListCollectionPoint.DataSource = EFBroker_DeptEmployee.GetCollectionPointList();
                 DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
                 DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
                 DropDownListCollectionPoint.DataBind();
@@ -142,16 +142,16 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             if (dcode != null)
             {
                 int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-                DeptBusinessLogic.UpdateCollectionPoint(dcode, c);
+                EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
                 int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
-                DeptBusinessLogic.UpdateDeptRep(dcode, empid);
+                EFBroker_DeptEmployee.UpdateDeptRep(dcode, empid);
 
                 if (Convert.ToInt32(DropDownListActingDHead.SelectedValue) == 0)
                 {
-                    if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
+                    if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
-                        DeptBusinessLogic.UpdateRevoke();
+                        EFBroker_DeptEmployee.UpdateRevoke();
 
                     }
 
@@ -166,7 +166,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                     string sdate = txtSDate.Text;
                     string edate = txtEDate.Text;
-                    DeptBusinessLogic.UpdateActingDHead(dcode, Aempid, sdate, edate);
+                    EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
 
 
                 }
@@ -195,13 +195,13 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
 
-            Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+            Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
 
             string empDRepname = empDRep.EmpName;
 
             int a = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
 
-            DropDownListDRep.DataSource = DeptBusinessLogic.GetEmployeeListForDRep(dcode, a);
+            DropDownListDRep.DataSource = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, a);
             DropDownListDRep.DataBind();
             DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
             if (a == 0)

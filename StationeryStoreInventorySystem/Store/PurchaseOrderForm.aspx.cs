@@ -219,7 +219,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 Label itemlbl = (Label)gvRow.FindControl("ItemCode");
                 pItems.ItemCode = itemlbl.Text;
                 pItems.PurchaseOrderID = pOrder.PurchaseOrderID;
-                TextBox qtyTxtBx = (TextBox)gvRow.FindControl("ReorderQty");
+                Label qtyTxtBx = (Label)gvRow.FindControl("ReorderQty");
                 pItems.OrderQty = Convert.ToInt32(qtyTxtBx.Text);
 
                 pItems.Amount = pItems.OrderQty * Convert.ToDecimal(str[1]);

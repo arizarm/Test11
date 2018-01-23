@@ -59,6 +59,6 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     {
         LinkButton btn = (LinkButton)(sender);
         string orderID = btn.CommandArgument;
-        Response.Redirect("~/PurchaseOrderDetail.aspx?OrderID="+orderID);
+        Response.Redirect("~/Store/PurchaseOrderDetail.aspx?OrderID=" + orderID);
     }
 }

@@ -20,11 +20,11 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
 
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {
-                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
                     string aheadname = "No Acting Head";
                     string detpRname = empDRep.EmpName;
                     string dname = dept.DeptName;
@@ -46,10 +46,10 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                 }
                 else
                 {
-                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-                    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
-                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
                     string aheadname = empActingDHead.EmpName;
                     string detpRname = empDRep.EmpName;
                     string dname = dept.DeptName;
@@ -69,8 +69,8 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                     lblDeptRep.Text = detpRname;
                 }
                 //UpdateCollectionPoint
-                string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
+                string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                DropDownListCollectionPoint.DataSource = EFBroker_DeptEmployee.GetCollectionPointList();
                 DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
                 DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
                 DropDownListCollectionPoint.DataBind();
@@ -93,7 +93,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-            DeptBusinessLogic.UpdateCollectionPoint(dcode, c);
+            EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
             Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
         }//ispostback

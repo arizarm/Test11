@@ -129,9 +129,16 @@ public class DisbursementCotrol
     public static DateTime getRegenrateDate()
     {
         int disbIDInt = Convert.ToInt32(disbID);
+        List<DateTime?> dates = new List<DateTime?>();
         List<string> dateList = new List<string>();
-        dateList = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
-
+        dates = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
+        foreach(DateTime d in dates)
+        {
+            if (d != null)
+            {
+                dateList.Add(d.ToLongDateString());
+            }
+        }
         DateTime inputDate = new DateTime();
         DateTime earliestDate = new DateTime();
 

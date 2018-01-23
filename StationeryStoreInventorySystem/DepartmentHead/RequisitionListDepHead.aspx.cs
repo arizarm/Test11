@@ -14,38 +14,11 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-                if (emp.Role == "DepartmentHead")
-                {
-                    //show all 
-                    GridView1.Visible = true;
-                    GridView2.Visible = false;
-                    GridView3.Visible = false;
-                }
-                else if (emp.Role == "Representative")
-                {
-                    // show approved / priority / his requested
-                    GridView1.Visible = false;
-                    GridView2.Visible = true;
-                    GridView3.Visible = false;
-                }
-                else if (emp.Role == "Employee")
-                {
-                    //show only emp requested req
-                    GridView1.Visible = true;
-                    GridView2.Visible = false;
-                    GridView3.Visible = true;
-                }
 
                 //Dep Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
                 GridView1.DataBind();
                 //Dep Representative
-                GridView2.DataSource = RequisitionControl.DisplayAll();
-                GridView2.DataBind();
-                //Dep Emp
-                GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-                GridView2.DataBind();
-
             }
             else
             {
@@ -56,13 +29,17 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string selectedStatus = DropDownList1.SelectedValue;
-
-        GridView1.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
-        GridView1.DataBind();
-
-        GridView2.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
-        GridView2.DataBind();
+        if (Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            string selectedStatus = DropDownList1.SelectedValue;
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode,selectedStatus);
+            GridView1.DataBind();
+        }
+        else
+        {
+            Utility.logout();
+        }
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
@@ -78,9 +55,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         else
         {
             GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView2.DataBind();
-            GridView2.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView2.DataBind();
+            GridView1.DataBind();
         }
     }
 
@@ -88,8 +63,6 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     {
         GridView1.DataSource = RequisitionControl.DisplayAllDepartment();
         GridView1.DataBind();
-        GridView2.DataSource = RequisitionControl.DisplayAllDepartment();
-        GridView2.DataBind();
     }
 
 

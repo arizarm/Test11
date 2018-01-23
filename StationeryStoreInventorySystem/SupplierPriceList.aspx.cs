@@ -216,21 +216,29 @@ public partial class SupplierPriceList : System.Web.UI.Page
     {
         //get new price
         System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("NewPriceTextBox");
-        string newPrice = newPriceTB.Text;
+        if (newPriceTB.Text.Trim() == "")
+        {
+            TenderPriceDropDownList.EditIndex = -1;
+            PopulateTenderSupplyList();
+        }
+        else
+        {
+            string newPrice = newPriceTB.Text;
 
-        //get description of item for this supplier
-        System.Web.UI.WebControls.Label ItemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
-        string itemDesc = ItemDescLabel.Text;
+            //get description of item for this supplier
+            System.Web.UI.WebControls.Label ItemDescLabel = (System.Web.UI.WebControls.Label)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("ItemDesLabel");
+            string itemDesc = ItemDescLabel.Text;
 
-        //get the pricelist composite primary key
-        PriceList pl = mplc.GetPriceListObjForGivenDescNSupplier(itemDesc, code);
-        string itemCode = pl.ItemCode;
-        string tenderY = pl.TenderYear;
+            //get the pricelist composite primary key
+            PriceList pl = mplc.GetPriceListObjForGivenDescNSupplier(itemDesc, code);
+            string itemCode = pl.ItemCode;
+            string tenderY = pl.TenderYear;
 
-        mplc.UpdatePrice(newPrice, code, itemCode, tenderY);
+            mplc.UpdatePrice(newPrice, code, itemCode, tenderY);
 
-        TenderPriceDropDownList.EditIndex = -1;
-        PopulateTenderSupplyList();
+            TenderPriceDropDownList.EditIndex = -1;
+            PopulateTenderSupplyList();
+        }
     }
 
 

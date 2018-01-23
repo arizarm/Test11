@@ -1,81 +1,106 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ReorderReport.aspx.cs" Inherits="ReorderReport" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+   
+    <link type="text/css" href="css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />
+    <script src="_scripts/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src="_scripts/jquery-ui-1.7.1.custom.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+     $(document).ready(function () {
+         $('#txtDate').datepicker({ minDate: -2, maxDate: -0 });
+         $('#txtEDate').datepicker({ minDate: -2});
+     });
+    </script>    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <script src="Content/JavaScript.js"></script> 
+    <%--<script src="Content/JavaScript.js"></script> --%>
     <h2 class="mainPageHeader">
         Reorder Report
 
     </h2>
-    Start Date: <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
+    Start Date: <asp:TextBox ID="txtDate" CssClass ="datepicker" runat="server" Text=""></asp:TextBox>
     <br />
-    End Date:&nbsp; <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <br />
+    End Date:&nbsp; <asp:TextBox ID="txtEDate"  CssClass ="datepicker" runat="server" Text=""></asp:TextBox>
      <br />
-    <asp:Button ID="Button1" runat="server" Text="Generate Report" CssClass="button" />
+    <asp:Button ID="GenerateBtn" runat="server" Text="Generate Report" CssClass="button" OnClick="GenerateBtn_Click" />
     <br />
-    <h4>Reorder Report from... to... </h4>
+    <h4>Reorder Report between <asp:Label ID="sDate" runat="server" Text=""></asp:Label> -<asp:Label ID="eDate"  runat="server" Text=""></asp:Label> </h4>
     <br />
-     <asp:Table ID="Table1" runat="server" Width="591px">
-        <asp:TableHeaderRow>
-            <asp:TableHeaderCell ColumnSpan="8" Font-Bold="true" Font-Underline="true">The following items have fallen below re-order level</asp:TableHeaderCell>
-        </asp:TableHeaderRow>
-        <asp:TableHeaderRow HorizontalAlign="Left" BorderStyle="Solid" BorderColor="Black">
-            <asp:TableHeaderCell>S/N</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Item Code</asp:TableHeaderCell> 
-            <asp:TableHeaderCell>Description</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Quantity on hand</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Re-order Level</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Re-order Quantity</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Purchase Order</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Expected Delivery</asp:TableHeaderCell>
-        </asp:TableHeaderRow>
+    
+        <asp:Label runat ="server" Text="" ForeColor="Red" ID="txtLbl"></asp:Label>
+        <br />
+        <br />
+    <asp:GridView runat="server" AutoGenerateColumns ="False" ID="gvPurchasedreoderItem" EmptyDataText="No records founds within the dates !!" EmptyDataRowStyle-BackColor="Window" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
+             <Columns>                 
+                 <asp:BoundField HeaderText="ItemCode"  DataField="ItemCode">
+                 <HeaderStyle Height="35px" Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="Description" DataField="Description">
+                 <HeaderStyle Height="35px" Width="75px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="QuantityOnHand" DataField="Balance">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ReorderLevel" DataField="ReorderLevel">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ReorderQuantity" DataField="ReorderQuantity">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="PurchaseOrderNo" DataField="PurchaseOrderNo">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ExpectedDate" DataField="FormattedExpectedDate">
+                 <HeaderStyle Width="65px" />
+                 </asp:BoundField>
+             </Columns>
 
-        <asp:TableRow>
-            <asp:TableCell>1</asp:TableCell>
-            <asp:TableCell>P040</asp:TableCell>
-            <asp:TableCell>Pen WhiteBoard Marker Green</asp:TableCell>
-            <asp:TableCell>98</asp:TableCell>
-            <asp:TableCell>100</asp:TableCell>
-            <asp:TableCell>50</asp:TableCell>
-            <asp:TableCell>01-1234/A</asp:TableCell>
-            <asp:TableCell>15/1/2018</asp:TableCell>
-        </asp:TableRow>
+             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+             <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+             <SortedAscendingCellStyle BackColor="#F7F7F7" />
+             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+             <SortedDescendingCellStyle BackColor="#E5E5E5" />
+             <SortedDescendingHeaderStyle BackColor="#242121" />
 
-        <asp:TableRow>
-            <asp:TableCell>2</asp:TableCell>
-            <asp:TableCell>T001</asp:TableCell>
-            <asp:TableCell>Thumb Tacks Large</asp:TableCell>
-            <asp:TableCell>8</asp:TableCell>
-            <asp:TableCell>10</asp:TableCell>
-            <asp:TableCell>10</asp:TableCell>
-            <asp:TableCell>01-1234/A</asp:TableCell>
-            <asp:TableCell>15/1/2018</asp:TableCell>
-        </asp:TableRow>
+         </asp:GridView>
+         <asp:GridView runat="server" AutoGenerateColumns ="False" ID="gvShortfallItems" EmptyDataText="No records founds within the dates !!" EmptyDataRowStyle-BackColor="Window" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Horizontal">
+             <Columns>                 
+                 <asp:BoundField HeaderText="ItemCode"  DataField="ItemCode">
+                 <HeaderStyle Height="35px" Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="Description" DataField="Description">
+                 <HeaderStyle Height="35px" Width="75px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="QuantityOnHand" DataField="Balance">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ReorderLevel" DataField="ReorderLevel">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ReorderQuantity" DataField="ReorderQuantity">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="PurchaseOrderNo" DataField="NullablePurchaseOrderNo">
+                 <HeaderStyle Width="55px" />
+                 </asp:BoundField>
+                 <asp:BoundField HeaderText="ExpectedDate" DataField="FormattedExpectedDate">
+                 <HeaderStyle Width="65px" />
+                 </asp:BoundField>
+             </Columns>
 
-        <asp:TableRow>
-            <asp:TableCell>3</asp:TableCell>
-            <asp:TableCell>P040</asp:TableCell>
-            <asp:TableCell>Folder Plastic Blue</asp:TableCell>
-            <asp:TableCell>180</asp:TableCell>
-            <asp:TableCell>150</asp:TableCell>
-            <asp:TableCell>50</asp:TableCell>
-            <asp:TableCell>01-1234/A</asp:TableCell>
-            <asp:TableCell>15/1/2018</asp:TableCell>
-        </asp:TableRow>
+             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+             <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+             <SortedAscendingCellStyle BackColor="#F7F7F7" />
+             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+             <SortedDescendingCellStyle BackColor="#E5E5E5" />
+             <SortedDescendingHeaderStyle BackColor="#242121" />
 
-        <asp:TableRow>
-            <asp:TableCell>4</asp:TableCell>
-            <asp:TableCell>F004</asp:TableCell>
-            <asp:TableCell>Folder Plastic Yellow</asp:TableCell>
-            <asp:TableCell>90</asp:TableCell>
-            <asp:TableCell>100</asp:TableCell>
-            <asp:TableCell>50</asp:TableCell>
-            <asp:TableCell>01-1234/A</asp:TableCell>
-            <asp:TableCell>15/1/2018</asp:TableCell>
-        </asp:TableRow>
-
-     </asp:Table>
+         </asp:GridView>
 
 </asp:Content>
 

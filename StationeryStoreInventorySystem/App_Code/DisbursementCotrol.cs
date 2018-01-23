@@ -6,7 +6,7 @@ using System.Web;
 
 public class DisbursementCotrol
 {
-    static StationeryEntities context = new StationeryEntities();
+    //static StationeryEntities context = new StationeryEntities();
 
     static string disbID;
 
@@ -87,7 +87,8 @@ public class DisbursementCotrol
     {
         disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
 
-        disbursementDetail = context.Disbursement_Item.Include("Item").Where(x => x.DisbursementID.ToString().Equals(disbID)).ToList();
+        int disbIDInt = Convert.ToInt32(disbID);
+        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbIDInt);
 
         string itemDesc;
         int reqQty;
@@ -113,7 +114,8 @@ public class DisbursementCotrol
     //VERIFY ACCESS CODE
     public static bool checkAccessCode(string accessCode)
     {
-        if ((context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).Select(x => x.AccessCode).First().ToString()).Equals(accessCode))
+        int disbIDInt = Convert.ToInt32(disbID);
+        if (EFBroker_Disbursement.GetAccessCodebyDisbID(disbIDInt).Equals(accessCode))
         {
             return true;
         }
@@ -126,9 +128,9 @@ public class DisbursementCotrol
     //Get earliest date for regenerate requisition
     public static DateTime getRegenrateDate()
     {
+        int disbIDInt = Convert.ToInt32(disbID);
         List<string> dateList = new List<string>();
-
-        dateList = context.Requisitions.Where(x => x.DisbursementID.ToString().Equals(disbID)).OrderBy(x=> x.RequestDate).Select(x => x.RequestDate.ToString()).ToList();
+        dateList = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
 
         DateTime inputDate = new DateTime();
         DateTime earliestDate = new DateTime();
@@ -154,16 +156,11 @@ public class DisbursementCotrol
 
 
     //get Department Representative Name by Department Name
-    public static string getDepRep(string depName)
+    public static Employee getDepRep(string depName)
     {
-        return context.Employees.Include("Department").Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First().ToString();
+        return DeptBusinessLogic.GetDeptRepByDeptCode(depName);
     }
 
-    //get Employee ID by Employee Name
-    public static int getEmpIdbyEmpName(string empName)
-    {
-        return context.Employees.Where(x => x.EmpName.Equals(empName)).Select(x => x.EmpID).First();
-    }
 
     //ADD REQUISITION ITEM
     public static void addItemToRequisition(string code, int qty, int id)
@@ -182,47 +179,42 @@ public class DisbursementCotrol
     //Get Current Disbursement
     public static Disbursement GetCurrentDisbursement()
     {
-        return context.Disbursements.Where(x => x.DisbursementID.ToString().Equals(disbID)).First();
+        int disbIDInt = Convert.ToInt32(disbID);
+        return EFBroker_Disbursement.GetDisbursmentbyDisbID(disbIDInt);
     }
 
 
     //update Disbursement final actual quantity
-    public static void UpdateDisbursementActualQty(List<int> ActualQty)
+    public static void UpdateDisbursementActualQty(List<int> actualQty)
     {
-        Disbursement d = GetCurrentDisbursement();
-
-        int i = 0;
-        foreach (Disbursement_Item di in d.Disbursement_Item)
-        {
-            di.ActualQty = ActualQty[i];
-            i++;        }
-        context.SaveChanges();
+        int disbIDInt = Convert.ToInt32(disbID);
+        EFBroker_Disbursement.UpdateDisbursementActualQty(disbIDInt, actualQty);
     }
 
     //update Disbursement Status
     public static void UpdateDisbursementStatus()
     {
-        Disbursement d = GetCurrentDisbursement();
-        d.Status = "Completed";
-        context.SaveChanges();
+        int disbIDInt = Convert.ToInt32(disbID);
+        EFBroker_Disbursement.UpdateDisbursementStatus(disbIDInt);
     }
 
     //Add disbursement transaction to Stockcard 
     public static void AddStockCardTransaction()
     {
-        Disbursement d = GetCurrentDisbursement();
         string transactionType = "Disbursement";
         int transId = Convert.ToInt32(disbID);
+        List<Disbursement_Item> d = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(transId);
 
         string itemCode;
         int Qty;
         int balance;
 
-        foreach (Disbursement_Item dI in d.Disbursement_Item)
+        foreach (Disbursement_Item dI in d)
         {
             itemCode = dI.ItemCode;
             Qty = (int) dI.ActualQty;
-            balance = (int)context.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.BalanceQty).First() - Qty;
+            balance = (int)dI.Item.BalanceQty - Qty;
+            
 
             StockCard sc = new StockCard();
             sc.ItemCode = itemCode;
@@ -230,8 +222,7 @@ public class DisbursementCotrol
             sc.Qty = Qty;
             sc.Balance = balance;
             sc.TransactionDetailID = transId;
-            context.StockCards.Add(sc);
-            context.SaveChanges();
+            EFBroker_StockCard.AddStockTransaction(sc);
         }        
     }
 }

@@ -11,7 +11,8 @@
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
     </div>
     <div>
-        <asp:DropDownList ID="DropDownList1" runat="server" CssClass="align-right" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
+        <asp:Label ID="Label2" runat="server" Text="To View Requisition by Status : "></asp:Label>
+        <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Selected="True" >Select Status</asp:ListItem>
             <asp:ListItem Value="Pending">Pending Approval</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
@@ -55,8 +56,8 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
+                <asp:HyperLinkField HeaderText="Reject/Approve" DataNavigateUrlFields="RequisitionNo"
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Details"/>
             </Columns>
 
         </asp:GridView>

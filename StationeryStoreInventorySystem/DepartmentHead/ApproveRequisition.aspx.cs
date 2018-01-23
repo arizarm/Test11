@@ -48,45 +48,65 @@ public partial class ApproveRequisition : System.Web.UI.Page
         GridView1.DataBind();
     }
 
-    protected void Cancel_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            id = Convert.ToInt32(Request.QueryString["id"]);
-            RequisitionControl.cancelRejectRequisition(id);
-
-            Response.Redirect("ReqisitionListDepartment.aspx");
-            //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
-        }
-        catch (Exception ex)
-        {
-            Response.Write("<script language='javascript'>alert('Error! Retry.');</script>");
-        }
-    }
-
-
 
     protected void ApproveButton_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
-        string reason = ReasonLabel.Text;
-        RequisitionControl.approveRequisition(id, reason);
+        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            id = Convert.ToInt32(Request.QueryString["id"]);
+            string reason = ReasonLabel.Text;
+            RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
-        approveSuccess.Text = "Approved Success";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+
+            approveSuccess.Text = "You apporved the requisition requested by " + Label1.Text + " Successfully";
+        }
+        else
+        {
+            approveSuccess.Text = "Process Failed , Please contact server admininstration";
+        }
 
     }
 
     protected void RejectButton_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
-        string reason = ReasonLabel.Text;
-        RequisitionControl.rejectRequisition(id, reason);
+        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            id = Convert.ToInt32(Request.QueryString["id"]);
+            string reason = ReasonLabel.Text;
+            RequisitionControl.rejectRequisition(id, reason,emp.EmpID);
 
-        approveSuccess.Text = "Rejected Success";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+
+            approveSuccess.Text = "You Rejected the requisition requested by " + Label1.Text + " Successfully";
+        }
+        else
+        {
+            approveSuccess.Text = "Process Failed , Please contact server admininstration";
+        }
+
     }
 
     protected void backButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect("~/RequisitionListDepartment.aspx");
+        if(Session["emp"] != null )
+        {
+            Employee emp = (Employee)Session["emp"];
+
+            if(emp.Role == "DepartmentHead")
+            {
+                Response.Redirect("~/DepartmentHead/RequisitionListDepartment.aspx");
+            }
+            else if (emp.Role == "Representative")
+            {
+                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepartment.aspx");
+            }  
+        }
+        
+
+        
     }
+
 }

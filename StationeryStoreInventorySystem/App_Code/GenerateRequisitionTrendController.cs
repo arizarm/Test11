@@ -19,16 +19,11 @@ public class GenerateRequisitionTrendController
 
     public List<string> GetAllDepartmentNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-            List<string> allDepts = SE.Departments.Where(a => a.CollectionLocationID != null).Select(c => c.DeptName).ToList();
-            ts.Complete();
-            return allDepts;
-        }
+        EFBroker_Department EFBD = new EFBroker_Department();
+        List<string> allDepts = EFBD.GetAllDepartmentNames();
+        return allDepts;
     }
 
-    //(1a) below will be in DAO/ bizcontroller
     public List<DateTime?> GetAllRequisitionMonths()
     {
         EFBroker_Requisition EFBR = new EFBroker_Requisition();

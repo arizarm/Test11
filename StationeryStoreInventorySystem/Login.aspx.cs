@@ -88,7 +88,7 @@ public partial class Login : System.Web.UI.Page
         }
         else if (role == "Representative")
         {
-            Response.Redirect("~/Department/RequisitionForm.aspx");
+            Response.Redirect("~/DepartmentRepresentative/RequisitionForm.aspx");
         }
     }
     protected void Button2_Click(object sender, EventArgs e)

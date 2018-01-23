@@ -51,21 +51,42 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
     protected void ApproveButton_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
-        string reason = ReasonLabel.Text;
-        RequisitionControl.approveRequisition(id, reason);
+        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            id = Convert.ToInt32(Request.QueryString["id"]);
+            string reason = ReasonLabel.Text;
+            RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
-        approveSuccess.Text = "Approved Success";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+
+            approveSuccess.Text = "You apporved the requisition requested by " + Label1.Text + " Successfully";
+        }
+        else
+        {
+            approveSuccess.Text = "Process Failed , Please contact server admininstration";
+        }
 
     }
 
     protected void RejectButton_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
-        string reason = ReasonLabel.Text;
-        RequisitionControl.rejectRequisition(id, reason);
+        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            id = Convert.ToInt32(Request.QueryString["id"]);
+            string reason = ReasonLabel.Text;
+            RequisitionControl.rejectRequisition(id, reason,emp.EmpID);
 
-        approveSuccess.Text = "Rejected Success";
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+
+            approveSuccess.Text = "You Rejected the requisition requested by " + Label1.Text + " Successfully";
+        }
+        else
+        {
+            approveSuccess.Text = "Process Failed , Please contact server admininstration";
+        }
+
     }
 
     protected void backButton_Click(object sender, EventArgs e)

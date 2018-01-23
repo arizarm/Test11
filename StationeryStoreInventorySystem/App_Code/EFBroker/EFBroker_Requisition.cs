@@ -85,7 +85,7 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
-    public static List<Requisition> getRequisitionListByStatusAndDepCode(string depCode, string status)
+    public static List<Requisition> getRequisitionListByStatusAndDepCode( string status ,string depCode)
     {
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())

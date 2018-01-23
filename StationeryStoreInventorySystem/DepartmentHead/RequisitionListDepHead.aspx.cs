@@ -16,7 +16,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 Employee emp = (Employee)Session["emp"];
 
                 //Dep Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode, "Pending");
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
                 GridView1.DataBind();
                 //Dep Representative
             }
@@ -32,11 +32,9 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-
             string selectedStatus = DropDownList1.SelectedValue;
-
-        GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode,selectedStatus);
-        GridView1.DataBind();
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode,selectedStatus);
+            GridView1.DataBind();
         }
         else
         {

@@ -5,9 +5,9 @@ using System.Web;
 using System.Transactions;
 
 /// <summary>
-/// Summary description for DeptBusinessLogic
+/// Summary description for EFBroker_DeptEmployee
 /// </summary>
-public class DeptBusinessLogic
+public class EFBroker_DeptEmployee
 {
 
     //
@@ -228,7 +228,7 @@ public class DeptBusinessLogic
         {
             try
             {
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(depcode) <= 0)
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(depcode) <= 0)
                 {
                     Employee emp = smodel.Employees.Where(p => p.DeptCode == depcode && p.EmpID == empid).First<Employee>();
                     emp.IsTempHead = "Y";

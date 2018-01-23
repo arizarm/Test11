@@ -24,11 +24,10 @@
         <div class="wrapper">
             <div class="header row">
                 <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
-                    <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />
+                    <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />                  
                 </asp:HyperLink>
-                <div class="col-s">
-                    <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
-                </div>
+                <asp:Label ID="LoginUserName" runat="server" Text="Label" class ="loginUser"></asp:Label>                           
+                <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
             </div>
 
             <div class="content row">

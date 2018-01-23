@@ -23,6 +23,17 @@
     background-color: rgba(118,180,50,1);
 }
 
+
+.header .loginUser {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    margin: 2% 10px;
+    max-width: 10%;
+    color: #3c763d;
+    text-decoration: solid;
+}
+
 .content {
     margin-right: auto;
     margin-left: auto;

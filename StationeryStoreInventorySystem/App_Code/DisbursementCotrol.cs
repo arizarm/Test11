@@ -55,7 +55,7 @@ public class DisbursementCotrol
             collectionTime = disbursement[i].CollectionTime.ToString();
 
             //get collection point
-            collectionPoint = DeptBusinessLogic.GetCollectionPointbyDeptCode(depCode);
+            collectionPoint = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode);
 
             //put all data to display class
             disbursementListItems = new DisbursementListItems(disbId, collectionDate, collectionTime, depName, collectionPoint);
@@ -158,7 +158,7 @@ public class DisbursementCotrol
     //get Department Representative Name by Department Name
     public static Employee getDepRep(string depName)
     {
-        return DeptBusinessLogic.GetDeptRepByDeptCode(depName);
+        return EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
     }
 
 

@@ -87,7 +87,7 @@ public class RequisitionControl
             status = r.Status.ToString();
 
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
-            Department dep = DeptBusinessLogic.GetDepartByEmpID(requestedBy);
+            Department dep = EFBroker_DeptEmployee.GetDepartByEmpID(requestedBy);
             depCode = dep.DeptCode;
 
             department = dep.DeptName;
@@ -134,7 +134,7 @@ public class RequisitionControl
         requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
         status = r.Status.ToString();
         int empCode = Convert.ToInt32(r.RequestedBy);
-        employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+        employeeName = EFBroker_DeptEmployee.GetEmployeebyEmpID(empCode).EmpName;
         return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
     }
 
@@ -246,7 +246,7 @@ public class RequisitionControl
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
             int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+            employeeName = EFBroker_DeptEmployee.GetEmployeebyEmpID(empCode).EmpName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
             itemList.Add(item);
         }

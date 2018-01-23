@@ -108,12 +108,28 @@ public class EFBroker_Item
         }
         return uom;
     }
+    public static List<string> GetActiveItemDescriptionList()
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Items.Where(i => i.ActiveStatus.Equals("Y")).Select(i => i.Description).ToList();
+        }
+    }
     public static string GetUnitbyItemCode(string itemCode)
     {
         string unit;
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            unit = inventoryDB.Items.Where(x => x.ItemCode == itemCode).Select(x => x.UnitOfMeasure).FirstOrDefault();
+            unit = inventoryDB.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x => x.UnitOfMeasure).FirstOrDefault();
+        }
+        return unit;
+    }
+    public static string GetUnitbyItemDesc(string itemDesc)
+    {
+        string unit;
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            unit = inventoryDB.Items.Where(x => x.Description.Equals(itemDesc)).Select(x => x.UnitOfMeasure).FirstOrDefault();
         }
         return unit;
     }

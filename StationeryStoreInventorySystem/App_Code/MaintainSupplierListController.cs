@@ -29,13 +29,11 @@ public class SupplierListController
         EFBroker_Supplier.UpdateSupplier(supplier);
     }
 
-    //DAO
     public void DeleteSupplier(string supplierCode)
     {
         EFBroker_Supplier.DeleteSupplier(supplierCode);
     }
 
-    //DAO
     public void CreateSupplier(Supplier supplier)
     {
         EFBroker_Supplier.CreateSupplier(supplier);

@@ -33,7 +33,7 @@
             <div class="content row">
                 <!-- Menu For Department Head -->
                 <div class="left-col" id="DepHeadMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentHead/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentHead/RequisitionListDepHead.aspx">Requisition List</asp:HyperLink>                  
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink3" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">DepartmentInfo</asp:HyperLink>
                 </div>

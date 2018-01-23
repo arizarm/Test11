@@ -34,28 +34,30 @@
             <div class="content row">
                 <!-- Menu For Department Head -->
                 <div class="left-col" id="DepHeadMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink3" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">Requisition Form</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentHead/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink3" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">DepartmentInfo</asp:HyperLink>
                 </div>
 
                 <!-- Menu For Departement Temp Head -->
                 <div class="left-col" id="DepTempHeadMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink4" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink5" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink4" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentTempHead/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink5" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink7" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">Requisition Form</asp:HyperLink>
                 </div>
 
                 <!-- Menu For Department Representative -->
                 <div class="left-col" id="DepRepMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink8" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink9" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink8" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink9" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink10" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">Requisition Form</asp:HyperLink>
                 </div>
 
                 <!-- Menu For Department Member -->
                 <div class="left-col" id="DepMember" runat="server">
-
+                    <asp:HyperLink ID="HyperLink11" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionListDepartment.aspx">Requisition List</asp:HyperLink>                  
+                    <asp:HyperLink ID="HyperLink12" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Requisition Form</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink13" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">Requisition Form</asp:HyperLink>
                 </div>
 
                 <!-- Menu For Store Manager -->

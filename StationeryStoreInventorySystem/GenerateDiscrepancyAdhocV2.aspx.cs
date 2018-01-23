@@ -124,11 +124,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
                     if(d.TotalDiscrepencyAmount < 250)
                     {
-                        d.ApprovedBy = DeptBusinessLogic.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
+                        d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                     }
                     else
                     {
-                        d.ApprovedBy = DeptBusinessLogic.GetEmployeeListByRole("Store Manager")[0].EmpID;
+                        d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].EmpID;
                     }
                     dList.Add(d);
                 }
@@ -172,12 +172,12 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
             if (informSupervisor)
             {
-                string supervisorEmail = DeptBusinessLogic.GetEmployeeListByRole("Store Supervisor")[0].Email;
+                string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
                 Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
             }
             if (informManager)
             {
-                string managerEmail = DeptBusinessLogic.GetEmployeeListByRole("Store Manager")[0].Email;
+                string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
             

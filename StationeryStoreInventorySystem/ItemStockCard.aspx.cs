@@ -77,7 +77,7 @@ public partial class ItemStockCard : System.Web.UI.Page
                         {
                             Disbursement db = EFBroker_Disbursement.GetDisbursmentbyDisbID((int)sc.TransactionDetailID);
                             scdr.TransDate = ((DateTime)db.CollectionDate).ToShortDateString();
-                            scdr.TransDetails = DeptBusinessLogic.GetDepartByDepCode(db.DeptCode).DeptName;
+                            scdr.TransDetails = EFBroker_DeptEmployee.GetDepartByDepCode(db.DeptCode).DeptName;
                             scdr.Quantity = GetQuantityString((int)sc.Qty);
                         }
                         scdr.Balance = (int)sc.Balance;

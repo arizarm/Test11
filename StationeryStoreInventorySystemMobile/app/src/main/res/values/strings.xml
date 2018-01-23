@@ -18,5 +18,10 @@
     <string name="btnApprove">Approve</string>
     <string name="btnReject">Reject</string>
     <string name="btnSave">Save</string>
+    <string name="m">(</string>
+    <string name="n">)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_title">Remarks: </string>
 
 </resources>

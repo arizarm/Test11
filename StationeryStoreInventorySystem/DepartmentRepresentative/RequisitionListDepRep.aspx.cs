@@ -9,28 +9,49 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["empRole"] = "Employee";
-        Session["isTempHead"] = "11";
-
-        if (Session["empRole"].ToString() == "DepartmentHead" || Session["isTempHead"].ToString() == "Representative")
-        {
-            GridView1.Visible = false;
-            GridView2.Visible = true;
-        }
-        else if (Session["empRole"].ToString() == "Employee" || Session["empRole"].ToString() == "Representative")
-        {
-            GridView1.Visible = true;
-            GridView2.Visible = false;
-        }
-
         if (!IsPostBack)
         {
-            GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
-            GridView1.DataBind();
-            GridView2.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
-            GridView2.DataBind();
+            if (Session["emp"] != null)
+            {
+                Employee emp = (Employee)Session["emp"];
+                if (emp.Role == "DepartmentHead")
+                {
+                    //show all 
+                    GridView1.Visible = true;
+                    GridView2.Visible = false;
+                    GridView3.Visible = false;
+                }
+                else if (emp.Role == "Representative")
+                {
+                    // show approved / priority / his requested
+                    GridView1.Visible = false;
+                    GridView2.Visible = true;
+                    GridView3.Visible = false;
+                }
+                else if (emp.Role == "Employee")
+                {
+                    //show only emp requested req
+                    GridView1.Visible = true;
+                    GridView2.Visible = false;
+                    GridView3.Visible = true;
+                }
 
-        }
+                //Dep Head
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
+                GridView1.DataBind();
+                //Dep Representative
+                GridView2.DataSource = RequisitionControl.DisplayAll();
+                GridView2.DataBind();
+                //Dep Emp
+                GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                GridView2.DataBind();
+
+            }
+            else
+            {
+                Utility.logout();
+            }
+        }      
     }
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

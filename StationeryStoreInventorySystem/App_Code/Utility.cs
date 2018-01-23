@@ -6,11 +6,12 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.IO;
+using System.Web.Security;
 
 /// <summary>
 /// Summary description for Utility
 /// </summary>
-public static class Utility
+public static class Utility 
 {
     public static void sendMail(string mailReceiver,string mailSubject,string mailBody)
     {
@@ -54,5 +55,13 @@ public static class Utility
             return false;
         }
     }
- }
+    public static void logout()
+    {
+        FormsAuthentication.SignOut();
+        HttpContext.Current.Session.Remove("emp");
+        HttpContext.Current.Session.Remove("empRole");
+        HttpContext.Current.Session.Remove("empID");
+        HttpContext.Current.Response.Redirect("~/Login.aspx");
+    }
+}
 

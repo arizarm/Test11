@@ -31,6 +31,14 @@ public class EFBroker_Item
             return result;
         }
     }
+    public Item GetActiveItembyItemCode(string itemCode)
+    {
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            Item result = inventoryDB.Items.Where(x => x.ItemCode == itemCode && x.ActiveStatus == "Y").FirstOrDefault();
+            return result;
+        }
+    }
     public Item GetItembyDescription(string description)
     {
         Item result;
@@ -74,7 +82,7 @@ public class EFBroker_Item
         List<Item> itemList;
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y").ToList();
+            itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y").OrderBy(x => x.ItemCode).ToList();
         }
         return itemList;
     }

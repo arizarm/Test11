@@ -63,5 +63,13 @@ public class EFBroker_PriceList
             ts.Complete();
         }
     }
-
+    public List<PriceList> GetPriceListByItemCode(string itemCode)
+    {   //goes to price list broker
+        List<PriceList> prices;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            prices = context.PriceLists.Where(x => x.ItemCode == itemCode).ToList();
+        }
+        return prices;
+    }
 }

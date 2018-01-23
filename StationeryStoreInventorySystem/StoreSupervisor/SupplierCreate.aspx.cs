@@ -31,6 +31,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
         Page.ClientScript.RegisterStartupScript(Page.GetType(), "my", "alert('" + Message.SupplierSuccessfulAdd + "');", true);
         //Response.Write("<script>alert('" + Message.SupplierSuccessfulAdd + "');</script>");
 
-        Response.Redirect("SupplierList.aspx", false);
+        Response.Redirect("~/Store/SupplierList.aspx", false);
     }
 }

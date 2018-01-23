@@ -102,9 +102,6 @@
             </tr>
             
         </table>
-           
-    <%--</th></tr>
-       </table>--%>
     <asp:Label ID="lblMessage" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="Large" Font-Strikeout="False" ForeColor="#006600"></asp:Label>
     
 </asp:Content>

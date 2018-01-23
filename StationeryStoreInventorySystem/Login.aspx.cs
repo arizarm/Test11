@@ -27,8 +27,7 @@ public partial class Login : System.Web.UI.Page
             if(Utility.checkIsTempDepHead(emp) == true)
             {
                 //set role for temp head
-                emp.Role = "DepartmentTempHead";
-                
+                emp.Role = "DepartmentTempHead";              
             }
             Session["empRole"] = emp.Role;           
             Session["empID"] = emp.EmpID;         

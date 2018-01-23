@@ -45,7 +45,7 @@ public class EFBroker_Category
         Category cat;
         using (StationeryEntities categoryDB = new StationeryEntities())
         {
-            cat = categoryDB.Categories.Where(x => x.CategoryName == categoryName).FirstOrDefault();
+            cat = categoryDB.Categories.Where(x => x.CategoryName.Equals(categoryName)).FirstOrDefault();
         }
         return cat;
     }

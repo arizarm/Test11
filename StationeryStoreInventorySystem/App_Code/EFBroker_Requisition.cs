@@ -121,6 +121,15 @@ public class EFBroker_Requisition
         }
         return list;
     }
+    public static List<Requisition_Item> GetRequisitionItemList()
+    {
+        List<Requisition_Item> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.Requisition_Item.ToList();
+        }
+        return rList;
+    }
     public static void AddItemToRequisition(Requisition_Item item)
     {
         using (StationeryEntities context = new StationeryEntities())

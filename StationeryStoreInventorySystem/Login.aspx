@@ -39,7 +39,6 @@
                 </div>
                 <asp:Label ID="Label3" runat="server"></asp:Label>
                 <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp
-                <%--<asp:Button ID="Button2" runat="server" Text="Send mail" OnClick="Button2_Click" />--%>
                 <asp:Label ID="Label4" runat="server"></asp:Label>
             </div>
         </div>

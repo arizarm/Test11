@@ -91,10 +91,5 @@ public partial class Login : System.Web.UI.Page
             Response.Redirect("~/DepartmentRepresentative/RequisitionForm.aspx");
         }
     }
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Utility.sendMail("yimonsoe.yms@gmail.com","Mail Subject","I am mail body");
-        Response.Redirect("~/Login.aspx");
-    }
 
 }

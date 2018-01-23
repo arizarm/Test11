@@ -3,10 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
+    <h2 class="mainPageHeader">Approve / Reject Requisition Details</h2>
     <br />
     <br />
-    <asp:Button ID="backButton" runat="server" Text="Button" OnClick="backButton_Click" />
+    <asp:Button ID="backButton" runat="server" Text="Back To List" OnClick="backButton_Click" />
     <br />
     <br />
 
@@ -30,7 +30,7 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">

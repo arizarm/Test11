@@ -87,7 +87,7 @@ public class RequisitionControl
             status = r.Status.ToString();
 
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
-            Department dep = DeptBusinessLogic.GetDepartByEmpID(requestedBy);
+            Department dep = EFBroker_DeptEmployee.GetDepartByEmpID(requestedBy);
             depCode = dep.DeptCode;
 
             department = dep.DeptName;
@@ -134,7 +134,7 @@ public class RequisitionControl
         requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
         status = r.Status.ToString();
         int empCode = Convert.ToInt32(r.RequestedBy);
-        employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+        employeeName = EFBroker_DeptEmployee.GetEmployeebyEmpID(empCode).EmpName;
         return new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
     }
 
@@ -143,32 +143,7 @@ public class RequisitionControl
     {
         return EFBroker_Requisition.GetRequisitionByID(id);
     }
-    //public static List<Requisition_ItemList> getList(int id)
-    //{
-    //    List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
-    //    using (StationeryEntities context = new StationeryEntities())
-    //    {
-    //        var q = from i in context.Items
-    //                join ri in context.Requisition_Item
-    //                on i.ItemCode equals ri.ItemCode
-    //                join rt in context.Requisitions
-    //                on ri.RequisitionID equals rt.RequisitionID
-    //                where ri.RequisitionID == id
-    //                select new
-    //                {
-    //                    i.Description,
-    //                    ri.RequestedQty,
-    //                    i.UnitOfMeasure,
-    //                    rt.Status
-    //                };
-    //        foreach (var x in q)
-    //        {
-    //            Requisition_ItemList r = new Requisition_ItemList(x.Description, x.RequestedQty, x.UnitOfMeasure, x.Status);
-    //            rlist.Add(r);
-    //        }
-    //    }
-    //    return rlist;
-    //}
+
     public static List<Requisition_ItemList> getList(int id)
     {
         List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
@@ -246,7 +221,7 @@ public class RequisitionControl
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
             int empCode = Convert.ToInt32(r.RequestedBy);
-            employeeName = DeptBusinessLogic.GetEmployeebyEmpID(empCode).EmpName;
+            employeeName = EFBroker_DeptEmployee.GetEmployeebyEmpID(empCode).EmpName;
             item = new ReqisitionListItem(date, requisitionNo, department, status, employeeName);
             itemList.Add(item);
         }

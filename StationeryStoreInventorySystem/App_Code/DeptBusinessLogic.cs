@@ -41,6 +41,15 @@ public class DeptBusinessLogic
         }
 
     }
+    public static string GetCollectionPointbyDeptCode(string depCode)
+    {
+        string collectionPoint;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).FirstOrDefault();
+        }
+        return collectionPoint;
+    }
     public static List<Employee> GetEmployeeListByRole(string role)
     {  //goes to employee broker
         List<Employee> e;
@@ -59,9 +68,13 @@ public class DeptBusinessLogic
         }
 
     }
-
-
-
+    public static Employee GetDeptRepByDeptCode(string depName)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
+        }
+    }
     public static List<Employee> GetEmployeeListForActingDHead(string deptcode, int a)
     {
         using (StationeryEntities smodel = new StationeryEntities())

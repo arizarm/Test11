@@ -30,24 +30,24 @@ public class EFBroker_Requisition
         }
         return req;
     }
-    public static string GetEarliestReqDateTimebyDisbID(int disbID)
+    public static DateTime? GetEarliestReqDateTimebyDisbID(int disbID)
     {
-        string earliest;
+        DateTime? earliest;
         using (StationeryEntities context = new StationeryEntities())
         {
-            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderByDescending(x => x.RequestDate).Select(x => x.RequestDate.ToString()).FirstOrDefault();
+            earliest = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderByDescending(x => x.RequestDate).Select(x => x.RequestDate).FirstOrDefault();
         }
         return earliest;
     }
     // alternative
-    public static List<string> GetDateTimeListbyDisbID(int disbID)
+    public static List<DateTime?> GetDateTimeListbyDisbID(int disbID)
     {
-        List<string> dateStringList;
+        List<DateTime?> dateList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            dateStringList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => x.RequestDate.ToString()).ToList();
+            dateList = context.Requisitions.Where(x => x.DisbursementID == disbID).OrderBy(x => x.RequestDate).Select(x => x.RequestDate).ToList();
         }
-        return dateStringList;
+        return dateList;
     }
     public static List<DateTime?> GetAllFinalisedRequisitionMonths()
     {
@@ -76,6 +76,17 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
+    public static List<Requisition> getRequisitionListByIDAndStatus(int empID,string status)
+    {
+        List<Requisition> rlist;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = context.Requisitions.Where(x => x.Status == status && x.RequestedBy == empID).ToList();
+        }
+        return rlist;
+    }
+
+    
     public static List<Requisition> GetAllRequisitionList()
     {
         List<Requisition> rList;

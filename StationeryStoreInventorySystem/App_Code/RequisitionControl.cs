@@ -168,6 +168,12 @@ public class RequisitionControl
         return PopulateGridViewForDepartment(rlist);
     }
 
+    public static List<ReqisitionListItem> getRequisitionListByIDAndStatus(int empID,string status)
+    {
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByIDAndStatus(empID,status);
+        return PopulateGridViewForDepartment(rlist);
+    }  
+
     //FIND REQUISITION ITEM BY REQUISITION ID
     public static Requisition_Item findRequisitionID(int id)
     {

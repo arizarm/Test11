@@ -143,32 +143,7 @@ public class RequisitionControl
     {
         return EFBroker_Requisition.GetRequisitionByID(id);
     }
-    //public static List<Requisition_ItemList> getList(int id)
-    //{
-    //    List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();
-    //    using (StationeryEntities context = new StationeryEntities())
-    //    {
-    //        var q = from i in context.Items
-    //                join ri in context.Requisition_Item
-    //                on i.ItemCode equals ri.ItemCode
-    //                join rt in context.Requisitions
-    //                on ri.RequisitionID equals rt.RequisitionID
-    //                where ri.RequisitionID == id
-    //                select new
-    //                {
-    //                    i.Description,
-    //                    ri.RequestedQty,
-    //                    i.UnitOfMeasure,
-    //                    rt.Status
-    //                };
-    //        foreach (var x in q)
-    //        {
-    //            Requisition_ItemList r = new Requisition_ItemList(x.Description, x.RequestedQty, x.UnitOfMeasure, x.Status);
-    //            rlist.Add(r);
-    //        }
-    //    }
-    //    return rlist;
-    //}
+
     public static List<Requisition_ItemList> getList(int id)
     {
         List<Requisition_ItemList> rlist = new List<Requisition_ItemList>();

@@ -14,7 +14,7 @@ public class EFBroker_Discrepancy
         // TODO: Add constructor logic here
         //
     }
-    public void SaveDiscrepencies(List<Discrepency> dList)
+    public static void SaveDiscrepencies(List<Discrepency> dList)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -26,7 +26,7 @@ public class EFBroker_Discrepancy
         }
         return;
     }
-    public int GetDiscrepancyID(Discrepency d)
+    public static int GetDiscrepancyID(Discrepency d)
     {
         int id;
         using (StationeryEntities context = new StationeryEntities())
@@ -35,7 +35,7 @@ public class EFBroker_Discrepancy
         }
         return id;
     }
-    public Discrepency GetDiscrepancyById(int id)
+    public static Discrepency GetDiscrepancyById(int id)
     {   //goes to discrepancy broker
         Discrepency d;
         using (StationeryEntities context = new StationeryEntities())
@@ -44,7 +44,7 @@ public class EFBroker_Discrepancy
         }
         return d;
     }
-    public Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
+    public static Discrepency GetPendingMonthlyDiscrepancyByItemCode(string itemCode)
     {   //goes to discrepancy broker
         Discrepency d;
         using (StationeryEntities context = new StationeryEntities())
@@ -53,7 +53,7 @@ public class EFBroker_Discrepancy
         }
         return d;
     }
-    public List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
+    public static List<Discrepency> GetPendingDiscrepanciesByItemCode(string itemCode)
     {   //goes to discrepancy broker
         List<Discrepency> dList = new List<Discrepency>();
         using (StationeryEntities context = new StationeryEntities())
@@ -62,7 +62,7 @@ public class EFBroker_Discrepancy
         }
         return dList;
     }
-    public List<Discrepency> GetPendingDiscrepancyList()
+    public static List<Discrepency> GetPendingDiscrepancyList()
     {
         List<Discrepency> dList = new List<Discrepency>();
         using (StationeryEntities context = new StationeryEntities())
@@ -71,7 +71,7 @@ public class EFBroker_Discrepancy
         }
         return dList;
     }
-    public List<Discrepency> GetMonthlyDiscrepancyList()
+    public static List<Discrepency> GetMonthlyDiscrepancyList()
     {
         List<Discrepency> dList = new List<Discrepency>();
         using (StationeryEntities context = new StationeryEntities())

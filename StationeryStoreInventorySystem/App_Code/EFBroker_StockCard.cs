@@ -14,7 +14,7 @@ public class EFBroker_StockCard
         // TODO: Add constructor logic here
         //
     }
-    public List<StockCard> GetStockCardsByItemCode(string itemCode)
+    public static List<StockCard> GetStockCardsByItemCode(string itemCode)
     {   //goes to stock card broker
         List<StockCard> stockList;
         using (StationeryEntities context = new StationeryEntities())
@@ -23,7 +23,7 @@ public class EFBroker_StockCard
         }
         return stockList;
     }
-    public void AddStockTransaction(StockCard stockCard)
+    public static void AddStockTransaction(StockCard stockCard)
     {
         using (StationeryEntities context = new StationeryEntities())
         {

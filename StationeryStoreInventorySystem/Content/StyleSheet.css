@@ -29,9 +29,13 @@
     top: 0px;
     right: 15px;
     margin: 2% 4%;
-    max-width: 10%;
+    max-width: 25%;
     color: #3c763d;
     text-decoration: solid;
+    font-family: 'Trocchi', serif;
+    font-size: 17px; 
+   
+    font-weight:bold;
 }
 
 .content {

@@ -21,7 +21,7 @@
             <asp:Label ID="Label1" runat="server" Font-Size="Larger" ForeColor="#666666" Text="Department List"></asp:Label>
         </h2>
         <p class="auto-style1">
-            <asp:GridView ID="GridViewDept" runat="server" CellPadding="100" ForeColor="Black" GridLines="Horizontal" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" Height="237px" Width="1037px">
+            <asp:GridView ID="GridViewDept" runat="server" CellPadding="100" ForeColor="Black" GridLines="Horizontal" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" Height="237px" Width="1037px" AutoGenerateColumns="False">
                 <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
                 <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
                 <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
@@ -30,6 +30,19 @@
                 <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
                 <SortedDescendingCellStyle BackColor="#E5E5E5" />
                 <SortedDescendingHeaderStyle BackColor="#242121" />
+                <columns>          
+                    <asp:BoundField DataField="DeptCode" HeaderText="DeptCode" />
+                     <asp:BoundField DataField="DeptName" HeaderText="DeptName" />
+                     <asp:BoundField DataField="EmpName" HeaderText="DeptHead" />
+                     <asp:BoundField DataField="CollectionPoint1" HeaderText="CollectionPoint" />
+                     <asp:BoundField DataField="DeptContactName" HeaderText="ContactName" />
+                    <asp:BoundField DataField="DeptTelephone" HeaderText="Phone" />
+                    <asp:BoundField DataField="DeptFax" HeaderText="Fax" />
+                   
+
+          
+        </columns>
+
             </asp:GridView>
         </p>
   

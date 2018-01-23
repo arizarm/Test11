@@ -14,40 +14,32 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-                if (emp.Role == "DepartmentHead")
+                //Approved requisition
+                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode) ==  null)
                 {
-                    //show all 
-                    GridView1.Visible = true;
-                    GridView2.Visible = false;
-                    GridView3.Visible = false;
+                    Label5.Text = "There is no requisition data";
                 }
-                else if (emp.Role == "Representative")
+                else
                 {
-                    // show approved / priority / his requested
-                    GridView1.Visible = false;
-                    GridView2.Visible = true;
-                    GridView3.Visible = false;
-                }
-                else if (emp.Role == "Employee")
-                {
-                    //show only emp requested req
-                    GridView1.Visible = true;
-                    GridView2.Visible = false;
-                    GridView3.Visible = true;
+                    Label5.Visible = false;
+                    GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode);
+                    GridView1.DataBind();
                 }
 
-                //Dep Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatus("Pending");
-                GridView1.DataBind();
-                //Dep Representative
-                GridView2.DataSource = RequisitionControl.DisplayAll();
-                GridView2.DataBind();
-                //Dep Emp
-                GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-                GridView2.DataBind();
-
+                //Requested Requisition
+                if(RequisitionControl.getRequisitionListByID(emp.EmpID) == null)
+                {
+                    Label6.Text = "There is no requested requisition data";
+                }
+                else
+                {
+                    Label6.Visible = false;
+                    GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                    GridView2.DataBind();
+                }
             }
             else
+
             {
                 Utility.logout();
             }

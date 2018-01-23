@@ -12,13 +12,9 @@ public class GenerateRequisitionTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-            List<string> allCats = SE.Categories.Select(c => c.CategoryName).ToList();
-            ts.Complete();
-            return allCats;
-        }
+        EFBroker_Category EFBC = new EFBroker_Category();
+        List<string> allCategoryNames = EFBC.GetAllCategoryNames();
+        return allCategoryNames;
     }
 
     public List<string> GetAllDepartmentNames()
@@ -35,15 +31,9 @@ public class GenerateRequisitionTrendController
     //(1a) below will be in DAO/ bizcontroller
     public List<DateTime?> GetAllRequisitionMonths()
     {
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-
-            List<DateTime?> allMonths = SE.Requisitions.Where(b => b.Status == "Closed" || b.Status == "Approved").Select(c => c.RequestDate).ToList();
-
-            ts.Complete();
-            return allMonths;
-        }
+        EFBroker_Requisition EFBR = new EFBroker_Requisition();
+        List<DateTime?> allMonths = EFBR.GetAllFinalisedRequisitionMonths();
+        return allMonths;
     }
 
     //(1b) below will be in useCaseController

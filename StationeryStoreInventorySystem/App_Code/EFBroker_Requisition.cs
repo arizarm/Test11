@@ -173,7 +173,7 @@ public class EFBroker_Requisition
             ts.Complete();
         }
     }
-    public static void AddNewRequisition(List<RequestedItem> item, DateTime date, string status, int empID)
+    public static void AddNewRequisition(List<RequestedItem> item, DateTime date, string status, int empID,string DeptCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -184,7 +184,7 @@ public class EFBroker_Requisition
             r.RequestDate = date;
             r.Status = status;
             r.RequestedBy = empID;
-
+            r.DeptCode = DeptCode;
             context.Requisitions.Add(r);
             context.SaveChanges();
 

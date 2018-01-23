@@ -77,11 +77,14 @@ public partial class Login : System.Web.UI.Page
         {
             Response.Redirect("~/PurchaseOrderList.aspx");
         }
-        else if (role == "DepartmentHead" || role == "DepartmentTempHead")
+        else if (role == "DepartmentHead")
         {        
             Response.Redirect("~/DepartmentHead/RequisitionListDepartment.aspx");
         }
-
+        else if(role == "DepartmentTempHead")
+        {
+            Response.Redirect("~/DepartmentTempHead/RequisitionListDepartment.aspx");
+        }
         else if (role == "Employee")
         {
             Response.Redirect("~/DepartmentEmployee/RequisitionForm.aspx");

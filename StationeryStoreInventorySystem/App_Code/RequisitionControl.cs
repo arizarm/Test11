@@ -258,9 +258,9 @@ public class RequisitionControl
         EFBroker_Requisition.EditRequisitionItemQty(id, code, qty);
     }
 
-    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int requestedBy)
+    public static void addNewRequisitionItem(List<RequestedItem> item, DateTime date, string status, int requestedBy,string depCode)
     {
-        EFBroker_Requisition.AddNewRequisition(item, date, status, requestedBy);
+        EFBroker_Requisition.AddNewRequisition(item, date, status, requestedBy,depCode);
     }
 
     // get requisition by emp ID

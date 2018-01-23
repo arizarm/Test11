@@ -276,7 +276,7 @@ public class RequisitionControl
     }
 
     //CHANGE REQUISITION STATUS
-    public static void approveRequisition(int id, string reason)
+    public static void approveRequisition(int id, string reason,int empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
@@ -284,16 +284,18 @@ public class RequisitionControl
             r.Remarks = reason;
             r.RequisitionID = id;
             r.Status = "Approved";
+            r.ApprovedBy = empID;
             context.SaveChanges();
         }
     }
-    public static void rejectRequisition(int id, string reason)
+    public static void rejectRequisition(int id, string reason, int empID)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
             Requisition r = context.Requisitions.Where(x => x.RequisitionID == id).First();
             r.Remarks = reason;
             r.RequisitionID = id;
+            r.ApprovedBy = empID;
             r.Status = "Rejected";
             r.Remarks = "Rejected By Head";
             context.SaveChanges();

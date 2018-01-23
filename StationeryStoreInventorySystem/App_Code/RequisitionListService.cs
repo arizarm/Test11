@@ -41,7 +41,7 @@ public class RequisitionListService : IRequisitionListService
             Remarks=requisition.Remarks,
         };
 
-        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks);
+        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks,1);
     }
 
     public void Reject(WCFRequisition requisition)
@@ -53,6 +53,6 @@ public class RequisitionListService : IRequisitionListService
             Remarks = requisition.Remarks,
         };
 
-        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks);
+        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks,1);
     }
 }

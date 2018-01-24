@@ -86,7 +86,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
-       
+
         if (Session["emp"] != null)
         {
             Employee empSession = (Employee)Session["emp"];
@@ -116,7 +116,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-       
+
         Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
     }
 

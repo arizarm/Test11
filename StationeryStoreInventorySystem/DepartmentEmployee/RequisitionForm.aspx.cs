@@ -86,7 +86,7 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        if(Session["emp"] != null)
+        if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
             int RequestedBy = emp.EmpID;

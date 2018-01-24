@@ -14,7 +14,7 @@
         <h3>All Collection list</h3>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid">
+            DataKeyNames="RequisitionNo" CssClass="mGrid" Width="60%" >
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">
@@ -26,17 +26,6 @@
 
                     </ItemTemplate>
                 </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="RequestedBy">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
-
-                    </ItemTemplate>
-                </asp:TemplateField>
-
 
                 <asp:TemplateField HeaderText="Status">
                     <EditItemTemplate>

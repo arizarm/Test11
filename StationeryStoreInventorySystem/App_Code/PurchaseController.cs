@@ -91,9 +91,57 @@ public class PurchaseController
         return EFBroker_PurchaseOrder.GetPurchaseSupplierListByItemCode(itemCode);
     }
 
-    public List<PurchaseItems> AddItems(String itemCode)
+    //public List<PurchaseItems> AddItems(String itemCode)
+    //{
+    //    var itemList = (from Stock in entities.StockCards
+    //                    group Stock by Stock.ItemCode into stck
+    //                    join item in entities.Items on stck.FirstOrDefault().ItemCode equals item.ItemCode
+    //                    where item.ItemCode == itemCode
+    //                    select new PurchaseItems
+    //                    {
+    //                        ItemCode = item.ItemCode,
+    //                        Description = item.Description,
+    //                        ReorderQty = item.ReorderQty,
+    //                        ReorderLevel = item.ReorderLevel,
+    //                        UnitOfMeasure = item.UnitOfMeasure,
+    //                        Balance = stck.Min(x => x.Balance)
+    //                    }).ToList<PurchaseItems>();
+    //    if (itemList != null)
+    //    {
+    //        itemList = (from item in entities.Items
+    //                    where item.ItemCode == itemCode
+    //                    select new PurchaseItems
+    //                    {
+    //                        ItemCode = item.ItemCode,
+    //                        Description = item.Description,
+    //                        ReorderQty = item.ReorderQty,
+    //                        ReorderLevel = item.ReorderLevel,
+    //                        UnitOfMeasure = item.UnitOfMeasure,
+    //                        Balance = 0
+    //                    }).ToList<PurchaseItems>();
+    //    }
+    //    return itemList;
+    //}
+    public PurchaseItems AddPurchaseItem(String itemCode)
     {
-        return EFBroker_PurchaseOrder.AddPurchaseItems(itemCode);
+        Item item = EFBroker_Item.GetActiveItembyItemCode(itemCode);
+        PurchaseItems purchaseItem = new PurchaseItems
+        {
+            ItemCode = item.ItemCode,
+            Description = item.Description,
+            ReorderQty = item.ReorderQty,
+            ReorderLevel = item.ReorderLevel,
+            UnitOfMeasure = item.UnitOfMeasure,
+        };
+        if (item.BalanceQty == null || item.BalanceQty == 0)
+        {
+            purchaseItem.Balance = 0;
+        }
+        else
+        {
+            purchaseItem.Balance = item.BalanceQty;
+        }
+        return purchaseItem;
     }
     public List<Item> GetItemList()
     {
@@ -106,14 +154,14 @@ public class PurchaseController
         return EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor");
     }
 
-    public void AddPurchaseOrder(Dictionary<PurchaseOrder,List<Item_PurchaseOrder>> orderItems)
+    public void AddPurchaseOrder(Dictionary<PurchaseOrder, List<Item_PurchaseOrder>> orderItems)
     {
         try
         {
             EFBroker_PurchaseOrder.AddPurchaseOrder(orderItems);
-          //  Utility.sendMail("williams@logicuniversity.com", "Purchase order", "Please find the order for items and approve to proceed");
+            Utility.sendMail("williams@logicuniversity.com", "Purchase order", "Please find the order for items and approve to proceed");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
@@ -137,12 +185,7 @@ public class PurchaseController
     {
         return EFBroker_PurchaseOrder.GetPurchaseOrderById(orderID);
     }
-    //public List<Item_PurchaseOrder> GetPurchaseOrderItems(int orderID)
-    //{
-    //    return entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == orderID).ToList();
-
-
-    //}
+ 
     public List<PurchaseOrderItemDetails> GetPurchaseOrderItemsDetails(int orderID)
     {
         return EFBroker_PurchaseOrder.GetPurchaseOrderItemsDetailList(orderID);
@@ -153,7 +196,7 @@ public class PurchaseController
         EFBroker_PurchaseOrder.UpdatePurchaseOrder(pOrder);
         return;
     }
-   
+
     public void ClosePurchaseOrder(PurchaseOrder pOrder)
     {
         EFBroker_PurchaseOrder.ClosePurchaseOrder(pOrder);

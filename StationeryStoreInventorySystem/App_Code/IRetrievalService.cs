@@ -16,7 +16,7 @@ public interface IRetrievalService
 
     [OperationContract]
     [WebGet(UriTemplate = "/Retrieval/{id}", ResponseFormat = WebMessageFormat.Json)]
-    List<WCFRetrievalDetail> getRetrievalDetail(string id);
+    List<WCFRetrievalDetail> getRetrievalDetail(int id);
 }
 
 [DataContract]
@@ -24,10 +24,10 @@ public class WCFRetrieval
 {
     private int retrievalID;
     private int retrievedBy;
-    private DateTime retrievedDate;
+    private string retrievedDate;
     private string retrievalStatus;
 
-    public static WCFRetrieval Make(int retrievalID, int retrievedBy, DateTime retrievedDate, string retrievalStatus)
+    public static WCFRetrieval Make(int retrievalID, int retrievedBy, string retrievedDate, string retrievalStatus)
     {
         WCFRetrieval r = new WCFRetrieval();
         r.RetrievalID = retrievalID;
@@ -44,10 +44,10 @@ public class WCFRetrieval
     public int RetrievedBy { get { return retrievedBy; } set { retrievedBy = value; } }
 
     [DataMember]
-    public DateTime RetrievedDate { get { return retrievedDate; } set { retrievedDate = value; } }
+    public string RetrievedDate { get { return retrievedDate; } set { retrievedDate = value; } }
 
     [DataMember]
-    public string RetrievalStatus { get { return retrievalStatus; } set { retrievalStatus = value; } }    
+    public string RetrievalStatus { get { return retrievalStatus; } set { retrievalStatus = value; } }
 }
 
 [DataContract]

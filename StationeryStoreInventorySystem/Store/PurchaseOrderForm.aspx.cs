@@ -139,7 +139,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 }
 
             }
-            ritems.AddRange(pCtrlr.AddItems(itemCode));
+            ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
             gvPurchaseItems.DataSource = ritems;
             Session["PurchaseItems"] = ritems;
             gvPurchaseItems.DataBind();

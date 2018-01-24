@@ -20,10 +20,17 @@ public class DisbursementService : IDisbursementService
         return wcfDisbList;
     }
 
-    public List<WCFDisbursementDetail> getDisbursementDetail(string id)
+    public WCFDisbursement getDisbursement(string id)
+    {
+        WCFDisbursement wcfDisb = new WCFDisbursement();
+        DisbursementListItems d = DisbursementCotrol.DisbursementListItemsObj(id);
+        wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
+        return wcfDisb;
+    }
+
+    public List<WCFDisbursementDetail> getDisbursementDetail()
     {
         List<WCFDisbursementDetail> wcfDisbDetailList = new List<WCFDisbursementDetail>();
-        DisbursementCotrol.DisbursementListItemsObj(id);
         List<DisbursementDetailListItems> disbDetailList = DisbursementCotrol.gvDisbursementDetailPopulate();
         foreach (DisbursementDetailListItems dI in disbDetailList)
         {

@@ -162,7 +162,9 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
 
     protected void gvPurchaseDetail_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-
+        gvPurchaseDetail.EditIndex = -1;
+        //Bind data to the GridView control.
+        BindGrid();
     }
 }
 

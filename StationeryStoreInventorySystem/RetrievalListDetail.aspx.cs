@@ -54,7 +54,7 @@ public partial class RetrievalForm : System.Web.UI.Page
 
         RetrievalShortfallItemList = RetrievalControl.CheckShortfall(txtRetrievedList);
 
-        if (RetrievalShortfallItemList != null)
+        if (RetrievalShortfallItemList != null)  //if any shortfall
         {
             Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
             Response.Redirect("RetrievalShortfall.aspx");

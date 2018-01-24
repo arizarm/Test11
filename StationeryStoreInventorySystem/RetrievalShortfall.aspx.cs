@@ -20,17 +20,34 @@ public partial class RetrievalDecision : System.Web.UI.Page
 
             retrievalShortfallItemSubListOfList = new List<RetrievalShortfallItemSub>();
 
+            int j = 0;
             foreach (GridViewRow r in gvMain.Rows)
             {
                 GridView gvSub = (GridView)r.FindControl("gvSub");
                 retrievalShortfallItemSubList = RetrievalControl.DisplayRetrievalShortfallSub((r.FindControl("hdfItemCode") as HiddenField).Value);
 
+                //	Available Quantity	in main gv
+                //foreach (RetrievalShortfallItem rs in RetrievalShortfallItemList)
+                //{
+                //    rs.Qty;
+                //}
+                //
                 foreach (RetrievalShortfallItemSub i in retrievalShortfallItemSubList)
                 {
                     retrievalShortfallItemSubListOfList.Add(i);
                 }
                 gvSub.DataSource = retrievalShortfallItemSubList;
                 gvSub.DataBind();
+
+                if (gvSub.Rows.Count == 1)
+                {
+                    //string qty = RetrievalShortfallItemList[j].Qty.ToString();
+                    foreach (GridViewRow subR in gvSub.Rows)
+                    {
+                        (subR.FindControl("txtActualQuantity") as TextBox).Text = RetrievalShortfallItemList[j].Qty.ToString();
+                    }
+                }
+                j++;
             }
         }
     }
@@ -48,7 +65,7 @@ public partial class RetrievalDecision : System.Web.UI.Page
     protected void BtnGenerateDisbursementList_Click(object sender, EventArgs e)
     {
         SaveActualQty();
-        RetrievalControl.GenerateDisbursementList();
+        RetrievalControl.GenerateAccessCode();
         Response.Redirect("CollectionPointUpdate.aspx");
     }
 

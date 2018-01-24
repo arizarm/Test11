@@ -35,7 +35,7 @@ public class EFBroker_Disbursement
         Disbursement disbursement;
         using (StationeryEntities context = new StationeryEntities())
         {
-            disbursement = context.Disbursements.Where(x => x.DisbursementID == disbID).FirstOrDefault();
+            disbursement = context.Disbursements.Include("Department").Include("Disbursement_Item").Where(x => x.DisbursementID == disbID).FirstOrDefault();
         }
         return disbursement;
 
@@ -68,7 +68,7 @@ public class EFBroker_Disbursement
         using (StationeryEntities context = new StationeryEntities())
         {
             Disbursement disbursement = GetDisbursmentbyDisbID(disbID);
-            disbursement.Status = "Completed";
+            disbursement.Status = "Closed";
             context.SaveChanges();
         }
     }

@@ -9,22 +9,24 @@ using System.Web;
 public class DisbursementListItems
 {
 
-    private string disbId;
+    private int disbId;
     private string collectionDate;
     private string collectionTime;
+    private string depCode;
     private string depName;
     private string collectionPoint;
 
-    public DisbursementListItems(string disbId, string collectionDate, string collectionTime, string depName, string collectionPoint)
+    public DisbursementListItems(int disbId, string collectionDate, string collectionTime, string depCode, string depName, string collectionPoint)
     {
         this.disbId = disbId;
         this.collectionDate = collectionDate;
         this.collectionTime = collectionTime;
+        this.depCode = depCode;
         this.depName = depName;
         this.collectionPoint = collectionPoint;
     }
 
-    public string DisbId
+    public int DisbId
     {
         get
         {
@@ -60,6 +62,19 @@ public class DisbursementListItems
         set
         {
             collectionTime = value;
+        }
+    }
+
+    public string DepCode
+    {
+        get
+        {
+            return depCode;
+        }
+
+        set
+        {
+            depCode = value;
         }
     }
 

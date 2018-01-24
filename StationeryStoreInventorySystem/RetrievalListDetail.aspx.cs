@@ -9,24 +9,33 @@ public partial class RetrievalForm : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!IsPostBack) //first time 
         {
-            string retrievalId = (string)Session["RetrievalID"];
+            int retrievalId = (int)Session["RetrievalID"];
             gvRe.DataSource = RetrievalControl.DisplayRetrievalListDetail(retrievalId);
             gvRe.DataBind();
+
+            List<int> txtRetrievedList = (List<int>)Session["txtRetrievedList"];
+            if (txtRetrievedList != null) //second time load to page 
+            {
+                int i = 0;
+                foreach (GridViewRow row in gvRe.Rows)
+                {
+                    (row.FindControl("txtRetrieved") as TextBox).Text = txtRetrievedList[i].ToString();
+                    i++;
+                }
+            }
         }
     }
 
-
-   static List<int> txtRetrievedList = new List<int>();
     protected void Save_Click(object sender, EventArgs e)
     {
+        List<int> txtRetrievedList = new List<int>();
         foreach (GridViewRow row in gvRe.Rows)
         {
             txtRetrievedList.Add(Convert.ToInt32((row.FindControl("txtRetrieved") as TextBox).Text));
         }
         Session["txtRetrievedList"] = txtRetrievedList;
-        RetrievalControl.SaveRetrieved(txtRetrievedList);
     }
 
     protected void FinalizeDisbursmentList_Click(object sender, EventArgs e)
@@ -34,15 +43,25 @@ public partial class RetrievalForm : System.Web.UI.Page
         //if Quantity Requested == Quantity Retrieved > update collect
         //else  >RetrievalShortfall> update collect 
 
+        List<int> txtRetrievedList = new List<int>();
+        List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
+
         foreach (GridViewRow row in gvRe.Rows)
         {
             txtRetrievedList.Add(Convert.ToInt32((row.FindControl("txtRetrieved") as TextBox).Text));
         }
-        Session["txtRetrievedList"] = txtRetrievedList;
-        RetrievalControl.CheckShortfall(txtRetrievedList);
+        RetrievalControl.UpdateDisbursementNonShortfallItemActualQty(txtRetrievedList);
 
+        RetrievalShortfallItemList = RetrievalControl.CheckShortfall(txtRetrievedList);
 
-        //Session["RequisitionNo"] = s;
-        //Response.Redirect("CollectionPointUpdate.aspx");
+        if (RetrievalShortfallItemList != null)
+        {
+            Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
+            Response.Redirect("RetrievalShortfall.aspx");
+        }
+        else
+        {
+            Response.Redirect("CollectionPointUpdate.aspx");
+        }
     }
 }

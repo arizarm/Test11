@@ -16,7 +16,7 @@ public interface IRetrievalService
 
     [OperationContract]
     [WebGet(UriTemplate = "/Retrieval/{id}", ResponseFormat = WebMessageFormat.Json)]
-    List<WCFRetrievalDetail> getRetrievalDetail(string id);
+    List<WCFRetrievalDetail> getRetrievalDetail(int id);
 }
 
 [DataContract]

@@ -76,7 +76,7 @@
         </table>
     </asp:Panel>--%>
 
-    <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/StationeryCatalogueDetail.aspx" >&lt &lt Create New Item &gt &gt</asp:HyperLink>
+    <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx" >&lt &lt Create New Item &gt &gt</asp:HyperLink>
 
     <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width ="90%">

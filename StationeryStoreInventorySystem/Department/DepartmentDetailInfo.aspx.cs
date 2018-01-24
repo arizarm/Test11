@@ -68,6 +68,10 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string telephone = dept.DeptTelephone;
                     string fax = dept.DeptFax;
                     string dheadname = emp.EmpName;
+                    string startdate = empActingDHead.StartDate.GetValueOrDefault().Date.ToShortDateString();
+                    string enddate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
+
+                   
                     string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
 
 
@@ -79,6 +83,8 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     lblActingDHead.Text = aheadname;
                     lblDeptRep.Text = detpRname;
                     lblCollectPoint.Text = empCollectionname;
+                    lblSDate.Text = startdate;
+                    lblEDate.Text = enddate;
                 }
 
             }//ispostback

@@ -10,9 +10,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Session["empRole"] != null )
+        if(Session["emp"] != null )
         {
-            if (Session["empRole"].ToString() == "DepartmentHead")
+            Employee emp = (Employee)Session["emp"];
+            LoginUserName.Text = emp.EmpName + " | " + emp.Role;
+            if (emp.Role == "DepartmentHead")
             {
                 DepHeadMenu.Visible = true;
                 DepTempHeadMenu.Visible = false;
@@ -23,7 +25,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "DepartmentTempHead")
+            if (emp.Role == "DepartmentTempHead")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = true;
@@ -34,7 +36,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "Representative")
+            if (emp.Role == "Representative")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = false;
@@ -45,7 +47,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "Employee")
+            if (emp.Role == "Employee")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = false;
@@ -56,7 +58,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "Store Manager")
+            if (emp.Role == "Store Manager")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = false;
@@ -67,7 +69,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "Store Supervisor")
+            if (emp.Role == "Store Supervisor")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = false;
@@ -78,7 +80,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 StoreClerkMenu.Visible = false;
             }
 
-            if (Session["empRole"].ToString() == "Store Clerk")
+            if (emp.Role == "Store Clerk")
             {
                 DepHeadMenu.Visible = false;
                 DepTempHeadMenu.Visible = false;

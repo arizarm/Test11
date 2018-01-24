@@ -11,24 +11,26 @@ public partial class StockAdjustment : System.Web.UI.Page
     List<Discrepency> monthly;
     protected void Page_Load(object sender, EventArgs e)
     {
-        monthly = GenerateDiscrepancyController.GetAllPendingMonthlyDiscrepancies();
-        List<Discrepency> pending = GenerateDiscrepancyController.GetAllPendingDiscrepancies();
+        if (!IsPostBack)
+        {
+        monthly = EFBroker_Discrepancy.GetMonthlyDiscrepancyList();
+        List<Discrepency> pending = EFBroker_Discrepancy.GetPendingDiscrepancyList();
 
         Dictionary<Discrepency, Item> monthlySource = new Dictionary<Discrepency, Item>();
         Dictionary<Discrepency, Item> pendingSource = new Dictionary<Discrepency, Item>();
 
-        foreach(Discrepency d in monthly)
+        foreach (Discrepency d in monthly)
         {
-            Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
+            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
             if (Session["empRole"] != null)
             {
-                string role = (string) Session["empRole"];
-                if(Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                string role = (string)Session["empRole"];
+                if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
                 {
                     monthlySource.Add(d, i);
                 }
-                else if(Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
                 {
                     monthlySource.Add(d, i);
                 }
@@ -37,9 +39,9 @@ public partial class StockAdjustment : System.Web.UI.Page
         GridView1.DataSource = monthlySource;
         GridView1.DataBind();
 
-        foreach(Discrepency d in pending)
+        foreach (Discrepency d in pending)
         {
-            Item i = GenerateDiscrepancyController.GetItemByItemCode(d.ItemCode);
+            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
             decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
             if (Session["empRole"] != null)
             {
@@ -59,6 +61,8 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
         GridView2.DataSource = pendingSource;
         GridView2.DataBind();
+
+        }
     }
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -92,21 +96,25 @@ public partial class StockAdjustment : System.Web.UI.Page
 
     private void ProcessApprovalAndRejections(GridView gdv)
     {
-        Dictionary<KeyValuePair<Discrepency, Item>, bool> summary = new Dictionary<KeyValuePair<Discrepency, Item>, bool>();
+        Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
         foreach (GridViewRow row in gdv.Rows)
         {
-            if (row.RowType == DataControlRowType.DataRow)
-            {
-                KeyValuePair<Discrepency, Item> kvp = (KeyValuePair<Discrepency, Item>)row.DataItem;
-                RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
 
-                if(rbl.SelectedIndex == 0)
+            if(rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
+            {
+                string itemCode = (row.FindControl("lblItemCode") as Label).Text;
+                int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
+                Item i = EFBroker_Item.GetItembyItemCode(itemCode);
+                Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById(discID);
+                KeyValuePair<Discrepency, Item> kvp = new KeyValuePair<Discrepency, Item>(d, i);
+                if (rbl.SelectedIndex == 0)
                 {
-                    summary.Add(kvp, true);
+                    summary.Add(kvp, "Approved");
                 }
-                else if(rbl.SelectedIndex == 1)
+                else if (rbl.SelectedIndex == 1)
                 {
-                    summary.Add(kvp, false);
+                    summary.Add(kvp, "Rejected");
                 }
             }
         }

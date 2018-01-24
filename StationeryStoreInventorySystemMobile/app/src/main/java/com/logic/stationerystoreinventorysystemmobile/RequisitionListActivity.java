@@ -31,7 +31,7 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
             @Override
             protected void onPostExecute(List<RequisitionListItem> result) {
                 lv.setAdapter(sa = new SimpleAdapter
-                        (RequisitionListActivity.this, result, R.layout.row, new String[]{"EmployeeName", "Status","Date"},
+                        (RequisitionListActivity.this, result, R.layout.row, new String[]{"Date", "EmployeeName","RequisitionNo"},
                                 new int[]{R.id.dateTV, R.id.empTV,R.id.reqTV}));
             }
         }.execute();
@@ -65,7 +65,9 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
         try {
             RequisitionListItem b = (RequisitionListItem) av.getAdapter().getItem(position);
             Intent intent = new Intent(this, RequisitionDetailActivity.class);
-            intent.putExtra("RequisitionNo", b.get("Date").toString());
+            intent.putExtra("RequisitionNo", b.get("RequisitionNo").toString());
+            intent.putExtra("Date", b.get("Date").toString());
+            intent.putExtra("Requestor", b.get("EmployeeName").toString());
             startActivity(intent);
         }catch (Exception e){
             Log.e("tag tag",e.toString() );

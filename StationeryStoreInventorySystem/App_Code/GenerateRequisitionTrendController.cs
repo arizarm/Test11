@@ -12,22 +12,19 @@ public class GenerateRequisitionTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        EFBroker_Category EFBC = new EFBroker_Category();
-        List<string> allCategoryNames = EFBC.GetAllCategoryNames();
+        List<string> allCategoryNames = EFBroker_Category.GetAllCategoryNames();
         return allCategoryNames;
     }
 
     public List<string> GetAllDepartmentNames()
     {
-        EFBroker_Department EFBD = new EFBroker_Department();
-        List<string> allDepts = EFBD.GetAllDepartmentNames();
+        List<string> allDepts = EFBroker_Department.GetAllDepartmentNames();
         return allDepts;
     }
 
     public List<DateTime?> GetAllRequisitionMonths()
     {
-        EFBroker_Requisition EFBR = new EFBroker_Requisition();
-        List<DateTime?> allMonths = EFBR.GetAllFinalisedRequisitionMonths();
+        List<DateTime?> allMonths = EFBroker_Requisition.GetAllFinalisedRequisitionMonths();
         return allMonths;
     }
 
@@ -108,37 +105,15 @@ public class GenerateRequisitionTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities SE = new StationeryEntities();
-
-            var TotalR = from ri in SE.Requisition_Item
-                         from r in SE.Requisitions
-                         from i in SE.Items
-                         from d in SE.Departments
-                         from e in SE.Employees
-                         from c in SE.Categories
-                         where ri.ItemCode == i.ItemCode
-                         where ri.RequisitionID == r.RequisitionID
-                         where r.ApprovedBy == e.EmpID
-                         where e.DeptCode == d.DeptCode
-                         where d.DeptName == dept
-                         where i.CategoryID == c.CategoryID
-                         where c.CategoryName == cat
-                         where r.RequestDate >= startDate
-                         where r.RequestDate <= endDate
-                         select ri.RequestedQty;
-
-            int? requisitionsForGivenMonth = TotalR.Sum();
+        int? requisitionsForGivenMonth = EFBroker_Report.GetRequisitionsForGivenMonth(startDate, endDate, dept, cat);
 
             int returnedQ = 0;
             if (requisitionsForGivenMonth > 0)
                 returnedQ = (int)requisitionsForGivenMonth;
-
-            ts.Complete();
             return returnedQ;
-        }
+        
     }
+    
 
     //getTotalRequisitionByCategoryGivenMonth() needs this function
     protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)

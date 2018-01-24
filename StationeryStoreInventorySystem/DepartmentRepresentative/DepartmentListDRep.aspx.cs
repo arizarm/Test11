@@ -7,85 +7,109 @@ using System.Web.UI.WebControls;
 
 public partial class DepartmentListDRep : System.Web.UI.Page
 {
-    static string dcode = "BDTD";
+
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Session["deptcode"] = dcode;
+
         if (!IsPostBack)
         {
-            if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+            if (Session["emp"] != null)
             {
-                Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-                Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                string aheadname = "No Acting Head";
-                string detpRname = empDRep.EmpName;
-                string dname = dept.DeptName;
-                string contactname = dept.DeptContactName;
-                string telephone = dept.DeptTelephone;
-                string fax = dept.DeptFax;
-                string dheadname = emp.EmpName;
+                Employee empSession = (Employee)Session["emp"];
+                string dcode = empSession.DeptCode;
+                string empRole = empSession.Role;
+
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                {
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    string aheadname = "No Acting Head";
+                    string detpRname = empDRep.EmpName;
+                    string dname = dept.DeptName;
+                    string contactname = dept.DeptContactName;
+                    string telephone = dept.DeptTelephone;
+                    string fax = dept.DeptFax;
+                    string dheadname = emp.EmpName;
 
 
 
-                lblDeptName.Text = dname;
-                lblContactName.Text = contactname;
-                lblPhone.Text = telephone;
-                lblFax.Text = fax;
-                lblHeadname.Text = dheadname;
-                lblActingDHead.Text = aheadname;
-                lblActingDHead.ForeColor = System.Drawing.Color.Red;
-                lblDeptRep.Text = detpRname;
-            }
+                    lblDeptName.Text = dname;
+                    lblContactName.Text = contactname;
+                    lblPhone.Text = telephone;
+                    lblFax.Text = fax;
+                    lblHeadname.Text = dheadname;
+                    lblActingDHead.Text = aheadname;
+                    lblActingDHead.ForeColor = System.Drawing.Color.Red;
+                    lblDeptRep.Text = detpRname;
+                }
+                else
+                {
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    string aheadname = empActingDHead.EmpName;
+                    string detpRname = empDRep.EmpName;
+                    string dname = dept.DeptName;
+                    string contactname = dept.DeptContactName;
+                    string telephone = dept.DeptTelephone;
+                    string fax = dept.DeptFax;
+                    string dheadname = emp.EmpName;
+
+
+
+                    lblDeptName.Text = dname;
+                    lblContactName.Text = contactname;
+                    lblPhone.Text = telephone;
+                    lblFax.Text = fax;
+                    lblHeadname.Text = dheadname;
+                    lblActingDHead.Text = aheadname;
+                    lblDeptRep.Text = detpRname;
+                }
+                //UpdateCollectionPoint
+                string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                DropDownListCollectionPoint.DataSource = EFBroker_DeptEmployee.GetCollectionPointList();
+                DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
+                DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
+                DropDownListCollectionPoint.DataBind();
+                DropDownListCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
+
+            }//ispostback
             else
             {
-                Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
-                Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
-                Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                string aheadname = empActingDHead.EmpName;
-                string detpRname = empDRep.EmpName;
-                string dname = dept.DeptName;
-                string contactname = dept.DeptContactName;
-                string telephone = dept.DeptTelephone;
-                string fax = dept.DeptFax;
-                string dheadname = emp.EmpName;
-
-
-
-                lblDeptName.Text = dname;
-                lblContactName.Text = contactname;
-                lblPhone.Text = telephone;
-                lblFax.Text = fax;
-                lblHeadname.Text = dheadname;
-                lblActingDHead.Text = aheadname;
-                lblDeptRep.Text = detpRname;
+                Utility.logout();
             }
-            //UpdateCollectionPoint
-            string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
-            DropDownListCollectionPoint.DataSource = DeptBusinessLogic.GetCollectionPointList();
-            DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
-            DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
-            DropDownListCollectionPoint.DataBind();
-            DropDownListCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
         }
-
     }
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
 
-        Session["deptcode"] = dcode;
-        int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-        DeptBusinessLogic.UpdateCollectionPoint(dcode, c);
+        if (Session["emp"] != null)
+        {
+            Employee empSession = (Employee)Session["emp"];
+            string dcode = empSession.DeptCode;
+            string empRole = empSession.Role;
+            int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
+            EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
-        Response.Redirect("DepartmentDetailInfo.aspx");
+            Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Update!!");
 
+        }//ispostback
+        else
+        {
+            Utility.logout();
+        }
 
     }
 
-
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+       
+        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+    }
 
 
 }

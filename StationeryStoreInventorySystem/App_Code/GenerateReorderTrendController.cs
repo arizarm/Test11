@@ -12,15 +12,13 @@ public class GenerateReorderTrendController
 {
     public List<string> GetAllCategoryNames()
     {
-        EFBroker_Category EFBC = new EFBroker_Category();
-        List<string> allCats = EFBC.GetAllCategoryNames();
+        List<string> allCats = EFBroker_Category.GetAllCategoryNames();
         return allCats;
     }
 
     public List<string> GetAllSupplierNames()
     {
-        EFBroker_Supplier EFBS = new EFBroker_Supplier();
-        List<string> allSupls = EFBS.ListAllSuppliers().Select(c => c.SupplierName).ToList();
+        List<string> allSupls = EFBroker_Supplier.ListAllSuppliers().Select(c => c.SupplierName).ToList();
         return allSupls;
     }
 
@@ -30,34 +28,13 @@ public class GenerateReorderTrendController
         DateTime startDate = startEndDate[0];
         DateTime endDate = startEndDate[1];
 
-        using (TransactionScope ts = new TransactionScope())
-        {
-            StationeryEntities se = new StationeryEntities();
-
-            var totalR = from ip in se.Item_PurchaseOrder
-                         from po in se.PurchaseOrders
-                         from c in se.Categories
-                         from i in se.Items
-                         from s in se.Suppliers
-                         where ip.PurchaseOrderID == po.PurchaseOrderID
-                         where ip.ItemCode == i.ItemCode
-                         where po.OrderDate >= startDate
-                         where po.OrderDate <= endDate
-                         where po.SupplierCode == s.SupplierCode
-                         where i.CategoryID == c.CategoryID
-                         where c.CategoryName == cat
-                         where s.SupplierName == supplier
-                         select ip.OrderQty;
-
-            int? reorderForGivenMonth = totalR.Sum();
+        int? reorderForGivenMonth = EFBroker_Report.GetReordersForGivenMonth(startDate, endDate, supplier, cat);
 
             int returnedQ = 0;
             if (reorderForGivenMonth > 0)
                 returnedQ = (int)reorderForGivenMonth;
 
-            ts.Complete();
-            return returnedQ;
-        }
+            return returnedQ;        
     }
 
     protected List<DateTime> GetStartDateEndDateForGivenMonth(string month)

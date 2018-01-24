@@ -9,15 +9,19 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if((bool)Session["monthly"] == true)
+        if (Session["monthly"] != null)
         {
-            Session["discrepancyList"] = new Dictionary<Item, String>();
+            if ((bool)Session["monthly"] == true)
+            {
+                Session["discrepancyList"] = new Dictionary<Item, String>();
+            }
         }
+
         Session["monthly"] = false;
         string itemCode = Request.QueryString["itemCode"];
         if (!ValidatorUtil.isEmpty(itemCode))
         {
-            Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
+            Item item = EFBroker_Item.GetItembyItemCode(itemCode);
 
             if (item != null)
             {
@@ -51,26 +55,25 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
             discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
         }
 
-        //bool alreadyInDiscrepancyList = false;
-        //foreach (KeyValuePair<Item, String> kvp in discrepancies)
-        //{
-        //    if (kvp.Key.ItemCode == lblItemCode.Text)
-        //    {
-        //        alreadyInDiscrepancyList = true;
-        //    }
-        //}
+        bool alreadyInDiscrepancyList = false;
+        KeyValuePair<Item, String> toBeReplaced = new KeyValuePair<Item, String>();
+        foreach (KeyValuePair<Item, String> kvp in discrepancies)
+        {
+            if (kvp.Key.ItemCode == lblItemCode.Text)
+            {
+                alreadyInDiscrepancyList = true;
+                toBeReplaced = kvp;
+            }
+        }
 
-        Item item = GenerateDiscrepancyController.GetItemByItemCode(lblItemCode.Text);
+        Item item = EFBroker_Item.GetItembyItemCode(lblItemCode.Text);
 
         int adjustment = 0;
         if (Int32.TryParse(txtAdj.Text, out adjustment))
         {
-            if (adjustment != 0)
-            {
-                //int actualQuantity = (int)item.BalanceQty + adjustment;
-
-                //if (alreadyInDiscrepancyList)
-                //{
+            //if (adjustment != 0)
+            //{
+                int actualQuantity = (int)item.BalanceQty + adjustment;
                 string adjStr = "";
 
                 if (adjustment > 0)
@@ -81,19 +84,20 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
                 {
                     adjStr = adjustment.ToString();
                 }
-                discrepancies[item] = adjStr.ToString();
-                //}
-                //else
-                //{
-                //    discrepancies.Add(item, actualQuantity.ToString());
-                //}
+
+                if (alreadyInDiscrepancyList)
+                {
+                    discrepancies.Remove(toBeReplaced.Key);
+                    //discrepancies[item] = adjStr;
+                }
+                discrepancies.Add(item, adjStr);
                 Session["discrepancyList"] = discrepancies;
                 Response.Redirect("~/GenerateDiscrepancyV2.aspx");
-            }
-            else
-            {
-                Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
-            }
+            //}
+            //else
+            //{
+            //    Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
+            //}
         }
         else
         {

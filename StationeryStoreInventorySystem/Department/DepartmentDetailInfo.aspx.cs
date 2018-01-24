@@ -13,17 +13,26 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
         if (!IsPostBack)
         {
+            string s = Request.QueryString["SuccessMsg"];
+            lblMessage.Text = s;
             if (Session["emp"] != null)
             {
                 Employee empSession = (Employee)Session["emp"];
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
+                string tempHead = empSession.IsTempHead;
 
-                if (DeptBusinessLogic.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                if(empRole=="Employee" && tempHead == "N")
                 {
-                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
+                    btnUpdate.Visible = false;
+                    
+                }
+
+                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                {
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
 
                     string aheadname = "No Acting Head";
                     string detpRname = empDRep.EmpName;
@@ -32,7 +41,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string telephone = dept.DeptTelephone;
                     string fax = dept.DeptFax;
                     string dheadname = emp.EmpName;
-                    string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+                    string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
 
 
                     lblDeptName.Text = dname;
@@ -45,14 +54,15 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     lblActingDHead.ForeColor = System.Drawing.Color.Red;
                     lblDeptRep.Text = detpRname;
                     lblCollectPoint.Text = empCollectionname;
+                    
 
                 }
                 else
                 {
-                    Employee empActingDHead = DeptBusinessLogic.GetEmployeeListForActingDHeadSelected(dcode);
-                    Employee empDRep = DeptBusinessLogic.GetEmployeeListForDRepSelected(dcode);
-                    Department dept = DeptBusinessLogic.GetDepartByDepCode(dcode);
-                    Employee emp = DeptBusinessLogic.GetDHeadByDeptCode(dcode);
+                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
 
                     string aheadname = empActingDHead.EmpName;
                     string detpRname = empDRep.EmpName;
@@ -61,7 +71,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string telephone = dept.DeptTelephone;
                     string fax = dept.DeptFax;
                     string dheadname = emp.EmpName;
-                    string empCollectionname = DeptBusinessLogic.GetDepartmentForCollectionPointSelected(dcode);
+                    string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
 
 
                     lblDeptName.Text = dname;

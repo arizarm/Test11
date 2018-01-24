@@ -284,7 +284,7 @@ public class RetrievalControl
 
     public static List<Retrieval> DisplayRetrievalList()
     {
-        return context.Retrievals.ToList();
+        return EFBroker_Disbursement.GetAllRetrievalList();
     }
 
     public static List<Retrieval> DisplaySearch(string searchWord)

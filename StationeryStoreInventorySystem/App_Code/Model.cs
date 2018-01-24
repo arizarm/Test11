@@ -48,6 +48,7 @@ public partial class Department
     {
         this.Disbursements = new HashSet<Disbursement>();
         this.Employees = new HashSet<Employee>();
+        this.Requisitions = new HashSet<Requisition>();
     }
 
     public string DeptCode { get; set; }
@@ -62,6 +63,8 @@ public partial class Department
     public virtual ICollection<Disbursement> Disbursements { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Employee> Employees { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Requisition> Requisitions { get; set; }
 }
 
 public partial class Disbursement
@@ -262,12 +265,14 @@ public partial class Requisition
     public Nullable<System.DateTime> RequestDate { get; set; }
     public string Status { get; set; }
     public string Remarks { get; set; }
+    public string DeptCode { get; set; }
 
     public virtual Disbursement Disbursement { get; set; }
     public virtual Employee Employee { get; set; }
     public virtual Employee Employee1 { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Requisition_Item> Requisition_Item { get; set; }
+    public virtual Department Department { get; set; }
 }
 
 public partial class Requisition_Item

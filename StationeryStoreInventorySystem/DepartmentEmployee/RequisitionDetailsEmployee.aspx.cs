@@ -35,10 +35,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
                 Add.Visible = false;
                 Update.Visible = false;
 
-                if (r.Remarks != null || r.Remarks!="" || r.Remarks!=" ")
+                if (!String.IsNullOrWhiteSpace(r.Remarks))
                     Label8.Text = r.Remarks.ToString();
-                else
-                    Label8.Text = "-";
             }
 
             DropDownList2.DataSource = RequisitionControl.getItem();

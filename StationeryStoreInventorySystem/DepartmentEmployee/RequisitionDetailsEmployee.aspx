@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionDetailsEmployee.aspx.cs" Inherits="RequisitionDetails" MaintainScrollPositionOnPostback="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionDetailRep.aspx.cs" Inherits="RequisitionDetails" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="RequisitionListDepartment.aspx"><-Back</a>
+    <a href="RequisitionListDepEmp.aspx"><-Back</a>
     <br />
     <h2>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>

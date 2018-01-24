@@ -14,16 +14,16 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-               
+
                 //Dep Temp Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending",emp.DeptCode);
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
                 GridView1.DataBind();
             }
             else
             {
                 Utility.logout();
             }
-        }      
+        }
     }
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,8 +34,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
             string selectedStatus = DropDownList1.SelectedValue;
 
-        GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
-        GridView1.DataBind();
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
+            GridView1.DataBind();
         }
         else
         {
@@ -46,19 +46,19 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
 
-        string searchWord = SearchBox.Text;
+        //  string searchWord = SearchBox.Text;
 
-        if (SearchBox.Text == String.Empty)
-        {
-            ClientScript.RegisterStartupScript(Page.GetType(),
-      "MessageBox",
-      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-        }
-        else
-        {
-            GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView1.DataBind();
-        }
+        //  if (SearchBox.Text == String.Empty)
+        //  {
+        //      ClientScript.RegisterStartupScript(Page.GetType(),
+        //"MessageBox",
+        //"<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+        //  }
+        //  else
+        //  {
+        //      GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+        //      GridView1.DataBind();
+        //  }
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)

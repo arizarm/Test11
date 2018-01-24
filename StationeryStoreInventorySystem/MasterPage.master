@@ -59,6 +59,7 @@
                     <asp:HyperLink ID="HyperLink12" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
                 </div>
 
+
                 <!-- Menu For Store Manager -->
                 <div class="left-col" id="StoreManMenu" runat="server">
                     <asp:HyperLink ID="ReorderTrendManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           

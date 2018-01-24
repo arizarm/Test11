@@ -6,6 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for RetrievalShortfallItemSub
 /// </summary>
+[Serializable]
 public class RetrievalShortfallItemSub
 {
     DateTime requestDate;

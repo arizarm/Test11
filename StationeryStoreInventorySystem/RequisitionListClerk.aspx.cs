@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListClerk : System.Web.UI.Page
 {
+    RetrievalControl reqCon = new RetrievalControl();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -95,9 +97,9 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
                 reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
             }
         }
-
-        Session["RetrievalID"] = RetrievalControl.AddRetrieval();
-        RetrievalControl.AddDisbursement(reqNo);
+        
+        Session["RetrievalID"] = reqCon.AddRetrieval();
+        reqCon.AddDisbursement(reqNo);
 
         //Response.Redirect("RetrievalList.aspx");
         Response.Redirect("RetrievalListDetail.aspx");
@@ -110,5 +112,4 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         Session["RequisitionNo"] = s;
         Response.Redirect("RequisitionDetails.aspx");
     }
-
 }

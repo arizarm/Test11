@@ -20,10 +20,10 @@ public class RetrievalService : IRetrievalService
         return wcfDisbList;
     }
 
-    public List<WCFRetrievalDetail> getRetrievalDetail(int id)
+    public List<WCFRetrievalDetail> getRetrievalDetail(string id)
     {
         List<WCFRetrievalDetail> wcfRetDetailList = new List<WCFRetrievalDetail>();
-        List<RetrievalListDetailItem> retbDetailList = RetrievalControl.DisplayRetrievalListDetail(id);
+        List<RetrievalListDetailItem> retbDetailList = RetrievalControl.DisplayRetrievalListDetail(Convert.ToInt32(id));
         foreach (RetrievalListDetailItem rD in retbDetailList)
         {
             wcfRetDetailList.Add(WCFRetrievalDetail.Make(rD.Bin, rD.Description, rD.TotalRequestedQty, rD.ItemCode));

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StationeryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Team11StationeryStoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -489,7 +489,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StationeryModelStoreContainer">
+        <EntityContainer Name="Team11StationeryStoreDBModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CollectionPoint" EntityType="Self.CollectionPoint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -607,10 +607,11 @@
             <End Role="Requisition" EntitySet="Requisition" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StationeryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Team11StationeryStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -641,7 +642,7 @@
           <NavigationProperty Name="CollectionPoint" Relationship="Self.FK__Departmen__Colle__1273C1CD" FromRole="Department" ToRole="CollectionPoint" />
           <NavigationProperty Name="Disbursements" Relationship="Self.FK__Disbursem__DeptC__267ABA7A" FromRole="Department" ToRole="Disbursement" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__DeptCo__15502E78" FromRole="Department" ToRole="Employee" />
-          <NavigationProperty Name="Requisitions" Relationship="StationeryModel.FK_Requisition_Department" FromRole="Department" ToRole="Requisition" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.FK_Requisition_Department" FromRole="Department" ToRole="Requisition" />
         </EntityType>
         <EntityType Name="Disbursement">
           <Key>
@@ -668,9 +669,9 @@
           <Property Name="ItemCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ActualQty" Type="Int32" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalRequestedQty" Type="Int32" />
           <NavigationProperty Name="Disbursement" Relationship="Self.FK__Disbursem__Disbu__29572725" FromRole="Disbursement_Item" ToRole="Disbursement" />
           <NavigationProperty Name="Item" Relationship="Self.FK__Disbursem__ItemC__2A4B4B5E" FromRole="Disbursement_Item" ToRole="Item" />
-          <Property Name="TotalRequestedQty" Type="Int32" />
         </EntityType>
         <EntityType Name="Discrepency">
           <Key>
@@ -723,14 +724,14 @@
           <Property Name="UnitOfMeasure" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Bin" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BalanceQty" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="Self.FK__Item__CategoryID__1A14E395" FromRole="Item" ToRole="Category" />
           <NavigationProperty Name="Disbursement_Item" Relationship="Self.FK__Disbursem__ItemC__2A4B4B5E" FromRole="Item" ToRole="Disbursement_Item" />
           <NavigationProperty Name="Discrepencies" Relationship="Self.FK__Discrepen__ItemC__3E52440B" FromRole="Item" ToRole="Discrepency" />
           <NavigationProperty Name="Item_PurchaseOrder" Relationship="Self.FK__Item_Purc__ItemC__3B75D760" FromRole="Item" ToRole="Item_PurchaseOrder" />
+          <NavigationProperty Name="PriceLists" Relationship="Self.FK__PriceList__ItemC__4AB81AF0" FromRole="Item" ToRole="PriceList" />
           <NavigationProperty Name="Requisition_Item" Relationship="Self.FK__Requisiti__ItemC__32E0915F" FromRole="Item" ToRole="Requisition_Item" />
           <NavigationProperty Name="StockCards" Relationship="Self.FK__StockCard__ItemC__4316F928" FromRole="Item" ToRole="StockCard" />
-          <Property Name="BalanceQty" Type="Int32" />
-          <NavigationProperty Name="PriceLists" Relationship="StationeryModel.FK__PriceList__ItemC__4AB81AF0" FromRole="Item" ToRole="PriceList" />
         </EntityType>
         <EntityType Name="Item_PurchaseOrder">
           <Key>
@@ -743,6 +744,20 @@
           <Property Name="Amount" Type="Decimal" Precision="6" Scale="2" />
           <NavigationProperty Name="Item" Relationship="Self.FK__Item_Purc__ItemC__3B75D760" FromRole="Item_PurchaseOrder" ToRole="Item" />
           <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__Item_Purc__Purch__3A81B327" FromRole="Item_PurchaseOrder" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="PriceList">
+          <Key>
+            <PropertyRef Name="SupplierCode" />
+            <PropertyRef Name="ItemCode" />
+            <PropertyRef Name="TenderYear" />
+          </Key>
+          <Property Name="SupplierCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="SupplierRank" Type="Int32" />
+          <Property Name="TenderYear" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__PriceList__ItemC__4AB81AF0" FromRole="PriceList" ToRole="Item" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__PriceList__Suppl__49C3F6B7" FromRole="PriceList" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -775,12 +790,12 @@
           <Property Name="RequestDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeptCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Requisition_Department" FromRole="Requisition" ToRole="Department" />
           <NavigationProperty Name="Disbursement" Relationship="Self.FK__Requisiti__Disbu__2D27B809" FromRole="Requisition" ToRole="Disbursement" />
           <NavigationProperty Name="Employee" Relationship="Self.FK__Requisiti__Appro__2F10007B" FromRole="Requisition" ToRole="Employee" />
           <NavigationProperty Name="Employee1" Relationship="Self.FK__Requisiti__Reque__2E1BDC42" FromRole="Requisition" ToRole="Employee" />
           <NavigationProperty Name="Requisition_Item" Relationship="Self.FK__Requisiti__Requi__31EC6D26" FromRole="Requisition" ToRole="Requisition_Item" />
-          <Property Name="DeptCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Department" Relationship="StationeryModel.FK_Requisition_Department" FromRole="Requisition" ToRole="Department" />
         </EntityType>
         <EntityType Name="Requisition_Item">
           <Key>
@@ -828,8 +843,8 @@
           <Property Name="SupplierAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SupplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ActiveStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="PriceLists" Relationship="Self.FK__PriceList__Suppl__49C3F6B7" FromRole="Supplier" ToRole="PriceList" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Suppl__35BCFE0A" FromRole="Supplier" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="PriceLists" Relationship="StationeryModel.FK__PriceList__Suppl__49C3F6B7" FromRole="Supplier" ToRole="PriceList" />
         </EntityType>
         <Association Name="FK__Item__CategoryID__1A14E395">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -875,6 +890,18 @@
               <PropertyRef Name="DeptCode" />
             </Principal>
             <Dependent Role="Employee">
+              <PropertyRef Name="DeptCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requisition_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DeptCode" />
+            </Principal>
+            <Dependent Role="Requisition">
               <PropertyRef Name="DeptCode" />
             </Dependent>
           </ReferentialConstraint>
@@ -1035,6 +1062,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PriceList__ItemC__4AB81AF0">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemCode" />
+            </Principal>
+            <Dependent Role="PriceList">
+              <PropertyRef Name="ItemCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Requisiti__ItemC__32E0915F">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Requisition_Item" Type="Self.Requisition_Item" Multiplicity="*" />
@@ -1068,6 +1107,18 @@
             </Principal>
             <Dependent Role="Item_PurchaseOrder">
               <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PriceList__Suppl__49C3F6B7">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierCode" />
+            </Principal>
+            <Dependent Role="PriceList">
+              <PropertyRef Name="SupplierCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1105,6 +1156,7 @@
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Item_PurchaseOrder" EntityType="Self.Item_PurchaseOrder" />
+          <EntitySet Name="PriceLists" EntityType="Self.PriceList" />
           <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
           <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
           <EntitySet Name="Requisition_Item" EntityType="Self.Requisition_Item" />
@@ -1126,6 +1178,10 @@
           <AssociationSet Name="FK__Employee__DeptCo__15502E78" Association="Self.FK__Employee__DeptCo__15502E78">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requisition_Department" Association="Self.FK_Requisition_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Requisition" EntitySet="Requisitions" />
           </AssociationSet>
           <AssociationSet Name="FK__Disbursem__Disbu__29572725" Association="Self.FK__Disbursem__Disbu__29572725">
             <End Role="Disbursement" EntitySet="Disbursements" />
@@ -1179,6 +1235,10 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="Item_PurchaseOrder" EntitySet="Item_PurchaseOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK__PriceList__ItemC__4AB81AF0" Association="Self.FK__PriceList__ItemC__4AB81AF0">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="PriceList" EntitySet="PriceLists" />
+          </AssociationSet>
           <AssociationSet Name="FK__Requisiti__ItemC__32E0915F" Association="Self.FK__Requisiti__ItemC__32E0915F">
             <End Role="Item" EntitySet="Items" />
             <End Role="Requisition_Item" EntitySet="Requisition_Item" />
@@ -1191,6 +1251,10 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
             <End Role="Item_PurchaseOrder" EntitySet="Item_PurchaseOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK__PriceList__Suppl__49C3F6B7" Association="Self.FK__PriceList__Suppl__49C3F6B7">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PriceList" EntitySet="PriceLists" />
+          </AssociationSet>
           <AssociationSet Name="FK__PurchaseO__Suppl__35BCFE0A" Association="Self.FK__PurchaseO__Suppl__35BCFE0A">
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -1199,78 +1263,15 @@
             <End Role="Requisition" EntitySet="Requisitions" />
             <End Role="Requisition_Item" EntitySet="Requisition_Item" />
           </AssociationSet>
-          <EntitySet Name="PriceLists" EntityType="StationeryModel.PriceList" />
-          <AssociationSet Name="FK__PriceList__ItemC__4AB81AF0" Association="StationeryModel.FK__PriceList__ItemC__4AB81AF0">
-            <End Role="Item" EntitySet="Items" />
-            <End Role="PriceList" EntitySet="PriceLists" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PriceList__Suppl__49C3F6B7" Association="StationeryModel.FK__PriceList__Suppl__49C3F6B7">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="PriceList" EntitySet="PriceLists" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Requisition_Department" Association="StationeryModel.FK_Requisition_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Requisition" EntitySet="Requisitions" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="PriceList">
-          <Key>
-            <PropertyRef Name="SupplierCode" />
-            <PropertyRef Name="ItemCode" />
-            <PropertyRef Name="TenderYear" />
-          </Key>
-          <Property Name="SupplierCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="SupplierRank" Type="Int32" />
-          <Property Name="TenderYear" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Item" Relationship="StationeryModel.FK__PriceList__ItemC__4AB81AF0" FromRole="PriceList" ToRole="Item" />
-          <NavigationProperty Name="Supplier" Relationship="StationeryModel.FK__PriceList__Suppl__49C3F6B7" FromRole="PriceList" ToRole="Supplier" />
-        </EntityType>
-        <Association Name="FK__PriceList__ItemC__4AB81AF0">
-          <End Type="StationeryModel.Item" Role="Item" Multiplicity="1" />
-          <End Type="StationeryModel.PriceList" Role="PriceList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="ItemCode" />
-            </Principal>
-            <Dependent Role="PriceList">
-              <PropertyRef Name="ItemCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PriceList__Suppl__49C3F6B7">
-          <End Type="StationeryModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="StationeryModel.PriceList" Role="PriceList" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierCode" />
-            </Principal>
-            <Dependent Role="PriceList">
-              <PropertyRef Name="SupplierCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Requisition_Department">
-          <End Type="StationeryModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="StationeryModel.Requisition" Role="Requisition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DeptCode" />
-            </Principal>
-            <Dependent Role="Requisition">
-              <PropertyRef Name="DeptCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StationeryModelStoreContainer" CdmEntityContainer="StationeryEntities">
+        <EntityContainerMapping StorageEntityContainer="Team11StationeryStoreDBModelStoreContainer" CdmEntityContainer="StationeryEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="StationeryModel.Category">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -1278,7 +1279,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionPoints">
-            <EntityTypeMapping TypeName="StationeryModel.CollectionPoint">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.CollectionPoint">
               <MappingFragment StoreEntitySet="CollectionPoint">
                 <ScalarProperty Name="CollectionLocationID" ColumnName="CollectionLocationID" />
                 <ScalarProperty Name="CollectionPoint1" ColumnName="CollectionPoint" />
@@ -1287,7 +1288,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="StationeryModel.Department">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
                 <ScalarProperty Name="CollectionLocationID" ColumnName="CollectionLocationID" />
@@ -1299,7 +1300,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Disbursements">
-            <EntityTypeMapping TypeName="StationeryModel.Disbursement">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Disbursement">
               <MappingFragment StoreEntitySet="Disbursement">
                 <ScalarProperty Name="DisbursementID" ColumnName="DisbursementID" />
                 <ScalarProperty Name="RetrievalID" ColumnName="RetrievalID" />
@@ -1312,18 +1313,18 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Disbursement_Item">
-            <EntityTypeMapping TypeName="StationeryModel.Disbursement_Item">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Disbursement_Item">
               <MappingFragment StoreEntitySet="Disbursement_Item">
-                <ScalarProperty Name="TotalRequestedQty" ColumnName="TotalRequestedQty" />
                 <ScalarProperty Name="DisbursementID" ColumnName="DisbursementID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ActualQty" ColumnName="ActualQty" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="TotalRequestedQty" ColumnName="TotalRequestedQty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Discrepencies">
-            <EntityTypeMapping TypeName="StationeryModel.Discrepency">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Discrepency">
               <MappingFragment StoreEntitySet="Discrepency">
                 <ScalarProperty Name="DiscrepencyID" ColumnName="DiscrepencyID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
@@ -1338,7 +1339,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="StationeryModel.Employee">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
@@ -1353,9 +1354,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="StationeryModel.Item">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Item">
               <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1364,11 +1364,12 @@
                 <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
                 <ScalarProperty Name="Bin" ColumnName="Bin" />
                 <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Item_PurchaseOrder">
-            <EntityTypeMapping TypeName="StationeryModel.Item_PurchaseOrder">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Item_PurchaseOrder">
               <MappingFragment StoreEntitySet="Item_PurchaseOrder">
                 <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
@@ -1377,8 +1378,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PriceLists">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.PriceList">
+              <MappingFragment StoreEntitySet="PriceList">
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="SupplierRank" ColumnName="SupplierRank" />
+                <ScalarProperty Name="TenderYear" ColumnName="TenderYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseOrders">
-            <EntityTypeMapping TypeName="StationeryModel.PurchaseOrder">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrder">
                 <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
@@ -1395,9 +1407,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Requisitions">
-            <EntityTypeMapping TypeName="StationeryModel.Requisition">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Requisition">
               <MappingFragment StoreEntitySet="Requisition">
-                <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
                 <ScalarProperty Name="RequisitionID" ColumnName="RequisitionID" />
                 <ScalarProperty Name="DisbursementID" ColumnName="DisbursementID" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
@@ -1405,11 +1416,12 @@
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Requisition_Item">
-            <EntityTypeMapping TypeName="StationeryModel.Requisition_Item">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Requisition_Item">
               <MappingFragment StoreEntitySet="Requisition_Item">
                 <ScalarProperty Name="RequisitionID" ColumnName="RequisitionID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
@@ -1418,7 +1430,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Retrievals">
-            <EntityTypeMapping TypeName="StationeryModel.Retrieval">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Retrieval">
               <MappingFragment StoreEntitySet="Retrieval">
                 <ScalarProperty Name="RetrievalID" ColumnName="RetrievalID" />
                 <ScalarProperty Name="RetrievedBy" ColumnName="RetrievedBy" />
@@ -1428,7 +1440,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StockCards">
-            <EntityTypeMapping TypeName="StationeryModel.StockCard">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.StockCard">
               <MappingFragment StoreEntitySet="StockCard">
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
@@ -1440,7 +1452,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="StationeryModel.Supplier">
+            <EntityTypeMapping TypeName="Team11StationeryStoreDBModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
                 <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
@@ -1450,17 +1462,6 @@
                 <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
                 <ScalarProperty Name="SupplierEmail" ColumnName="SupplierEmail" />
                 <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PriceLists">
-            <EntityTypeMapping TypeName="StationeryModel.PriceList">
-              <MappingFragment StoreEntitySet="PriceList">
-                <ScalarProperty Name="TenderYear" ColumnName="TenderYear" />
-                <ScalarProperty Name="SupplierRank" ColumnName="SupplierRank" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -22,7 +22,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Utility.logout();
             }
-        }      
+        }
     }
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -32,7 +32,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Employee emp = (Employee)Session["emp"];
             string selectedStatus = DropDownList1.SelectedValue;
 
-            GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID,selectedStatus);
+            GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
             GridView1.DataBind();
         }
         else

@@ -7,15 +7,16 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
+    Employee emp = new Employee();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             if (Session["emp"] != null)
             {
-                Employee emp = (Employee)Session["emp"];
+                emp = (Employee)Session["emp"];
                 //Approved requisition
-                if (RequisitionControl.getCollectionList(emp.DeptCode).Count ==  0)
+                if (RequisitionControl.getCollectionList(emp.DeptCode).Count == 0)
                 {
                     Label5.Text = "There is no collection data";
                 }
@@ -31,7 +32,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Utility.logout();
             }
-        }      
+        }
     }
 
     protected void SearchBtn_Click(object sender, EventArgs e)
@@ -48,7 +49,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+                GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord);
                 GridView1.DataBind();
             }
         }

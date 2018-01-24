@@ -14,7 +14,7 @@ public partial class InventoryStatusReport : System.Web.UI.Page
         //InventoryCrystalReport cr = new InventoryCrystalReport();
         //cr.SetDataSource(InventoryReportItem.getInventoryReportItems());
         //CrystalReportViewer1.ReportSource = cr;
-        GridView1.DataSource = ilogic.GetInventoryReportItemList();
+        GridView1.DataSource = ItemBusinessLogic.GetInventoryReportItemList();
         GridView1.DataBind();
     }
 }

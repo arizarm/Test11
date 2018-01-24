@@ -10,9 +10,8 @@ public partial class StationeryCatalogue : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Employee user = (Employee)Session["emp"];
-        GridView1.DataSource = ilogic.GetCatalogueList();
+        GridView1.DataSource = EFBroker_Item.GetCatalogueList();
         if (!IsPostBack)
         {
             //if (user.DeptCode != "STATS")
@@ -76,7 +75,6 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void EditRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridView1.EditIndex = index;
         GridView1.DataBind();
         GridViewRowCollection a = GridView1.Rows;
@@ -87,28 +85,26 @@ public partial class StationeryCatalogue : System.Web.UI.Page
 
         ddl.DataTextField = "CategoryName";
         ddl.DataValueField = "CategoryID";
-        List<Category> categories = ilogic.GetCategoryList();
-        Item item = ilogic.GetItembyItemCode(itemLabel.Text);
+        List<Category> categories = EFBroker_Category.GetCategoryList();
+        Item item = EFBroker_Item.GetItembyItemCode(itemLabel.Text);
         ddl.DataSource = categories;
         ddl.SelectedValue = item.CategoryID.ToString();
         ddl.DataBind();
 
-        ddl2.DataSource = ilogic.GetDistinctUOMList();
+        ddl2.DataSource = EFBroker_Item.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
         return;
     }
     protected void RemoveRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         Label r = (Label)GridView1.Rows[index].FindControl("Label1");
-        string output = r.Text;
-        ilogic.RemoveItem(output);
+        string itemCode = r.Text;
+        EFBroker_Item.RemoveItem(itemCode);
         return;
     }
     protected void UpdateRow(int index)
     {
-        ItemBusinessLogic ilogic = new ItemBusinessLogic();
         GridViewRow row = GridView1.Rows[index];
         Label itemCode = (Label)row.FindControl("Label1");
         DropDownList categoryList = (DropDownList)row.FindControl("DropDownList3");
@@ -119,7 +115,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         int qty = Convert.ToInt32(reorderQty.Text);
         TextBox bin = (TextBox)row.FindControl("TextBoxBin");
         DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownList4");
-        ilogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
+        ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
         cancelEdit();
     }
     protected void cancelEdit()

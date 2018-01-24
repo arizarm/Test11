@@ -89,7 +89,7 @@
 
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
-                    <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="button" OnClick="UpdateButton_Click"/>
+                    <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="button" OnClick="UpdateButton_Click" Visible="false" Enabled="false"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <asp:Button ID="DeleteButton" runat="server" Text="Set To Inactive" CssClass="rejectBtn" OnClick="DeleteButton_Click" />
                 </asp:TableCell>

@@ -67,8 +67,24 @@ public class RequisitionControl
         return searchList;
     }
 
-    public static List<ReqisitionListItem> SearchForRepRequisition(string searchWord,int empID)
+    public static List<ReqisitionListItem> SearchForRepRequisitionWithStatus(string searchWord, int empID, string status)
     {
+        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.getRequisitionListByEmpIDAndStatus(empID, status));
+
+        searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord.ToLower()) || x.Date.ToString().Contains(searchWord.ToString())).ToList();
+        //itemList = getCollectionList();
+        //foreach (ReqisitionListItem i in itemList)
+        //{
+        //    searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord) || x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
+        //}
+        return searchList;
+    }
+
+    public static List<ReqisitionListItem> SearchForRepRequisitionWithoutStatus(string searchWord, int empID)
+    {
+        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.GetRequisitionListByRequestorID(empID));
+        searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord.ToLower()) || Convert.ToDateTime(x.Date).ToLongDateString().Contains(searchWord.ToString())).ToList();
+
         //itemList = getCollectionList();
         foreach (ReqisitionListItem i in itemList)
         {
@@ -86,8 +102,16 @@ public class RequisitionControl
         }
         return searchList;
     }
-
-    
+  
+    public static List<ReqisitionListItem> DisplayCollectionListSearch(string deptCode, string searchWord)
+    {
+        List<ReqisitionListItem> l = PopulateGridView(EFBroker_Requisition.SearchForCollectionList(deptCode));
+        foreach(ReqisitionListItem i in l)
+        {
+            searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)).ToList();
+        }
+        return searchList;
+    }
 
     public static List<ReqisitionListItem> PopulateGridView(List<Requisition> rlist)
     {

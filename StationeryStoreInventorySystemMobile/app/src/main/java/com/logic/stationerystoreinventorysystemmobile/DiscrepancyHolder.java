@@ -1,19 +1,15 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by edwon on 24/1/2018.
  */
 
 public class DiscrepancyHolder {
-    public static ArrayList<CatalogueItem> getItemList() {
-        return itemList;
+    public static HashMap<CatalogueItem, Integer> getItemList() {
+        return discrepancies;
     }
 
-    public static void setItemList(ArrayList<CatalogueItem> itemList) {
-        DiscrepancyHolder.itemList = itemList;
-    }
-
-    static ArrayList<CatalogueItem> itemList = new ArrayList<CatalogueItem>();
+    static HashMap<CatalogueItem, Integer> discrepancies = new HashMap<CatalogueItem, Integer>();
 }

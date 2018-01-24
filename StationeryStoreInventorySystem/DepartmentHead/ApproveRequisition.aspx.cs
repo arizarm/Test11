@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 public partial class ApproveRequisition : System.Web.UI.Page
 {
     StationeryEntities context = new StationeryEntities();
-    
+
     int id = 0;
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Request.QueryString["id"] != null)
+        if (Request.QueryString["id"] != null)
         {
             id = Convert.ToInt32(Request.QueryString["id"]);
 
@@ -76,7 +76,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
             string reason = ReasonLabel.Text;
-            RequisitionControl.rejectRequisition(id, reason,emp.EmpID);
+            RequisitionControl.rejectRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
@@ -91,22 +91,22 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
     protected void backButton_Click(object sender, EventArgs e)
     {
-        if(Session["emp"] != null )
+        if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
 
-            if(emp.Role == "DepartmentHead")
+            if (emp.Role == "DepartmentHead")
             {
                 Response.Redirect("~/DepartmentHead/RequisitionListDepartment.aspx");
             }
             else if (emp.Role == "Representative")
             {
                 Response.Redirect("~/DepartmentRepresentative/RequisitionListDepartment.aspx");
-            }  
+            }
         }
-        
 
-        
+
+
     }
 
 }

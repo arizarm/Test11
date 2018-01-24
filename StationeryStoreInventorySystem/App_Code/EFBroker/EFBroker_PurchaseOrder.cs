@@ -90,40 +90,6 @@ public class EFBroker_PurchaseOrder
         }
 
     }
-    public static List<PurchaseItems> AddPurchaseItems(String itemCode)
-    {
-        using (StationeryEntities entities = new StationeryEntities())
-        {
-            var itemList = (from Stock in entities.StockCards
-                            group Stock by Stock.ItemCode into stck
-                            join item in entities.Items on stck.FirstOrDefault().ItemCode equals item.ItemCode
-                            where item.ItemCode == itemCode
-                            select new PurchaseItems
-                            {
-                                ItemCode = item.ItemCode,
-                                Description = item.Description,
-                                ReorderQty = item.ReorderQty,
-                                ReorderLevel = item.ReorderLevel,
-                                UnitOfMeasure = item.UnitOfMeasure,
-                                Balance = stck.Min(x => x.Balance)
-                            }).ToList<PurchaseItems>();
-            if (itemList != null)
-            {
-                itemList = (from item in entities.Items
-                            where item.ItemCode == itemCode
-                            select new PurchaseItems
-                            {
-                                ItemCode = item.ItemCode,
-                                Description = item.Description,
-                                ReorderQty = item.ReorderQty,
-                                ReorderLevel = item.ReorderLevel,
-                                UnitOfMeasure = item.UnitOfMeasure,
-                                Balance = 0
-                            }).ToList<PurchaseItems>();
-            }
-            return itemList;
-        }
-    }
     public static List<PurchaseOrderItemDetails> GetPurchaseOrderItemsDetailList(int orderID)
     {
         using(StationeryEntities entities = new StationeryEntities())

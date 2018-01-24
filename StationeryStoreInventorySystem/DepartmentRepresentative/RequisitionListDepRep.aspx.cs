@@ -14,41 +14,18 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-                //Approved requisition
-                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode).Count ==  0)
+                
+                //Requested Requisition
+                if(RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
                 {
-                    Label5.Text = "There is no requisition data";
+                    Label5.Text = "There is no requested requisition data";
                 }
                 else
                 {
                     Label5.Visible = false;
-                    GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode);
+                    GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                     GridView1.DataBind();
-                }
-
-                //Requested Requisition
-                if(RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
-                {
-                    Label6.Text = "There is no requested requisition data";
-                }
-                else
-                {
-                    Label6.Visible = false;
-                    GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-                    GridView2.DataBind();
-                }
-
-                //Priority Requisition / Short fall
-                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Priority", emp.DeptCode).Count == 0)
-                {
-                    Label7.Text = "There is no short full requisition data";
-                }
-                else
-                {
-                    Label7.Visible = false;
-                    GridView2.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Priority", emp.DeptCode);
-                    GridView2.DataBind();
-                }
+                }      
             }
             else
 
@@ -60,19 +37,25 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string selectedStatus = DropDownList1.SelectedValue;
+        if (Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            string selectedStatus = DropDownList1.SelectedValue;
 
-        GridView1.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
+        GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
         GridView1.DataBind();
+        }
+        else
+        {
+            Utility.logout();
+        }
 
-        GridView2.DataSource = RequisitionControl.getRequisitionListByStatus(selectedStatus);
-        GridView2.DataBind();
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
-
+            Employee emp = (Employee)Session["emp"];
             string searchWord = SearchBox.Text;
             if (SearchBox.Text == String.Empty)
             {
@@ -82,10 +65,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-                GridView2.DataBind();
-                GridView2.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-                GridView2.DataBind();
+                GridView1.DataSource = RequisitionControl.SearchForRepRequisition(searchWord,emp.EmpID);
+                GridView1.DataBind();
             }
         }
         else
@@ -99,9 +80,5 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     {
         GridView1.DataSource = RequisitionControl.DisplayAllDepartment();
         GridView1.DataBind();
-        GridView2.DataSource = RequisitionControl.DisplayAllDepartment();
-        GridView2.DataBind();
     }
-
-
 }

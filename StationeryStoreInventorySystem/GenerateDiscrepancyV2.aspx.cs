@@ -52,9 +52,9 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             }
         }
 
-        if (Session["discrepancyList"] != null)
+        if (Session["discrepancyDisplay"] != null && Session["discrepancyList"] != null)
         {
-            Dictionary<Item, String> iList2 = (Dictionary<Item, String>)Session["discrepancyList"];
+            Dictionary<Item, String> iList2 = (Dictionary<Item, String>)Session["discrepancyDisplay"];
             GridView2.DataSource = iList2;
             GridView2.DataBind();
         }
@@ -71,12 +71,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     }
 
     protected void Button1_Click(object sender, EventArgs e)
-    {
+    {      //Generate discrepancy button
         GenerateDiscrepancyList();
     }
 
     protected void Button3_Click(object sender, EventArgs e)
-    {
+    {        //Check all button
         for (int i = 0; i < GridView1.Rows.Count; i++)
         {
             GridViewRow row = GridView1.Rows[i];
@@ -85,7 +85,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     }
 
     protected void Button2_Click(object sender, EventArgs e)
-    {
+    {     //Finalise discrepancy button
         if (itemError == false)
         {
             //foreach (GridViewRow row in GridView2.Rows)
@@ -102,28 +102,28 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //}
             //Session["discrepancyList"] = discrepancies;
 
-            if ((bool)Session["monthly"] == false)
-            {
-                Dictionary<Item, String> discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
-                Dictionary<Item, String> discrepanciesOutput = new Dictionary<Item, String>();
+            //if ((bool)Session["monthly"] == false)
+            //{
+            //    Dictionary<Item, int> discrepancies = (Dictionary<Item, int>)Session["discrepancyList"];
+            //    Dictionary<Item, int> discrepanciesOutput = new Dictionary<Item, int>();
 
-                foreach (KeyValuePair<Item, String> kvp in discrepancies)
-                {
-                    string actual = "";
-                    if (kvp.Value[0] == '+')
-                    {
-                        string adj = kvp.Value.Substring(1);
-                        actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
-                    }
-                    else
-                    {
-                        string adj = kvp.Value;
-                        actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
-                    }
-                    discrepanciesOutput.Add(kvp.Key, actual);
-                }
-                Session["discrepancyList"] = discrepanciesOutput;
-            }
+            //    foreach (KeyValuePair<Item, int> kvp in discrepancies)
+            //    {
+            //        string actual = "";
+            //        if (kvp.Value[0] == '+')
+            //        {
+            //            string adj = kvp.Value.Substring(1);
+            //            actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
+            //        }
+            //        else
+            //        {
+            //            string adj = kvp.Value;
+            //            actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
+            //        }
+            //        discrepanciesOutput.Add(kvp.Key, actual);
+            //    }
+            //    Session["discrepancyList"] = discrepanciesOutput;
+            //}
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
@@ -133,7 +133,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     }
 
     protected void Button4_Click(object sender, EventArgs e)
-    {
+    {        //Search button
         List<Item> iList = new List<Item>();
         iList = EFBroker_Item.GetActiveItemList();
 
@@ -168,11 +168,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     }
 
     protected void Button5_Click(object sender, EventArgs e)
-    {
+    {       //Display all button
         ShowAll();
     }
     protected void Button6_Click(object sender, EventArgs e)
-    {
+    {       //Clear list button
         Dictionary<Item, String> empty = new Dictionary<Item, String>();
         Session["discrepancyList"] = empty;
         GridView2.DataSource = empty;
@@ -190,7 +190,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     private void GenerateDiscrepancyList()
     {
-        Dictionary<Item, String> iList2 = new Dictionary<Item, String>();
+        Dictionary<Item, int> discrepancyList = new Dictionary<Item, int>();
+        Dictionary<Item, String> discrepancyDisplay = new Dictionary<Item, String>();
         List<String> missed = new List<String>();
         itemError = false;
         for (int i = 0; i < GridView1.Rows.Count; i++)
@@ -213,19 +214,17 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                     if (Int32.TryParse(txtActual, out actualQuantity))
                     {
                         //Calculate the adjustment needed, then add to GridView2
-                        Label holder = row.FindControl("lblStock") as Label;
-                        string[] holderContents = holder.Text.Split(' ');
-                        string quantity = holderContents[0];
+                        string quantity = (row.FindControl("lblStock") as Label).Text;
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = EFBroker_Item.GetItembyItemCode(itemCode);
-                        //InventoryItem invItem = new InventoryItem(item, quantity);
                         string actual = actualQuantity.ToString();
                         if (adj != 0)
                         {
-                            iList2.Add(item, actual);
+                            discrepancyList.Add(item, adj);
+                            discrepancyDisplay.Add(item, actual);
                         }
                     }
-                    else
+                    else   //If a row is not checked but has a non integer actual quantity
                     {
                         itemError = true;
                         error = true;
@@ -235,13 +234,9 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 {
                     ErrorClear();
                     row.BackColor = Color.Transparent;
-                    //if (mode == "Monthly")   // This code only applies to monthly
-                    //{
                     Label5.Text = "Some items have not been checked yet. ";
                     itemError = true;
                     error = true;
-                    //}
-
                 }
             }
             else
@@ -261,7 +256,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 Label7.Text = "Please double-check the highlighted items.";
                 missed.Add(itemCode);
             }
-
         }
 
         string missedMessage = "Items with issues: ";
@@ -279,8 +273,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
         Session["itemError"] = itemError;
 
+        //Indicate monthly inventory check mode if the number of items in GridView1
+        //when generating discrepancies matches the number of active items in the database
         if (GridView1.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
-        {
+        {     
             Session["monthly"] = true;
         }
         else
@@ -288,9 +284,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             Session["monthly"] = false;
         }
 
-        Session["discrepancyList"] = iList2;
+        Session["discrepancyList"] = discrepancyList;
+        Session["discrepancyDisplay"] = discrepancyDisplay;
 
-        GridView2.DataSource = iList2;
+        GridView2.DataSource = discrepancyList;
         GridView2.DataBind();
     }
 

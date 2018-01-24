@@ -43,9 +43,8 @@ public partial class RetrievalList : System.Web.UI.Page
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)
     {
-        GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn
-        string s = (row.FindControl("LabelRetrievalID") as Label).Text; //row.Cells[1]
-        Session["RetrievalID"] = s;
+        GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn        
+        Session["RetrievalID"] = Convert.ToInt32((row.FindControl("LabelRetrievalID") as Label).Text); //row.Cells[1]
         Response.Redirect("RetrievalListDetail.aspx");
     }
 }

@@ -67,7 +67,17 @@ public class RequisitionControl
         return searchList;
     }
 
-    public static List<ReqisitionListItem> DisplaySearchDepartment(string searchWord)
+    public static List<ReqisitionListItem> SearchForRepRequisition(string searchWord,int empID)
+    {
+        //itemList = getCollectionList();
+        foreach (ReqisitionListItem i in itemList)
+        {
+            searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord) || x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();
+        }
+        return searchList;
+    }
+
+    public static List<ReqisitionListItem> DisplaySearchByEmpID(string searchWord,int empId)
     {
         itemList = DisplayAllDepartment();
         foreach (ReqisitionListItem i in itemList)
@@ -76,6 +86,8 @@ public class RequisitionControl
         }
         return searchList;
     }
+
+    
 
     public static List<ReqisitionListItem> PopulateGridView(List<Requisition> rlist)
     {

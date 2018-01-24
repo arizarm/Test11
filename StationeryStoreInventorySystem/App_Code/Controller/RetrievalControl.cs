@@ -26,7 +26,7 @@ public class RetrievalControl
     static int retrievalId;
 
 
-    public static void GenerateDisbursementList()
+    public static void GenerateAccessCode()
     {
         Random r = new Random();
 
@@ -35,10 +35,9 @@ public class RetrievalControl
             int value = r.Next(1000, 9999);
             d.AccessCode = value.ToString();
             d.Status = "Ready";
+            EFBroker_Disbursement.UpdateDisbursement(d);
         }
-
-        context.SaveChanges();
-        HttpContext.Current.Response.Redirect("CollectionPointUpdate.aspx");///////////////////////////
+        return;
     }
 
     public static void SaveActualQtyBreakdownByDepartment(List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
@@ -55,19 +54,20 @@ public class RetrievalControl
                         {
                             //find the correct Disbursement_Item to save
                             di.ActualQty = rsub.ActualQty;
+                            EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
                 }
 
             }
         }
-        context.SaveChanges();
+        return;
     }
 
     static List<RetrievalShortfallItemSub> RetrievalShortfallItemSubList;
     public static List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSub(string shortfallItemCode)
     {
-        List<string> shortfallItemCodeList = new List<string>();
+       // List<string> shortfallItemCodeList = new List<string>();
         RetrievalShortfallItemSubList = new List<RetrievalShortfallItemSub>();
 
         int i = 0;
@@ -75,11 +75,14 @@ public class RetrievalControl
         {
             foreach (Requisition r in d.Requisitions)
             {
+                ///////////////////////if only one deptName
                 string deptName = d.Department.DeptName.ToString();
                 string deptCode = d.Department.DeptCode.ToString();
                 try///////////////////////////////
                 {
                     int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
+
+                    //////////////////////actual Qty bind with avialable Qty
                     RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);
                     RetrievalShortfallItemSubList.Add(rsfs);
                     i++;

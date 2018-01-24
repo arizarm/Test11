@@ -17,7 +17,7 @@ public interface IDisbursementService
 
     [OperationContract]
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    WCFDisbursement getDisbursement(string id);
+    WCFDisbursement getDisbursement(int id);
 
     [OperationContract]
     [WebGet(UriTemplate = "/DisbursementDetail", ResponseFormat = WebMessageFormat.Json)]
@@ -28,13 +28,13 @@ public interface IDisbursementService
 [DataContract]
 public class WCFDisbursement
 {
-    private string disbId;
+    private int disbId;
     private string collectionDate;
     private string collectionTime;
     private string depName;
     private string collectionPoint;
 
-    public static WCFDisbursement Make(string disbId, string collectionDate, string collectionTime, string depName, string collectionPoint)
+    public static WCFDisbursement Make(int disbId, string collectionDate, string collectionTime, string depName, string collectionPoint)
     {
         WCFDisbursement d = new WCFDisbursement();
         d.DisbId = disbId;
@@ -46,7 +46,7 @@ public class WCFDisbursement
     }
 
     [DataMember]
-    public string DisbId { get { return disbId; } set { disbId = value; } }
+    public int DisbId { get { return disbId; } set { disbId = value; } }
 
     [DataMember]
     public string CollectionDate { get { return collectionDate; } set { collectionDate = value; } }

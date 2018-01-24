@@ -22,10 +22,9 @@ public class Requisition extends HashMap<String,String>{
         put("Remarks",remarks);
     }
 
-    public Requisition(String requisitionNo, String approvedBy, String status, String remarks){
-        put("RequisitionNo", requisitionNo);
+    public Requisition(String requisitionNo, String approvedBy, String remarks){
+        put("RequisitionID", requisitionNo);
         put("ApprovedBy", approvedBy);
-        put("Status", status);
         put("Remarks",remarks);
     }
 
@@ -34,12 +33,24 @@ public class Requisition extends HashMap<String,String>{
     public static void approveRequisition(Requisition r){
         JSONObject b = new JSONObject();
         try{
-            b.put("RequisitionNo", r.get("RequisitionNo"));
+            b.put("RequisitionID", r.get("RequisitionID"));
             b.put("Remarks",r.get("Remarks"));
             b.put("ApprovedBy", r.get("ApprovedBy"));
-            b.put("Status", r.get("Status"));
         }catch(Exception e){
-            String result=JSONParser.postStream(host+"/Approve",b.toString());
+
         }
+        String result=JSONParser.postStream(host+"/Approve",b.toString());
+    }
+
+    public static void rejectRequisition(Requisition r){
+        JSONObject b = new JSONObject();
+        try{
+            b.put("RequisitionID", r.get("RequisitionID"));
+            b.put("Remarks",r.get("Remarks"));
+            b.put("ApprovedBy", r.get("ApprovedBy"));
+        }catch(Exception e){
+
+        }
+        String result=JSONParser.postStream(host+"/Reject",b.toString());
     }
 }

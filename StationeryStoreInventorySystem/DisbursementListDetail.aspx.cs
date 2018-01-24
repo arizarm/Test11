@@ -8,25 +8,29 @@ using System.Web.UI.WebControls;
 public partial class DisbursementListDetail : System.Web.UI.Page
 {
 
+    DisbursementCotrol disbCon = new DisbursementCotrol();
+
     List<RequestedItem> shortfallItem = new List<RequestedItem>();
     static List<DisbursementDetailListItems> retrievedItem;
     Dictionary<Item, String> discrepanciesOutput = new Dictionary<Item, String>();
 
+    Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();
+
     protected void Page_Load(object sender, EventArgs e)
-    {
-        string disbId = Session["SelectedDisb"].ToString();
-
-        //get and display disbursement data 
-        DisbursementListItems disb = DisbursementCotrol.DisbursementListItemsObj(disbId);
-        lblDate.Text = disb.CollectionDate.ToString();
-        lblTime.Text = disb.CollectionTime.ToString();
-        lblDepartment.Text = disb.DepName.ToString();
-        lblColPoint.Text = disb.CollectionPoint.ToString();
-
+    {   
         //populate grid view with disbursement details
         if (!IsPostBack)
         {
-            retrievedItem = DisbursementCotrol.gvDisbursementDetailPopulate();
+            int disbId = (int) Session["SelectedDisb"];
+           
+            //get and display disbursement data 
+            DisbursementListItems disb = disbCon.DisbursementListItemsObj(disbId);
+            lblDate.Text = disb.CollectionDate.ToString();
+            lblTime.Text = disb.CollectionTime.ToString();
+            lblDepartment.Text = disb.DepName.ToString();
+            lblColPoint.Text = disb.CollectionPoint.ToString();
+
+            retrievedItem = disbCon.gvDisbursementDetailPopulate();
             gvDisbDetail.DataSource = retrievedItem;
             gvDisbDetail.DataBind();
         }
@@ -36,8 +40,10 @@ public partial class DisbursementListDetail : System.Web.UI.Page
     {
         string message;
 
+        int disbId = (int)Session["SelectedDisb"];
+
         //Verify access code
-        if (DisbursementCotrol.checkAccessCode(txtAccessCode.Text))
+        if (disbCon.checkAccessCode(disbId, txtAccessCode.Text))
         {
             //message = "Disbursement Acknowledgement Successful!";
             //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
@@ -80,6 +86,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                         Item disItem = GenerateDiscrepancyController.GetItemByItemCode(iCode);
                         string finalQty = (disItem.BalanceQty + disQty).ToString();
                         discrepanciesOutput.Add(disItem, finalQty);
+                        discToUpdate.Add(disItem, disQty);
                     }
                     else if(actualQty > retrievedQty)
                     {
@@ -89,19 +96,21 @@ public partial class DisbursementListDetail : System.Web.UI.Page
             }
 
             //update Disbursement table (actual qty + status)
-            DisbursementCotrol.UpdateDisbursementActualQty(actualQtyList);            
-            DisbursementCotrol.UpdateDisbursementStatus();
+            disbCon.UpdateDisbursementActualQty(actualQtyList);
+            disbCon.UpdateDisbursementStatus();
 
             //Add disbursement transaction to Stockcard   
-            DisbursementCotrol.AddStockCardTransaction(); 
+            disbCon.AddStockCardTransaction(); 
 
             //add discrepancy item to session 
             Session["discrepancyList"] = discrepanciesOutput;
 
+            Session["discToUpdate"] = discToUpdate;
+
             //redirect to Regenerate Request page if any shortfall
             if (shortfallItem.Count != 0)
             {
-                Session["RegenerateDate"] = DisbursementCotrol.getRegenrateDate();
+                Session["RegenerateDate"] = disbCon.getRegenrateDate();
                 Session["RegenerateDep"] = lblDepartment.Text;
                 Session["RegrenerateItems"] = shortfallItem;                
                 Response.Redirect("~/RegenerateRequest.aspx");

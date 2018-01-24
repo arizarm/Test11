@@ -89,14 +89,24 @@ public class EFBroker_DeptEmployee
         return dep;
 
     }
-    public static string GetCollectionPointbyDeptCode(string depCode)
+    public static CollectionPoint GetCollectionPointbyDeptCode(string depCode)
     {
-        string collectionPoint;
+        CollectionPoint collectionPoint;
         using (StationeryEntities context = new StationeryEntities())
         {
-            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).FirstOrDefault();
+            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint).FirstOrDefault();
         }
         return collectionPoint;
+    }
+
+    public static int GetCollectionidbyDeptCode(string depCode)
+    {
+        int collectionid;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            collectionid = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionLocationID).FirstOrDefault();
+        }
+        return collectionid;
     }
     public static List<Employee> GetEmployeeListByRole(string role)
     {  //goes to employee broker

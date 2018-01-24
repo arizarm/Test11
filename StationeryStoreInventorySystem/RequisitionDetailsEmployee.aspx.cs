@@ -15,7 +15,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         
-            id = Convert.ToInt32(Request.QueryString["id"]);
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
         //int id = 24;
         
 
@@ -94,17 +94,49 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
     protected void New_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
         string code = RequisitionControl.getCode(des);
         int qty = Convert.ToInt32(TextBox1.Text);
 
-        RequisitionControl.addItemToRequisition(code, qty, id);
+        if (GridView1.Rows.Count <= 0)
+        {
+            RequisitionControl.addItemToRequisition(code, qty, id);
+        }
 
+        else
+        {
+            bool isEqual = false;
+            string truCode = "";
+            foreach (GridViewRow row in GridView1.Rows)
+            {
+                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
+                string item = labelDes.Text;
+
+                if (des.Equals(item))
+                {
+                    isEqual = true;
+                    truCode = RequisitionControl.getCode(des);
+                }
+            }
+            if (isEqual)
+            {
+                RequiredFieldValidator2.Enabled = true;
+                RangeValidator2.Enabled = true;
+                RequisitionControl.editRequisitionItemQty(id, truCode, qty);
+            }
+            else
+            {
+                RequiredFieldValidator2.Enabled = true;
+                RangeValidator2.Enabled = true;
+                RequisitionControl.addItemToRequisition(code, qty, id);
+            }
+        }
 
         showAllItems();
     }
 
-    protected void Close_Click(object sender, EventArgs e)
+
+protected void Close_Click(object sender, EventArgs e)
     {
         Panel1.Visible = false;
         Add.Visible = true;

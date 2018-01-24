@@ -86,17 +86,27 @@ public partial class DepartmentListDRep : System.Web.UI.Page
 
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
-
+       
         if (Session["emp"] != null)
         {
             Employee empSession = (Employee)Session["emp"];
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
-            int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-            EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
-            Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
-        }//ispostback
+            int cid = EFBroker_DeptEmployee.GetCollectionidbyDeptCode(dcode);
+            int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
+            //lblFax.Text = cid.ToString();
+            //lblPhone.Text = c.ToString();
+            if (c != cid)
+            {
+                EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
+                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+            }
+            else
+            {
+                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+            }
+        }
         else
         {
             Utility.logout();

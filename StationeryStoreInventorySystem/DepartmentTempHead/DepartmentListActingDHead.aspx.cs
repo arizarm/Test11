@@ -81,16 +81,31 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
         if (Session["emp"] != null)
         {
+
             Employee empSession = (Employee)Session["emp"];
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
+
+            Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+            int cid = EFBroker_DeptEmployee.GetCollectionidbyDeptCode(dcode);
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
             EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
+            int empRepid = empDRep.EmpID;
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
             EFBroker_DeptEmployee.UpdateDeptRep(dcode, empid);
 
-            Response.Redirect("DepartmentDetailInfo.aspx");
+            if (c==cid && empid==empRepid)
+            {
+                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+            }
+            else
+            {
+              
+                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+               
+            }
+
         }//ispostback
         else
         {

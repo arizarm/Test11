@@ -11,21 +11,35 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         Employee user = (Employee)Session["emp"];
-        GridView1.DataSource = EFBroker_Item.GetCatalogueList();
-        if (!IsPostBack)
+        if (user != null)
         {
-            //if (user.DeptCode != "STATS")
-            if(true)
+            try
             {
-                HyperLink7.Visible = false;
-                GridView1.Columns[0].Visible = false;
-                GridView1.Columns[3].Visible = false;
-                GridView1.Columns[4].Visible = false;
-                GridView1.Columns[6].Visible = false;
-                GridView1.Columns[7].Visible = false;
-                GridView1.Columns[8].Visible = false;
+                GridView1.DataSource = EFBroker_Item.GetCatalogueList();
             }
-            GridView1.DataBind();
+            catch(Exception sql)
+            {
+                Response.Redirect("~/ErrorPage.aspx");
+            }
+            if (!IsPostBack)
+            {
+                if (user.DeptCode != "STATS")
+                    if (true)
+                    {
+                        HyperLink7.Visible = false;
+                        GridView1.Columns[0].Visible = false;
+                        GridView1.Columns[3].Visible = false;
+                        GridView1.Columns[4].Visible = false;
+                        GridView1.Columns[6].Visible = false;
+                        GridView1.Columns[7].Visible = false;
+                        GridView1.Columns[8].Visible = false;
+                    }
+                GridView1.DataBind();
+            }
+        }
+        else
+        {
+            Utility.logout();
         }
 
     }
@@ -75,6 +89,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void EditRow(int index)
     {
+
         GridView1.EditIndex = index;
         GridView1.DataBind();
         GridViewRowCollection a = GridView1.Rows;

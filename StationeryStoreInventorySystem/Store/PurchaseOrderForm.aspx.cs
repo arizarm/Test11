@@ -143,6 +143,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             gvPurchaseItems.DataSource = ritems;
             Session["PurchaseItems"] = ritems;
             gvPurchaseItems.DataBind();
+            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+  "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
         }
        
     }
@@ -240,6 +242,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
             }
             pCtrlr.AddPurchaseOrder(purchaseItemList);
+            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+  "<script language='javascript'>alert('" + "Purchase Done, Awaiting Approval!" + "');</script>");
         }
     }
 

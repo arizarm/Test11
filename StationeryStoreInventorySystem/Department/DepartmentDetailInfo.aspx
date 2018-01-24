@@ -40,7 +40,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script src="Content/JavaScript.js"></script>
-   <%--<table class="tableBorder">
+    <%--<table class="tableBorder">
        <tr><th>--%>
     <table class="auto-style5">
             <tr >
@@ -75,11 +75,15 @@
                 <td class="auto-style8">Head&#39;s Name :</td>
                 <td class="auto-style9">
                     <asp:Label ID="lblHeadname" runat="server"></asp:Label>
-                </td>
+                &nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style10">Acting Department Head :</td>
-                <td class="auto-style11"><asp:Label ID="lblActingDHead" runat="server"></asp:Label></td>
+                <td class="auto-style11"><asp:Label ID="lblActingDHead" runat="server"></asp:Label>&nbsp;(
+                    <asp:Label ID="lblSDate" runat="server" ForeColor="#666666"></asp:Label>
+&nbsp;-
+                    <asp:Label ID="lblEDate" runat="server" ForeColor="#666666"></asp:Label>
+&nbsp;)</td>
             </tr>            
             <tr>
                 <td class="auto-style12">Department Representative :</td>

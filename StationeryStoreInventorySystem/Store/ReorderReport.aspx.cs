@@ -15,16 +15,34 @@ public partial class ReorderReport : System.Web.UI.Page
 
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
-        //DateTime startDate = Convert.ToDateTime(txtDate.Text);
-        //DateTime endDate = Convert.ToDateTime(txtEDate.Text);
-        //sDate.Text = startDate.ToShortDateString();
-        //eDate.Text = endDate.ToShortDateString();              
-        //txtLbl.Text= "The following items have fallen below re-order level";
-        //gvPurchasedreoderItem.DataSource=pCtrlr.GenerateReorderReportForPurchasedItems(startDate, endDate);
-        //gvPurchasedreoderItem.DataBind();
+        if (Page.IsValid)
+        {
+            DateTime startDate = Convert.ToDateTime(txtSDate.Text);
+            DateTime endDate = Convert.ToDateTime(txtEDate.Text);
+            sDate.Text = startDate.ToShortDateString();
+            eDate.Text = endDate.ToShortDateString();
+            txtLbl.Text = "List of items running low on stock which are yet to be delivered from supplier";
+            gvPurchasedreoderItem.DataSource = pCtrlr.GenerateReorderReportForPurchasedItems(startDate, endDate);
+            gvPurchasedreoderItem.DataBind();
 
-        //gvShortfallItems.DataSource = pCtrlr.GenerateShortfallItemsReport();
-        //gvShortfallItems.DataBind();
+            txtLbl2.Text = "List of items running low on stock with no purchases done yet";
+            gvShortfallItems.DataSource = pCtrlr.GenerateShortfallItemsReport(startDate, endDate);
+            gvShortfallItems.DataBind();
+        }
 
+
+    }
+    protected void CompareDateValidator(object sender, ServerValidateEventArgs e)
+    {
+        DateTime sDate = Convert.ToDateTime(txtSDate.Text);
+        DateTime eDate = Convert.ToDateTime(txtEDate.Text);
+        if (sDate > eDate)
+        {
+            e.IsValid = false;
+        }
+        else
+        {
+            e.IsValid = true;
+        }
     }
 }

@@ -21,9 +21,9 @@ public class RetrievalControl
 
     static List<RetrievalListDetailItem> RetrievalListDetailItemList;
 
-    static List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
+    static List<RetrievalShortfallItem> RetrievalShortfallItemList;
 
-
+    static int retrievalId;
 
 
     public static void GenerateDisbursementList()
@@ -34,99 +34,109 @@ public class RetrievalControl
         {
             int value = r.Next(1000, 9999);
             d.AccessCode = value.ToString();
-            d.Status = "Processing";
+            d.Status = "Ready";
         }
 
         context.SaveChanges();
+        HttpContext.Current.Response.Redirect("CollectionPointUpdate.aspx");///////////////////////////
     }
 
-    public static List<RetrievalShortfallItem> DisplayRetrievalShortfall(List<int> txtRetrievedList)
+    public static void SaveActualQtyBreakdownByDepartment(List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
     {
-        int i = 0;
-        foreach (RetrievalListDetailItem r in RetrievalListDetailItemList)
+        foreach (RetrievalShortfallItemSub rsub in retrievalShortfallItemSubListOfList)////////////////////////////
         {
-            string description = r.Description;
-            RetrievalShortfallItem rsf = new RetrievalShortfallItem(description, txtRetrievedList[i]);//, deptNameList[i], requestedQtyList[i]
-            RetrievalShortfallItemList.Add(rsf);
-            i++;
+            foreach (Disbursement d in disbursementList)/////////////////////
+            {
+                if (rsub.DeptCode == d.DeptCode)
+                {
+                    foreach (Disbursement_Item di in d.Disbursement_Item)//////////////////
+                    {
+                        if (rsub.ItemCode == di.ItemCode)
+                        {
+                            //find the correct Disbursement_Item to save
+                            di.ActualQty = rsub.ActualQty;
+                        }
+                    }
+                }
+
+            }
         }
-        return RetrievalShortfallItemList;
+        context.SaveChanges();
     }
 
-    static List<RetrievalShortfallItemSub> RetrievalShortfallItemSubList = new List<RetrievalShortfallItemSub>();
-    static List<RetrievalShortfallItemSub> RetrievalShortfallItemSubListList = new List<RetrievalShortfallItemSub>();
-
-    public static List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSub()
+    static List<RetrievalShortfallItemSub> RetrievalShortfallItemSubList;
+    public static List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSub(string shortfallItemCode)
     {
-        List<string> deptNameList = new List<string>();
-        List<int> requestedQtyList = new List<int>();
-
-
-        // if itemcode in requestion == left, show dept name and requested number
+        List<string> shortfallItemCodeList = new List<string>();
+        RetrievalShortfallItemSubList = new List<RetrievalShortfallItemSub>();
 
         int i = 0;
         foreach (Disbursement d in disbursementList)/////////////////////////////////////////////////
         {
-            //    foreach (Disbursement_Item di in d.Disbursement_Item)
-            //    {
-            //        foreach (RetrievalShortfallItem rsfi in RetrievalShortfallItemList)
-            //        {
-            //            if (rsfi.Description == di.Item.Description)
-            //            {
-            string deptName = d.Department.DeptName.ToString();
-            //                //int requestedQty = Convert.ToInt32(context.Requisition_Item.Where(x => x.RequisitionID == ).Select(x => x.RequestedQty));
-            RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub(deptName);
-            RetrievalShortfallItemSubList.Add(rsfs);
-            i++;
-            //            }
-            //        }
-            //    }
+            foreach (Requisition r in d.Requisitions)
+            {
+                string deptName = d.Department.DeptName.ToString();
+                string deptCode = d.Department.DeptCode.ToString();
+                try///////////////////////////////
+                {
+                    int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
+                    RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);
+                    RetrievalShortfallItemSubList.Add(rsfs);
+                    i++;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+            }
         }
-
-
-
-
-        //foreach (RetrievalShortfallItem rsfi in RetrievalShortfallItemList)
-        //{
-        //    if (rsfi.Description == disbursement_Item.Item.Description)
-        //    {
-        //        foreach (RetrievalShortfallItemSub r in RetrievalShortfallItemSubList)
-        //        {
-
-        //        }
-        //    }
-        //    //RetrievalShortfallItemSubListList
-        //}
-
-
-
-
 
         return RetrievalShortfallItemSubList;
     }
 
 
-    public static List<CollectionPointItem> DisplayCollectionPoint(string retrievalId)
+
+    public static void CreateCollectionPointItemList(Disbursement d, List<CollectionPointItem> collectionPointItemList, List<int> CollectionLocationIDList)
     {
-        disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID.ToString().Equals(retrievalId)).ToList();
+        CollectionLocationIDList.Add((int)d.Department.CollectionLocationID);
+        string collectionPoint = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.CollectionPoint1.ToString()).First();
+        string defaultCollectionTime = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.DefaultCollectionTime.ToString()).First();
+        CollectionPointItem c = new CollectionPointItem(collectionPoint, defaultCollectionTime);
+        collectionPointItemList.Add(c);
+    }
+    public static List<CollectionPointItem> DisplayCollectionPoint(int retrievalId)
+    {
+        disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == retrievalId).ToList();
 
         List<CollectionPointItem> collectionPointItemList = new List<CollectionPointItem>();
-        int i = 0;
-        foreach (Disbursement d in disbursementList)/////////////////////////////////////////////////
-        {
-            if (d.DeptCode[i] == d.Department.DeptCode[i])
-            {
-                string collectionPoint = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.CollectionPoint1.ToString()).First();
-                string defaultCollectionTime = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.DefaultCollectionTime.ToString()).First();
+        List<int> CollectionLocationIDList = new List<int>();
 
-                CollectionPointItem c = new CollectionPointItem(collectionPoint, defaultCollectionTime);
-                collectionPointItemList.Add(c);
+        foreach (Disbursement d in disbursementList)///same collect point from different DeptCode
+        {
+            if (CollectionLocationIDList.Count != 0)
+            {
+                bool add = true;
+                foreach (int cID in CollectionLocationIDList)
+                {
+                    if (d.Department.CollectionLocationID == cID)
+                    {
+                        add = false;
+                    }
+                }
+                if (add)
+                {
+                    CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
+                }
             }
-            i++;
+            else
+            {
+                CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
+            }
         }
         return collectionPointItemList;
     }
-    public static void SaveCollectionTimeAndDateToDisbursement(List<DateTime> dateList, List<string> timeList)
+
+    public static void SaveCollectionTimeAndDateToDisbursement(List<DateTime> dateList, List<string> timeList)//
     {
         int i = 0;
         foreach (Disbursement d in disbursementList)
@@ -141,26 +151,20 @@ public class RetrievalControl
         context.SaveChanges();
     }
 
-    public static void CheckShortfall(List<int> ActualQty)
+    public static List<RetrievalShortfallItem> CheckShortfall(List<int> ActualQty)///////////////////////////////////////////
     {
-
-        bool Shortfall = false;
+        RetrievalShortfallItemList = new List<RetrievalShortfallItem>();//////////////////////////////////////////////
 
         for (int i = 0; i < RetrievalListDetailItemList.Count; i++)
         {
-            if (RetrievalListDetailItemList[i].TotalRequestedQty != ActualQty[i])
-                Shortfall = true;
+            if (ActualQty[i] < RetrievalListDetailItemList[i].TotalRequestedQty)
+            {
+                RetrievalShortfallItem r = new RetrievalShortfallItem(RetrievalListDetailItemList[i].Description, ActualQty[i], RetrievalListDetailItemList[i].ItemCode);
+                RetrievalShortfallItemList.Add(r);
+            }
         }
 
-        if (Shortfall == true)
-        {
-            HttpContext.Current.Response.Redirect("RetrievalShortfall.aspx");
-        }
-        else
-        {
-            HttpContext.Current.Response.Redirect("CollectionPointUpdate.aspx");
-        }
-
+        return RetrievalShortfallItemList;
     }
 
     public static void CreateRetrievalListDetailItemList(string itemCode, List<string> itemCodeList)
@@ -177,14 +181,16 @@ public class RetrievalControl
     }
 
 
-    public static List<RetrievalListDetailItem> DisplayRetrievalListDetail(string retrievalId)
+    public static List<RetrievalListDetailItem> DisplayRetrievalListDetail(int rId)
     {
+
+        retrievalId = rId;
         retrievalList = new List<Retrieval>();
 
         List<string> itemCodeList = new List<string>();
         RetrievalListDetailItemList = new List<RetrievalListDetailItem>();
 
-        disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID.ToString().Equals(retrievalId)).ToList();
+        disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == retrievalId).ToList();
 
         RetrievalListDetailItem r;
 
@@ -223,64 +229,30 @@ public class RetrievalControl
     }
 
 
-    public static void SaveRetrieved(List<int> ActualQty)//////////////////////////////////////////////
+    public static void UpdateDisbursementNonShortfallItemActualQty(List<int> ActualQty)
     {
-        foreach (Disbursement d in disbursementList)
+        int i = 0;
+        foreach (RetrievalListDetailItem r in RetrievalListDetailItemList)
         {
-            foreach (Disbursement_Item di in d.Disbursement_Item)
+            if (r.TotalRequestedQty == ActualQty[i])
             {
-                bool Shortfall = false;
-                for (int i = 0; i < RetrievalListDetailItemList.Count; i++)
+                foreach (Disbursement d in disbursementList)/////////////////////
                 {
-                    if (RetrievalListDetailItemList[i].TotalRequestedQty != ActualQty[i])
-                        Shortfall = true;
-                }
-                if (Shortfall == false)
-                {
-                    di.ActualQty = di.TotalRequestedQty;
-                }
-
-                if (Shortfall == true)/////////////////////////////////////////////
-                {
-                    MessageBox.Show("RetrievalShortfall!");
-                    HttpContext.Current.Response.Redirect("RetrievalShortfall.aspx");
+                    foreach (Disbursement_Item di in d.Disbursement_Item)//////////////////
+                    {
+                        if (di.TotalRequestedQty == ActualQty[i] && di.ItemCode == r.ItemCode)
+                        {
+                            //find the correct Disbursement_Item to save
+                            di.ActualQty = ActualQty[i];
+                            di.Disbursement.Retrieval.RetrievalStatus = "Retrieved";//////////////////////////
+                        }
+                    }
                 }
             }
+            i++;
         }
-
-        //foreach (Requisition_Item ri in Requisition_ItemList)
-        //{
-        //    //if (diList.Count != 0)
-        //    //{
-        //        foreach (Disbursement_Item di in Disbursement_ItemList)
-        //        {
-        //            if (di.TotalRequestedQty == ri.RequestedQty)
-        //            {
-
-        //            }
-        //        }
-        //    //}
-        //    //else
-        //    //{
-        //    //    di = new Disbursement_Item();
-        //    //    di.DisbursementID = disbursementID;
-        //    //    di.ItemCode = r.ItemCode;
-        //    //    di.TotalRequestedQty = r.RequestedQty;
-        //    //    context.Disbursement_Item.Add(di);
-        //    //}
-        //    //context.SaveChanges();
-        //}
-
-        ////foreach (int i in ActualQty)
-        ////{
-        ////    di.ActualQty = i;
-        ////}
-        //// context.Disbursement_Item.Add(di);  //??????????????????????????????
         context.SaveChanges();
     }
-
-
-
 
     public static List<Retrieval> DisplayRetrievalList()
     {
@@ -297,10 +269,7 @@ public class RetrievalControl
         return searchList;
     }
 
-
-
-    static int retrievalId;
-    public static void AddRetrieval()
+    public static int AddRetrieval()
     {
         Retrieval r = new Retrieval();
         r.RetrievedBy = 1001;       //base on user session
@@ -311,120 +280,131 @@ public class RetrievalControl
         context.SaveChanges();
 
         retrievalId = r.RetrievalID; // get auto increasement data after SaveChanges
+        return retrievalId;
     }
 
-    static List<int> disbursementID = new List<int>();
+
     public static void AddDisbursement(List<int> requNo)
     {
+        List<int> disbursementID = new List<int>();
         Disbursement d = new Disbursement();
-
         List<int> requestedBy = new List<int>(); //EmpID
-        List<string> deptCode = new List<string>();
+        List<string> deptCodeList = new List<string>();
 
         foreach (int i in requNo)
         {
             requestedBy.Add((int)(context.Requisitions.Where(x => x.RequisitionID.Equals(i)).Select(x => x.RequestedBy).First()));
         }
 
-
         //foreach requestedBy get depcode
         foreach (int i in requestedBy)
         {
             string dC = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
 
-            if (deptCode.Count() != 0)
+            if (deptCodeList.Count() != 0)
             {
                 bool add = true;
 
-                foreach (string s in deptCode)
+                foreach (string s in deptCodeList)
                 {
                     if (s == dC)
                     {
                         add = false;
                     }
                 }
-                if (add) deptCode.Add(dC);
+                if (add) deptCodeList.Add(dC);
             }
             else
             {
-                deptCode.Add(dC);
+                deptCodeList.Add(dC);
             }
         }
 
         //foreach depcode add disbursement + disbDetail
-        foreach (string i in deptCode)
+        foreach (string i in deptCodeList)
         {
+            //add Disbursement
             d.RetrievalID = retrievalId;
             d.DeptCode = i;
             d.Status = "Pending";
             context.Disbursements.Add(d);
             context.SaveChanges();
 
-            //add disbursement id into requisition table
-            foreach (int j in requestedBy)
-            {
-                string unfilterDepCode = context.Employees.Where(x => x.EmpID.Equals(j)).Select(x => x.DeptCode).First().ToString();
-                if (unfilterDepCode == i)
-                {
-                    int requisitionID = context.Requisitions.Where(x => x.RequestedBy == j).Select(x => x.RequisitionID).First();
-                    Requisition r = context.Requisitions.Where(x => x.RequisitionID.Equals(requisitionID)).First();
-                    r.DisbursementID = d.DisbursementID;
-                    context.Requisitions.Add(r);
-                }
-            }
             disbursementID.Add(d.DisbursementID);////////////////////auto increasement disbursementID after SaveChanges
         }
-
-
         foreach (int i in disbursementID)
         {
+            string disbDep = context.Disbursements.Where(x => x.DisbursementID == i).Select(x => x.DeptCode).First();
+
+            foreach (int no in requNo)
+            {
+                //update requisition table 
+                Requisition r = new Requisition();
+                r = context.Requisitions.Where(x => x.RequisitionID.Equals(no)).First();
+
+                string dep = context.Employees.Where(x => x.EmpID == r.RequestedBy).Select(x => x.DeptCode).First();
+
+                if (dep == disbDep)
+                {
+                    r.DisbursementID = i;
+                    context.SaveChanges();
+                }
+            }
             AddDisbursemen_Item(i);
         }
     }
 
 
-
-    static List<Requisition_Item> Requisition_ItemList = new List<Requisition_Item>();
+    static List<Requisition_Item> Requisition_ItemList;
     static Disbursement_Item disbursement_Item;
-    static List<Disbursement_Item> Disbursement_ItemList = new List<Disbursement_Item>();
+    static List<Disbursement_Item> Disbursement_ItemList;
     public static void AddDisbursemen_Item(int disbursementID)
     {
+        List<Requisition_Item> Requisition_ItemListOfList = new List<Requisition_Item>();
 
         List<int> requisitionIDList = new List<int>();
         requisitionIDList = context.Requisitions.Where(x => x.DisbursementID == disbursementID).Select(x => x.RequisitionID).ToList();
-
-        foreach (int i in requisitionIDList)
+        Disbursement_ItemList = new List<Disbursement_Item>();
+        foreach (int rL in requisitionIDList)   ////////////////
         {
-            Requisition_ItemList = context.Requisition_Item.Where(x => x.RequisitionID == i).ToList();
-        }
+            Requisition_ItemList = context.Requisition_Item.Where(x => x.RequisitionID == rL).ToList();
 
-        foreach (Requisition_Item r in Requisition_ItemList)
-        {
-            if (Disbursement_ItemList.Count != 0)
+            //foreach (Requisition_Item r in Requisition_ItemListOfList)
+            foreach (Requisition_Item r in Requisition_ItemList)/////////////////////////////
             {
-                foreach (Disbursement_Item i in Disbursement_ItemList)
+                if (Disbursement_ItemList.Count != 0)
                 {
-                    if (i.ItemCode == r.ItemCode)
+                    bool add = true;
+
+                    foreach (Disbursement_Item i in Disbursement_ItemList)
                     {
-                        i.TotalRequestedQty += r.RequestedQty;
+                        if (i.ItemCode == r.ItemCode)
+                        {
+                            add = false;
+                            i.TotalRequestedQty += r.RequestedQty;
+                        }
+                    }
+                    if (add)
+                    {
+                        CreateDisbursementItemList(disbursementID, r);
                     }
                 }
+                else
+                {
+                    CreateDisbursementItemList(disbursementID, r);
+                }
+                context.SaveChanges();
             }
-            else
-            {
-                disbursement_Item = new Disbursement_Item();
-                disbursement_Item.DisbursementID = disbursementID;
-                disbursement_Item.ItemCode = r.ItemCode;
-                disbursement_Item.TotalRequestedQty = r.RequestedQty;
-                context.Disbursement_Item.Add(disbursement_Item);
-            }
-            context.SaveChanges();
         }
-
-        //di.ActualQty =
-        //di.Remarks =
-
     }
 
-
+    public static void CreateDisbursementItemList(int disbursementID, Requisition_Item r)
+    {
+        disbursement_Item = new Disbursement_Item();
+        disbursement_Item.DisbursementID = disbursementID;
+        disbursement_Item.ItemCode = r.ItemCode;
+        disbursement_Item.TotalRequestedQty = r.RequestedQty;
+        context.Disbursement_Item.Add(disbursement_Item);
+        Disbursement_ItemList.Add(disbursement_Item);
+    }
 }

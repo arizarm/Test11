@@ -9,11 +9,9 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListClerk : System.Web.UI.Page
 {
-    
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             gvReq.DataSource = RequisitionControl.DisplayAll();
             gvReq.DataBind();
@@ -21,6 +19,8 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
         if (DropDownList1.Text == "Priority")
         {
+            DropDownList1.Text = "Select Status";
+           
             gvReq.DataSource = null;
             gvReq.DataSource = RequisitionControl.DisplayPriority();
             gvReq.DataBind();
@@ -28,11 +28,13 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
         if (DropDownList1.Text == "Approved")
         {
+            DropDownList1.Text = "Select Status";
+            
             gvReq.DataSource = null;
             gvReq.DataSource = RequisitionControl.DisplayApproved();
             gvReq.DataBind();
         }
-}
+    }
 
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
@@ -43,7 +45,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             {
                 ((CheckBox)row.FindControl("CheckBox")).Checked = true;
             }
-         }
+        }
 
         if (!((CheckBox)gvReq.HeaderRow.FindControl("CheckAll")).Checked)
         {
@@ -75,6 +77,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
+        DropDownList1.Text = "Select Status";
         gvReq.DataSource = RequisitionControl.DisplayAll();
         gvReq.DataBind();
     }
@@ -83,17 +86,21 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
-        List<string> reqNo = new List<string>();
+        List<int> reqNo = new List<int>();
 
         foreach (GridViewRow row in gvReq.Rows)
         {
             if (((CheckBox)row.FindControl("CheckBox")).Checked)
             {
-                reqNo.Add((row.FindControl("lblrequisitionNo") as Label).Text);
+                reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
             }
         }
-       // Session["reqNo"] = Convert.ToInt32(reqNo); //Convert.ToInt32(reqNo)
-       // RequisitionControl.AddDisbursemen_Item(reqNo);
+
+        Session["RetrievalID"] = RetrievalControl.AddRetrieval();
+        RetrievalControl.AddDisbursement(reqNo);
+
+        //Response.Redirect("RetrievalList.aspx");
+        Response.Redirect("RetrievalListDetail.aspx");
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

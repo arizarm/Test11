@@ -8,24 +8,19 @@ using System.Web;
 /// </summary>
 public class RetrievalShortfallItem
 {
+    //string deptName;
+    //int requestedQty;
+
     string description;
     int qty;
-    string deptName;
-    int requestedQty;
+    string itemCode;
 
-    public RetrievalShortfallItem(string description, int qty, string deptName, int requestedQty)
+    public RetrievalShortfallItem(string description, int qty, string itemCode)
     {
         this.description = description;
         this.qty = qty;
-        this.deptName = deptName;
-        this.requestedQty = requestedQty;
-    }
-
-    public RetrievalShortfallItem(string description, int qty)
-    {
-        this.description = description;
-        this.qty = qty;
-    }
+        this.itemCode = itemCode;
+    }   
 
     public string Description
     {
@@ -53,29 +48,16 @@ public class RetrievalShortfallItem
         }
     }
 
-    public string DeptName
+    public string ItemCode
     {
         get
         {
-            return deptName;
+            return itemCode;
         }
 
         set
         {
-            deptName = value;
+            itemCode = value;
         }
-    }
-
-    public int RequestedQty
-    {
-        get
-        {
-            return requestedQty;
-        }
-
-        set
-        {
-            requestedQty = value;
-        }
-    }
+    }    
 }

@@ -20,7 +20,6 @@
                      </ItemTemplate>
                  </asp:TemplateField>
                  <asp:TemplateField HeaderText="Date">
-             
                      <EditItemTemplate>
                          <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                      </EditItemTemplate>
@@ -28,6 +27,8 @@
                     <asp:TextBox ID="txtDate" runat="server" ClientIDMode="Static"></asp:TextBox>
                      </ItemTemplate>
                  </asp:TemplateField>
+
+
                  <asp:TemplateField HeaderText="Time">
                      <EditItemTemplate>
                          <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>

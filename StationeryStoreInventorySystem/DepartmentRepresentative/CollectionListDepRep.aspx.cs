@@ -14,18 +14,17 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-                
-                //Requested Requisition
-                if(RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
+                //Approved requisition
+                if (RequisitionControl.getCollectionList(emp.DeptCode).Count ==  0)
                 {
-                    Label5.Text = "There is no requested requisition data";
+                    Label5.Text = "There is no collection data";
                 }
                 else
                 {
                     Label5.Visible = false;
-                    GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                    GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
                     GridView1.DataBind();
-                }      
+                }
             }
             else
 
@@ -35,27 +34,11 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }      
     }
 
-    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (Session["emp"] != null)
-        {
-            Employee emp = (Employee)Session["emp"];
-            string selectedStatus = DropDownList1.SelectedValue;
-
-        GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
-        GridView1.DataBind();
-        }
-        else
-        {
-            Utility.logout();
-        }
-
-    }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
-            Employee emp = (Employee)Session["emp"];
+
             string searchWord = SearchBox.Text;
             if (SearchBox.Text == String.Empty)
             {
@@ -65,7 +48,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisition(searchWord,emp.EmpID);
+                GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
                 GridView1.DataBind();
             }
         }
@@ -78,7 +61,18 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
-        GridView1.DataSource = RequisitionControl.DisplayAllDepartment();
-        GridView1.DataBind();
+        if (Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
+            GridView1.DataBind();
+        }
+        else
+
+        {
+            Utility.logout();
+        }
     }
+
+
 }

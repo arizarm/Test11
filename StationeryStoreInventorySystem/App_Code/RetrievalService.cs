@@ -15,17 +15,17 @@ public class RetrievalService : IRetrievalService
 
         foreach (Retrieval r in retList)
         {
-            wcfDisbList.Add(WCFRetrieval.Make(r.RetrievalID, (int)r.RetrievedBy, (DateTime)r.RetrievedDate, r.RetrievalStatus));
+            wcfDisbList.Add(WCFRetrieval.Make(r.RetrievalID, (int)r.RetrievedBy, ((DateTime)r.RetrievedDate).ToLongDateString(), r.RetrievalStatus));
         }
         return wcfDisbList;
     }
 
     public List<WCFRetrievalDetail> getRetrievalDetail(string id)
     {
-        List<WCFRetrievalDetail> wcfRetDetailList = new List<WCFRetrievalDetail>();        
-        List<RetrievalListDetailItem> retbDetailList = RetrievalControl.DisplayRetrievalListDetail(id);
+        List<WCFRetrievalDetail> wcfRetDetailList = new List<WCFRetrievalDetail>();
+        List<RetrievalListDetailItem> retbDetailList = RetrievalControl.DisplayRetrievalListDetail(Convert.ToInt32(id));
         foreach (RetrievalListDetailItem rD in retbDetailList)
-        { 
+        {
             wcfRetDetailList.Add(WCFRetrievalDetail.Make(rD.Bin, rD.Description, rD.TotalRequestedQty, rD.ItemCode));
         }
         return wcfRetDetailList;

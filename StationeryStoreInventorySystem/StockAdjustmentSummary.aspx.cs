@@ -57,7 +57,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             EFBroker_Discrepancy.ProcessDiscrepancy(discID, action);
 
             if(action == "Approved")
-            {
+            {    //only update stock card and item tables if discrepancy is approved
                 StockCard sc = new StockCard();
 
                 StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();

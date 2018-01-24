@@ -8,10 +8,12 @@ using System.Text;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "DisbursementService" in code, svc and config file together.
 public class DisbursementService : IDisbursementService
 {
+    DisbursementCotrol disbCon = new DisbursementCotrol();
+
     public List<WCFDisbursement> getAllDisbursement()
     {
         List<WCFDisbursement> wcfDisbList = new List<WCFDisbursement>();
-        List<DisbursementListItems> disbList = DisbursementCotrol.gvDisbursementPopulate();
+        List<DisbursementListItems> disbList = disbCon.gvDisbursementPopulate();
 
         foreach (DisbursementListItems d in disbList)
         {
@@ -20,11 +22,18 @@ public class DisbursementService : IDisbursementService
         return wcfDisbList;
     }
 
-    public List<WCFDisbursementDetail> getDisbursementDetail(string id)
+    public WCFDisbursement getDisbursement(int id)
+    {
+        WCFDisbursement wcfDisb = new WCFDisbursement();
+        DisbursementListItems d = disbCon.DisbursementListItemsObj(id);
+        wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
+        return wcfDisb;
+    }
+
+    public List<WCFDisbursementDetail> getDisbursementDetail()
     {
         List<WCFDisbursementDetail> wcfDisbDetailList = new List<WCFDisbursementDetail>();
-        DisbursementCotrol.DisbursementListItemsObj(id);
-        List<DisbursementDetailListItems> disbDetailList = DisbursementCotrol.gvDisbursementDetailPopulate();
+        List<DisbursementDetailListItems> disbDetailList = disbCon.gvDisbursementDetailPopulate();
         foreach (DisbursementDetailListItems dI in disbDetailList)
         {
             wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode, dI.ItemDesc, dI.ReqQty, dI.ActualQty, dI.Remarks));

@@ -104,7 +104,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
                 
-                    <asp:TemplateField HeaderText="Qty in stock" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
+                    <asp:TemplateField HeaderText="Qty in stock (excluding pending discrepancies)" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>

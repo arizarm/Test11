@@ -13,8 +13,6 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            string s = Request.QueryString["SuccessMsg"];
-            lblMessage.Text = s;
             if (Session["emp"] != null)
             {
                 Employee empSession = (Employee)Session["emp"];
@@ -54,7 +52,6 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     lblActingDHead.ForeColor = System.Drawing.Color.Red;
                     lblDeptRep.Text = detpRname;
                     lblCollectPoint.Text = empCollectionname;
-                    
 
                 }
                 else

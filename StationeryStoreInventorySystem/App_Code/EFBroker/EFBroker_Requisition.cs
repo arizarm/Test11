@@ -267,4 +267,11 @@ public class EFBroker_Requisition
         }
         return;
     }
+    public static List<Requisition> getCollectionList(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.Status == "Approved" || x.Status == "Priority" && x.DeptCode == deptCode).ToList();
+        }
+    }
 }

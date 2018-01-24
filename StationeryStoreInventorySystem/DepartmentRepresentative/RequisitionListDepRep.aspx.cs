@@ -15,7 +15,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Employee emp = (Employee)Session["emp"];
                 //Approved requisition
-                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode) ==  null)
+                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Approved", emp.DeptCode).Count ==  0)
                 {
                     Label5.Text = "There is no requisition data";
                 }
@@ -27,7 +27,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 }
 
                 //Requested Requisition
-                if(RequisitionControl.getRequisitionListByID(emp.EmpID) == null)
+                if(RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
                 {
                     Label6.Text = "There is no requested requisition data";
                 }
@@ -35,6 +35,18 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 {
                     Label6.Visible = false;
                     GridView2.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                    GridView2.DataBind();
+                }
+
+                //Priority Requisition / Short fall
+                if (RequisitionControl.getRequisitionListByStatusAndDepCode("Priority", emp.DeptCode).Count == 0)
+                {
+                    Label7.Text = "There is no short full requisition data";
+                }
+                else
+                {
+                    Label7.Visible = false;
+                    GridView2.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Priority", emp.DeptCode);
                     GridView2.DataBind();
                 }
             }
@@ -58,21 +70,28 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-
-        string searchWord = SearchBox.Text;
-
-        if (SearchBox.Text == String.Empty)
+        if (Session["emp"] != null)
         {
-            ClientScript.RegisterStartupScript(Page.GetType(),
-      "MessageBox",
-      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+
+            string searchWord = SearchBox.Text;
+            if (SearchBox.Text == String.Empty)
+            {
+                ClientScript.RegisterStartupScript(Page.GetType(),
+                "MessageBox",
+                "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+            }
+            else
+            {
+                GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+                GridView2.DataBind();
+                GridView2.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+                GridView2.DataBind();
+            }
         }
         else
+
         {
-            GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView2.DataBind();
-            GridView2.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView2.DataBind();
+            Utility.logout();
         }
     }
 

@@ -53,7 +53,6 @@ public class EFBroker_DeptEmployee
 
     }
 
-
     public static IList GetDepartDetailInfoList()
     {
         using (StationeryEntities smodel = new StationeryEntities())

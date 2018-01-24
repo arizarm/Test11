@@ -35,9 +35,9 @@ public class RetrievalControl
             int value = r.Next(1000, 9999);
             d.AccessCode = value.ToString();
             d.Status = "Ready";
+            EFBroker_Disbursement.UpdateDisbursement(d);
         }
-
-        context.SaveChanges();
+        return;
     }
 
     public static void SaveActualQtyBreakdownByDepartment(List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
@@ -54,13 +54,14 @@ public class RetrievalControl
                         {
                             //find the correct Disbursement_Item to save
                             di.ActualQty = rsub.ActualQty;
+                            EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
                 }
 
             }
         }
-        context.SaveChanges();
+        return;
     }
 
     static List<RetrievalShortfallItemSub> RetrievalShortfallItemSubList;

@@ -89,12 +89,12 @@ public class EFBroker_DeptEmployee
         return dep;
 
     }
-    public static string GetCollectionPointbyDeptCode(string depCode)
+    public static CollectionPoint GetCollectionPointbyDeptCode(string depCode)
     {
-        string collectionPoint;
+        CollectionPoint collectionPoint;
         using (StationeryEntities context = new StationeryEntities())
         {
-            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionPoint1).FirstOrDefault();
+            collectionPoint = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint).FirstOrDefault();
         }
         return collectionPoint;
     }

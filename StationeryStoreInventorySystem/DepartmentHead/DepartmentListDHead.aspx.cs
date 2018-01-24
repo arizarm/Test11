@@ -170,7 +170,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
 
                 }
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg="+"Successfully Update!!");
 
             }
             else

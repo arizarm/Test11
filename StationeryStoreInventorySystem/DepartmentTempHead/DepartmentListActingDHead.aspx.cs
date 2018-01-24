@@ -90,7 +90,8 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
             EFBroker_DeptEmployee.UpdateDeptRep(dcode, empid);
 
-            Response.Redirect("DepartmentDetailInfo.aspx");
+            Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Update!!");
+
         }//ispostback
         else
         {

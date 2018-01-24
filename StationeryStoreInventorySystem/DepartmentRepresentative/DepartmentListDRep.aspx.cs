@@ -95,7 +95,8 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
             EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
 
-            Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+            Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Update!!");
+
         }//ispostback
         else
         {

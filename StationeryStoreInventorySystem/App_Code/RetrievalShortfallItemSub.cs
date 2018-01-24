@@ -8,20 +8,35 @@ using System.Web;
 /// </summary>
 public class RetrievalShortfallItemSub
 {
+    DateTime requestDate;
     string deptName;
+    string deptCode;
     int requestedQty;
+    int actualQty;
+    string itemCode;
 
-    public RetrievalShortfallItemSub(string deptName, int requestedQty)
+    public RetrievalShortfallItemSub(DateTime requestDate, string deptName, string deptCode, int requestedQty, int actualQty, string itemCode)
     {
+        this.requestDate = requestDate;
         this.deptName = deptName;
+        this.deptCode = deptCode;
         this.requestedQty = requestedQty;
+        this.actualQty = actualQty;
+        this.itemCode = itemCode;
     }
 
-    public RetrievalShortfallItemSub(string deptName)
+    public DateTime RequestDate
     {
-        this.deptName = deptName;
-    }
+        get
+        {
+            return requestDate;
+        }
 
+        set
+        {
+            requestDate = value;
+        }
+    }
 
     public string DeptName
     {
@@ -36,6 +51,19 @@ public class RetrievalShortfallItemSub
         }
     }
 
+    public string DeptCode
+    {
+        get
+        {
+            return deptCode;
+        }
+
+        set
+        {
+            deptCode = value;
+        }
+    }
+
     public int RequestedQty
     {
         get
@@ -46,6 +74,32 @@ public class RetrievalShortfallItemSub
         set
         {
             requestedQty = value;
+        }
+    }
+
+    public int ActualQty
+    {
+        get
+        {
+            return actualQty;
+        }
+
+        set
+        {
+            actualQty = value;
+        }
+    }
+
+    public string ItemCode
+    {
+        get
+        {
+            return itemCode;
+        }
+
+        set
+        {
+            itemCode = value;
         }
     }
 }

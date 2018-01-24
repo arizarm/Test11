@@ -16,8 +16,12 @@ public interface IDisbursementService
     List<WCFDisbursement> getAllDisbursement();
 
     [OperationContract]
-    [WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    List<WCFDisbursementDetail> getDisbursementDetail(string id);
+    [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
+    WCFDisbursement getDisbursement(string id);
+
+    [OperationContract]
+    [WebGet(UriTemplate = "/DisbursementDetail", ResponseFormat = WebMessageFormat.Json)]
+    List<WCFDisbursementDetail> getDisbursementDetail();
 
 }
 
@@ -70,7 +74,7 @@ public class WCFDisbursementDetail
     {
         WCFDisbursementDetail d = new WCFDisbursementDetail();
         d.ItemCode = itemCode;
-        d.ItemDesc = itemCode;
+        d.ItemDesc = itemDesc;
         d.ReqQty = reqQty;
         d.ActualQty = actualQty;
         d.Remarks = remarks;

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/reqTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:scaleType="fitEnd"
+        android:layout_gravity="right"/>
+
+    <TextView
+        android:id="@+id/reqDate"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/reqTV"
+        android:ellipsize="end"
+        android:text="@string/reqDate"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dateTV"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/reqDate"
+        android:layout_below="@+id/reqTV"
+        android:layout_toEndOf="@+id/reqDate"
+        android:layout_toRightOf="@+id/reqDate"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/reqBy"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateTV"
+        android:ellipsize="end"
+        android:text="@string/reqBy" />
+
+    <TextView
+        android:id="@+id/empTV"
+        android:layout_width="246dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/reqBy"
+        android:layout_alignEnd="@+id/reqBy"
+        android:textSize="18sp" />
+
+<!--    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />-->
+
+</LinearLayout>

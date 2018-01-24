@@ -69,7 +69,7 @@ public class RequisitionControl
 
     public static List<ReqisitionListItem> SearchForRepRequisition(string searchWord,int empID)
     {
-        itemList = getCollectionList();
+        //itemList = getCollectionList();
         foreach (ReqisitionListItem i in itemList)
         {
             searchList = itemList.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord) || x.Department.ToLower().Contains(searchWord.ToLower()) || x.Status.ToLower().Contains(searchWord.ToLower())).ToList();

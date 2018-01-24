@@ -8,4 +8,20 @@
     <string name="disbursement">Disbursement</string>
     <string name="discrepancy">Generate Discrepancy</string>
     <string name="update_dep">Department Details</string>
+    <string name="quantity">Quantity</string>
+    <string name="reqDate">Requested Date: </string>
+    <string name="reqBy">Requested By: </string>
+    <string name="des">Description: </string>
+    <string name="qty">Requested Qty: </string>
+    <string name="uom">Unit of measure: </string>
+    <string name="title">Item Requested </string>
+    <string name="btnApprove">Approve</string>
+    <string name="btnReject">Reject</string>
+    <string name="btnSave">Save</string>
+    <string name="m">(</string>
+    <string name="n">)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_title">Remarks: </string>
+
 </resources>

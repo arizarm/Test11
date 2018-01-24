@@ -52,7 +52,7 @@ public class EFBroker_DeptEmployee
         }
 
     }
-<<<<<<< HEAD:StationeryStoreInventorySystem/App_Code/DeptBusinessLogic.cs
+
 
     public static IList GetDepartDetailInfoList()
     {
@@ -74,11 +74,12 @@ public class EFBroker_DeptEmployee
                     x.CollectionPoint.CollectionPoint1,
                     x.Department.DeptTelephone,
                     x.Department.DeptFax
-                }).ToList ();
-            
-        }
+                }).ToList();
 
-=======
+        }
+    }
+
+
     public static Department GetDepartByEmpID(int empID)
     {
         Department dep;
@@ -87,7 +88,7 @@ public class EFBroker_DeptEmployee
             dep=smodel.Employees.Where(x => x.EmpID == empID).Select(x=>x.Department).FirstOrDefault();
         }
         return dep;
->>>>>>> 78d17ece77be94045f99549cd09a91f32f56e79d:StationeryStoreInventorySystem/App_Code/EFBroker/EFBroker_DeptEmployee.cs
+
     }
     public static string GetCollectionPointbyDeptCode(string depCode)
     {

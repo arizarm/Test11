@@ -56,20 +56,22 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
 
             EFBroker_Discrepancy.ProcessDiscrepancy(discID, action);
 
-            StockCard sc = new StockCard();
+            if(action == "Approved")
+            {
+                StockCard sc = new StockCard();
 
+                StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();
 
-            StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();
+                sc.ItemCode = d.ItemCode;
+                sc.TransactionType = "Adjustment";
+                sc.Qty = d.AdjustmentQty;
+                sc.Balance = lastEntry.Balance + d.AdjustmentQty;
+                sc.TransactionDetailID = d.DiscrepencyID;
 
-            sc.ItemCode = d.ItemCode;
-            sc.TransactionType = "Adjustment";
-            sc.Qty = d.AdjustmentQty;
-            sc.Balance = lastEntry.Balance + d.AdjustmentQty;
-            sc.TransactionDetailID = d.DiscrepencyID;
-
-            EFBroker_StockCard.ResolveDiscrepancy(sc, sc.ItemCode, (int)sc.Balance);
+                EFBroker_StockCard.ResolveDiscrepancy(sc, sc.ItemCode, (int)sc.Balance);
+            }
         }
-
+        Session["discrepancySummary"] = null;
         Response.Redirect("~/StockAdjustment.aspx");
     }
 }

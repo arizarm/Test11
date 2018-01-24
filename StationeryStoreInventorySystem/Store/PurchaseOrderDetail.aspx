@@ -93,7 +93,7 @@
                             <EditItemTemplate>
                                 <asp:TextBox ID="orderQtyTxtBx" runat="server" Height="38px" Width="80px" Text='<%# Bind("OrderQty") %>' OnTextChanged="orderQtyTxtBx_TextChanged"></asp:TextBox>
                                 <asp:RequiredFieldValidator runat="server" ErrorMessage="Cannot be blank" Display="Dynamic" ForeColor="Red" ControlToValidate="orderQtyTxtBx" ValidationGroup="PurchaseDetailGrp"/>
-                                <asp:RegularExpressionValidator runat ="server" ErrorMessage="Invalid.Please enter only the digits" ForeColor="Red" ControlToValidate="orderQtyTxtBx" ValidationExpression="^[0-9]" ValidationGroup="PurchaseDetailGrp" />
+                                <asp:RegularExpressionValidator runat ="server" ErrorMessage="Invalid.Please enter only the digits" ForeColor="Red" ControlToValidate="orderQtyTxtBx" ValidationExpression="^[0-9]+$" ValidationGroup="PurchaseDetailGrp" />
                             </EditItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Price">

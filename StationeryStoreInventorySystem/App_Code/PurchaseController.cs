@@ -24,64 +24,17 @@ public class PurchaseController
         return EFBroker_PurchaseOrder.GetReorderItemList();
     }
 
-    //public List<ShortfallItems> GenerateReorderReportForPurchasedItems(DateTime startDate,DateTime endDate)
-    //{     
-    //  var lowStockItemList = (from Stock in entities.StockCards
-    //                    group Stock by Stock.ItemCode into stck
-    //                    join item in entities.Items on stck.Key equals item.ItemCode
-    //                    where item.ReorderLevel >= stck.Min(x => x.Balance)
-    //                    select new ShortfallItems
-    //                    {
-    //                        ItemCode = item.ItemCode,
-    //                        Description = item.Description,
-    //                        ReorderQuantity = item.ReorderQty,
-    //                        ReorderLevel = item.ReorderLevel,
-    //                        UnitOfMeasure = item.UnitOfMeasure,
-    //                        Balance = stck.Min(x => x.Balance)
-    //                    }).ToList<ShortfallItems>();
-
-    //    List<Item_PurchaseOrder> itemList = entities.Item_PurchaseOrder.ToList();
-
-    //    List <ShortfallItems>shortfallItemList = lowStockItemList.Join(itemList, a => a.ItemCode, b => b.ItemCode, (a, b) => new ShortfallItems
-    //                                          {
-    //                                                ItemCode = a.ItemCode,
-    //                                                Description = a.Description,
-    //                                                ReorderQuantity = a.ReorderQuantity,
-    //                                                ReorderLevel = a.ReorderLevel,
-    //                                                UnitOfMeasure = a.UnitOfMeasure,
-    //                                                Balance = a.Balance,
-    //                                                PurchaseOrderNo=b.PurchaseOrderID,
-    //                                                ExpectedDate = b.PurchaseOrder.ExpectedDate,
-    //                                                OrderDate = b.PurchaseOrder.OrderDate,
-    //                                           }).Where(x=>x.OrderDate >=startDate && x.OrderDate <= endDate).ToList();
+    public List<ShortfallItems> GenerateReorderReportForPurchasedItems(DateTime startDate, DateTime endDate)
+    {
+        return EFBroker_PurchaseOrder.GenerateReorderReportForPurchasedItems(startDate, endDate);
+    }
 
 
+    public List<ShortfallItems> GenerateShortfallItemsReport(DateTime startDate, DateTime endDate)
+    {
+        return EFBroker_PurchaseOrder.GenerateShortfallItemsReport(startDate, endDate);
 
-    //    return shortfallItemList;
-    //}
-
-
-    //public List<ShortfallItems> GenerateShortfallItemsReport()
-    //{
-    //    var lowStockItemList = (from Stock in entities.StockCards
-    //                            group Stock by Stock.ItemCode into stck
-    //                            join item in entities.Items on stck.Key equals item.ItemCode                              
-    //                            where item.ReorderLevel >= stck.Min(x => x.Balance)
-    //                            select new ShortfallItems
-    //                            {
-    //                                ItemCode = item.ItemCode,
-    //                                Description = item.Description,
-    //                                ReorderQuantity = item.ReorderQty,
-    //                                ReorderLevel = item.ReorderLevel,
-    //                                UnitOfMeasure = item.UnitOfMeasure,
-    //                                Balance = stck.Min(x => x.Balance),
-    //                                PurchaseOrderNo = 0,
-    //                                ExpectedDate = null,
-    //                            }).ToList<ShortfallItems>();
-
-    //    return lowStockItemList;
-
-    //}
+    }
     public List<SupplierInfo> GetSupplierList()
     {
         return EFBroker_PurchaseOrder.GetPurchaseSupplierInfoList();

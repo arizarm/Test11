@@ -20,7 +20,7 @@ public class EFBroker_PurchaseOrder
         PurchaseOrder order;
         using (StationeryEntities context = new StationeryEntities())
         {
-            order = context.PurchaseOrders.Where(x => x.PurchaseOrderID == id).FirstOrDefault();
+            order = context.PurchaseOrders.Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Include("Supplier").Where(x => x.PurchaseOrderID == id).FirstOrDefault();
         }
         return order;
     }
@@ -92,7 +92,7 @@ public class EFBroker_PurchaseOrder
     }
     public static List<PurchaseOrderItemDetails> GetPurchaseOrderItemsDetailList(int orderID)
     {
-        using(StationeryEntities entities = new StationeryEntities())
+        using (StationeryEntities entities = new StationeryEntities())
         {
             List<PurchaseOrderItemDetails> porderDetails = (from pOrderDetail in entities.Item_PurchaseOrder
                                                             join pOrder in entities.PurchaseOrders on pOrderDetail.PurchaseOrderID equals pOrder.PurchaseOrderID
@@ -200,7 +200,7 @@ public class EFBroker_PurchaseOrder
     }
     public static void ClosePurchaseOrder(PurchaseOrder pOrder)
     {
-        using(TransactionScope ts = new TransactionScope())
+        using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities entities = new StationeryEntities();
             PurchaseOrder order = entities.PurchaseOrders.Where(x => x.PurchaseOrderID == pOrder.PurchaseOrderID).First();
@@ -222,4 +222,46 @@ public class EFBroker_PurchaseOrder
         }
         return;
     }
+
+    public static List<ShortfallItems> GenerateReorderReportForPurchasedItems(DateTime startDate, DateTime endDate)
+    {
+        StationeryEntities entities = new StationeryEntities();
+    
+        var itemList = (from item in entities.Items
+                        join pItems in entities.Item_PurchaseOrder on item.ItemCode equals pItems.ItemCode
+                        where item.ReorderLevel >= item.BalanceQty && (pItems.PurchaseOrder.OrderDate >= startDate && endDate >= pItems.PurchaseOrder.OrderDate)
+                        select new ShortfallItems
+                        {
+                            ItemCode = item.ItemCode,
+                            Description = item.Description,
+                            ReorderQuantity = item.ReorderQty,
+                            ReorderLevel = item.ReorderLevel,
+                            UnitOfMeasure = item.UnitOfMeasure,
+                            Balance = item.BalanceQty,
+                            PurchaseOrderNo = pItems.PurchaseOrderID,
+                            ExpectedDate = pItems.PurchaseOrder.ExpectedDate
+                        }).ToList<ShortfallItems>();
+        return itemList;
+    }
+    public static List<ShortfallItems> GenerateShortfallItemsReport(DateTime startDate, DateTime endDate)
+    {
+        StationeryEntities entities = new StationeryEntities();
+        var lowStockItemList = (from i in entities.Item_PurchaseOrder
+                                where !(entities.Items.Any(x => x.ItemCode == i.ItemCode) && (i.PurchaseOrder.OrderDate >= startDate && endDate >= i.PurchaseOrder.OrderDate))
+                                join item in entities.Items on i.ItemCode equals item.ItemCode
+                                select new ShortfallItems
+                                {
+                                    ItemCode = item.ItemCode,
+                                    Description = item.Description,
+                                    ReorderQuantity = item.ReorderQty,
+                                    ReorderLevel = item.ReorderLevel,
+                                    UnitOfMeasure = item.UnitOfMeasure,
+                                    Balance = item.BalanceQty,
+                                    NullablePurchaseOrderNo = "-",
+                                    ExpectedDate = null,
+                                }).ToList();
+
+        return lowStockItemList;
+    }
+
 }

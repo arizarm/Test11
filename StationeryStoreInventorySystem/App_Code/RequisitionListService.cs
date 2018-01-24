@@ -34,25 +34,11 @@ public class RequisitionListService : IRequisitionListService
 
     public void Approve(WCFRequisition requisition)
     {
-        Requisition r = new Requisition()
-        {
-            RequisitionID = Convert.ToInt32(requisition.RequisitionNo),
-            ApprovedBy = Convert.ToInt32(requisition.ApprovedBy),
-            Remarks=requisition.Remarks,
-        };
-
-        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks, r.ApprovedBy);
+        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo),requisition.Remarks,Convert.ToInt32(requisition.ApprovedBy));
     }
 
     public void Reject(WCFRequisition requisition)
     {
-        Requisition r = new Requisition()
-        {
-            RequisitionID = Convert.ToInt32(requisition.RequisitionNo),
-            Status = "Rejected",
-            Remarks = requisition.Remarks,
-        };
-
         RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks,1);
     }
 }

@@ -63,7 +63,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         }
         else
         {
-            discrepancyDisplay = (Dictionary<Item, String>)Session["discrepancyList"];
+            discrepancyDisplay = (Dictionary<Item, String>)Session["discrepancyDisplay"];
         }
 
         bool alreadyInDiscrepancyList = false;

@@ -258,4 +258,12 @@ public class RequisitionControl
         return PopulateGridView(rlist);
 
     }
+
+    public static List<ReqisitionListItem> getCollectionList(string deptCode)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.getCollectionList(depCode);
+        return PopulateGridView(rlist);
+    }
+    
 }

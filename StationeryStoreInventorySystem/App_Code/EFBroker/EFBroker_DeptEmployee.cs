@@ -99,6 +99,16 @@ public class EFBroker_DeptEmployee
         }
         return collectionPoint;
     }
+
+    public static int GetCollectionidbyDeptCode(string depCode)
+    {
+        int collectionid;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            collectionid = context.Departments.Include("CollectionPoint").Where(x => x.DeptCode.Equals(depCode)).Select(x => x.CollectionPoint.CollectionLocationID).FirstOrDefault();
+        }
+        return collectionid;
+    }
     public static List<Employee> GetEmployeeListByRole(string role)
     {  //goes to employee broker
         List<Employee> e;

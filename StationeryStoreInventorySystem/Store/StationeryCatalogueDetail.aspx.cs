@@ -12,7 +12,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        List<Category> catList = ilogic.GetCategoryList();
+        List<Category> catList = EFBroker_Category.GetCategoryList();
         Category temp = new Category();
         temp.CategoryID = 0;
         temp.CategoryName = "Other";
@@ -20,7 +20,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         DropDownListCategory.DataSource = catList;
         DropDownListCategory.DataTextField = "CategoryName";
         DropDownListCategory.DataValueField = "CategoryID";
-        List<string> UOMList = ilogic.GetDistinctUOMList();
+        List<string> UOMList = EFBroker_Item.GetDistinctUOMList();
         UOMList.Add("Other");
         DropDownListUOM.DataSource = UOMList;
         if (Session["itemlist"] == null)
@@ -103,7 +103,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             categoryName = TextBoxCategory.Text;
             uom = TextBoxUOM.Text;
             bin = TextBoxBin.Text;
-            Item item = ilogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
+            Item item = ItemBusinessLogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
             if (item!= null)
             {
                 iList.Add(item);
@@ -135,6 +135,6 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
-        args.IsValid= (ilogic.GetItembyItemCode(args.Value) == null);
+        args.IsValid= (EFBroker_Item.GetItembyItemCode(args.Value) == null);
     }
 }

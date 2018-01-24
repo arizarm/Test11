@@ -44,7 +44,7 @@
                 </asp:TemplateField>
 
                 <asp:HyperLinkField HeaderText="View Details" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="RequisitionDetailsEmployee.aspx?id={0}" Text="View Details" />
+                    DataNavigateUrlFormatString="RequisitionDetailsEmployee.aspx?requisitionNo={0}" Text="View Details" />
             </Columns>
 
         </asp:GridView>

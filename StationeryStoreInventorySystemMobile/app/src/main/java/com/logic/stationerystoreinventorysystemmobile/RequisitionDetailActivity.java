@@ -1,6 +1,7 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 /*import android.app.FragmentManager;*/
+import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class RequisitionDetailActivity extends FragmentActivity implements View.OnClickListener{
 
-    String btnText;
+    String remarkTxt;
     Button btnApprove;
     Button btnReject;
     SimpleAdapter sa;
@@ -50,15 +51,9 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         reqDate.setText(date);
 
         btnApprove.setOnClickListener(this);
-        btnReject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        //reqBy.setText();
         final ListView lv = (ListView) findViewById(R.id.detailListView);
         lv.setClickable(false);
+
         new AsyncTask<String, Void, List<Requisition_ItemList>>() {
             @Override
             protected List<Requisition_ItemList> doInBackground(String... params) {
@@ -71,41 +66,74 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                 lv.setAdapter(sa = new SimpleAdapter(RequisitionDetailActivity.this, result, R.layout.rowfordetails, new String[]{"Description", "ReqQty", "Uom"}, new int[]{R.id.textView3, R.id.textView4, R.id.textView5}));
             }
         }.execute(rid);
-    }
 
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog d = new Dialog(RequisitionDetailActivity.this);
+                d.setTitle("Remarks");
+                d.setContentView(R.layout.remark_dialog);
+                d.setCancelable(true);
+                final EditText t = (EditText) d.findViewById(R.id.edit1);
+                Button b = (Button) d.findViewById(R.id.button);
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        remarkTxt=t.getText().toString();
+                        if(remarkTxt==""|| remarkTxt==" "){remarkTxt=null;}
+                        final Requisition r = new Requisition(rid, "1006", remarkTxt);
+
+                        new AsyncTask<Requisition,Void,Void>(){
+                            @Override
+                            protected Void doInBackground(Requisition...params) {
+                                Requisition.rejectRequisition(params[0]);
+                                return null;
+                            }
+                            @Override
+                            protected void onPostExecute(Void result){
+                                Intent i = new Intent(RequisitionDetailActivity.this,RequisitionListActivity.class);
+                                Toast.makeText(getApplicationContext(), "Requisition Rejected", Toast.LENGTH_LONG).show();
+                                startActivity(i);
+                            }
+                        }.execute(r);
+                        d.dismiss();
+                    }
+                });
+                d.show();
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
-        final Requisition r = new Requisition(rid, "1006",  "Approved", "Hey Yo!");
-        //r.put("RequisitionNo",rid);
-        //r.put("ApprovedBy","1027");
-        //.put("Remarks","Hey Yo!");
-/*        new AsyncTask<String,Void,Void>(){
+        final Dialog d = new Dialog(this);
+        d.setTitle("Remarks");
+        d.setContentView(R.layout.remark_dialog);
+        d.setCancelable(true);
+        final EditText t = (EditText) d.findViewById(R.id.edit1);
+        Button b = (Button) d.findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected Requisition doInBackground(String...param){
-                return Requisition.getRequisition(param[0]);
-            }
-            protected void onPostExecute(Requisition result){
-                show(result);
-            }
-        }.execute(rid);*/
+            public void onClick(View v) {
+                remarkTxt=t.getText().toString();
+                final Requisition r = new Requisition(rid, "1006", remarkTxt);
 
-
-/*      EditText remarks = (EditText) findViewById(R.id.remarksText);
-        Button save = (Button) findViewById(R.id.btnSave);
-        remarks.setVisibility(View.VISIBLE);
-        save.setVisibility(View.VISIBLE);*/
-        new AsyncTask<Requisition,Void,Void>(){
-            @Override
-            protected Void doInBackground(Requisition...params) {
-                Requisition.approveRequisition(params[0]);
-                return null;
+                new AsyncTask<Requisition,Void,Void>(){
+                    @Override
+                    protected Void doInBackground(Requisition...params) {
+                        Requisition.approveRequisition(params[0]);
+                        return null;
+                    }
+                    @Override
+                    protected void onPostExecute(Void result){
+                        Intent i = new Intent(RequisitionDetailActivity.this,RequisitionListActivity.class);
+                        Toast.makeText(getApplicationContext(), "Requisition Approved", Toast.LENGTH_LONG).show();
+                        startActivity(i);
+                    }
+                }.execute(r);
+                d.dismiss();
             }
-
-            @Override
-            protected void onPostExecute(Void result){
-                Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
-            }
-        }.execute(r);
+        });
+        d.show();
     }
 }

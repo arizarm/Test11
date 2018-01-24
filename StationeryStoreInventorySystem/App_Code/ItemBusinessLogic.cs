@@ -20,7 +20,7 @@ public class ItemBusinessLogic
         // TODO: Add constructor logic here
         //
     }
-    public Item AddItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
+    public static Item AddItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
     {
         Item item = new Item();
         int level, qty;
@@ -62,30 +62,40 @@ public class ItemBusinessLogic
         }
         return item;
     }
-    public void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public static void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Category category = EFBroker_Category.GetCategorybyName(categoryName);
-        EFBroker_Item.UpdateItem(itemCode, category, description, reorderLevel, reorderQty, unitOfMeasure, bin);
+        Item i =EFBroker_Item.GetItembyItemCode(itemCode);
+        if (i != null)
+        {
+            i.Category = category;
+            i.Description = description;
+            i.ReorderLevel = reorderLevel;
+            i.ReorderQty = reorderQty;
+            i.UnitOfMeasure = unitOfMeasure;
+            i.Bin = bin;
+        }
+        EFBroker_Item.UpdateItem(i);
         return;
     }
-    public Item GetItembyItemCode(string itemCode)
+    public static Item GetItembyItemCode(string itemCode)
     {
         return EFBroker_Item.GetItembyItemCode(itemCode);
     }
-    public void RemoveItem(string itemCode)
+    public static void RemoveItem(string itemCode)
     {
         EFBroker_Item.RemoveItem(itemCode);
         return;
     }
-    public List<Item> GetItemList()
+    public static List<Item> GetItemList()
     {
         return EFBroker_Item.GetActiveItemList();
     }
-    public List<Item> GetCatalogueList()
+    public static List<Item> GetCatalogueList()
     {
         return EFBroker_Item.GetCatalogueList();
     }
-    public List<InventoryReportItem> GetInventoryReportItemList()
+    public static List<InventoryReportItem> GetInventoryReportItemList()
     {
         List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
         List<Item> iList = GetItemList();
@@ -96,19 +106,19 @@ public class ItemBusinessLogic
         }
         return reportItemList;
     }
-    public List<Category> GetCategoryList()
+    public static  List<Category> GetCategoryList()
     {
         return EFBroker_Category.GetCategoryList();
     }
-    public Category GetCategorybyID(int categoryID)
+    public static  Category GetCategorybyID(int categoryID)
     {
         return EFBroker_Category.GetCategorybyID(categoryID);
     }
-    public List<string> GetDistinctUOMList()
+    public static List<string> GetDistinctUOMList()
     {
         return EFBroker_Item.GetDistinctUOMList();
     }
-    public string FirstUpperCase(string s)
+    public static string FirstUpperCase(string s)
     {
         return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
     }

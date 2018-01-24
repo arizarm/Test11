@@ -46,10 +46,16 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
             {
                 DeliveryOrderIDTxtBx.Visible = true;
                 CloseOrderBtn.Visible = true;
-               
+                RemarkLbl.Visible = false;
+                RemarkTxtBx.Visible = false;
+                ApproveBtn.Visible = false;
+                RejectBtn.Visible = false;
+
             }
             else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
             {
+                DeliveryOrderIDTxtBx.Visible = true;
+                CloseOrderBtn.Visible = true;
                 RemarkLbl.Visible = true;
                 RemarkTxtBx.Visible = true;
                 ApproveBtn.Visible = true;
@@ -106,6 +112,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         purchaseOrder.Status = "Closed";
         purchaseOrder.PurchaseOrderID = orderid;
         pCtrlr.ClosePurchaseOrder(purchaseOrder);
+        Session["PurchaseItems"] = null;
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
     "<script language='javascript'>alert('" + "Order Closed!" + "');</script>");
     }
@@ -157,12 +164,15 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         pCtrlr.UpdatePurchaseItem(item);
         gvPurchaseDetail.EditIndex = -1;
         BindGrid();
-
+        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+   "<script language='javascript'>alert('" + "Item Updated!" + "');</script>");
     }
 
     protected void gvPurchaseDetail_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-
+        gvPurchaseDetail.EditIndex = -1;
+        //Bind data to the GridView control.
+        BindGrid();
     }
 }
 

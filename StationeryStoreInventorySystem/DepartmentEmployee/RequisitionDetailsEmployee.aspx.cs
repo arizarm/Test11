@@ -15,7 +15,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
         //int id = 24;
 
 
@@ -35,7 +35,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
                 Add.Visible = false;
                 Update.Visible = false;
 
-                if (r.Remarks != null)
+                if (r.Remarks != null || r.Remarks!="" || r.Remarks!=" ")
                     Label8.Text = r.Remarks.ToString();
                 else
                     Label8.Text = "-";

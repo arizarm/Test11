@@ -11,19 +11,19 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     int maxChars = 100;
     protected void Page_Load(object sender, EventArgs e)
     {
-        Dictionary<Item, String> discrepancies = new Dictionary<Item, String>();
+        Dictionary<Item, int> discrepancies = new Dictionary<Item, int>();
         Dictionary<KeyValuePair<Item, String>, String> fullDiscrepancies = new Dictionary<KeyValuePair<Item, String>, String>();
         if (!IsPostBack)
         {
             if (Session["discrepancyList"] != null)
             {
-                discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
-                foreach (KeyValuePair<Item, String> kvp in discrepancies)
+                discrepancies = (Dictionary<Item, int>)Session["discrepancyList"];
+                foreach (KeyValuePair<Item, int> kvp in discrepancies)
                 {
                     string adjustment = "";
                     int stock = (int)kvp.Key.BalanceQty;
-                    int actualQuantity = Int32.Parse(kvp.Value);
-                    int adj = actualQuantity - stock;
+                    int adj = kvp.Value;
+                    int actualQuantity = stock + adj;
 
                     if (adj > 0)
                     {
@@ -33,8 +33,8 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     {
                         adjustment = adj.ToString();
                     }
-
-                    fullDiscrepancies.Add(kvp, adjustment);
+                    KeyValuePair<Item, String> displayKvp = new KeyValuePair<Item, String>(kvp.Key, actualQuantity.ToString());
+                      fullDiscrepancies.Add(displayKvp, adjustment);
                 }
             }
             else
@@ -62,12 +62,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         bool complete = true;
         foreach (GridViewRow row in GridView1.Rows)
         {
-            row.BackColor = Color.Transparent;
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
-            string remarks = (row.FindControl("txtRemarks") as TextBox).Text;
             string stock = (row.FindControl("lblStock") as Label).Text;
             string actual = (row.FindControl("lblActual") as Label).Text;
             int adj = Int32.Parse(actual) - Int32.Parse(stock);
+            string remarks = (row.FindControl("txtRemarks") as TextBox).Text;
             if (!ValidatorUtil.isEmpty(remarks))
             {
                 if (remarks.Length <= maxChars)

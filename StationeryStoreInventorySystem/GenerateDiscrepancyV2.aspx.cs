@@ -287,7 +287,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         Session["discrepancyList"] = discrepancyList;
         Session["discrepancyDisplay"] = discrepancyDisplay;
 
-        GridView2.DataSource = discrepancyList;
+        GridView2.DataSource = discrepancyDisplay;
         GridView2.DataBind();
     }
 

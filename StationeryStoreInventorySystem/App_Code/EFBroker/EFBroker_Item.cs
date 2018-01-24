@@ -149,18 +149,11 @@ public class EFBroker_Item
         }
         return unit;
     }
-    public static void UpdateItem(string itemCode, Category category, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
+    public static void UpdateItem(Item i)
     {
-        Item i;
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            i = GetItembyItemCode(itemCode);
-            i.CategoryID = category.CategoryID;
-            i.Description = description;
-            i.ReorderLevel = reorderLevel;
-            i.ReorderQty = reorderQty;
-            i.UnitOfMeasure = unitOfMeasure;
-            i.Bin = bin;
+            inventoryDB.Entry(i).State = System.Data.Entity.EntityState.Modified;
             inventoryDB.SaveChanges();
         }
         return;

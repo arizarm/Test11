@@ -7,49 +7,70 @@ using System.Web.UI.WebControls;
 
 public partial class RetrievalDecision : System.Web.UI.Page
 {
+    static List<RetrievalShortfallItemSub> retrievalShortfallItemSubList;
+    static List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList;
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string retrievalId = (string)Session["RetrievalID"];
+        if (!IsPostBack)
+        {
+            List<RetrievalShortfallItem> RetrievalShortfallItemList = (List<RetrievalShortfallItem>)Session["RetrievalShortfallItemList"];
+            //string retrievalId = (string)Session["RetrievalID"];
+            gvMain.DataSource = RetrievalShortfallItemList;
+            gvMain.DataBind();
 
-        List<int> txtRetrievedList = (List<int>)Session["txtRetrievedList"];
-        gvMain.DataSource = RetrievalControl.DisplayRetrievalShortfall(txtRetrievedList);
-        gvMain.DataBind();
+            retrievalShortfallItemSubListOfList = new List<RetrievalShortfallItemSub>();
 
+            foreach (GridViewRow r in gvMain.Rows)
+            {
+                GridView gvSub = (GridView)r.FindControl("gvSub");
+                retrievalShortfallItemSubList = RetrievalControl.DisplayRetrievalShortfallSub((r.FindControl("hdfItemCode") as HiddenField).Value);
+
+                foreach (RetrievalShortfallItemSub i in retrievalShortfallItemSubList)
+                {
+                    retrievalShortfallItemSubListOfList.Add(i);
+                }
+                gvSub.DataSource = retrievalShortfallItemSubList;
+                gvSub.DataBind();
+            }
+        }
     }
 
-    protected void gvMain_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType != DataControlRowType.DataRow) return;
-        GridView nestedGV = (GridView)e.Row.FindControl("gvSub");
+    //protected void BtnResetAll_Click(object sender, EventArgs e)
+    //{
+    //    Response.Redirect(Request.RawUrl);
+    //}
 
-        nestedGV.DataSource = RetrievalControl.DisplayRetrievalShortfallSub();
-        nestedGV.DataBind();
-    }
+    //protected void BtnSave_Click(object sender, EventArgs e)
+    //{
+    //    SaveActualQty();
+    //}
 
-    protected void BtnResetAll_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(Request.RawUrl);
-    }
-
-    protected void BtnSave_Click(object sender, EventArgs e)
-    {
-
-    }
-
-
-    static List<int> txtActualDisburseList = new List<int>();
     protected void BtnGenerateDisbursementList_Click(object sender, EventArgs e)
     {
-        //foreach (GridViewRow row in gvRe.Rows)
-        //{
-        //    txtRetrievedList.Add(Convert.ToInt32((row.FindControl("txtRetrieved") as TextBox).Text));
-        //}
-        //Session["txtActualDisburseList"] = txtRetrievedList;
-
+        SaveActualQty();
         RetrievalControl.GenerateDisbursementList();
-
-        Response.Redirect("DisbursementList.aspx");
+        Response.Redirect("CollectionPointUpdate.aspx");
     }
 
- 
+    protected void SaveActualQty()
+    {
+        List<int> txtActualQuantityList = new List<int>();
+        List<RetrievalShortfallItem> shortfallSubList = new List<RetrievalShortfallItem>();
+
+        int i = 0;
+        foreach (GridViewRow row in gvMain.Rows)
+        {
+            int actualQty;
+            GridView gvSub = (GridView)row.FindControl("gvSub");
+            foreach (GridViewRow subRow in gvSub.Rows)
+            {
+                actualQty = Convert.ToInt32((subRow.FindControl("txtActualQuantity") as TextBox).Text);
+                retrievalShortfallItemSubListOfList[i].ActualQty = actualQty;
+                i++;
+            }
+        }
+        RetrievalControl.SaveActualQtyBreakdownByDepartment(retrievalShortfallItemSubListOfList);
+    }
+
+
 }

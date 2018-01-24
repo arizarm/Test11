@@ -20,7 +20,7 @@ public class RetrievalService : IRetrievalService
         return wcfDisbList;
     }
 
-    public List<WCFRetrievalDetail> getRetrievalDetail(string id)
+    public List<WCFRetrievalDetail> getRetrievalDetail(int id)
     {
         List<WCFRetrievalDetail> wcfRetDetailList = new List<WCFRetrievalDetail>();
         List<RetrievalListDetailItem> retbDetailList = RetrievalControl.DisplayRetrievalListDetail(id);

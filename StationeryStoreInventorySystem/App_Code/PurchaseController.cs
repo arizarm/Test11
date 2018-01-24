@@ -159,7 +159,7 @@ public class PurchaseController
         try
         {
             EFBroker_PurchaseOrder.AddPurchaseOrder(orderItems);
-            //  Utility.sendMail("williams@logicuniversity.com", "Purchase order", "Please find the order for items and approve to proceed");
+            Utility.sendMail("williams@logicuniversity.com", "Purchase order", "Please find the order for items and approve to proceed");
         }
         catch (Exception e)
         {
@@ -185,12 +185,7 @@ public class PurchaseController
     {
         return EFBroker_PurchaseOrder.GetPurchaseOrderById(orderID);
     }
-    //public List<Item_PurchaseOrder> GetPurchaseOrderItems(int orderID)
-    //{
-    //    return entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == orderID).ToList();
-
-
-    //}
+ 
     public List<PurchaseOrderItemDetails> GetPurchaseOrderItemsDetails(int orderID)
     {
         return EFBroker_PurchaseOrder.GetPurchaseOrderItemsDetailList(orderID);

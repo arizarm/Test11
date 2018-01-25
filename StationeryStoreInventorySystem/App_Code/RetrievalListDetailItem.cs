@@ -6,6 +6,9 @@ using System.Web;
 /// <summary>
 /// Summary description for RetrievalListDetailItem
 /// </summary>
+/// 
+
+[Serializable]
 public class RetrievalListDetailItem
 {
 

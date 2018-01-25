@@ -76,7 +76,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     {
         try
         {
-            id = Convert.ToInt32(Request.QueryString["id"]);
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
             RequisitionControl.cancelRejectRequisition(id);
 
             Response.Redirect("RequisitionListDepartment.aspx");
@@ -96,7 +96,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
     protected void New_Click(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["id"]);
+        id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
         string code = RequisitionControl.getCode(des);
         int qty = Convert.ToInt32(TextBox1.Text);
 

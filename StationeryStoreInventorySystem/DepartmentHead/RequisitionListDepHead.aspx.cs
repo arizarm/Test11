@@ -24,7 +24,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Utility.logout();
             }
-        }      
+        }
     }
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -33,7 +33,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             string selectedStatus = DropDownList1.SelectedValue;
-            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode,selectedStatus);
+            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(emp.DeptCode, selectedStatus);
             GridView1.DataBind();
         }
         else
@@ -44,19 +44,19 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
 
-        string searchWord = SearchBox.Text;
+        //  string searchWord = SearchBox.Text;
 
-        if (SearchBox.Text == String.Empty)
-        {
-            ClientScript.RegisterStartupScript(Page.GetType(),
-      "MessageBox",
-      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-        }
-        else
-        {
-            GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-            GridView1.DataBind();
-        }
+        //  if (SearchBox.Text == String.Empty)
+        //  {
+        //      ClientScript.RegisterStartupScript(Page.GetType(),
+        //"MessageBox",
+        //"<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+        //  }
+        //  else
+        //  {
+        //      GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
+        //      GridView1.DataBind();
+        //  }
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)

@@ -7,27 +7,30 @@ using System.Web.UI.WebControls;
 
 public partial class CollectionPointUpdate : System.Web.UI.Page
 {
+    RetrievalControl retCon = new RetrievalControl();     
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             int retrievalId = (int)Session["RetrievalID"];
-            gvCollectionPoint.DataSource = RetrievalControl.DisplayCollectionPoint(retrievalId);
+            gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
             gvCollectionPoint.DataBind();
         }
     }
 
-    List<DateTime> dateList = new List<DateTime>();
-    List<string> timeList = new List<string>();
+    
     protected void Submit_Click(object sender, EventArgs e)
     {
+        int retrievalId = (int)Session["RetrievalID"];
+
         foreach (GridViewRow row in gvCollectionPoint.Rows)
         {
-            dateList.Add(DateTime.Parse((row.FindControl("txtDate") as TextBox).Text));
-            timeList.Add(((row.FindControl("time") as TextBox).Text));
-        }
-        RetrievalControl.SaveCollectionTimeAndDateToDisbursement(dateList, timeList);//
-
-        Response.Redirect("DisbursementList.aspx");/////////////////////////////
+            string collectionPoint = (row.FindControl("labCollectionPoint") as Label).Text;
+            DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
+            string time = (row.FindControl("time") as TextBox).Text;
+            retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
+        }       
+        Response.Redirect("DisbursementList.aspx");
     }
 }

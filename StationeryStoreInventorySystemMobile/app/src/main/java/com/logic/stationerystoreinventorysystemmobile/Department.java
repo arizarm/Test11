@@ -27,6 +27,7 @@ public class Department extends  java.util.HashMap<String,String> {
         put("departmentName", departmentName);
     }
 
+
     public  static List<Department> listDepartment(){
         List<Department> dlist=new ArrayList<Department>();
         JSONArray a=JSONParser.getJSONArrayFromUrl(hostURL+"Dept");
@@ -53,8 +54,4 @@ public class Department extends  java.util.HashMap<String,String> {
         }
         return(null);
     }
-
-
-
-
 }

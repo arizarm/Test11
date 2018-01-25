@@ -10,6 +10,15 @@ using System.Text;
 [ServiceContract]
 public interface IDeptService
 {
+    //Start Login
+
+    [OperationContract]
+    [WebGet(UriTemplate = "/GetEmployeeByEmail", ResponseFormat = WebMessageFormat.Json)]
+    WCFEmployee GetEmployeeByEmail(string email);
+
+    // End Login
+
+
     // Start Employee
 
     [OperationContract]
@@ -27,7 +36,6 @@ public interface IDeptService
     [OperationContract]
     [WebGet(UriTemplate = "/Employee/DeptRep/{deptCode}", ResponseFormat = WebMessageFormat.Json)]
     WCFEmployee GetDeptRep(string deptCode);
-
 
     [OperationContract]
     [WebGet(UriTemplate = "/Employee/ForActingDHead/{deptCode}/{id}", ResponseFormat = WebMessageFormat.Json)]

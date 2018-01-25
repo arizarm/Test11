@@ -47,6 +47,7 @@
 
                 <!-- Menu For Department Representative -->
                 <div class="left-col" id="DepRepMenu" runat="server">
+                    <asp:HyperLink ID="HyperLink15" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>               
                     <asp:HyperLink ID="HyperLink13" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/CollectionListDepRep.aspx">Collection List</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink8" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionListDepRep.aspx">Requisition List</asp:HyperLink>                  
                     <asp:HyperLink ID="HyperLink9" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
@@ -67,7 +68,7 @@
                     <asp:HyperLink ID="ReorderTrendManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
                     <asp:HyperLink ID="RequisitionTrendManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
                     <asp:HyperLink ID="SupplierListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>     
-                    <asp:HyperLink ID="SupplierCreateManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManager/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
+                    <asp:HyperLink ID="SupplierCreateManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
                 </div>
 
                 <!-- Menu For Store Supervisor -->
@@ -75,7 +76,7 @@
                     <asp:HyperLink ID="ReorderTrendSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
                     <asp:HyperLink ID="RequisitionTrendSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
                     <asp:HyperLink ID="SupplierListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>     
-                    <asp:HyperLink ID="SupplierCreateSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
+                    <asp:HyperLink ID="SupplierCreateSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
                 </div>
 
 

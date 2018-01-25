@@ -101,7 +101,7 @@ public class RetrievalControl
     public void UpdateDisbursementNonShortfallItemActualQty(int rId, List<int> ActualQty, List<RetrievalListDetailItem> retDetailList)
     {
         RetrievalListDetailItemList = retDetailList;
-
+       
         List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
 
         int i = 0;
@@ -187,7 +187,8 @@ public class RetrievalControl
             int value = r.Next(1000, 9999);
             d.AccessCode = value.ToString();
             d.Status = "Ready";
-            EFBroker_Disbursement.UpdateDisbursement(d);
+            // EFBroker_Disbursement.UpdateDisbursement(d);
+            context.SaveChanges();
         }
         return;
     }
@@ -208,7 +209,8 @@ public class RetrievalControl
                         {
                             //find the correct Disbursement_Item to save
                             di.ActualQty = rsub.ActualQty;
-                            EFBroker_Disbursement.UpdateDisbursementItem(di);
+                            context.SaveChanges();
+                            //EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
                 }

@@ -137,11 +137,13 @@ public class RequisitionControl
             status = r.Status.ToString();
 
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
+          
+
             Department dep = EFBroker_DeptEmployee.GetDepartByEmpID(requestedBy);
             depCode = dep.DeptCode;
 
             department = dep.DeptName;
-            item = new ReqisitionListItem(date, requisitionNo, department, status, "");
+            item = new ReqisitionListItem(date, requisitionNo, department, status, requestedBy.ToString());
             itemList.Add(item);
         }
         return itemList;

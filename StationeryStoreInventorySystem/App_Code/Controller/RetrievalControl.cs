@@ -209,7 +209,8 @@ public class RetrievalControl
                         {
                             //find the correct Disbursement_Item to save
                             di.ActualQty = rsub.ActualQty;
-                            EFBroker_Disbursement.UpdateDisbursementItem(di);
+                            context.SaveChanges();
+                            //EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
                 }

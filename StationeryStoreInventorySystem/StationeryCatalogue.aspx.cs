@@ -110,7 +110,6 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ddl2.DataSource = EFBroker_Item.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
-        //ViewState["rowindex"] = index;
         return;
     }
     protected void RemoveRow(int index)

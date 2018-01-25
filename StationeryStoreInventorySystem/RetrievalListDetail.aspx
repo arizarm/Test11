@@ -31,7 +31,7 @@
             <asp:TemplateField HeaderText="Total Quantity Retrieved">
                 <ItemTemplate>
                     <asp:TextBox ID="txtRetrieved" runat="server"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

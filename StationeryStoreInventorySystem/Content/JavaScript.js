@@ -15,6 +15,16 @@
                dateFormat: 'dd-M-yy'
            }).val()
        });
+	    $(function () {
+           $("#startDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+           });
+           $("#endDate").datepicker({
+               changeMonth: true,
+               changeYear: true,
+           });
+       });
        function printDiv() {
            var divName = "printable";
            var printContents = document.getElementById(divName).innerHTML;

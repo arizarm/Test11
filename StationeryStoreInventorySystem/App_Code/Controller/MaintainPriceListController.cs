@@ -9,9 +9,9 @@ using System.Web;
 /// </summary>
 public class MaintainPriceListController
 {
-    public List<string> GetAllItemNames()
+    public List<Item> GetActiveItemList()
     {
-            List<string> items = EFBroker_Item.GetActiveItemList().Select(c => c.Description).ToList();
+            List<Item> items = EFBroker_Item.GetActiveItemList().ToList();
             return items;
     }
 
@@ -21,24 +21,18 @@ public class MaintainPriceListController
         return categories;
     }
 
-    public List<string> GetAllItemNamesForGivenCat(string cat)
+    public List<Item> GetAllItemsForGivenCat(string cat)
     {
         int catID = EFBroker_Category.GetCategoryList().Where(c => c.CategoryName == cat).Select(x => x.CategoryID).FirstOrDefault();
-        List<string> itemFGC = EFBroker_Item.GetItemsbyCategoryID(catID).Select(z => z.Description).ToList();
+        List<Item> itemFGC = EFBroker_Item.GetItemsbyCategoryID(catID).ToList();
         return itemFGC;
     }
 
-    public string GetCatForGivenItem(string name)
+    public string GetCatForGivenItemCode(string code)
     {
-        int? catFGI = EFBroker_Item.GetItembyDescription(name).CategoryID;
+        int? catFGI = EFBroker_Item.GetItembyItemCode(code).CategoryID;
         string catFGI2 = EFBroker_Category.GetCategoryList().Where(z => z.CategoryID == catFGI).Select(d => d.CategoryName).FirstOrDefault();
         return catFGI2;
-    }
-
-    public string GetItemCodeForGivenItemName(string name)
-    {
-        string itemCode = EFBroker_Item.GetItembyDescription(name).ItemCode;
-        return itemCode;
     }
 
     public void AddPriceListItem(PriceList obj)
@@ -52,9 +46,9 @@ public class MaintainPriceListController
         return lpl;
     }
 
-    public string GetItemNameForGivenItemCode(string itemCode)
+    public Item GetItemForGivenItemCode(string itemCode)
     {
-        string itemName = EFBroker_Item.GetItembyItemCode(itemCode).Description;
+        Item itemName = EFBroker_Item.GetItembyItemCode(itemCode);
         return itemName;
     }
 
@@ -65,10 +59,8 @@ public class MaintainPriceListController
     }
 
 
-    public PriceList GetPriceListObjForGivenDescNSupplier(string desc, string supplierCode)
+    public PriceList GetPriceListObjForGivenItemCodeNSupplier(string itemCode, string supplierCode)
     {
-        string itemCode = EFBroker_Item.GetItembyDescription(desc).ItemCode;
-
         PriceList pl = EFBroker_PriceList.GetCurrentYearSupplierPriceList(supplierCode).Where(c => c.ItemCode == itemCode).FirstOrDefault();
         return pl;
     }

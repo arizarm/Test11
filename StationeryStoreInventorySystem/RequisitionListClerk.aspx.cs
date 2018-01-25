@@ -62,19 +62,19 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
 
-        string searchWord = SearchBox.Text;
+          string searchWord = SearchBox.Text;
 
-        if (SearchBox.Text == String.Empty)
-        {
-            ClientScript.RegisterStartupScript(Page.GetType(),
-      "MessageBox",
-      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-        }
-        else
-        {
+      //  if (SearchBox.Text == String.Empty)
+      //  {
+      //      ClientScript.RegisterStartupScript(Page.GetType(),
+      //"MessageBox",
+      //"<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+      //  }
+      //  else
+      //  {
             gvReq.DataSource = RequisitionControl.DisplaySearch(searchWord);
             gvReq.DataBind();
-        }
+       // }
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
@@ -89,20 +89,41 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
         List<int> reqNo = new List<int>();
-
+        //
         foreach (GridViewRow row in gvReq.Rows)
         {
-            if (((CheckBox)row.FindControl("CheckBox")).Checked)
+            if (((CheckBox)row.FindControl("CheckBox")).Checked == false)
             {
+                CheckBoxValidation.Text = "Please select at least one requisition!";
+            }else if (((CheckBox)row.FindControl("CheckBox")).Checked)
+            {
+
                 reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
+                Session["RetrievalID"] = reqCon.AddRetrieval();
+                reqCon.AddDisbursement(reqNo);
+
+                //Response.Redirect("RetrievalList.aspx");
+                Response.Redirect("RetrievalListDetail.aspx");
             }
         }
-        
-        Session["RetrievalID"] = reqCon.AddRetrieval();
-        reqCon.AddDisbursement(reqNo);
+  
+        //
 
-        //Response.Redirect("RetrievalList.aspx");
-        Response.Redirect("RetrievalListDetail.aspx");
+        //List<int> reqNo = new List<int>();
+
+        //foreach (GridViewRow row in gvReq.Rows)
+        //{
+        //    if (((CheckBox)row.FindControl("CheckBox")).Checked)
+        //    {
+        //        reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
+        //    }
+        //}
+        
+        //Session["RetrievalID"] = reqCon.AddRetrieval();
+        //reqCon.AddDisbursement(reqNo);
+
+        ////Response.Redirect("RetrievalList.aspx");
+        //Response.Redirect("RetrievalListDetail.aspx");
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

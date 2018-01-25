@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:Label ID="Label1" runat="server" Text="Supplier List" CssClass="mainPageHeader" Font-Bold="true" Font-Size="X-Large"/>
     <br /><br /> 
-    <a href="SupplierCreate.aspx">
+    <a href="~/StoreManagerSupervisor/SupplierCreate.aspx">
         <asp:Label ID="Label2" runat="server" Text="+ Add New" Font-Size="Large" Enabled="false" Visible="false"/></a>
     <br /> <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" >

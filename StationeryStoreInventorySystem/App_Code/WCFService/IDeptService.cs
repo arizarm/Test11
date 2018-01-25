@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
@@ -11,8 +12,7 @@ using System.Text;
 public interface IDeptService
 {
     //Start Login
-
-    [OperationContract]
+    [PrincipalPermission(SecurityAction.Demand, Role = "DepartmentHead")]
     [WebGet(UriTemplate = "/GetEmployeeByEmail", ResponseFormat = WebMessageFormat.Json)]
     WCFEmployee GetEmployeeByEmail(string email);
 

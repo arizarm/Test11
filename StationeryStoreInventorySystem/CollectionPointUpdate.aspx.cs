@@ -31,6 +31,6 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
             string time = (row.FindControl("time") as TextBox).Text;
             retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
         }       
-        Response.Redirect("DisbursementList.aspx");
+        Response.Redirect("~/Store/DisbursementList.aspx");
     }
 }

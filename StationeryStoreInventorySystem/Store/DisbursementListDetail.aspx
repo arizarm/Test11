@@ -41,9 +41,10 @@
                 <asp:TemplateField HeaderText="Actual Quantity">                                   
                     <ItemTemplate>
                         <asp:TextBox ID="txtactualQty" runat="server" Text='<%# Bind("actualQty") %>'></asp:TextBox> 
+                        <asp:Label ID="lblActualError" runat="server" ForeColor="Red" ></asp:Label>
                         <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtactualQty" MaximumValue='<%# Eval("reqQty") %>' MinimumValue="0" style="color:red"></asp:RangeValidator>
                    <br />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red">Quantity cannot be empty!</asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red" EnableViewState="True">Quantity cannot be empty!</asp:RequiredFieldValidator>
                          </ItemTemplate>
                 </asp:TemplateField>
              <asp:TemplateField HeaderText="Remarks" SortExpression="Remarks">                                   

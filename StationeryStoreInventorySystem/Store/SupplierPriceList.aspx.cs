@@ -253,6 +253,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
     protected void NewPriceTextBox_TextChanged(object sender, EventArgs e)
     {
     }
+
+    protected void TenderPriceDropDownList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        TenderPriceDropDownList.PageIndex = e.NewPageIndex;
+        PopulateTenderSupplyList();
+    }
 }
 
 public class TenderListObj

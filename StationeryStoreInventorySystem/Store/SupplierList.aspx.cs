@@ -19,7 +19,7 @@ public partial class SupplierList : System.Web.UI.Page
             GridView1.DataSource = LS;
             GridView1.DataBind();
 
-            if ((string)Session["userType"] == "Store Supervisor" || (string)Session["userType"] == "Store Manager")
+            if ((string)Session["empRole"] == "Store Supervisor" || (string)Session["empRole"] == "Store Manager")
             {
                 Label2.Enabled = true;
                 Label2.Visible = true;

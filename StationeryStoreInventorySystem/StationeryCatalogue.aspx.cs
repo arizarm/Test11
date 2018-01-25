@@ -69,13 +69,14 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                     break;
                 case "CancelEdit":
                     {
-                        cancelEdit();
+                        cancelEdit(index);
                     }
                     break;
                 case "UpdateRow":
                     {
                         UpdateRow(index);
                         RefreshPage();
+
                     }
                     break;
                 default:
@@ -109,6 +110,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ddl2.DataSource = EFBroker_Item.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
+        //ViewState["rowindex"] = index;
         return;
     }
     protected void RemoveRow(int index)
@@ -132,11 +134,17 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         TextBox bin = (TextBox)row.FindControl("TextBoxBin");
         DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
         ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
-        cancelEdit();
+        cancelEdit(index);
         }
     }
-    protected void cancelEdit()
+    protected void cancelEdit(int index)
     {
+        //GridViewRowCollection a = GridView1.Rows;
+        //GridViewRow row = a[index];
+        //CustomValidator customValidator1 = (CustomValidator)row.FindControl("CustomValidator1");
+        //customValidator1.IsValid = true;
+        //RequiredFieldValidator requiredFieldValidator1 = (RequiredFieldValidator)row.FindControl("RequiredFieldValidator1");
+        //requiredFieldValidator1.IsValid = true;
         GridView1.EditIndex = -1;
         GridView1.DataBind();
     }

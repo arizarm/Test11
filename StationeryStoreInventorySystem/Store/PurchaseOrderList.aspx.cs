@@ -61,4 +61,29 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         string orderID = btn.CommandArgument;
         Response.Redirect("~/Store/PurchaseOrderDetail.aspx?OrderID=" + orderID);
     }
+
+    protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label statusLbl = (Label)e.Row.FindControl("OrderStatus");
+            string status = statusLbl.Text;
+            if (status == "Pending")
+            {
+                statusLbl.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if(status == "Approved")
+            {
+                statusLbl.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (status == "Rejected")
+            {
+                statusLbl.ForeColor = System.Drawing.Color.Red;
+            }
+            else if (status == "Closed")
+            {
+                statusLbl.ForeColor = System.Drawing.Color.Orange;
+            }
+        }
+    }
 }

@@ -101,7 +101,7 @@ public class RetrievalControl
     public void UpdateDisbursementNonShortfallItemActualQty(int rId, List<int> ActualQty, List<RetrievalListDetailItem> retDetailList)
     {
         RetrievalListDetailItemList = retDetailList;
-       
+
         List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
 
         int i = 0;
@@ -117,6 +117,9 @@ public class RetrievalControl
                         {
                             di.ActualQty = ActualQty[i];
                             di.Disbursement.Retrieval.RetrievalStatus = "Retrieved";
+                            Item item = EFBroker_Item.GetItembyItemCode(di.ItemCode);
+                            item.BalanceQty -= ActualQty[i];//////////////////////////////////////////
+                            EFBroker_Item.UpdateItem(item);
                         }
                     }
                 }
@@ -349,6 +352,7 @@ public class RetrievalControl
 
                 if (dep == disbDep)
                 {
+                    r.Status = "InProgress";/////////////////////////////////////////////
                     r.DisbursementID = i;
                     context.SaveChanges();
                 }

@@ -30,7 +30,15 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
             DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
             string time = (row.FindControl("time") as TextBox).Text;
             retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
-        }       
-        Response.Redirect("~/Store/DisbursementList.aspx");
+        }
+
+        if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
+        {
+            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+        }
+        else
+        {
+            Response.Redirect("~/Store/DisbursementList.aspx");
+        }        
     }
 }

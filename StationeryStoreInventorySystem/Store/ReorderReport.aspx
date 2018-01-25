@@ -10,13 +10,13 @@
 
     </h2>
     Start Date:
-                <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static" ReadOnly="true"></asp:TextBox>
-    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtSDate" Display="Dynamic" ErrorMessage="Please enter the Start Date" ForeColor="Red" ValidationGroup="DateValGrp"></asp:RequiredFieldValidator>
+                <asp:TextBox ID="startDate" runat="server" ClientIDMode="Static" ></asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" ControlToValidate="startDate" Display="Dynamic" ErrorMessage="Please enter the Start Date" ForeColor="Red" ValidationGroup="DateValGrp"></asp:RequiredFieldValidator>
     <br />
     <br />
     End Date:&nbsp;
-    <asp:TextBox ID="txtEDate"  runat="server" ClientIDMode="Static" ReadOnly="true"></asp:TextBox>
-    <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEDate" Display="Dynamic" ErrorMessage="Please enter the End Date" ForeColor="Red" ValidationGroup="DateValGrp"></asp:RequiredFieldValidator>
+    <asp:TextBox ID="endDate"  runat="server" ClientIDMode="Static" ></asp:TextBox>
+    <asp:RequiredFieldValidator runat="server" ControlToValidate="endDate" Display="Dynamic" ErrorMessage="Please enter the End Date" ForeColor="Red" ValidationGroup="DateValGrp"></asp:RequiredFieldValidator>
     <br />
     <br />
     <br />

@@ -25,6 +25,8 @@
                      </EditItemTemplate>
                      <ItemTemplate>                         
                     <asp:TextBox ID="txtDate" runat="server" ClientIDMode="Static"></asp:TextBox>
+                           <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please select the date" ControlToValidate="txtDate" Style="color: red"></asp:RequiredFieldValidator>
+
                      </ItemTemplate>
                  </asp:TemplateField>
 
@@ -42,4 +44,5 @@
      </p>      
         <asp:Button ID="Submit" runat="server" Text="Submit" CssClass="button" OnClick="Submit_Click" />
 </asp:Content>
+
 

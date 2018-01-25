@@ -266,3 +266,13 @@
         width: 300px;
         height: 140px;
     }
+	
+	   .gridviewEditbutton{
+   
+    margin: 2% 2px;
+    background-color: rgba(100,150,40,1);
+    max-width: 55%;
+    color: #fff;
+    padding:3px 2% 3px 2%;
+    
+}

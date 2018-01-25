@@ -54,7 +54,7 @@ public partial class RetrievalDecision : System.Web.UI.Page
     protected void BtnGenerateDisbursementList_Click(object sender, EventArgs e)
     {
         SaveActualQty();
-        retCon.GenerateAccessCode(retrievalId);
+        //retCon.GenerateAccessCode(retrievalId);
         Response.Redirect("CollectionPointUpdate.aspx");
     }
 

@@ -57,11 +57,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     }
 
     protected void Button2_Click(object sender, EventArgs e)
-    {
+    {  
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
         foreach (GridViewRow row in GridView1.Rows)
-        {
+        {        
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
             string stock = (row.FindControl("lblStock") as Label).Text;
             string actual = (row.FindControl("lblActual") as Label).Text;
@@ -71,6 +71,18 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             {
                 if (remarks.Length <= maxChars)
                 {
+                    //update item table if any adjustment at disubrsement point 
+                    if (Session["ItemToUpdate"] != null)
+                    {
+                        if ((bool)Session["ItemToUpdate"])
+                        {
+                            StationeryEntities context = new StationeryEntities();
+                            Item i = EFBroker_Item.GetItembyItemCode(itemCode);
+                            i.BalanceQty = (adj * -1) + i.BalanceQty;
+                            EFBroker_Item.UpdateItem(i);
+                        }
+                    }
+
                     List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
                     List<PriceList> itemPrices = new List<PriceList>();
 

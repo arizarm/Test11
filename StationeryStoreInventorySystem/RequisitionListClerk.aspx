@@ -82,7 +82,8 @@
         </asp:GridView>
     </div>
     <asp:Button ID="GenerateBtn" runat="server" Text="Generate Retrieval List" CssClass="button" OnClick="GenerateBtn_Click" Height="60px" Width="273px"/>
-    <h2><asp:Label ID="CheckBoxValidation" runat="server" Text=""></asp:Label></h2> 
+    <asp:Label ID="CheckBoxValidation" runat="server" ForeColor="Red" Font-Size="Large" ></asp:Label>
+    
     </asp:Content>
 
 

@@ -75,10 +75,10 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void redirectCheck()
     {
-        if (((Dictionary<Item, String>)Session["discrepancyList"]).Count != 0)
+        if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
             Session["ItemToUpdate"] = true;
-            Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
+            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {

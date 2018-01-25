@@ -166,6 +166,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
             Session["discrepancyList"] = null;
             Session["monthly"] = null;
+            Session["ItemToUpdate"] = null;
 
             bool informSupervisor = false;
             bool informManager = false;

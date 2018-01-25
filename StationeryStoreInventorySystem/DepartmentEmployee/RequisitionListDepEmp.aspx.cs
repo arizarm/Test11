@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -42,6 +43,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
+        Employee emp = (Employee)Session["emp"];
         string searchWord = SearchBox.Text;
         if (SearchBox.Text == String.Empty)
         {
@@ -51,7 +53,16 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
         else
         {
-
+            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            {
+                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord, emp.EmpID);
+                GridView1.DataBind();
+            }
+            else
+            {
+                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord, emp.EmpID, DropDownList1.SelectedItem.ToString());
+                GridView1.DataBind();
+            }
         }
     }
 

@@ -24,7 +24,9 @@ public partial class RequisitionForm : System.Web.UI.Page
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
-            Label3.Text = "Form: "+emp.DeptCode+"/" + id;
+            //Label3.Text = "Form: "+emp.DeptCode+"/" + id;
+            Label3.Text = "Form: " + "/ " + id;
+
             ViewState["list"] = rItem;
             DropDownList1.DataSource = RequisitionControl.getItem();
             DropDownList1.DataBind();

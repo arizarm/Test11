@@ -90,7 +90,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.Status == status && x.DeptCode == depCode).ToList();
+            rlist = context.Requisitions.Where(x => x.Status.Equals(status) && x.DeptCode.Equals(depCode)).ToList();
         }
         return rlist;
     }
@@ -280,6 +280,22 @@ public class EFBroker_Requisition
         using (StationeryEntities context = new StationeryEntities())
         {
             return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).OrderBy(x=>x.Status.Equals("Approved")).ToList();
+        }
+    }
+
+    public static List<Requisition> SearchForReqHeadWithoutStatus(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode)).ToList();
+        }
+    }
+
+    public static List<Requisition> SearchForReqHeadWithStatus(string deptCode, string status)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals(status)).ToList();
         }
     }
 }

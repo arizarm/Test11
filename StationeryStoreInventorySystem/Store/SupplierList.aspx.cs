@@ -21,9 +21,14 @@ public partial class SupplierList : System.Web.UI.Page
 
             if ((string)Session["empRole"] == "Store Supervisor" || (string)Session["empRole"] == "Store Manager")
             {
-                Label2.Enabled = true;
-                Label2.Visible = true;
+                AddSupplierButton.Enabled = true;
+                AddSupplierButton.Visible = true;
             }
         }
+    }
+
+    protected void AddSupplierButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/StoreManagerSupervisor/SupplierCreate.aspx");
     }
 }

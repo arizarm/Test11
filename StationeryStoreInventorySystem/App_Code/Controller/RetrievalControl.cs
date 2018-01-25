@@ -21,7 +21,7 @@ public class RetrievalControl
     //Get all Retrieval List
     public List<Retrieval> DisplayRetrievalList()
     {
-        return context.Retrievals.ToList();
+        return EFBroker_Disbursement.GetAllRetrievalList();
     }
 
     //Display retrieval by search keyword
@@ -290,123 +290,224 @@ public class RetrievalControl
         return retrievalId;
     }
 
-    public void AddDisbursement(List<int> requNo)
-    {
-        List<int> disbursementID = new List<int>();
-        Disbursement d = new Disbursement();
-        List<int> requestedBy = new List<int>(); //EmpID
-        List<string> deptCodeList = new List<string>();
+    //public void AddDisbursement(List<int> requNo)
+    //{
+    //    List<int> disbursementID = new List<int>();
+    //    Disbursement d = new Disbursement();
+    //    List<int> requestedBy = new List<int>(); //EmpID
+    //    List<string> deptCodeList = new List<string>();
 
-        foreach (int i in requNo)
-        {
-            requestedBy.Add((int)(context.Requisitions.Where(x => x.RequisitionID.Equals(i)).Select(x => x.RequestedBy).First()));
-        }
+    //    foreach (int i in requNo)
+    //    {
+    //        requestedBy.Add((int)(context.Requisitions.Where(x => x.RequisitionID.Equals(i)).Select(x => x.RequestedBy).First()));
+    //    }
 
-        //foreach requestedBy get depcode
-        foreach (int i in requestedBy)
-        {
-            string dC = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
+    //    //foreach requestedBy get depcode
+    //    foreach (int i in requestedBy)
+    //    {
+    //        string dC = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
 
-            if (deptCodeList.Count() != 0)
-            {
-                bool add = true;
+    //        if (deptCodeList.Count() != 0)
+    //        {
+    //            bool add = true;
 
-                foreach (string s in deptCodeList)
-                {
-                    if (s == dC)
-                    {
-                        add = false;
-                    }
-                }
-                if (add) deptCodeList.Add(dC);
-            }
-            else
-            {
-                deptCodeList.Add(dC);
-            }
-        }
+    //            foreach (string s in deptCodeList)
+    //            {
+    //                if (s == dC)
+    //                {
+    //                    add = false;
+    //                }
+    //            }
+    //            if (add) deptCodeList.Add(dC);
+    //        }
+    //        else
+    //        {
+    //            deptCodeList.Add(dC);
+    //        }
+    //    }
 
-        //foreach depcode add disbursement + disbDetail
-        foreach (string i in deptCodeList)
-        {
-            //add Disbursement
-            d.RetrievalID = retrievalId;
-            d.DeptCode = i;
-            d.Status = "Pending";
-            context.Disbursements.Add(d);
-            context.SaveChanges();
+    //    //foreach depcode add disbursement + disbDetail
+    //    foreach (string i in deptCodeList)
+    //    {
+    //        //add Disbursement
+    //        d.RetrievalID = retrievalId;
+    //        d.DeptCode = i;
+    //        d.Status = "Pending";
+    //        context.Disbursements.Add(d);
+    //        context.SaveChanges();
 
-            disbursementID.Add(d.DisbursementID);//auto increasement disbursementID after SaveChanges
-        }
-        foreach (int i in disbursementID)
-        {
-            string disbDep = context.Disbursements.Where(x => x.DisbursementID == i).Select(x => x.DeptCode).First();
+    //        disbursementID.Add(d.DisbursementID);//auto increasement disbursementID after SaveChanges
+    //    }
+    //    foreach (int i in disbursementID)
+    //    {
+    //        string disbDep = context.Disbursements.Where(x => x.DisbursementID == i).Select(x => x.DeptCode).First();
 
-            foreach (int no in requNo)
-            {
-                //update requisition table 
-                Requisition r = new Requisition();
-                r = context.Requisitions.Where(x => x.RequisitionID.Equals(no)).First();
+    //        foreach (int no in requNo)
+    //        {
+    //            //update requisition table 
+    //            Requisition r = new Requisition();
+    //            r = context.Requisitions.Where(x => x.RequisitionID.Equals(no)).First();
 
-                string dep = context.Employees.Where(x => x.EmpID == r.RequestedBy).Select(x => x.DeptCode).First();
+    //            string dep = context.Employees.Where(x => x.EmpID == r.RequestedBy).Select(x => x.DeptCode).First();
 
-                if (dep == disbDep)
-                {
-                    r.Status = "InProgress";/////////////////////////////////////////////
-                    r.DisbursementID = i;
-                    context.SaveChanges();
-                }
-            }
-            AddDisbursemen_Item(i);
-        }
-    }
+    //            if (dep == disbDep)
+    //            {
+    //                r.Status = "InProgress";/////////////////////////////////////////////
+    //                r.DisbursementID = i;
+    //                context.SaveChanges();
+    //            }
+    //        }
+    //        AddDisbursemen_Item(i);
+    //    }
+    //}
 
-    public void AddDisbursemen_Item(int disbursementID)
-    {
-        List<Requisition_Item> Requisition_ItemListOfList = new List<Requisition_Item>();
+    //public void AddDisbursemen_Item(int disbursementID)
+    //{
+    //    List<Requisition_Item> Requisition_ItemListOfList = new List<Requisition_Item>();
 
-        List<int> requisitionIDList = new List<int>();
-        requisitionIDList = context.Requisitions.Where(x => x.DisbursementID == disbursementID).Select(x => x.RequisitionID).ToList();
-        foreach (int rL in requisitionIDList)
-        {
-            List<Requisition_Item> Requisition_ItemList = context.Requisition_Item.Where(x => x.RequisitionID == rL).ToList();
+    //    List<int> requisitionIDList = new List<int>();
+    //    requisitionIDList = context.Requisitions.Where(x => x.DisbursementID == disbursementID).Select(x => x.RequisitionID).ToList();
+    //    foreach (int rL in requisitionIDList)
+    //    {
+    //        List<Requisition_Item> Requisition_ItemList = context.Requisition_Item.Where(x => x.RequisitionID == rL).ToList();
 
-            //foreach (Requisition_Item r in Requisition_ItemListOfList)
-            foreach (Requisition_Item r in Requisition_ItemList)
-            {
-                if (Disbursement_ItemList.Count != 0)
-                {
-                    bool add = true;
+    //        //foreach (Requisition_Item r in Requisition_ItemListOfList)
+    //        foreach (Requisition_Item r in Requisition_ItemList)
+    //        {
+    //            if (Disbursement_ItemList.Count != 0)
+    //            {
+    //                bool add = true;
 
-                    foreach (Disbursement_Item i in Disbursement_ItemList)
-                    {
-                        if (i.ItemCode == r.ItemCode)
-                        {
-                            add = false;
-                            i.TotalRequestedQty += r.RequestedQty;
-                        }
-                    }
-                    if (add)
-                    {
-                        CreateDisbursementItemList(disbursementID, r);
-                    }
-                }
-                else
-                {
-                    CreateDisbursementItemList(disbursementID, r);
-                }
-                context.SaveChanges();
-            }
-        }
-    }
+    //                foreach (Disbursement_Item i in Disbursement_ItemList)
+    //                {
+    //                    if (i.ItemCode == r.ItemCode)
+    //                    {
+    //                        add = false;
+    //                        i.TotalRequestedQty += r.RequestedQty;
+    //                    }
+    //                }
+    //                if (add)
+    //                {
+    //                    CreateDisbursementItemList(disbursementID, r);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                CreateDisbursementItemList(disbursementID, r);
+    //            }
+    //            context.SaveChanges();
+    //        }
+    //    }
+    //}
 
-    public void CreateDisbursementItemList(int disbursementID, Requisition_Item r)
-    {
-        Disbursement_Item disbursement_Item = new Disbursement_Item();
-        disbursement_Item.DisbursementID = disbursementID;
-        disbursement_Item.ItemCode = r.ItemCode;
-        disbursement_Item.TotalRequestedQty = r.RequestedQty;
-        context.Disbursement_Item.Add(disbursement_Item);
-        Disbursement_ItemList.Add(disbursement_Item);
-    }
+    //public void CreateDisbursementItemList(int disbursementID, Requisition_Item r)
+    //{
+    //    Disbursement_Item disbursement_Item = new Disbursement_Item();
+    //    disbursement_Item.DisbursementID = disbursementID;
+    //    disbursement_Item.ItemCode = r.ItemCode;
+    //    disbursement_Item.TotalRequestedQty = r.RequestedQty;
+    //    context.Disbursement_Item.Add(disbursement_Item);
+    //    Disbursement_ItemList.Add(disbursement_Item);
+    //}\
+
+////TEST CODE
+
+
+//    public void AddDisbursement(List<int> requNos, int retrievalID)
+//    {
+//        DepReqDictionary depReqDic = GetSelectedRequisitionDepartmentList(requNos);
+//        foreach (string depCode in depReqDic.keys)
+//        {
+//            int disbursementID = CreateNewDisbursment(depCode, retrievalID);
+//            List<int> requisitionNos = depReqDic.dictionary[depCode];
+//            DepReqDictionary multicounter = GetRequisition_quantities(requisitionNos, depCode);
+//            CreateNewDisbursementItems(multicounter.keys, disbursementID, depCode, multicounter.accumulator);
+//        }
+
+//    }
+//    public void CreateNewDisbursementItems(HashSet<string> itemCodes, int disbursementID, string depCode, Dictionary<string,int> accumulator)
+//    {
+//        List<Disbursement_Item> diList = new List<Disbursement_Item>();
+//        foreach(string itemCode in itemCodes)
+//        {
+//            Disbursement_Item disbursement_Item = new Disbursement_Item();
+//            disbursement_Item.DisbursementID = disbursementID;
+//            disbursement_Item.ItemCode = itemCode;
+//            disbursement_Item.TotalRequestedQty = accumulator[itemCode];
+//            diList.Add(disbursement_Item);
+//        }
+//        using (StationeryEntities context = new StationeryEntities())
+//        {
+//            context.Disbursement_Item.AddRange(diList);
+//            context.SaveChanges();
+//        }
+//        return;
+//    }
+//    public static DepReqDictionary GetRequisition_quantities(List<int> requisitionNos, string depCode)
+//    {
+//        DepReqDictionary multiCounter = new DepReqDictionary();
+//        HashSet<string> itemCodeKeys = new HashSet<string>();
+//        Dictionary<string, int> quantities = new Dictionary<string, int>();
+//        using (StationeryEntities context = new StationeryEntities())
+//        {
+//            foreach (int i in requisitionNos)
+//            {
+//                List <Requisition_Item> rList = context.Requisition_Item.Where(ri=>ri.RequisitionID==i).ToList();
+//                foreach( Requisition_Item ri in rList)
+//                {
+//                    int qty = quantities[ri.ItemCode];
+//                    itemCodeKeys.Add(ri.ItemCode);
+//                    qty = qty + ri.RequestedQty ?? 0;
+//                    quantities[ri.ItemCode] = qty;
+//                }
+//            }
+//            multiCounter.keys = itemCodeKeys;
+//            multiCounter.accumulator = quantities;
+//        }
+//        return multiCounter;
+//    }
+//    public DepReqDictionary GetSelectedRequisitionDepartmentList(List<int> requisitionNos)
+//    {
+//        DepReqDictionary complete = new DepReqDictionary();
+//        Dictionary<string, List<int>> depCodeDic = new Dictionary<string, List<int>>();
+//        HashSet<string> keys = new HashSet<string>();
+
+//        foreach (int i in requisitionNos)
+//        {
+//            List<int> list = new List<int>();
+//            string d;
+//            using (StationeryEntities context = new StationeryEntities())
+//            {
+//                d = context.Requisitions.Where(r => r.RequisitionID == i).Select(r => r.Employee.DeptCode).FirstOrDefault();
+//            }
+//            if (depCodeDic[d] != null)
+//            {
+//                list = depCodeDic[d];
+//                list.Add(i);
+//                depCodeDic[d] = list;
+//            }
+//            else
+//            {
+//                list.Add(i);
+//                depCodeDic.Add(d, list);
+//                keys.Add(d);
+//            }
+//        }
+//        complete.dictionary = depCodeDic;
+//        complete.keys = keys;
+//        return complete;
+//    }
+//    public static int CreateNewDisbursment(string depCode, int retrievalID)
+//    {
+//        using (StationeryEntities context = new StationeryEntities())
+//        { 
+//            Disbursement d = new Disbursement();
+//                d.RetrievalID = retrievalID;
+//                d.DeptCode = depCode;
+//                d.Status = "Pending";
+//                context.Disbursements.Add(d);
+//                context.SaveChanges();
+//            return d.DisbursementID;
+//        }
+//    }
 }

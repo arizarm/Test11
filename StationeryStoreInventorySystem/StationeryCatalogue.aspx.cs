@@ -94,9 +94,9 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         GridView1.DataBind();
         GridViewRowCollection a = GridView1.Rows;
         GridViewRow row = a[index];
-        Label itemLabel = (Label)row.FindControl("Label1");
-        DropDownList ddl = (DropDownList)row.FindControl("DropDownList3");
-        DropDownList ddl2 = (DropDownList)row.FindControl("DropDownList4");
+        Label itemLabel = (Label)row.FindControl("LabelICode");
+        DropDownList ddl = (DropDownList)row.FindControl("DropDownListCat");
+        DropDownList ddl2 = (DropDownList)row.FindControl("DropDownListUOM");
 
         ddl.DataTextField = "CategoryName";
         ddl.DataValueField = "CategoryID";
@@ -113,25 +113,27 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void RemoveRow(int index)
     {
-        Label r = (Label)GridView1.Rows[index].FindControl("Label1");
+        Label r = (Label)GridView1.Rows[index].FindControl("LabelICode");
         string itemCode = r.Text;
         EFBroker_Item.RemoveItem(itemCode);
         return;
     }
     protected void UpdateRow(int index)
     {
+        if (Page.IsValid) { 
         GridViewRow row = GridView1.Rows[index];
-        Label itemCode = (Label)row.FindControl("Label1");
-        DropDownList categoryList = (DropDownList)row.FindControl("DropDownList3");
-        TextBox description = (TextBox)row.FindControl("TextBox6");
-        TextBox reorderLevel = (TextBox)row.FindControl("TextBox9");
+        Label itemCode = (Label)row.FindControl("LabelICode");
+        DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
+        TextBox description = (TextBox)row.FindControl("TextboxDesc");
+        TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
         int level = Convert.ToInt32(reorderLevel.Text);
-        TextBox reorderQty = (TextBox)row.FindControl("TextBox8");
+        TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
         int qty = Convert.ToInt32(reorderQty.Text);
         TextBox bin = (TextBox)row.FindControl("TextBoxBin");
-        DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownList4");
+        DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
         ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
         cancelEdit();
+        }
     }
     protected void cancelEdit()
     {
@@ -221,5 +223,6 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
+        return;
     }
 }

@@ -217,4 +217,9 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //        TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
     //    }
     //}
+
+    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
+    }
 }

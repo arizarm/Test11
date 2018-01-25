@@ -1,22 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" EnableEventValidation="true" CodeFile="StationeryCatalogue.aspx.cs" Inherits="StationeryCatalogue" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <script>
-        function printDiv() {
-            var divName = "printable";
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-        }
-    </script>
+    <script src="Content/JavaScript.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
     <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
 
 
@@ -90,10 +77,12 @@
     </asp:Panel>--%>
     <div class="row">
         <div class="col-md-6 pull-left">
-            <asp:HyperLink ID="HyperLink7" runat="server" CssClass="pull-left" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">&lt &lt Create New Item &gt &gt</asp:HyperLink></div>
+            <asp:HyperLink ID="HyperLink7" runat="server" CssClass="pull-left" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">&lt &lt Create New Item &gt &gt</asp:HyperLink>
+        </div>
 
         <div class="col-md-6 pull-right">
-            <button type="button" class="btn btn-default pull-right" onclick="printDiv()">Print Catalogue</button></div>
+            <button type="button" class="btn btn-default pull-right" onclick="printDiv()">Print Catalogue</button>
+        </div>
     </div>
     <br />
     <div id="printable">
@@ -114,7 +103,9 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Description">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("description") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBox6" runat="server" Text='<%# Bind("description") %>' ></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Description cannot be left blank" ControlToValidate="TextBox6" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                        <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Description must be different from existing products" ControlToValidate="TextBox6" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
@@ -154,8 +145,8 @@
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <EditItemTemplate>
-                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
-                        <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="True" CommandName="CancelEdit" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ValidationGroup="validateItemGroup"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="CancelEdit" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="True" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
@@ -163,7 +154,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="True" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 

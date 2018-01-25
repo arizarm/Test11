@@ -6,6 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for RetrievalShortfallItem
 /// </summary>
+[Serializable]
 public class RetrievalShortfallItem
 {
     //string deptName;

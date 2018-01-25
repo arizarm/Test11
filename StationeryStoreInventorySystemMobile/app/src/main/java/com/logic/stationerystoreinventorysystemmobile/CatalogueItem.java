@@ -27,11 +27,12 @@ public class CatalogueItem extends HashMap<String, String> {
 //        put("activeStatus", activeStatus);
 //    }
 
-    public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty){
+    public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments){
         put("itemCode", itemCode);
         put("description", description);
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
+        put("adjustments", adjustments);
     }
 
     public static ArrayList<CatalogueItem> getAllBooks(){
@@ -41,7 +42,17 @@ public class CatalogueItem extends HashMap<String, String> {
             for(int i =0;i<a.length();i++)
             {
                 JSONObject b= a.getJSONObject(i);
-                CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"));
+                Integer adjustments = b.getInt("adjustments");
+                String adjStr = "";
+                if (adjustments > 0)
+                {
+                    adjStr = "+" + adjustments.toString();
+                }
+                else
+                {
+                    adjStr = adjustments.toString();
+                }
+                CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"), adjStr);
                 ciList.add(ci);
             }
         }

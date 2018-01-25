@@ -11,13 +11,11 @@ public partial class RequisitionDetails : System.Web.UI.Page
     StationeryEntities context = new StationeryEntities();
     Requisition r = new Requisition();
     int id = 0;
-    string des;
+    string code;
     protected void Page_Load(object sender, EventArgs e)
     {
-
         id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
         //int id = 24;
-
 
         Requisition r = RequisitionControl.getRequisition(id);
         int empid = Convert.ToInt32(r.RequestedBy);
@@ -40,29 +38,17 @@ public partial class RequisitionDetails : System.Web.UI.Page
             }
 
             DropDownList2.DataSource = RequisitionControl.getItem();
+            DropDownList2.DataTextField = "Description";
+            DropDownList2.DataValueField = "ItemCode";
             DropDownList2.DataBind();
         }
 
-        des = DropDownList2.SelectedItem.ToString();
-        Label6.Text = RequisitionControl.getUOM(des);
+        code = DropDownList2.SelectedValue.ToString();
+        Label6.Text = RequisitionControl.getUOM(code);
     }
 
     protected void showAllItems()
     {
-        //var q = from i in context.Items
-        //        join ri in context.Requisition_Item
-        //        on i.ItemCode equals ri.ItemCode
-        //        join rt in context.Requisitions
-        //        on ri.RequisitionID equals rt.RequisitionID
-        //        where ri.RequisitionID == id
-        //        select new
-        //        {
-        //            i.Description,
-        //            ri.RequestedQty,
-        //            i.UnitOfMeasure,
-        //            rt.Status
-        //        };
-
         GridView1.DataSource = RequisitionControl.getList(id);
         //GridView1.DataSource = q.ToList();
         GridView1.DataBind();
@@ -91,13 +77,12 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Add_Click(object sender, EventArgs e)
     {
         Panel1.Visible = true;
-
     }
 
     protected void New_Click(object sender, EventArgs e)
     {
         id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-        string code = RequisitionControl.getCode(des);
+        string des = RequisitionControl.getDescription(code);
         int qty = Convert.ToInt32(TextBox1.Text);
 
         if (GridView1.Rows.Count <= 0)
@@ -114,10 +99,13 @@ public partial class RequisitionDetails : System.Web.UI.Page
                 System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
                 string item = labelDes.Text;
 
-                if (des.Equals(item))
+                System.Web.UI.WebControls.Label labelCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
+                string iCode = labelCode.Text;
+
+                if (code.Equals(iCode))
                 {
                     isEqual = true;
-                    truCode = RequisitionControl.getCode(des);
+                    truCode = iCode;
                 }
             }
             if (isEqual)
@@ -165,8 +153,8 @@ public partial class RequisitionDetails : System.Web.UI.Page
         System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView1.Rows[e.RowIndex].FindControl("qtyText");
         int newQty = Convert.ToInt32(qtyText.Text);
 
-        System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)GridView1.Rows[e.RowIndex].FindControl("itemDes");
-        string itemDesc = itemDescLabel.Text;
+        System.Web.UI.WebControls.Label codeLabel = (System.Web.UI.WebControls.Label)GridView1.Rows[e.RowIndex].FindControl("code");
+        string itemDesc = codeLabel.Text;
 
         Requisition_Item item = RequisitionControl.findByReqIDItemCode(id, itemDesc);
         string iCode = item.ItemCode;

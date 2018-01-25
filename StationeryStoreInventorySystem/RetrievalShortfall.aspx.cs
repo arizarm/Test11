@@ -60,6 +60,8 @@ public partial class RetrievalDecision : System.Web.UI.Page
 
     protected void SaveActualQty()
     {
+        retrievalId = (int)Session["RetrievalID"];
+
         List<int> txtActualQuantityList = new List<int>();
         List<RetrievalShortfallItem> shortfallSubList = new List<RetrievalShortfallItem>();
         List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList = new List<RetrievalShortfallItemSub>();

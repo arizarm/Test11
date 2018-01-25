@@ -1,5 +1,11 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -7,16 +13,41 @@ import java.util.HashMap;
  */
 
 public class CatalogueItem extends HashMap<String, String> {
+    String host = "http://localhost:43605/ItemService.svc/";
 
-    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
+//    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
+//        put("itemCode", itemCode);
+//        put("description", description);
+//        put("unitOfMeasure", unitOfMeasure);
+//        put("balanceQty", balanceQty.toString());
+//        put("categoryID", categoryID.toString());
+//        put("reorderLevel", reorderLevel.toString());
+//        put("reorderQty", reorderQty.toString());
+//        put("bin", bin);
+//        put("activeStatus", activeStatus);
+//    }
+
+    public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty){
         put("itemCode", itemCode);
-        put("categoryID", categoryID.toString());
         put("description", description);
-        put("reorderLevel", reorderLevel.toString());
-        put("reorderQty", reorderQty.toString());
         put("unitOfMeasure", unitOfMeasure);
-        put("bin", bin);
-        put("activeStatus", activeStatus);
         put("balanceQty", balanceQty.toString());
+    }
+
+    public ArrayList<CatalogueItem> getAllBooks(){
+        ArrayList<CatalogueItem> ciList = new ArrayList<CatalogueItem>();
+        try{
+            JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/CatalogueItems");
+            for(int i =0;i<a.length();i++)
+            {
+                JSONObject b= a.getJSONObject(i);
+                CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"));
+                ciList.add(ci);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return ciList;
     }
 }

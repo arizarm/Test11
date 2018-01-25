@@ -91,7 +91,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                 RejectBtn.Visible = false;
                
             }
-            if(pOrder.Status=="Closed")
+            if(pOrder.Status=="Closed" || pOrder.Status == "Rejected")
             {
                 deliveryLbl.Visible = false;
                 DeliveryOrderIDTxtBx.Visible = false;
@@ -112,18 +112,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                 ApproveBtn.Visible = false;
                 RejectBtn.Visible = false;
                 gvPurchaseDetail.Columns[5].Visible = true;
-            }
-           //else if (pOrder.Status == "Rejected")
-           // {
-           //     deliveryLbl.Visible = true;
-           //     DeliveryOrderIDTxtBx.Visible = true;
-           //     CloseOrderBtn.Visible = true;
-           //     RemarkLbl.Visible = false;
-           //     RemarkTxtBx.Visible = false;
-           //     ApproveBtn.Visible = false;
-           //     RejectBtn.Visible = false;
-           //     gvPurchaseDetail.Columns[5].Visible = false;
-           // }           
+            }           
         }
     }
 

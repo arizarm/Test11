@@ -28,12 +28,14 @@
 
         .labelStyle {
             font-size: medium;
-            font-weight: bold;
+            font-weight:bold;
+             font-size: 10pt;
         }
 
         .orderInfoStyle {
-            width: 560px;
-            height: 25px;
+            width: 1260px;
+            height: 10px;
+            
         }
     </style>
     <script>
@@ -48,44 +50,42 @@
 
     </div>
     <table>
-        <tr>
+         <tr>
             <td class="orderInfoStyle">
-                <h3 class="labelStyle">Supervisor Name:<asp:Label ID="supervisorName" runat="server" Text="" CssClass="labelStyle"></asp:Label></h3>
-
-            </td>
-        </tr>
-        <tr>
+                <h3 class="labelStyle">Deliver To:
+                                <asp:Label ID="Label2" runat="server" Text=" Logic University" CssClass="labelStyle"></asp:Label></h3>
+             
+            </td>  
             <td class="orderInfoStyle">
                 <h3 class="labelStyle">PurchaseOrder ID:
                     <asp:Label ID="OrderID" runat="server" Text="" CssClass="labelStyle"></asp:Label></h3>
 
             </td>
-        </tr>
-        <tr>
-            <td class="orderInfoStyle">
-                <h3 class="labelStyle">Deliver To:
-                                <asp:Label ID="Label4" runat="server" Text="Deliver to Logic University" CssClass="labelStyle"></asp:Label></h3>
-
-            </td>
-        </tr>
-        <tr>
-            <td class="orderInfoStyle">
-                <h3 class="labelStyle">Supplier Name:<asp:Label ID="SupplierName" runat="server" Text="" CssClass="labelStyle"></asp:Label></h3>
-
-            </td>
-        </tr>
-        <tr>
+          </tr>
+        <tr>         
             <td class="orderInfoStyle">
                 <h3 class="labelStyle">
-                    <asp:Label ID="Label7" runat="server" Text="Address: 25 Heng Mui Keng Terrace Singapore 119615" CssClass="labelStyle" />
+                    <asp:Label ID="Label3" runat="server" Text="Address: 25 Heng Mui Keng Terrace Singapore 119615" CssClass="labelStyle" />
                 </h3>
 
             </td>
-        </tr>
+            <td class="orderInfoStyle">
+                <h3 class="labelStyle">Supplier Name:<asp:Label ID="SupplierName" runat="server" Text=" " CssClass="labelStyle"></asp:Label></h3>
 
+            </td>
+        </tr>                       
+        <tr>
+            <td class="orderInfoStyle">
+                <h3 class="labelStyle">Supervisor Name:<asp:Label ID="supervisorName" runat="server" Text="" CssClass="labelStyle"></asp:Label></h3>
+
+            </td>
+        </tr>      
     </table>
     <br />
-    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" CssClass="gridViewAlign"
+    <br />
+    <br />
+    <br />
+    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" CssClass="mGrid"
         EmptyDataText="No items haven been ordered for this order" OnRowEditing="gvPurchaseDetail_RowEditing"
         OnRowUpdating="gvPurchaseDetail_RowUpdating" OnRowCancelingEdit="gvPurchaseDetail_RowCancelingEdit">
         <Columns>

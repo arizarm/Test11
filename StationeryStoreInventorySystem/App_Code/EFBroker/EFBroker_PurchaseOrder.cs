@@ -39,7 +39,7 @@ public class EFBroker_PurchaseOrder
         List<PurchaseOrder> rList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee").ToList();
+            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").ToList();
         }
         return rList;
     }
@@ -47,7 +47,7 @@ public class EFBroker_PurchaseOrder
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            List<PurchaseOrder> purchaseorderList = (from pOrder in entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee")
+            List<PurchaseOrder> purchaseorderList = (from pOrder in entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder")
                                                      where pOrder.Status == status
                                                      select pOrder).ToList();
             return purchaseorderList;
@@ -57,7 +57,7 @@ public class EFBroker_PurchaseOrder
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee").Where(x => x.PurchaseOrderID == orderID).ToList();
+            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x => x.PurchaseOrderID == orderID).ToList();
         }
     }
     public static List<Item_PurchaseOrder> GetPurchaseOrderItemList()

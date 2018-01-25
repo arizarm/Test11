@@ -9,16 +9,12 @@ using System.Text;
 public class DeptService : IDeptService
 {
     // Start Login
-    public bool VerifyEmployee(WCFEmployee e)
-    {
-        return EmployeeController.verifyLogin(e.Email, e.Password);
-    }
-
 
     public WCFEmployee GetEmployeeByEmail(string email)
     {
         Employee emp = EmployeeController.GetEmployeeByEmail(email);
-        return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
+
+        return WCFEmployee.Make(emp.EmpID, emp.DeptCode, emp.EmpName, emp.Role, emp.Password
         , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
         , emp.EndDate.GetValueOrDefault().ToShortDateString());
     }

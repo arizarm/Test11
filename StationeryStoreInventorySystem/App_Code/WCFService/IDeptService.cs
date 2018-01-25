@@ -13,10 +13,6 @@ public interface IDeptService
     //Start Login
 
     [OperationContract]
-    [WebGet(UriTemplate = "/VerifyEmployee", ResponseFormat = WebMessageFormat.Json)]
-    bool VerifyEmployee(WCFEmployee e);
-
-    [OperationContract]
     [WebGet(UriTemplate = "/GetEmployeeByEmail", ResponseFormat = WebMessageFormat.Json)]
     WCFEmployee GetEmployeeByEmail(string email);
 

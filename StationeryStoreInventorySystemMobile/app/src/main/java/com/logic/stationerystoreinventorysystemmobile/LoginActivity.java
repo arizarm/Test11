@@ -26,8 +26,7 @@ public class LoginActivity extends Activity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email.getText().toString().equals("admin") &&
-                        password.getText().toString().equals("admin")) {
+                if(Employee.VerifyEmployee(email.getText().toString(), password.getText().toString())) {
                     Toast.makeText(getApplicationContext(),
                             "Redirecting...",Toast.LENGTH_SHORT).show();
                 }else{

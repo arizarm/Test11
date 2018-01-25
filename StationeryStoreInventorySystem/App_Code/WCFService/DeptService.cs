@@ -8,6 +8,19 @@ using System.Text;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
 public class DeptService : IDeptService
 {
+    // Start Login
+
+    public WCFEmployee GetEmployeeByEmail(string email)
+    {
+        Employee emp = EmployeeController.GetEmployeeByEmail(email);
+
+        return WCFEmployee.Make(emp.EmpID, emp.DeptCode, emp.EmpName, emp.Role, emp.Password
+        , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
+        , emp.EndDate.GetValueOrDefault().ToShortDateString());
+    }
+
+    //End Login
+
     //Start Employee Function Part
     public List<WCFEmployee> EmployeeList()
     {

@@ -26,7 +26,7 @@ public class EFBroker_Disbursement
         List<Disbursement> disbursements = new List<Disbursement>();
         using (StationeryEntities context = new StationeryEntities())
         {
-            disbursements = context.Disbursements.Include("Department").Where(x => x.Status.Equals("Retrieved")).ToList();
+            disbursements = context.Disbursements.Include("Department").Where(x => x.Status.Equals("Ready")).ToList();
         }
         return disbursements;
     }

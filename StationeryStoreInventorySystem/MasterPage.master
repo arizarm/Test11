@@ -47,6 +47,7 @@
 
                 <!-- Menu For Department Representative -->
                 <div class="left-col" id="DepRepMenu" runat="server">
+                    <asp:HyperLink ID="HyperLink15" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>               
                     <asp:HyperLink ID="HyperLink13" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/CollectionListDepRep.aspx">Collection List</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink8" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionListDepRep.aspx">Requisition List</asp:HyperLink>                  
                     <asp:HyperLink ID="HyperLink9" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>

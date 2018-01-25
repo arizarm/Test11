@@ -17,20 +17,20 @@ public class DiscrepancyAdhoc extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_adhoc);
 
-//        list = findViewById(R.id.listItemsAdhoc);
-//        new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
-//
-//            @Override
-//            protected ArrayList<CatalogueItem> doInBackground(Void... input){
-//                return CatalogueItem.getAllBooks();
-//            }
-//
-//            @Override
-//            protected void onPostExecute(ArrayList<CatalogueItem> iList){
-//                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
-//                list.setAdapter(adapter);
-//            }
-//        }.execute();
+        list = findViewById(R.id.listItemsAdhoc);
+        new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
+
+            @Override
+            protected ArrayList<CatalogueItem> doInBackground(Void... input){
+                return CatalogueItem.getAllBooks();
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<CatalogueItem> iList){
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
+                list.setAdapter(adapter);
+            }
+        }.execute();
 //        ArrayList<CatalogueItem> iList = new ArrayList<>();
 //        iList.add(new CatalogueItem("C001", "book", "each", 43));
 //        iList.add(new CatalogueItem("C002", "paper", "boxes", 34));

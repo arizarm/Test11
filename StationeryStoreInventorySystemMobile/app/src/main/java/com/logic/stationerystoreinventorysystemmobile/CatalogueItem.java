@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 
 public class CatalogueItem extends HashMap<String, String> {
-    static String host = "http://localhost:43605/ItemService.svc/";
+    static String host = "http://172.17.249.125/StationeryStoreInventorySystem/ItemService.svc/";
 
 //    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
 //        put("itemCode", itemCode);
@@ -37,7 +37,7 @@ public class CatalogueItem extends HashMap<String, String> {
     public static ArrayList<CatalogueItem> getAllBooks(){
         ArrayList<CatalogueItem> ciList = new ArrayList<CatalogueItem>();
         try{
-            JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/CatalogueItems");
+            JSONArray a = JSONParser.getJSONArrayFromUrl(host+"CatalogueItems");
             for(int i =0;i<a.length();i++)
             {
                 JSONObject b= a.getJSONObject(i);

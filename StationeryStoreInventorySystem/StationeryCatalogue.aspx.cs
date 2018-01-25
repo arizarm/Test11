@@ -227,9 +227,9 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //    }
     //}
 
-    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
-        return;
-    }
+    //protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    //{
+    //    args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
+    //    return;
+    //}
 }

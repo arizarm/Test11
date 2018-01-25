@@ -9,6 +9,7 @@ public partial class RetrievalForm : System.Web.UI.Page
 {
     RetrievalControl retCon = new RetrievalControl();
 
+    Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -83,8 +84,21 @@ public partial class RetrievalForm : System.Web.UI.Page
 
         RetrievalShortfallItemList = retCon.CheckShortfall(txtRetrievedList);
 
-        if (RetrievalShortfallItemList != null)  //if any shortfall
+        if (RetrievalShortfallItemList != null)  //if there's shortfall
         {
+            foreach(RetrievalShortfallItem r in RetrievalShortfallItemList)
+            {
+                Item i = EFBroker_Item.GetItembyItemCode(r.ItemCode);
+                int balance = (int) i.BalanceQty;
+                if(balance> r.Qty)
+                {                    
+                    int discQty = r.Qty - balance; 
+                    discToUpdate.Add(i, discQty);
+                }                
+            }
+
+            Session["discrepancyList"] = discToUpdate;
+
             Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
             Response.Redirect("RetrievalShortfall.aspx");
         }

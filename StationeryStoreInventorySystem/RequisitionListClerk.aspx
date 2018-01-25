@@ -4,6 +4,7 @@
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
+    <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server"><ContentTemplate>--%>
    
   <div>
         <h2 class="mainPageHeader">Requisition List</h2>
@@ -84,6 +85,8 @@
     <asp:Button ID="GenerateBtn" runat="server" Text="Generate Retrieval List" CssClass="button" OnClick="GenerateBtn_Click" Height="60px" Width="273px"/>
     <asp:Label ID="CheckBoxValidation" runat="server" ForeColor="Red" Font-Size="Large" ></asp:Label>
     
-    </asp:Content>
+ <%--   </ContentTemplate></asp:UpdatePanel>--%>
+    
+</asp:Content>
 
 

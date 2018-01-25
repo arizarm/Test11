@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="RequisitionListDepartment.aspx"><-Back</a>
+    <a href="CollectionListDepRep.aspx"><-Back</a>
     <br />
     <br />
 
@@ -25,7 +25,7 @@
         <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid" Width="150%">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">

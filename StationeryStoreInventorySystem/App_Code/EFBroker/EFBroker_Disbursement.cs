@@ -69,8 +69,25 @@ public class EFBroker_Disbursement
         {
             Disbursement disbursement = GetDisbursmentbyDisbID(disbID);
             disbursement.Status = "Closed";
+            UpdateDisbursement(disbursement);
+        }
+    }
+    public static void UpdateDisbursement(Disbursement disbursement)
+    {
+        using(StationeryEntities context = new StationeryEntities())
+        {
+            context.Entry(disbursement).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
+    }
+    public static void UpdateDisbursementItem(Disbursement_Item disItem)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Entry(disItem).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+
     }
     public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
     {   //not needed
@@ -90,4 +107,5 @@ public class EFBroker_Disbursement
         }
         return disbursementDetail;
     }
+
 }

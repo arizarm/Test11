@@ -13,7 +13,8 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         {
             if ((bool)Session["monthly"] == true)
             {
-                Session["discrepancyList"] = new Dictionary<Item, String>();
+                Session["discrepancyList"] = new Dictionary<Item, int>();
+                Session["discrepancyDisplay"] = new Dictionary<Item, String>();
             }
         }
 
@@ -44,20 +45,30 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Dictionary<Item, String> discrepancies = null;
+        Dictionary<Item, int> discrepancies = null;
+        Dictionary<Item, String> discrepancyDisplay = null;
 
         if (Session["discrepancyList"] == null)
         {
-            discrepancies = new Dictionary<Item, String>();
+            discrepancies = new Dictionary<Item, int>();
         }
         else
         {
-            discrepancies = (Dictionary<Item, String>)Session["discrepancyList"];
+            discrepancies = (Dictionary<Item, int>)Session["discrepancyList"];
+        }
+
+        if (Session["discrepancyDisplay"] == null)
+        {
+            discrepancyDisplay = new Dictionary<Item, String>();
+        }
+        else
+        {
+            discrepancyDisplay = (Dictionary<Item, String>)Session["discrepancyDisplay"];
         }
 
         bool alreadyInDiscrepancyList = false;
-        KeyValuePair<Item, String> toBeReplaced = new KeyValuePair<Item, String>();
-        foreach (KeyValuePair<Item, String> kvp in discrepancies)
+        KeyValuePair<Item, int> toBeReplaced = new KeyValuePair<Item, int>();
+        foreach (KeyValuePair<Item, int> kvp in discrepancies)
         {
             if (kvp.Key.ItemCode == lblItemCode.Text)
             {
@@ -71,8 +82,8 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         int adjustment = 0;
         if (Int32.TryParse(txtAdj.Text, out adjustment))
         {
-            //if (adjustment != 0)
-            //{
+            if (adjustment != 0)
+            {
                 int actualQuantity = (int)item.BalanceQty + adjustment;
                 string adjStr = "";
 
@@ -88,16 +99,18 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
                 if (alreadyInDiscrepancyList)
                 {
                     discrepancies.Remove(toBeReplaced.Key);
+                    discrepancyDisplay.Remove(toBeReplaced.Key);
                     //discrepancies[item] = adjStr;
                 }
-                discrepancies.Add(item, adjStr);
+                discrepancies.Add(item, adjustment);
+                discrepancyDisplay.Add(item, adjStr);
                 Session["discrepancyList"] = discrepancies;
                 Response.Redirect("~/GenerateDiscrepancyV2.aspx");
-            //}
-            //else
-            //{
-            //    Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
-            //}
+            }
+            else
+            {
+                Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
+            }
         }
         else
         {

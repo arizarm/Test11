@@ -15,15 +15,16 @@ public partial class RequisitionForm : System.Web.UI.Page
     //ArrayList reqItem =new ArrayList();
     static RequestedItem ri;
     string des;
+    Employee emp;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         Label1.Text = DateTime.Now.ToLongDateString();
-
+         emp = (Employee)Session["emp"];
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
-            Label3.Text = "Form:ENGL/" + id;
+            Label3.Text = "Form: "+emp.DeptCode+"/" + id;
             ViewState["list"] = rItem;
             DropDownList1.DataSource = RequisitionControl.getItem();
             DropDownList1.DataBind();
@@ -86,9 +87,9 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Submit_Click(object sender, EventArgs e)
     {
-        if(Session["emp"] != null)
+        if (Session["emp"] != null)
         {
-            Employee emp = (Employee)Session["emp"];
+            emp = (Employee)Session["emp"];
             int RequestedBy = emp.EmpID;
             string DeptCode = emp.DeptCode;
             if (GridView2.Rows.Count <= 0)
@@ -98,10 +99,10 @@ public partial class RequisitionForm : System.Web.UI.Page
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
+                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
-            //Server.Transfer("RequisitionListDepartment.aspx", true);
-            Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+            //Server.Transfer("RequisitionListDepartment.aspx", true);            
         }
         else
         {

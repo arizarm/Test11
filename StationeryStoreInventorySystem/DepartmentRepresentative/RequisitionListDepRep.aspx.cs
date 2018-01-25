@@ -14,9 +14,9 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             if (Session["emp"] != null)
             {
                 Employee emp = (Employee)Session["emp"];
-                
+
                 //Requested Requisition
-                if(RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
+                if (RequisitionControl.getRequisitionListByID(emp.EmpID).Count == 0)
                 {
                     Label5.Text = "There is no requested requisition data";
                 }
@@ -25,14 +25,14 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                     Label5.Visible = false;
                     GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                     GridView1.DataBind();
-                }      
+                }
             }
             else
 
             {
                 Utility.logout();
             }
-        }      
+        }
     }
 
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,8 +42,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Employee emp = (Employee)Session["emp"];
             string selectedStatus = DropDownList1.SelectedValue;
 
-        GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
-        GridView1.DataBind();
+            GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
+            GridView1.DataBind();
         }
         else
         {
@@ -65,8 +65,16 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisition(searchWord,emp.EmpID);
-                GridView1.DataBind();
+                if (DropDownList1.SelectedItem.ToString() == "Select Status")
+                {
+                    GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord, emp.EmpID);
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord, emp.EmpID, DropDownList1.SelectedItem.ToString());
+                    GridView1.DataBind();
+                }
             }
         }
         else

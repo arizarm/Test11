@@ -46,8 +46,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 //Date
 
                 cmpToday.ValueToCompare = DateTime.Now.ToShortDateString();
-               //CompareValidator1.ValueToCompare = DateTime.Now.ToShortDateString();
-                
+                //CompareValidator1.ValueToCompare = DateTime.Now.ToShortDateString();
+
                 RequiredFieldValidator1.Enabled = true;
                 RequiredFieldValidator2.Enabled = true;
                 cmpToday.Enabled = true;
@@ -101,12 +101,12 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     //}else { cmpToday.Enabled = true; }
                     DateTime? endDate = empActingDHead.EndDate;
                     DateTime today = DateTime.Now;
-                        if (today > endDate)
-                        {
-                            EFBroker_DeptEmployee.UpdateRevoke();
+                    if (today > endDate)
+                    {
+                        EFBroker_DeptEmployee.UpdateRevoke();
 
-                        }
-                    
+                    }
+
                     DropDownListActingDHead.DataSource = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, empRid);
                     DropDownListActingDHead.DataTextField = "EmpName";
                     DropDownListActingDHead.DataValueField = "EmpID";
@@ -148,7 +148,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             Employee empSession = (Employee)Session["emp"];
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
-            
+
             if (dcode != null)
             {
                 int cid = EFBroker_DeptEmployee.GetCollectionidbyDeptCode(dcode);
@@ -163,7 +163,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                 if (Convert.ToInt32(DropDownListActingDHead.SelectedValue) == 0)
                 {
-                   
+
                     if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
                         EFBroker_DeptEmployee.UpdateRevoke();
@@ -181,14 +181,14 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                     string sdate = txtSDate.Text;
                     string edate = txtEDate.Text;
-                   EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
+                    EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
 
 
                 }
                 if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                 {
                     Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
-                    int aid = empActingDHead.EmpID;              
+                    int aid = empActingDHead.EmpID;
                     int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
                     string sdate = txtSDate.Text;
                     string edate = txtEDate.Text;
@@ -196,7 +196,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     string eedate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
                     //lblFax.Text = ssdate;
                     //lblPhone.Text = sdate;
-                    if (c == cid && empid == empRepid && Aempid==aid && sdate==ssdate && edate==eedate)
+                    if (c == cid && empid == empRepid && Aempid == aid && sdate == ssdate && edate == eedate)
                     {
                         Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
                     }
@@ -206,13 +206,14 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
 
                     }
-                }else
+                }
+                else
                 {
                     int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
                     string sdate = txtSDate.Text;
                     string edate = txtEDate.Text;
                     //lblFax.Text = Aempid.ToString();
-                    
+
                     if (c == cid && empid == empRepid && Aempid == 0 && sdate == "" && edate == "")
                     {
                         Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
@@ -220,7 +221,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     else
                     {
 
-                       Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+                        Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
 
                     }
                 }
@@ -286,7 +287,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        
+
         Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
     }
 }

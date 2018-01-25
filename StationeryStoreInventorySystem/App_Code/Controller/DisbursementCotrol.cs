@@ -5,8 +5,8 @@ using System.Transactions;
 using System.Web;
 
 public class DisbursementCotrol
-{     
-    int disbID;    
+{
+    int disbID;
 
     //GET DISBURSEMENT LIST TO DISPLAY
     public List<DisbursementListItems> gvDisbursementPopulate()
@@ -14,24 +14,16 @@ public class DisbursementCotrol
         List<DisbursementListItems> disbursementListItemsList = new List<DisbursementListItems>();
 
         //get all disbursement data
-        List<Disbursement> disbursement = EFBroker_Disbursement.GetAllDisbursementList();   
+        List<Disbursement> disbursement = EFBroker_Disbursement.GetAllDisbursementList();
 
         //get dep detail for each disbursement 
-        foreach(Disbursement d in disbursement)
+        foreach (Disbursement d in disbursement)
         {
-            int disbId = d.DisbursementID;
-            string depCode = d.DeptCode;
-            string depName = d.Department.DeptName;
-            string collectionDate = d.CollectionDate.Value.ToLongDateString();
-            string collectionTime = d.CollectionTime.ToString();
-            string collectionPoint = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode);
-
-            //put all data to display class
-            DisbursementListItems disbursementListItems = new DisbursementListItems(disbId, depCode, depName, collectionDate, collectionTime, collectionPoint);
-
+            //Set DisbursementListItem Details
+            DisbursementListItems disbursementListItems = CreateDisbursementListItem(d);
             //add display data to list
             disbursementListItemsList.Add(disbursementListItems);
-        }        
+        }
         return disbursementListItemsList;
     }
 
@@ -41,27 +33,29 @@ public class DisbursementCotrol
         disbID = disbId;
 
         Disbursement disb = EFBroker_Disbursement.GetDisbursmentbyDisbID(disbID);
-        
+
+        return CreateDisbursementListItem(disb);
+    }
+    ////Set DisbursementListItem Details
+    public DisbursementListItems CreateDisbursementListItem(Disbursement disb)
+    {
         string depCode = disb.DeptCode;
         string depName = disb.Department.DeptName;
         string collectionDate = disb.CollectionDate.Value.ToLongDateString();
         string collectionTime = disb.CollectionTime.ToString();
-        string collectionPoint = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode);
+        string collectionPoint = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(disb.DeptCode).CollectionPoint1;
+        DisbursementListItems disbursementListItems = new DisbursementListItems(disb.DisbursementID, collectionDate, collectionTime, depCode, depName, collectionPoint);
 
-        //put all data to display class
-        DisbursementListItems disbursementListItems = new DisbursementListItems(disbId, depCode, depName, collectionDate, collectionTime, collectionPoint);
-                
         return disbursementListItems;
     }
-
     //GET DISBURSEMENT DETAIL LIST TO DISPLAY
     public List<DisbursementDetailListItems> gvDisbursementDetailPopulate()
     {
         List<DisbursementDetailListItems> disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
-        
+
         List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
 
-        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbID);        
+        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbID);
 
         foreach (Disbursement_Item disbDetails in disbursementDetail)
         {
@@ -100,7 +94,7 @@ public class DisbursementCotrol
         List<DateTime?> dates = new List<DateTime?>();
         List<string> dateList = new List<string>();
         dates = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
-        foreach(DateTime d in dates)
+        foreach (DateTime d in dates)
         {
             if (d != null)
             {
@@ -140,15 +134,11 @@ public class DisbursementCotrol
     //ADD REQUISITION ITEM
     public void addItemToRequisition(string code, int qty, int id)
     {
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Requisition_Item ri = new Requisition_Item();
-            ri.RequisitionID = id;
-            ri.ItemCode = code;
-            ri.RequestedQty = qty;
-            context.Requisition_Item.Add(ri);
-            context.SaveChanges();
-        }
+        Requisition_Item ri = new Requisition_Item();
+        ri.RequisitionID = id;
+        ri.ItemCode = code;
+        ri.RequestedQty = qty;
+        EFBroker_Requisition.AddItemToRequisition(ri);
     }
 
     //Get Current Disbursement
@@ -187,9 +177,9 @@ public class DisbursementCotrol
         foreach (Disbursement_Item dI in d)
         {
             itemCode = dI.ItemCode;
-            Qty = (int) dI.ActualQty;
+            Qty = (int)dI.ActualQty;
             balance = (int)dI.Item.BalanceQty - Qty;
-            
+
 
             StockCard sc = new StockCard();
             sc.ItemCode = itemCode;
@@ -198,6 +188,6 @@ public class DisbursementCotrol
             sc.Balance = balance;
             sc.TransactionDetailID = transId;
             EFBroker_StockCard.AddStockTransaction(sc);
-        }        
+        }
     }
 }

@@ -14,6 +14,8 @@ public partial class DisbursementListDetail : System.Web.UI.Page
     static List<DisbursementDetailListItems> retrievedItem;
     Dictionary<Item, String> discrepanciesOutput = new Dictionary<Item, String>();
 
+    Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();
+
     protected void Page_Load(object sender, EventArgs e)
     {   
         //populate grid view with disbursement details
@@ -84,6 +86,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                         Item disItem = GenerateDiscrepancyController.GetItemByItemCode(iCode);
                         string finalQty = (disItem.BalanceQty + disQty).ToString();
                         discrepanciesOutput.Add(disItem, finalQty);
+                        discToUpdate.Add(disItem, disQty);
                     }
                     else if(actualQty > retrievedQty)
                     {
@@ -101,6 +104,8 @@ public partial class DisbursementListDetail : System.Web.UI.Page
 
             //add discrepancy item to session 
             Session["discrepancyList"] = discrepanciesOutput;
+
+            Session["discToUpdate"] = discToUpdate;
 
             //redirect to Regenerate Request page if any shortfall
             if (shortfallItem.Count != 0)

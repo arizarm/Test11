@@ -40,7 +40,7 @@ public class GenerateRequisitionTrendController
         {
             string month = D.ToString("MMMM");
             string year = D.Year.ToString();
-            string entry = month + " " + month;
+            string entry = month + " " + year;
 
             allMonthsInString.Add(entry);
         }

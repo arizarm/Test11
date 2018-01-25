@@ -58,9 +58,6 @@
     <br />
     <br />
 
-    <asp:GridView ID="GridView1" runat="server">
-    </asp:GridView>
-
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
                         
                         <Columns>

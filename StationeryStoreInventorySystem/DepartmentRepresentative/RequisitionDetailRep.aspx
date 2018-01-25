@@ -65,12 +65,17 @@
     <br />
     <br />
     <asp:Table runat="server">
-        <asp:TableRow>
+          <asp:TableRow>
             <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
                     <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
                         <Columns>
+                            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
                                     <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
@@ -117,9 +122,14 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Description" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
 
                         <Columns>
+                            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
                                 <ItemTemplate>
                                     <asp:Label ID="itemDes" runat="server" Text='<%# Bind("Description") %>'></asp:Label>

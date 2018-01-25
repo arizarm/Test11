@@ -22,10 +22,10 @@ public class DisbursementService : IDisbursementService
         return wcfDisbList;
     }
 
-    public WCFDisbursement getDisbursement(int id)
+    public WCFDisbursement getDisbursement(string id)
     {
         WCFDisbursement wcfDisb = new WCFDisbursement();
-        DisbursementListItems d = disbCon.DisbursementListItemsObj(id);
+        DisbursementListItems d = disbCon.DisbursementListItemsObj(Convert.ToInt32(id));
         wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
         return wcfDisb;
     }

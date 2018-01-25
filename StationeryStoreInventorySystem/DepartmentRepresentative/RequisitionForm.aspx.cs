@@ -24,17 +24,20 @@ public partial class RequisitionForm : System.Web.UI.Page
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
-            //Label3.Text = "Form: " + emp.DeptCode + "/ " + id;
+            //Label3.Text = "Form: "+emp.DeptCode+"/" + id;
             Label3.Text = "Form: " + "/ " + id;
 
             ViewState["list"] = rItem;
             DropDownList1.DataSource = RequisitionControl.getItem();
+            DropDownList1.DataTextField = "Description";
+            DropDownList1.DataValueField = "ItemCode";
             DropDownList1.DataBind();
         }
         rItem = (List<RequestedItem>)ViewState["list"];
         des = DropDownList1.SelectedItem.ToString();
-        Label2.Text = RequisitionControl.getUOM(des);
-        Label4.Text = RequisitionControl.getCode(des);
+        code = DropDownList1.SelectedValue.ToString();
+        Label2.Text = RequisitionControl.getUOM(code);
+        //Label4.Text = RequisitionControl.getCode(des);
         Label4.Visible = false;
     }
 
@@ -46,7 +49,7 @@ public partial class RequisitionForm : System.Web.UI.Page
 
         if (GridView2.Rows.Count <= 0)
         {
-            ri = new RequestedItem(Label4.Text, des, qty, Label2.Text);
+            ri = new RequestedItem(code, des, qty, Label2.Text);
             rItem = (List<RequestedItem>)ViewState["list"];
             rItem.Add(ri);
             //reqItem.Add(ri);
@@ -61,7 +64,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                 System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("code");
                 string item = labelDes.Text;
 
-                if (Label4.Text.Equals(item))
+                if (code.Equals(item))
                 {
                     isEqual = true;
                 }
@@ -72,7 +75,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             }
             else
             {
-                ri = new RequestedItem(Label4.Text, des, qty, Label2.Text);
+                ri = new RequestedItem(code, des, qty, Label2.Text);
                 rItem = (List<RequestedItem>)ViewState["list"];
                 rItem.Add(ri);
                 ViewState["list"] = rItem;
@@ -101,7 +104,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
-                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
+                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

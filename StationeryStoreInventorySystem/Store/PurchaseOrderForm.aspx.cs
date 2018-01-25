@@ -25,6 +25,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoadData();
+           
         }
 
     }
@@ -42,7 +43,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         supervisorNamesDropDown.DataValueField = "EmpID";
         supervisorNamesDropDown.DataBind();
 
-                   
+
         if (Session["PurchaseItems"] != null)
         {
             ritems = (List<PurchaseItems>)Session["PurchaseItems"];
@@ -73,7 +74,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             Label itemCodeLbl = (Label)e.Row.FindControl("ItemCode");
             String gvrowItemCode = itemCodeLbl.Text;
             List<SupplierInfo> splrList = pCtrlr.GetSupplierList().Where(x => x.ItemCode == (string)DataBinder.Eval(e.Row.DataItem, "ItemCode")).ToList();
-           // List<SupplierInfo> splrList = pCtrlr.GetSupplierListByItemCode(gvrowItemCode);
+            // List<SupplierInfo> splrList = pCtrlr.GetSupplierListByItemCode(gvrowItemCode);
             supplierList.DataSource = splrList;
             supplierList.DataTextField = "SupplierNameWithPrice";
             supplierList.DataValueField = "SupplierCode";
@@ -105,7 +106,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         {
 
         }
-     
+
 
     }
 
@@ -113,9 +114,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     {
         //To add an item that is not under reorderLevel and append it to the gvPurchaseItems List
         String itemCode = AddNewItemDropDown.SelectedItem.Value;
-        if(Session["PurchaseItems"]!=null)
+        if (Session["PurchaseItems"] != null)
         {
-            ritems = (List<PurchaseItems> )Session["PurchaseItems"];
+            ritems = (List<PurchaseItems>)Session["PurchaseItems"];
             if (ritems.Exists(x => x.ItemCode == itemCode))
             {
                 for (int i = 0; i < gvPurchaseItems.Rows.Count; i++)
@@ -146,30 +147,30 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
   "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
         }
-       
+
     }
 
-    protected void gvreoderItems_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        // deleting a item row from gvPurchaseItems
-        if (e.CommandName == "Delete")
-        {
-            int index = Convert.ToInt32(e.CommandArgument);
-            GridViewRow gvRow = gvPurchaseItems.Rows[index];
-            List<PurchaseItems> reorderItems = (List<PurchaseItems>)Session["PurchaseItems"];
-            reorderItems.RemoveAt(index);
-           Session["PurchaseItems"] = reorderItems;
+    //protected void gvreoderItems_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    // deleting a item row from gvPurchaseItems
+    //    if (e.CommandName == "Delete")
+    //    {
+    //        int index = Convert.ToInt32(e.CommandArgument);
+    //        GridViewRow gvRow = gvPurchaseItems.Rows[index];
+    //        List<PurchaseItems> reorderItems = (List<PurchaseItems>)Session["PurchaseItems"];
+    //        reorderItems.RemoveAt(index);
+    //       Session["PurchaseItems"] = reorderItems;
 
-        }
-    }
+    //    }
+    //}
 
-    protected void gvreoderItems_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        //Update gvPurchaseItems after deleting a row
-        List<PurchaseItems> reorderItems = (List<PurchaseItems>)Session["PurchaseItems"];
-        gvPurchaseItems.DataSource = reorderItems;
-        gvPurchaseItems.DataBind();
-    }
+    //protected void gvreoderItems_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    //{
+    //    //Update gvPurchaseItems after deleting a row
+    //    List<PurchaseItems> reorderItems = (List<PurchaseItems>)Session["PurchaseItems"];
+    //    gvPurchaseItems.DataSource = reorderItems;
+    //    gvPurchaseItems.DataBind();
+    //}
 
     protected void Reset_Click(object sender, EventArgs e)
     {
@@ -262,7 +263,34 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
         }
 
-       
+
+    }
+
+    protected void DeleteItem_Click(object sender, EventArgs e)
+    {
+        //int index = Convert.ToInt32(e.CommandArgument);
+        // GridViewRow gvRow = gvPurchaseItems.Rows[index];
+        List<PurchaseItems> reorderItems = (List<PurchaseItems>)Session["PurchaseItems"];
+        List<PurchaseItems> newReorderList = new List<PurchaseItems>();
+        foreach (GridViewRow gvrow in gvPurchaseItems.Rows)
+        {
+            CheckBox chkbx = (CheckBox)gvrow.FindControl("DeleteChkBx");
+            if (!chkbx.Checked)
+            {
+
+
+                int index = Convert.ToInt32(gvrow.RowIndex);
+                newReorderList.Add(reorderItems.ElementAt(index));                
+            }
+        }
+
+         
+         Session["PurchaseItems"] = newReorderList;
+         gvPurchaseItems.DataSource = newReorderList;
+         gvPurchaseItems.DataBind();
+        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+        "<script language='javascript'>alert('" + "Item Deleted!" + "');</script>");
+
     }
 
 }

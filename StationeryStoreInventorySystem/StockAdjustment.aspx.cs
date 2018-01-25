@@ -67,8 +67,10 @@ public partial class StockAdjustment : System.Web.UI.Page
 
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        //Disallow processing of regular pending discrepancies that came before
+        //a monthly inventory check discrepancy
         if (e.Row.RowType == DataControlRowType.DataRow)
-        {
+        {    
             KeyValuePair<Discrepency, Item> kvp = (KeyValuePair<Discrepency, Item>)e.Row.DataItem;
 
             foreach (Discrepency d in monthly)

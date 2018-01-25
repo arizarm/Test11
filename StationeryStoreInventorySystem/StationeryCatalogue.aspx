@@ -5,76 +5,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
-
-
-    <%--    <asp:Panel ID="Panel1" runat="server">
-        <table>
-            <tr>
-                <td>Item Number:</td>
-                <td>
-                    <asp:TextBox ID="TextBoxItemNo" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>Category:</td>
-                <td>
-                    <asp:DropDownList ID="DropDownListCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListCategory_SelectedIndexChanged">
-                    </asp:DropDownList>
-                    <br />
-                    <asp:TextBox ID="TextBoxCategory" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>Item Description : </td>
-                <td>
-                    <asp:TextBox ID="TextBoxDesc" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>Unit of Measure:</td>
-                <td>
-                    <asp:DropDownList ID="DropDownListUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListUOM_SelectedIndexChanged">
-                    </asp:DropDownList>
-                    <br />
-                    <asp:TextBox ID="TextBoxUOM" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>Reorder Level : </td>
-                <td>
-                    <asp:TextBox ID="TextBoxReLvl" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
-                    <br />
-                    <br />
-                </td>
-            </tr>
-            <tr>
-                <td>Reorder Quantity : </td>
-                <td>
-                    <asp:TextBox ID="TextBoxReQty" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Button ID="Button1" runat="server" Text="Add" CssClass="button" OnClick="Button1_Click" ValidationGroup="validateItemGroup" /></td>
-            </tr>
-        </table>
-    </asp:Panel>--%>
     <div class="row">
         <div class="col-md-6 pull-left">
             <asp:HyperLink ID="HyperLink7" runat="server" CssClass="pull-left" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">&lt &lt Create New Item &gt &gt</asp:HyperLink>
@@ -103,9 +33,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Description">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxDesc" runat="server" CausesValidation="true" AutoPostBack="true" ValidationGroup="validateDescGroup" Text='<%# Bind("description") %>'></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Field cannot be left blank" ControlToValidate="TextBoxDesc" ValidationGroup="validateDescGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                        <asp:CustomValidator ID="CustomValidator1" runat="server" ErrorMessage="Description must be different from existing products" ControlToValidate="TextBoxDesc" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateDescGroup" Display="Dynamic"></asp:CustomValidator>
+                        <asp:TextBox ID="TextBoxDesc" runat="server" Text='<%# Bind("description") %>'></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
@@ -150,11 +78,11 @@
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <EditItemTemplate>
-                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ValidationGroup="validateItemGroup" ></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ValidationGroup="validateItemGroup"></asp:LinkButton>
                         <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="CancelEdit" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="True" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">

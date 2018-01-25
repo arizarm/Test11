@@ -13,7 +13,7 @@ public interface IDeptService
     //Start Login
 
     [OperationContract]
-    [WebGet(UriTemplate = "/GetEmployeeByEmail", ResponseFormat = WebMessageFormat.Json)]
+    [WebGet(UriTemplate = "/GetEmployeeByEmail/{email}", ResponseFormat = WebMessageFormat.Json)]
     WCFEmployee GetEmployeeByEmail(string email);
 
     // End Login

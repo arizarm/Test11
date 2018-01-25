@@ -135,14 +135,15 @@ public class RequisitionControl
             date = r.RequestDate.Value.ToLongDateString();
             requisitionNo = Convert.ToInt32(r.RequisitionID.ToString());
             status = r.Status.ToString();
-            
+
             requestedBy = Convert.ToInt32(r.RequestedBy.ToString());
-            string empName =EmployeeController.getEmployee(requestedBy);
+          
+
             Department dep = EFBroker_DeptEmployee.GetDepartByEmpID(requestedBy);
             depCode = dep.DeptCode;
 
             department = dep.DeptName;
-            item = new ReqisitionListItem(date, requisitionNo, department, status, empName);
+            item = new ReqisitionListItem(date, requisitionNo, department, status, requestedBy.ToString());
             itemList.Add(item);
         }
         return itemList;
@@ -226,7 +227,7 @@ public class RequisitionControl
     }
     public static List<ReqisitionListItem> getRequisitionListByStatusAndDepCode(string status, string depCode)
     {
-        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode( status, depCode);
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(depCode, status);
         return PopulateGridViewForDepartment(rlist);
     }
     

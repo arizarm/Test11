@@ -113,12 +113,12 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                 Session["RegenerateDate"] = disbCon.getRegenrateDate();
                 Session["RegenerateDep"] = lblDepartment.Text;
                 Session["RegrenerateItems"] = shortfallItem;                
-                Response.Redirect("~/RegenerateRequest.aspx");
+                Response.Redirect("~/Store/RegenerateRequest.aspx");
             }
             //redirect back to Disbursement List page if no shortfall
             else
             {
-                Response.Redirect("~/DisbursementList.aspx");
+                Response.Redirect("~/Store/DisbursementList.aspx");
             }
         }
         else

@@ -21,8 +21,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
         {
             date = (DateTime)Session["RegenerateDate"];
             depName = (string)Session["RegenerateDep"];
-            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];            
-            //requestedBy = DisbursementCotrol.getDepRep(depName);
+            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];      
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
         }
@@ -78,11 +77,11 @@ public partial class RegenerateRequest : System.Web.UI.Page
     {
         if (((Dictionary<Item, String>)Session["discrepancyList"]).Count != 0)
         {
-            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+            Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {
-            Response.Redirect("~/DisbursementList.aspx");
+            Response.Redirect("~/Store/DisbursementList.aspx");
         }
     }
 

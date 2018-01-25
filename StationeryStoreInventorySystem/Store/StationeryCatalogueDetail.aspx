@@ -14,7 +14,7 @@
             <td>
                 <asp:textbox id="TextBoxItemNo" runat="server"></asp:textbox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:CustomValidator>
                 <br />
                 <br />
             </td>
@@ -24,9 +24,8 @@
             <td>
                 <asp:dropdownlist id="DropDownListCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListCategory_SelectedIndexChanged">
                     </asp:dropdownlist>
-                <br />
-                <asp:textbox id="TextBoxCategory" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:textbox id="TextBoxCategory" runat="server" readonly="true"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -35,7 +34,7 @@
             <td>Item Description : </td>
             <td>
                 <asp:textbox id="TextBoxDesc" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -45,9 +44,8 @@
             <td>
                 <asp:dropdownlist id="DropDownListUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListUOM_SelectedIndexChanged">
                     </asp:dropdownlist>
-                <br />
-                <asp:textbox id="TextBoxUOM" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
+                <asp:textbox id="TextBoxUOM" runat="server" readonly="true"></asp:textbox>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                 <br />
                 <br />
             </td>
@@ -56,8 +54,8 @@
             <td>Reorder Level : </td>
             <td>
                 <asp:textbox id="TextBoxReLvl" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="100000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                 <br />
                 <br />
             </td>
@@ -66,8 +64,8 @@
             <td>Reorder Quantity : </td>
             <td>
                 <asp:textbox id="TextBoxReQty" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup"></asp:RequiredFieldValidator>
-                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer"></asp:RangeValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                 <br />
                 <br />
             </td>
@@ -88,7 +86,8 @@
                 
     </table>
     </asp:panel>
-
+    <br />
+    <asp:Label ID="LabelSubtitle" runat="server" Text="Items Added" CssClass="h3"></asp:Label>
     <br />
     <asp:gridview id="GridView1" runat="server" autogeneratecolumns="False" Width = "90%" >
             <Columns>

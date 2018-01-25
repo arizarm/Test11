@@ -32,13 +32,13 @@ public class ItemBusinessLogic
         {
             return null;
         }
-        else if (EFBroker_Item.GetItembyItemCode(itemCode) != null)
+        else if (EFBroker_Item.GetItembyItemCode(itemCode.ToUpper()) != null)
         {
             return null;
         }
         else
         {
-            categoryName = FirstUpperCase(categoryName);
+            categoryName = Utility.FirstUpperCase(categoryName);
             item.ItemCode = itemCode;
             item.Description = description;
             item.ReorderLevel = level;
@@ -118,8 +118,5 @@ public class ItemBusinessLogic
     {
         return EFBroker_Item.GetDistinctUOMList();
     }
-    public static string FirstUpperCase(string s)
-    {
-        return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
-    }
+
 }

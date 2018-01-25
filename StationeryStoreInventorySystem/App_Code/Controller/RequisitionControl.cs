@@ -148,7 +148,7 @@ public class RequisitionControl
         return itemList;
     }
     //GET ITEM DESCRIPTION
-    public static List<String> getItem()
+    public static List<Item> getItem()
     {
         return EFBroker_Item.GetActiveItemDescriptionList();
     }
@@ -156,7 +156,7 @@ public class RequisitionControl
     //GET ITEM UOM
     public static String getUOM(string item)
     {
-        return EFBroker_Item.GetUnitbyItemDesc(item);
+        return EFBroker_Item.GetUnitbyItemCode(item);
     }
 
     //GET LAST REQUISITION
@@ -166,9 +166,9 @@ public class RequisitionControl
     }
 
     //GET ITEM DESCRIPTION BY ITEM CODE
-    public static String getCode(string item)
+    public static String getDescription(string code)
     {
-        return EFBroker_Item.GetItembyDescription(item).ItemCode;
+        return EFBroker_Item.GetItemByDescription(code);
     }
 
     //FIND REQUISITION WITH PENDING STATUS
@@ -201,7 +201,7 @@ public class RequisitionControl
         List<Requisition_Item> tlist = EFBroker_Requisition.GetRequisitionItemListbyReqID(id);
         foreach(Requisition_Item x in tlist)
         {
-            Requisition_ItemList r = new Requisition_ItemList(x.Item.Description, x.RequestedQty, x.Item.UnitOfMeasure, x.Requisition.Status);
+            Requisition_ItemList r = new Requisition_ItemList(x.ItemCode,x.Item.Description, x.RequestedQty, x.Item.UnitOfMeasure, x.Requisition.Status);
             rlist.Add(r);
         }
         return rlist;
@@ -238,9 +238,9 @@ public class RequisitionControl
     }
 
     //FIND REQUISITION ITEM BY REQUISITION ID AND ITEM CODE
-    public static Requisition_Item findByReqIDItemCode(int id, string des)
+    public static Requisition_Item findByReqIDItemCode(int id, string code)
     {
-        return EFBroker_Requisition.FindReqItemsByReqIDItemDescription(id, des).FirstOrDefault();
+        return EFBroker_Requisition.FindReqItemsByReqIDItemDescription(id, code).FirstOrDefault();
     }
 
     //REMOVE REQUISITION

@@ -61,7 +61,7 @@
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
                         
                         <Columns>
-                            <asp:TemplateField HeaderText="Code" SortExpression="Code">
+                            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="false">
                                 <ItemTemplate>
                                     <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
                                 </ItemTemplate>

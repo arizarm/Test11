@@ -45,20 +45,25 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-
-        //  string searchWord = SearchBox.Text;
-
-        //  if (SearchBox.Text == String.Empty)
-        //  {
-        //      ClientScript.RegisterStartupScript(Page.GetType(),
-        //"MessageBox",
-        //"<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-        //  }
-        //  else
-        //  {
-        //      GridView1.DataSource = RequisitionControl.DisplaySearchDepartment(searchWord);
-        //      GridView1.DataBind();
-        //  }
+        Employee emp = (Employee)Session["emp"];
+        string searchWord = SearchBox.Text;
+        if (String.IsNullOrWhiteSpace(searchWord))
+        {
+            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox", "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
+        }
+        else
+        {
+            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            {
+                GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord, emp.DeptCode);
+                GridView1.DataBind();
+            }
+            else
+            {
+                GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord, emp.DeptCode, DropDownList1.SelectedItem.ToString());
+                GridView1.DataBind();
+            }
+        }
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)

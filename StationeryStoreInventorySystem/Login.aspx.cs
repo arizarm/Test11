@@ -75,7 +75,7 @@ public partial class Login : System.Web.UI.Page
         }
         else if (role == "Store Supervisor" || role == "Store Manager")
         {
-            Response.Redirect("~/PurchaseOrderList.aspx");
+            Response.Redirect("~/Store/PurchaseOrderList.aspx");
         }
         else if (role == "DepartmentHead")
         {        

@@ -193,7 +193,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
             
-            Response.Redirect("https://www.google.com.sg");
+            Response.Redirect("~/GenerateDiscrepancyV2.aspx");
         }
     }
 }

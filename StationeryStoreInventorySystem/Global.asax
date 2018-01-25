@@ -50,6 +50,11 @@
 
     protected void Application_AuthenticateRequest(Object sender, EventArgs e)
     {
+        HttpApplication context = (HttpApplication)sender;
+        if (context.Request.Url.ToString().Contains(".svc"))
+        {
+            context.Response.SuppressFormsAuthenticationRedirect = true;
+        }
         if (HttpContext.Current.User != null)
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)

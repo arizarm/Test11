@@ -11,7 +11,7 @@
     <div>
         <h2>There are insufficient numbers of quantities for the following items.</h2>
         <h3>Please allocate the items before generating forms</h3>
-   
+
         <asp:GridView ID="gvMain" runat="server" AutoGenerateColumns="False">
             <Columns>
                 <asp:TemplateField HeaderText="Item Description">
@@ -19,8 +19,8 @@
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                       <asp:Label ID="itemDescription" runat="server" Text='<%# Bind("Description")%>'></asp:Label>
-                        <asp:HiddenField ID="hdfItemCode" runat="server" value='<%# Bind("ItemCode")%>' />
+                        <asp:Label ID="itemDescription" runat="server" Text='<%# Bind("Description")%>'></asp:Label>
+                        <asp:HiddenField ID="hdfItemCode" runat="server" Value='<%# Bind("ItemCode")%>' />
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -39,7 +39,8 @@
                     </EditItemTemplate>
 
                     <ItemTemplate>
-                         <asp:GridView ID="gvSub" runat="server" AutoGenerateColumns="False" CssClass="mGrid" Width="100%">
+                         <asp:Label ID="totalActualQuantityValidator" runat="server" ForeColor="Red" ></asp:Label>
+                        <asp:GridView ID="gvSub" runat="server" AutoGenerateColumns="False" CssClass="mGrid" Width="100%">
                             <Columns>
                                 <asp:TemplateField HeaderText="RequestDate">
                                     <EditItemTemplate>
@@ -56,7 +57,7 @@
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="DeptName" runat="server" Text='<%# Bind("DeptName")%>'></asp:Label>
-                                        <asp:HiddenField ID="hdfdeptCode" runat="server" value='<%# Bind("deptCode")%>' />
+                                        <asp:HiddenField ID="hdfdeptCode" runat="server" Value='<%# Bind("deptCode")%>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -65,7 +66,7 @@
                                         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
                                     </EditItemTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="RequestedQty" runat="server" Text='<%# Bind("RequestedQty")%>'></asp:Label>
+                                        <asp:Label ID="requestedQty" runat="server" Text='<%# Bind("RequestedQty")%>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -75,6 +76,11 @@
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:TextBox ID="txtActualQuantity" runat="server"></asp:TextBox>
+                                       
+                                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtActualQuantity"  MinimumValue="0" Style="color: red"></asp:RangeValidator>
+                                        <br />
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ControlToValidate="txtActualQuantity" Style="color: red"></asp:RequiredFieldValidator>
+
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -89,23 +95,10 @@
 
     </div>
     <div>
-       
-       <%-- <asp:Button ID="BtnResetAll" runat="server" Text="Reset All" CssClass="button" align="left" OnClick="BtnResetAll_Click" />--%>
-        <table align="right">
-            <tr>
-
-                <td>
-                   <%-- <asp:Button ID="BtnSave" runat="server" Text="Save" CssClass="button" OnClick="BtnSave_Click" />
-                    &nbsp; &nbsp; &nbsp;
-         --%>       </td>
-
-                <td>
-                    &nbsp;</td>
-            </tr>
-        </table>
-                    <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Generate Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
+        <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Generate Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
     </div>
 
 
 </asp:Content>
+
 

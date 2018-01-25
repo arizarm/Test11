@@ -17,7 +17,7 @@ public interface IDisbursementService
 
     [OperationContract]
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    WCFDisbursement getDisbursement(int id);
+    WCFDisbursement getDisbursement(string id);
 
     [OperationContract]
     [WebGet(UriTemplate = "/DisbursementDetail", ResponseFormat = WebMessageFormat.Json)]

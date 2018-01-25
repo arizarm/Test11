@@ -132,6 +132,15 @@ public class EFBroker_Item
         }
         return unit;
     }
+    public static List<Item> SearchItemsByItemCodeOrDesc(string search)
+    {
+        List<Item> searchResults = new List<Item>();
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            searchResults = inventoryDB.Items.Where(x => x.ItemCode.ToLower().Contains(search.ToLower()) || x.Description.ToLower().Contains(search.ToLower())).ToList();
+        }
+        return searchResults;
+    }
     public static void UpdateItem(Item i)
     {
         using (StationeryEntities inventoryDB = new StationeryEntities())

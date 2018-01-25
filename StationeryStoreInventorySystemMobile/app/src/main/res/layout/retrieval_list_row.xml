@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<TextView android:id="@+id/disbIDHidden"-->
+            <!--android:visibility="gone"/>-->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lblDate"
+                android:layout_width="167dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:text="Date "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="222dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lblRetrievalNo"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:text="Retrieval No "
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lbRetrievedBy"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:text="Retrieved By "/>
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:textSize="16sp" />
+        </TableRow>
+
+
+    </TableLayout>
+</LinearLayout>

@@ -11,4 +11,8 @@ public class DiscrepancyAdhoc extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_adhoc);
     }
+
+    protected void finaliseClick(View v){
+        
+    }
 }

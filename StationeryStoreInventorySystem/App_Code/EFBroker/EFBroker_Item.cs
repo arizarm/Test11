@@ -55,6 +55,7 @@ public class EFBroker_Item
             return result;
         }
     }
+
     public static Item GetItembyDescription(string description)
     {
         Item result;
@@ -63,6 +64,16 @@ public class EFBroker_Item
             result = inventoryDB.Items.Where(x => x.Description.Equals(description)).FirstOrDefault();
         }
         return result;
+    }
+
+    public static string GetItemByDescription(string itemCode)
+    {
+        string description;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            description = context.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x=>x.Description).FirstOrDefault();
+        }
+        return description;
     }
     public static void RemoveItem(string itemCode)
     {
@@ -124,11 +135,11 @@ public class EFBroker_Item
         }
         return uom;
     }
-    public static List<string> GetActiveItemDescriptionList()
+    public static List<Item> GetActiveItemDescriptionList()
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Items.Where(i => i.ActiveStatus.Equals("Y")).Select(i => i.Description).ToList();
+            return context.Items.Where(i => i.ActiveStatus.Equals("Y")).ToList();
         }
     }
     public static string GetUnitbyItemCode(string itemCode)

@@ -55,7 +55,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = ReasonLabel.Text;
+            string reason = TextBox2.Text;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -75,7 +75,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = ReasonLabel.Text;
+            string reason = TextBox2.Text;
             RequisitionControl.rejectRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -97,11 +97,11 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
             if (emp.Role == "DepartmentHead")
             {
-                Response.Redirect("~/DepartmentHead/RequisitionListDepartment.aspx");
+                Response.Redirect("~/DepartmentHead/RequisitionListDepHead.aspx");
             }
             else if (emp.Role == "Representative")
             {
-                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepartment.aspx");
+                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
             }
         }
 

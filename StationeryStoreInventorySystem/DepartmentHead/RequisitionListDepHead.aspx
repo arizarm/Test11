@@ -36,7 +36,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="RequestedBy">
+                <asp:TemplateField HeaderText="Requested By">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>

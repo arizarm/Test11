@@ -25,10 +25,26 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         int orderID = Convert.ToInt32(Request.QueryString["OrderID"]);
         pOrder = pCtrlr.GetPurchaseOrderByID(orderID);
         orderid = pOrder.PurchaseOrderID;
-        SupervisorName.Text = pOrder.Employee1.EmpName;
-        SuplierName.Text = pOrder.Employee.EmpName;
+        supervisorName.Text = pOrder.Employee1.EmpName;
+        SupplierName.Text = pOrder.Employee.EmpName;
         OrderID.Text = Convert.ToString(pOrder.PurchaseOrderID);
-
+        orderStatus.Text = pOrder.Status;
+        if (pOrder.Status == "Pending")
+        {
+            orderStatus.ForeColor = System.Drawing.Color.Blue;
+        }
+        else if(pOrder.Status =="Approved")
+        {
+            orderStatus.ForeColor = System.Drawing.Color.Green;
+        }
+        else if(pOrder.Status == "Rejected")
+        {
+            orderStatus.ForeColor = System.Drawing.Color.Red;
+        }
+        else
+        {
+            orderStatus.ForeColor = System.Drawing.Color.Orange;
+        }
        List<PurchaseOrderItemDetails>itemList = pCtrlr.GetPurchaseOrderItemsDetails(orderID);
         gvPurchaseDetail.DataSource = itemList;
         gvPurchaseDetail.DataBind();
@@ -44,6 +60,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         {
             if (Session["empRole"].ToString() == "Store Clerk")
             {
+                deliveryLbl.Visible = true;
                 DeliveryOrderIDTxtBx.Visible = true;
                 CloseOrderBtn.Visible = true;
                 RemarkLbl.Visible = false;
@@ -54,6 +71,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
             }
             else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
             {
+                deliveryLbl.Visible = true;
                 DeliveryOrderIDTxtBx.Visible = true;
                 CloseOrderBtn.Visible = true;
                 RemarkLbl.Visible = true;
@@ -64,6 +82,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
             }
             else
             {
+                deliveryLbl.Visible = false;
                 DeliveryOrderIDTxtBx.Visible = false;
                 CloseOrderBtn.Visible = false;
                 RemarkLbl.Visible = false;
@@ -72,6 +91,28 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                 RejectBtn.Visible = false;
                
             }
+            if(pOrder.Status=="Closed" || pOrder.Status == "Rejected")
+            {
+                deliveryLbl.Visible = false;
+                DeliveryOrderIDTxtBx.Visible = false;
+                CloseOrderBtn.Visible = false;
+                RemarkLbl.Visible = false;
+                RemarkTxtBx.Visible = false;
+                ApproveBtn.Visible = false;
+                RejectBtn.Visible = false;
+                gvPurchaseDetail.Columns[5].Visible = false;
+            }
+            else if (pOrder.Status == "Approved")
+            {
+                deliveryLbl.Visible = true;
+                DeliveryOrderIDTxtBx.Visible = true;
+                CloseOrderBtn.Visible = true;
+                RemarkLbl.Visible = false;
+                RemarkTxtBx.Visible = false;
+                ApproveBtn.Visible = false;
+                RejectBtn.Visible = false;
+                gvPurchaseDetail.Columns[5].Visible = true;
+            }           
         }
     }
 

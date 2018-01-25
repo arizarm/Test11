@@ -7,11 +7,13 @@ using System.Web.UI.WebControls;
 
 public partial class RetrievalList : System.Web.UI.Page
 {
+    RetrievalControl retCon = new RetrievalControl();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            List<Retrieval> retList = RetrievalControl.DisplayRetrievalList();
+            List<Retrieval> retList = retCon.DisplayRetrievalList();
             gvReq.DataSource = retList;
             gvReq.DataBind();
         }
@@ -29,14 +31,14 @@ public partial class RetrievalList : System.Web.UI.Page
         }
         else
         {
-            gvReq.DataSource = RetrievalControl.DisplaySearch(searchWord);
+            gvReq.DataSource = retCon.DisplaySearch(searchWord);
             gvReq.DataBind();
         }
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
-        gvReq.DataSource = RetrievalControl.DisplayRetrievalList();
+        gvReq.DataSource = retCon.DisplayRetrievalList();
         gvReq.DataBind();
     }
 

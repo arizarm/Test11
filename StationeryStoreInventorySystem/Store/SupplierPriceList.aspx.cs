@@ -28,10 +28,10 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
             if (!IsPostBack)
             {
-                if ((string)Session["empRole"] != "Store Supervisor" || (string)Session["empRole"] != "Store Manager")
+                if ((string)Session["empRole"] == "Store Supervisor" || (string)Session["empRole"] == "Store Manager")
                 {
-                    UpdateButton.Enabled = false;
-                    UpdateButton.Visible = false;
+                    UpdateButton.Enabled = true;
+                    UpdateButton.Visible = true;
                 }
                 //Set Default Supplier Info on Page
                 Supplier s = slc.GetSupplierGivenSupplierCode(code);

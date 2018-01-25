@@ -16,7 +16,7 @@
         <asp:Label ID="Label2" runat="server" Text="To View Your Requested Requisition by Status : "></asp:Label>
         <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Selected="True" >Select Status</asp:ListItem>
-            <asp:ListItem Value="Pending">Pending Approval</asp:ListItem>
+            <asp:ListItem Value="Pending">Pending</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
             <asp:ListItem Value="Closed">Closed</asp:ListItem>
@@ -25,7 +25,7 @@
          <h3>Your Requested Requisition list</h3>
          <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
          <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid">
+            DataKeyNames="RequisitionNo" CssClass="mGrid" Width="60%">
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">
@@ -34,16 +34,6 @@
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("Date") %>'></asp:Label>
-
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="RequestedBy">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("EmployeeName") %>'></asp:Label>
 
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -59,7 +49,7 @@
                 </asp:TemplateField>
 
                 <asp:HyperLinkField HeaderText="View" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?id={0}" Text="Approve/Reject"/>
+                    DataNavigateUrlFormatString="RequisitionDetailRep.aspx?requisitionNo={0}" Text="View"/>
             </Columns>
 
         </asp:GridView>

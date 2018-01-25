@@ -26,7 +26,7 @@ public class EFBroker_Requisition
         Requisition req;
         using (StationeryEntities context = new StationeryEntities())
         {
-          req = context.Requisitions.Where(x => x.RequisitionID.Equals(id)).FirstOrDefault();
+            req = context.Requisitions.Where(x => x.RequisitionID.Equals(id)).FirstOrDefault();
         }
         return req;
     }
@@ -76,7 +76,7 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
-    public static List<Requisition> getRequisitionListByEmpIDAndStatus(int empID,string status)
+    public static List<Requisition> getRequisitionListByEmpIDAndStatus(int empID, string status)
     {
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
@@ -85,7 +85,7 @@ public class EFBroker_Requisition
         }
         return rlist;
     }
-    public static List<Requisition> getRequisitionListByStatusAndDepCode( string status ,string depCode)
+    public static List<Requisition> getRequisitionListByStatusAndDepCode(string status, string depCode)
     {
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
@@ -95,7 +95,7 @@ public class EFBroker_Requisition
         return rlist;
     }
 
-    
+
 
 
     public static List<Requisition> GetAllRequisitionList()
@@ -195,7 +195,7 @@ public class EFBroker_Requisition
             ts.Complete();
         }
     }
-    public static void AddNewRequisition(List<RequestedItem> item, DateTime date, string status, int empID,string DeptCode)
+    public static void AddNewRequisition(List<RequestedItem> item, DateTime date, string status, int empID, string DeptCode)
     {
         using (TransactionScope ts = new TransactionScope())
         {
@@ -238,7 +238,7 @@ public class EFBroker_Requisition
             r.Status = "Approved";
             r.ApprovedBy = empID;
 
-            context.Entry(r).State= System.Data.Entity.EntityState.Modified;
+            context.Entry(r).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
         return;
@@ -272,6 +272,14 @@ public class EFBroker_Requisition
         using (StationeryEntities context = new StationeryEntities())
         {
             return context.Requisitions.Where(x => x.Status == "Approved" || x.Status == "Priority" && x.DeptCode == deptCode).ToList();
+        }
+    }
+
+    public static List<Requisition> SearchForCollectionList(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).OrderBy(x=>x.Status.Equals("Approved")).ToList();
         }
     }
 }

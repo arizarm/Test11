@@ -95,15 +95,15 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
             EFBroker_DeptEmployee.UpdateDeptRep(dcode, empid);
 
-            if (c==cid && empid==empRepid)
+            if (c == cid && empid == empRepid)
             {
                 Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
             }
             else
             {
-              
+
                 Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
-               
+
             }
 
         }//ispostback

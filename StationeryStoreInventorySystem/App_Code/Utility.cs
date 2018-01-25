@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Text;
 using System.IO;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// Summary description for Utility
@@ -55,12 +56,37 @@ public static class Utility
             return false;
         }
     }
+    public static bool ValidateNewItem(CustomValidator control, string itemCode)
+    {
+        Item item = EFBroker_Item.GetItembyItemCode(itemCode.ToUpper());
+        if (item == null)
+        {
+            return true;
+        }
+        else
+        {
+            if (item.ActiveStatus == "Y")
+            {
+                control.ErrorMessage = "ItemCode is in use by existing item";
+            }
+            else
+            {
+                control.ErrorMessage = "ItemCode is used for archived item";
+            }
+            return false;
+        }
+    }
+    public static string FirstUpperCase(string s)
+    {
+        return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
+    }
     public static void logout()
     {
         FormsAuthentication.SignOut();
         HttpContext.Current.Session.Remove("emp");
         HttpContext.Current.Session.Remove("empRole");
         HttpContext.Current.Session.Remove("empID");
+        HttpContext.Current.Session.Remove("itemlist");
         HttpContext.Current.Response.Redirect("~/Login.aspx");
     }
 }

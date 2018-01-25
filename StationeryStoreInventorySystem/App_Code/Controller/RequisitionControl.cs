@@ -166,12 +166,6 @@ public class RequisitionControl
         return EFBroker_Requisition.GetLatestRequisitionID();
     }
 
-    //GET ITEM DESCRIPTION BY ITEM CODE
-    public static String getDescription(string code)
-    {
-        return EFBroker_Item.GetItemByDescription(code);
-    }
-
     //FIND REQUISITION WITH PENDING STATUS
     public static List<Requisition> getRequisitionList()
     {

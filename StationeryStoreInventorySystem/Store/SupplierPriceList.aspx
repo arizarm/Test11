@@ -123,7 +123,7 @@
                 <asp:TableRow>
                     <asp:TableCell>Item: </asp:TableCell>
                     <asp:TableCell>
-                         <asp:DropDownList runat="server" ID="ItemDropDownList" Width="180%" OnSelectedIndexChanged="ItemDropDownList_SelectedIndexChanged"  AutoPostBack="true">
+                         <asp:DropDownList runat="server" ID="ItemDropDownList" Width="180%" OnSelectedIndexChanged="ItemDropDownList_SelectedIndexChanged"  AutoPostBack="true" DataTextField="ItemDescription" DataValueField="ItemCode">
                           </asp:DropDownList>
                     </asp:TableCell>
                 </asp:TableRow>
@@ -145,7 +145,7 @@
                     </asp:TableCell></asp:TableRow><asp:TableRow>
                     <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
                         <asp:Button ID="AddItemButton" runat="server" Text="Add" OnClick="AddItemButton_Click"/>
-                    </asp:TableCell></asp:TableRow></asp:Table></asp:Panel><br /><asp:Label ID="ItemDisplayDesc" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label><asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AllowPaging="true" PageSize="20" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemDescription" OnPageIndexChanging="TenderPriceDropDownList_PageIndexChanging"
+                    </asp:TableCell></asp:TableRow></asp:Table></asp:Panel><br /><asp:Label ID="ItemDisplayDesc" runat="server" Text="Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label><asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AllowPaging="true" PageSize="20" AutoGenerateColumns="False" Width ="120%" DataKeyNames="ItemCode" OnPageIndexChanging="TenderPriceDropDownList_PageIndexChanging"
                          OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating">
             <Columns>
                 <asp:TemplateField HeaderText ="Item Description" ItemStyle-Width ="80%">

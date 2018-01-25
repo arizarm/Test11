@@ -10,7 +10,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -23,25 +23,27 @@
         android:layout_marginEnd="239dp"
         android:layout_marginRight="239dp"
         android:width="20dp"
-        android:text="@string/qty" />
+        android:text="@string/qty"
+        android:textSize="18sp" />
 
- <TextView
-     android:id="@+id/textView4"
-     android:layout_width="23dp"
-     android:layout_height="wrap_content"
-     android:layout_alignBaseline="@+id/textView7"
-     android:layout_alignEnd="@+id/textView7"
-     android:textSize="18sp"
-     android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="23dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignEnd="@+id/textView7"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView7"
+        android:layout_alignRight="@+id/textView7"
         android:layout_below="@+id/textView7"
-        android:layout_toLeftOf="@+id/textView4"
-        android:layout_toStartOf="@+id/textView4"
-        android:text="@string/uom" />
+        android:text="@string/uom"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -51,5 +53,5 @@
         android:layout_alignBottom="@+id/textView8"
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 </RelativeLayout>

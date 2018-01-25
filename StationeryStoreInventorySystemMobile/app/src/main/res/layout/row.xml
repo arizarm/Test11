@@ -10,9 +10,9 @@
         android:id="@+id/reqTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_gravity="right"
         android:scaleType="fitEnd"
-        android:layout_gravity="right"/>
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/reqDate"
@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/reqBy"
         android:layout_alignEnd="@+id/reqBy"
-        android:textSize="18sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 <!--    <TextView
         android:id="@+id/text3"

@@ -77,6 +77,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
     {
         if (((Dictionary<Item, String>)Session["discrepancyList"]).Count != 0)
         {
+            Session["ItemToUpdate"] = true;
             Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
         }
         else

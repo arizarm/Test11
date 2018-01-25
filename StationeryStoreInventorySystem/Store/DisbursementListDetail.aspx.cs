@@ -52,6 +52,8 @@ public partial class DisbursementListDetail : System.Web.UI.Page
 
             List<int> actualQtyList = new List<int>();
 
+            bool check = true;
+
             foreach (GridViewRow r in gvDisbDetail.Rows)
             {           
                 //get actual qty to verify
@@ -90,36 +92,40 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                     }
                     else if(actualQty > retrievedQty)
                     {
-                        //display error
+                        check = false;
+                        (r.FindControl("lblActualError") as Label).Text = "Actual cannot be more than retrieved quantity";                        
                     }
                 }
             }
 
-            //update Disbursement table (actual qty + status)
-            disbCon.UpdateDisbursementActualQty(actualQtyList);
-            disbCon.UpdateDisbursementStatus();
-
-            //Add disbursement transaction to Stockcard   
-            disbCon.AddStockCardTransaction(); 
-
-            //add discrepancy item to session 
-            Session["discrepancyList"] = discrepanciesOutput;
-
-            Session["discToUpdate"] = discToUpdate;
-
-            //redirect to Regenerate Request page if any shortfall
-            if (shortfallItem.Count != 0)
+            if(check)
             {
-                Session["RegenerateDate"] = disbCon.getRegenrateDate();
-                Session["RegenerateDep"] = lblDepartment.Text;
-                Session["RegrenerateItems"] = shortfallItem;                
-                Response.Redirect("~/Store/RegenerateRequest.aspx");
-            }
-            //redirect back to Disbursement List page if no shortfall
-            else
-            {
-                Response.Redirect("~/Store/DisbursementList.aspx");
-            }
+                //update Disbursement table (actual qty + status)
+                disbCon.UpdateDisbursementActualQty(actualQtyList);
+                disbCon.UpdateDisbursementStatus();
+
+                //Add disbursement transaction to Stockcard   
+                disbCon.AddStockCardTransaction();
+
+                //add discrepancy item to session 
+                Session["discrepancyList"] = discrepanciesOutput;
+
+                Session["discToUpdate"] = discToUpdate;
+
+                //redirect to Regenerate Request page if any shortfall
+                if (shortfallItem.Count != 0)
+                {
+                    Session["RegenerateDate"] = disbCon.getRegenrateDate();
+                    Session["RegenerateDep"] = lblDepartment.Text;
+                    Session["RegrenerateItems"] = shortfallItem;
+                    Response.Redirect("~/Store/RegenerateRequest.aspx");
+                }
+                //redirect back to Disbursement List page if no shortfall
+                else
+                {
+                    Response.Redirect("~/Store/DisbursementList.aspx");
+                }
+            }            
         }
         else
         {

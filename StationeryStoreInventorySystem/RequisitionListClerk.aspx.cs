@@ -82,48 +82,33 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         DropDownList1.Text = "Select Status";
         gvReq.DataSource = RequisitionControl.DisplayAll();
         gvReq.DataBind();
-    }
-
-
+    }    
 
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
+        bool check = false;
+
         List<int> reqNo = new List<int>();
-        //
+        
         foreach (GridViewRow row in gvReq.Rows)
         {
             if (((CheckBox)row.FindControl("CheckBox")).Checked == false)
             {
                 CheckBoxValidation.Text = "Please select at least one requisition!";
-            }else if (((CheckBox)row.FindControl("CheckBox")).Checked)
+            }
+            else if (((CheckBox)row.FindControl("CheckBox")).Checked)
             {
-
+                check = true;
                 reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
-                Session["RetrievalID"] = reqCon.AddRetrieval();
-                reqCon.AddDisbursement(reqNo);
-
-                //Response.Redirect("RetrievalList.aspx");
-                Response.Redirect("RetrievalListDetail.aspx");
             }
         }
-  
-        //
 
-        //List<int> reqNo = new List<int>();
-
-        //foreach (GridViewRow row in gvReq.Rows)
-        //{
-        //    if (((CheckBox)row.FindControl("CheckBox")).Checked)
-        //    {
-        //        reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
-        //    }
-        //}
-        
-        //Session["RetrievalID"] = reqCon.AddRetrieval();
-        //reqCon.AddDisbursement(reqNo);
-
-        ////Response.Redirect("RetrievalList.aspx");
-        //Response.Redirect("RetrievalListDetail.aspx");
+        if(check)
+        {
+            Session["RetrievalID"] = reqCon.AddRetrieval();
+            reqCon.AddDisbursement(reqNo);            
+            Response.Redirect("RetrievalListDetail.aspx");
+        }       
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

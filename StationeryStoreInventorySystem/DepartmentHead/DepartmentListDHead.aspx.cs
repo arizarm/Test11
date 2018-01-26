@@ -13,7 +13,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+       
 
         if (!IsPostBack)
         {
@@ -67,13 +67,17 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     DropDownListActingDHead.DataBind();
                     DropDownListActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
                     DropDownListActingDHead.SelectedIndex = 0;
-                    if (DropDownListActingDHead.SelectedValue == "0")
-                    {
+                    //if (DropDownListActingDHead.SelectedValue == "0")
+                    //{
                         txtSDate.Enabled = false;
                         txtEDate.Enabled = false;
+                        txtSDate.Visible = true;
+                        txtEDate.Visible = true;
+                        btnEditDate.Visible = false;
                         RequiredFieldValidator1.Enabled = false;
                         RequiredFieldValidator2.Enabled = false;
-                    }
+
+                   // }
 
 
                     int empid = 0;
@@ -93,6 +97,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     string startdate = empActingDHead.StartDate.GetValueOrDefault().Date.ToShortDateString();
                     string enddate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
 
+                    lblStartDate.Text = startdate;
+                    lblEndDate.Text = enddate;
                     txtSDate.Text = startdate;
                     txtEDate.Text = enddate;
                     //if (empActingDHead.EndDate != null && txtSDate.Text.ToString()==empActingDHead.StartDate.GetValueOrDefault().ToShortDateString())
@@ -100,12 +106,17 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     //    cmpToday.Enabled = false;
                     //}else { cmpToday.Enabled = true; }
                     DateTime? endDate = empActingDHead.EndDate;
+                    DateTime? startDate = empActingDHead.StartDate;
                     DateTime today = DateTime.Now;
-                    if (today > endDate)
-                    {
-                        EFBroker_DeptEmployee.UpdateRevoke();
+                    
+                    //if (today <= endDate && today>=startDate && txtEDate.Text==enddate && txtSDate.Text==startdate)
+                    //{
+                    //    cmpToday.Enabled = false;
+                    //    cmpStartAndEndDates.Enabled =false;
+                    //    RequiredFieldValidator1.Enabled = false;
+                    //    RequiredFieldValidator2.Enabled = false;
 
-                    }
+                    //}
 
                     DropDownListActingDHead.DataSource = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, empRid);
                     DropDownListActingDHead.DataTextField = "EmpName";
@@ -166,63 +177,77 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                     if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
-                        EFBroker_DeptEmployee.UpdateRevoke();
+                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        string sdate = txtSDate.Text;
+                        string edate = txtEDate.Text;
+                        string lbsdate = lblStartDate.Text;
+                        string lbedate = lblEndDate.Text;
+                        //lblFax.Text = Aempid.ToString();
+
+                        if (c == cid && empid == empRepid && Aempid == 0 && sdate == "" && edate == "" && lbsdate == "" && lbedate == "")
+                        {
+
+                            Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                        }
+                        else
+                        {
+                            EFBroker_DeptEmployee.UpdateRevoke();
+                            Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+
+                        }
+
 
                     }
 
                 }
                 else
                 {
-                    int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-                    RequiredFieldValidator1.Enabled = true;
-                    RequiredFieldValidator2.Enabled = true;
-                    cmpToday.Enabled = true;
-                    cmpStartAndEndDates.Enabled = true;
-
-                    string sdate = txtSDate.Text;
-                    string edate = txtEDate.Text;
-                    EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
-
-
-                }
-                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
-                {
-                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
-                    int aid = empActingDHead.EmpID;
-                    int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-                    string sdate = txtSDate.Text;
-                    string edate = txtEDate.Text;
-                    string ssdate = empActingDHead.StartDate.GetValueOrDefault().ToShortDateString();
-                    string eedate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
-                    //lblFax.Text = ssdate;
-                    //lblPhone.Text = sdate;
-                    if (c == cid && empid == empRepid && Aempid == aid && sdate == ssdate && edate == eedate)
+                    if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
-                        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
-                    }
-                    else
-                    {
+                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        RequiredFieldValidator1.Enabled = true;
+                        RequiredFieldValidator2.Enabled = true;
+                        cmpToday.Enabled = true;
+                        cmpStartAndEndDates.Enabled = true;
 
+                        string sdate = txtSDate.Text;
+                        string edate = txtEDate.Text;
+
+
+                    
+
+                        Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                        int aid = empActingDHead.EmpID;
+
+                        string ssdate = empActingDHead.StartDate.GetValueOrDefault().ToShortDateString();
+                        string eedate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
+                        string lbsdate = lblStartDate.Text;
+                        string lbedate = lblEndDate.Text;
+                        lblFax.Text = aid.ToString();
+                        lblPhone.Text = Aempid.ToString();
+
+                        if (c == cid && empid == empRepid && Aempid == aid && sdate == ssdate && edate == eedate && lbsdate == ssdate && lbedate == eedate)
+                        {
+                            Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                        }
+                        else
+                        {
+                            EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
+                            Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+
+                        }
+                    }else
+                    {
+                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        RequiredFieldValidator1.Enabled = true;
+                        RequiredFieldValidator2.Enabled = true;
+                        cmpToday.Enabled = true;
+                        cmpStartAndEndDates.Enabled = true;
+
+                        string sdate = txtSDate.Text;
+                        string edate = txtEDate.Text;
+                        EFBroker_DeptEmployee.UpdateActingDHead(dcode, Aempid, sdate, edate);
                         Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
-
-                    }
-                }
-                else
-                {
-                    int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-                    string sdate = txtSDate.Text;
-                    string edate = txtEDate.Text;
-                    //lblFax.Text = Aempid.ToString();
-
-                    if (c == cid && empid == empRepid && Aempid == 0 && sdate == "" && edate == "")
-                    {
-                        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
-                    }
-                    else
-                    {
-
-                        Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
-
                     }
                 }
             }
@@ -257,25 +282,70 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             DropDownListDRep.DataSource = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, a);
             DropDownListDRep.DataBind();
             DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
-            if (a == 0)
+            if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
             {
-                RequiredFieldValidator1.Enabled = false;
-                RequiredFieldValidator2.Enabled = false;
-                cmpToday.Enabled = false;
-                cmpStartAndEndDates.Enabled = false;
-                txtSDate.Text = "";
-                txtSDate.Enabled = false;
-                txtEDate.Text = "";
-                txtEDate.Enabled = false;
-            }
-            else
+                if (a == 0)
+                {
+                    RequiredFieldValidator1.Enabled = false;
+                    RequiredFieldValidator2.Enabled = false;
+                    cmpToday.Enabled = false;
+                    cmpStartAndEndDates.Enabled = false;
+                    //txtSDate.Text = "";
+                    txtSDate.Enabled = false;
+                    //txtEDate.Text = "";
+                    txtEDate.Enabled = false;
+                    txtEDate.Visible = true;
+                    txtSDate.Visible = true;
+                    lblStartDate.Visible = false;
+                    lblEndDate.Visible = false;
+                    btnEditDate.Visible = false;
+                }
+                else
+                {
+                    RequiredFieldValidator1.Enabled = true;
+                    RequiredFieldValidator2.Enabled = true;
+                    cmpToday.Enabled = true;
+                    cmpStartAndEndDates.Enabled = true;
+                    txtSDate.Enabled = true;
+                    txtEDate.Enabled = true;
+                    txtEDate.Visible = false;
+                    txtSDate.Visible = false;
+                    lblStartDate.Visible = true;
+                    lblEndDate.Visible = true;
+                    btnEditDate.Visible = true;
+                }
+            }else
             {
-                RequiredFieldValidator1.Enabled = true;
-                RequiredFieldValidator2.Enabled = true;
-                cmpToday.Enabled = true;
-                cmpStartAndEndDates.Enabled = true;
-                txtSDate.Enabled = true;
-                txtEDate.Enabled = true;
+                if (a == 0)
+                {
+                    RequiredFieldValidator1.Enabled = false;
+                    RequiredFieldValidator2.Enabled = false;
+                    cmpToday.Enabled = false;
+                    cmpStartAndEndDates.Enabled = false;
+                    txtSDate.Text = "";
+                    txtSDate.Enabled = false;
+                    txtEDate.Text = "";
+                    txtEDate.Enabled = false;
+                    //txtEDate.Visible = true;
+                    //txtSDate.Visible = true;
+                    //lblStartDate.Visible = false;
+                    //lblEndDate.Visible = false;
+                    
+                }
+                else
+                {
+                    RequiredFieldValidator1.Enabled = true;
+                    RequiredFieldValidator2.Enabled = true;
+                    cmpToday.Enabled = true;
+                    cmpStartAndEndDates.Enabled = true;
+                    txtSDate.Enabled = true;
+                    txtEDate.Enabled = true;
+                    txtEDate.Visible = true;
+                    txtSDate.Visible = true;
+                    //lblStartDate.Visible = true;
+                    //lblEndDate.Visible = true;
+
+                }
             }
         }
         else
@@ -285,9 +355,18 @@ public partial class DepartmentListDHead : System.Web.UI.Page
     }
 
 
-    protected void btnCancel_Click(object sender, EventArgs e)
-    {
+   
 
-        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+
+
+
+
+    protected void btnEditDate_Click(object sender, EventArgs e)
+    {
+        txtSDate.Visible = true;
+        txtEDate.Visible = true;
+        lblStartDate.Visible = false;
+        lblEndDate.Visible = false;
+        btnEditDate.Visible = false;
     }
 }

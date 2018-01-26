@@ -14,6 +14,7 @@ public partial class RequisitionForm : System.Web.UI.Page
     List<RequestedItem> rItem = new List<RequestedItem>();
     //ArrayList reqItem =new ArrayList();
     static RequestedItem ri;
+    string code;
     string des;
     Employee emp;
 

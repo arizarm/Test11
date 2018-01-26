@@ -118,15 +118,24 @@
 
         </tr>
         <tr>
-            <td class="auto-style2">Assignment Start Date :</td>
+            <td class="auto-style2">Assignment Start Date :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                 <asp:Button ID="btnEditDate" runat="server" Text="Edit Date" OnClick="btnEditDate_Click"/>
+            </td>
+            
+               
+                
+           
             <td>
-                <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static" Visible="False"></asp:TextBox>
+                <asp:Label ID="lblStartDate" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
 
 
 
 
             </td>
+            
         </tr>
         <tr>
             <td class="auto-style2">Assignment End Date :</td>
@@ -134,11 +143,10 @@
 
 
 
-               <%-- <asp:CompareValidator ID="cmpToday" Operator="GreaterThan"
-                    ControlToValidate="txtSDate" ErrorMessage="The 'Start Date' must be after today" runat="server" ForeColor="#FF3300" Enabled="False" />--%>
-                <asp:CompareValidator ID="cmpToday" runat="server" ErrorMessage="The 'Start Date' must be after today" ForeColor="#FF3300" ControlToValidate="txtSDate" Operator="GreaterThanEqual"></asp:CompareValidator>
+               <asp:CompareValidator ID="cmpToday" runat="server" ErrorMessage="The 'Start Date' must be after today" ForeColor="#FF3300" ControlToValidate="txtSDate" Operator="GreaterThanEqual" Type="Date"></asp:CompareValidator>
                 <br />
-                <asp:TextBox ID="txtEDate" runat="server" ClientIDMode="Static"></asp:TextBox>
+                <asp:TextBox ID="txtEDate" runat="server" ClientIDMode="Static" Visible="False"></asp:TextBox>
+                <asp:Label ID="lblEndDate" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
 
             </td>
@@ -149,7 +157,7 @@
             <td class="auto-style7">
                 <asp:CompareValidator ID="cmpStartAndEndDates" runat="server" Display="Dynamic"
                     Operator="GreaterThanEqual" ControlToValidate="txtEDate" ControlToCompare="txtSDate"
-                    ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" Enabled="False" />
+                    ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" Enabled="False" Type="Date" />
 
                 <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True">
                 </asp:DropDownList>
@@ -166,7 +174,7 @@
             <td></td>
             <td class="auto-style2">
                 <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="rejectBtn" OnClick="btnCancel_Click"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<a href="../Department/DepartmentDetailInfo.aspx"><input type="button" id="btnCancel" class="rejectBtn" value="Cancel"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
 

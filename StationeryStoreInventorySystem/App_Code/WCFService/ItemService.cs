@@ -12,9 +12,9 @@ public class ItemService : IItemService
     {
         List<Item> iList = EFBroker_Item.GetActiveItemList();
         List<WCFCatalogueItem> ciList = new List<WCFCatalogueItem>();
-        foreach(Item i in iList)
+        foreach (Item i in iList)
         {
-            if(i.BalanceQty != null)
+            if (i.BalanceQty != null)
             {
                 int adjustments = GetAdjustmentSum(i);
                 WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
@@ -41,7 +41,14 @@ public class ItemService : IItemService
 
     public WCFCatalogueItem GetItem(string itemCode)
     {
-
+        Item i = EFBroker_Item.GetItembyItemCode(itemCode);
+        WCFCatalogueItem ci = null;
+        if (i.BalanceQty != null)
+        {
+            int adjustments = GetAdjustmentSum(i);
+            ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
+        }
+        return ci;
     }
 
     private int GetAdjustmentSum(Item i)

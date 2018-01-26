@@ -42,6 +42,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
                 list.setAdapter(adapter);
             }
         }.execute(searchString);
+        hideKeyboard();
     }
 
     protected void finaliseClick(View v){
@@ -50,6 +51,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
 
     protected void displayAllClick(View v){
         displayAll();
+        hideKeyboard();
     }
 
     private void displayAll(){

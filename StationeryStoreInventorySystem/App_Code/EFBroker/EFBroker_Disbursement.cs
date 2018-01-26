@@ -30,6 +30,31 @@ public class EFBroker_Disbursement
         }
         return disbursements;
     }
+    public static int AddNewRetrieval(int empID)
+    {
+        int retrievalID;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Retrieval r = new Retrieval();
+            r.RetrievedBy = empID;     //base on user session
+            r.RetrievedDate = DateTime.Today;
+            r.RetrievalStatus = "Pending";
+            context.Retrievals.Add(r);
+            context.SaveChanges();
+            retrievalID = r.RetrievalID; // get auto increasement data after SaveChanges        
+        }
+        return retrievalID;
+    }
+    public static List<Disbursement> GetDisbursmentListbyRetrievalID(int retrievalID)
+    {
+        List<Disbursement> dList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            dList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == retrievalID).ToList();
+        }
+        return dList;
+
+    }
     public static Disbursement GetDisbursmentbyDisbID(int disbID)
     {
         Disbursement disbursement;
@@ -38,6 +63,44 @@ public class EFBroker_Disbursement
             disbursement = context.Disbursements.Include("Department").Include("Disbursement_Item").Where(x => x.DisbursementID == disbID).FirstOrDefault();
         }
         return disbursement;
+
+    }
+    public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
+    {   //not needed
+        Disbursement_Item disbursementItem;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            disbursementItem = context.Disbursement_Item.Where(x => x.DisbursementID == id && x.ItemCode == itemCode).FirstOrDefault();
+        }
+        return disbursementItem;
+    }
+    public static List<Disbursement_Item> GetDisbursement_ItemsbyDisbID(int disbID)
+    {
+        List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            disbursementDetail = context.Disbursement_Item.Include("Item").Where(x => x.DisbursementID == disbID).ToList();
+        }
+        return disbursementDetail;
+    }
+    public static int AddNewDisbursment(Disbursement disbursment)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Disbursements.Add(disbursment);
+            context.SaveChanges();
+            //saving changes get ID for disbursement
+            return disbursment.DisbursementID;
+        }
+    }
+    public static void AddNewDisbursementItemList(List<Disbursement_Item> disitems)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Disbursement_Item.AddRange(disitems);
+            context.SaveChanges();
+        }
+        return;
 
     }
     public static string GetAccessCodebyDisbID(int disbID)
@@ -84,7 +147,7 @@ public class EFBroker_Disbursement
     }
     public static void UpdateDisbursement(Disbursement disbursement)
     {
-        using(StationeryEntities context = new StationeryEntities())
+        using (StationeryEntities context = new StationeryEntities())
         {
             context.Entry(disbursement).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
@@ -99,23 +162,6 @@ public class EFBroker_Disbursement
         }
 
     }
-    public static Disbursement_Item GetDisbursementItem(int id, string itemCode)
-    {   //not needed
-        Disbursement_Item disbursementItem;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            disbursementItem = context.Disbursement_Item.Where(x => x.DisbursementID == id && x.ItemCode == itemCode).FirstOrDefault();
-        }
-        return disbursementItem;
-    }
-    public static List<Disbursement_Item> GetDisbursement_ItemsbyDisbID(int disbID)
-    {
-        List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            disbursementDetail = context.Disbursement_Item.Include("Item").Where(x => x.DisbursementID == disbID).ToList();
-        }
-        return disbursementDetail;
-    }
+
 
 }

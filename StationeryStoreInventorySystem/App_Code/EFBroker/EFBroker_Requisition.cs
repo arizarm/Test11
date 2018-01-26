@@ -21,6 +21,15 @@ public class EFBroker_Requisition
         }
         return req;
     }
+    public static string GetDepartmentCodebyRequisitionID(int requisitionID)
+    {
+        string depCode;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            depCode = context.Requisitions.(r => r.RequisitionID).Select(r => r.DeptCode).FirstOrDefault();
+        }
+        return depCode;
+    }
     public static Requisition GetRequisitionByID(int id)
     {
         Requisition req;

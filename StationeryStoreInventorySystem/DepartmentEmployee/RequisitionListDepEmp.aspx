@@ -22,7 +22,7 @@
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid" >
+            DataKeyNames="RequisitionNo" CssClass="mGrid" Width="90%">
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">

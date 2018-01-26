@@ -129,7 +129,7 @@ public class EFBroker_Requisition
         List<Requisition> rList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList = context.Requisitions.Where(x => x.RequestedBy == empID).ToList();
+            rList = context.Requisitions.Where(x => x.RequestedBy == empID).OrderByDescending(c => c.RequestDate).ToList();
         }
         return rList;
     }
@@ -327,7 +327,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy.Equals(empID)).ToList();
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy == (empID)).ToList();
         }
     }
 }

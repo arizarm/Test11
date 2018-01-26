@@ -39,95 +39,95 @@ public class RetrievalControl
     }
 
     //Get Retrieval Detail By RetrievalID
-    public List<RetrievalListDetailItem> DisplayRetrievalListDetail(int rId)
-    {
-        List<Retrieval> retrievalList = new List<Retrieval>();
-
-        List<string> itemCodeList = new List<string>();
-
-        List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
-
-        RetrievalListDetailItem r;
-
-        foreach (Disbursement d in disbursementList)
-        {
-            foreach (Disbursement_Item dI in d.Disbursement_Item)
-            {
-                string itemCode = dI.ItemCode;
-
-                if (itemCodeList.Count() != 0)
-                {
-                    bool add = true;
-
-                    foreach (string s in itemCodeList)
-                    {
-                        if (s == itemCode)
-                        {
-                            add = false;
-                            r = RetrievalListDetailItemList.Where(x => x.ItemCode.Equals(s)).First();
-                            r.TotalRequestedQty += (int)(context.Disbursement_Item.Where(x => x.DisbursementID == dI.DisbursementID && x.ItemCode.ToString().Equals(s)).Select(x => x.TotalRequestedQty).First());
-                        }
-                    }
-                    if (add)
-                    {
-                        CreateRetrievalListDetailItemList(itemCode, itemCodeList);
-                    }
-                }
-                else
-                {
-                    CreateRetrievalListDetailItemList(itemCode, itemCodeList);
-                }
-            }
-        }
-        return RetrievalListDetailItemList;
-    }
-
-    //Create new RetrievalListDetailItem
-    public void CreateRetrievalListDetailItemList(string itemCode, List<string> itemCodeList)
-    {
-        RetrievalListDetailItem r;
-
-        string bin = context.Items.Where(x => x.ItemCode == itemCode).Select(x => x.Bin).First().ToString();
-        string description = context.Items.Where(x => x.ItemCode == itemCode).Select(x => x.Description).First().ToString();
-        int totalRequestedQty = (int)(context.Disbursement_Item.Where(x => x.ItemCode.ToString().Equals(itemCode)).Select(x => x.TotalRequestedQty).First());
-
-        r = new RetrievalListDetailItem(bin, description, totalRequestedQty, itemCode);
-        RetrievalListDetailItemList.Add(r);
-        itemCodeList.Add(itemCode);
-    }
-
-    ////-- test Code--
-    ////Get Retrieval Detail By RetrievalID
     //public List<RetrievalListDetailItem> DisplayRetrievalListDetail(int rId)
     //{
-    //    List<Disbursement_Item> disbursementItemList = new List<Disbursement_Item>();
-    //    List<RetrievalListDetailItem> retrievalItemList = new List<RetrievalListDetailItem>();
-    //    HashSet<Item> itemSet = new HashSet<Item>();
-    //    Dictionary<string, int> qtyCounter = new Dictionary<string, int>();
-    //    using (StationeryEntities context = new StationeryEntities())
-    //    {
-    //        disbursementItemList = context.Disbursement_Item.Include("Item").Where(di => di.Disbursement.RetrievalID == rId).ToList();
-    //    }
-    //    foreach (Disbursement_Item di in disbursementItemList)
-    //    {
-    //        int qty;
+    //    List<Retrieval> retrievalList = new List<Retrieval>();
 
-    //        if(!qtyCounter.TryGetValue(di.ItemCode,out qty))
-    //        {
-    //            qty = 0;
-    //            itemSet.Add(di.Item);
-    //            qtyCounter.Add(di.ItemCode, qty);
-    //        }
-    //        qty += di.TotalRequestedQty ?? 0;
-    //        qtyCounter[di.ItemCode] = qty;    
-    //    }
-    //    foreach(Item item in itemSet)
+    //    List<string> itemCodeList = new List<string>();
+
+    //    List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
+
+    //    RetrievalListDetailItem r;
+
+    //    foreach (Disbursement d in disbursementList)
     //    {
-    //        RetrievalListDetailItem retrievalItem = new RetrievalListDetailItem(item.Bin, item.Description, qtyCounter[item.ItemCode], item.ItemCode);
-    //        retrievalItemList.Add(retrievalItem);
+    //        foreach (Disbursement_Item dI in d.Disbursement_Item)
+    //        {
+    //            string itemCode = dI.ItemCode;
+
+    //            if (itemCodeList.Count() != 0)
+    //            {
+    //                bool add = true;
+
+    //                foreach (string s in itemCodeList)
+    //                {
+    //                    if (s == itemCode)
+    //                    {
+    //                        add = false;
+    //                        r = RetrievalListDetailItemList.Where(x => x.ItemCode.Equals(s)).First();
+    //                        r.TotalRequestedQty += (int)(context.Disbursement_Item.Where(x => x.DisbursementID == dI.DisbursementID && x.ItemCode.ToString().Equals(s)).Select(x => x.TotalRequestedQty).First());
+    //                    }
+    //                }
+    //                if (add)
+    //                {
+    //                    CreateRetrievalListDetailItemList(itemCode, itemCodeList);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                CreateRetrievalListDetailItemList(itemCode, itemCodeList);
+    //            }
+    //        }
     //    }
-    //    return retrievalItemList;
+    //    return RetrievalListDetailItemList;
     //}
+
+    ////Create new RetrievalListDetailItem
+    //public void CreateRetrievalListDetailItemList(string itemCode, List<string> itemCodeList)
+    //{
+    //    RetrievalListDetailItem r;
+
+    //    string bin = context.Items.Where(x => x.ItemCode == itemCode).Select(x => x.Bin).First().ToString();
+    //    string description = context.Items.Where(x => x.ItemCode == itemCode).Select(x => x.Description).First().ToString();
+    //    int totalRequestedQty = (int)(context.Disbursement_Item.Where(x => x.ItemCode.ToString().Equals(itemCode)).Select(x => x.TotalRequestedQty).First());
+
+    //    r = new RetrievalListDetailItem(bin, description, totalRequestedQty, itemCode);
+    //    RetrievalListDetailItemList.Add(r);
+    //    itemCodeList.Add(itemCode);
+    //}
+
+    //-- test Code--
+    //Get Retrieval Detail By RetrievalID
+    public List<RetrievalListDetailItem> DisplayRetrievalListDetail(int rId)
+    {
+        List<Disbursement_Item> disbursementItemList = new List<Disbursement_Item>();
+        List<RetrievalListDetailItem> retrievalItemList = new List<RetrievalListDetailItem>();
+        HashSet<Item> itemSet = new HashSet<Item>();
+        Dictionary<string, int> qtyCounter = new Dictionary<string, int>();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            disbursementItemList = context.Disbursement_Item.Include("Item").Where(di => di.Disbursement.RetrievalID == rId).ToList();
+        }
+        foreach (Disbursement_Item di in disbursementItemList)
+        {
+            int qty;
+
+            if (!qtyCounter.TryGetValue(di.ItemCode, out qty))
+            {
+                qty = 0;
+                itemSet.Add(di.Item);
+                qtyCounter.Add(di.ItemCode, qty);
+            }
+            qty += di.TotalRequestedQty ?? 0;
+            qtyCounter[di.ItemCode] = qty;
+        }
+        foreach (Item item in itemSet)
+        {
+            RetrievalListDetailItem retrievalItem = new RetrievalListDetailItem(item.Bin, item.Description, qtyCounter[item.ItemCode], item.ItemCode);
+            retrievalItemList.Add(retrievalItem);
+        }
+        return retrievalItemList;
+    }
 
     //update actual qty for non-shortfall disbursement items when generate disbursement button clicked
     public void UpdateDisbursementNonShortfallItemActualQty(int rId, List<int> ActualQty, List<RetrievalListDetailItem> retDetailList)

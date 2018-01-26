@@ -7,7 +7,7 @@
     <h2 class="mainPageHeader">Pending Disbursement List</h2>
 
     <br />
-    <asp:GridView ID="gdvDisbList" runat="server" CssClass="mGrid" AutoGenerateColumns="false" AllowSorting="true">      
+    <asp:GridView ID="gdvDisbList" runat="server" CssClass="mGrid" AutoGenerateColumns="false" AllowSorting="true" Width="90%" OnSorting="gdvDisbList_Sorting">      
          <Columns>                
                 <asp:TemplateField HeaderText="Disbursement No">
                     <ItemTemplate>
@@ -24,7 +24,7 @@
                         <asp:Label ID="lblcollectionTime" runat="server" Text='<%# Bind("collectionTime") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-             <asp:TemplateField HeaderText="Department" SortExpression="depName">                                   
+             <asp:TemplateField HeaderText="Department" SortExpression="depName" >                                   
                     <ItemTemplate>
                         <asp:Label ID="lbldepName" runat="server" Text='<%# Bind("depName") %>'></asp:Label>
                     </ItemTemplate>

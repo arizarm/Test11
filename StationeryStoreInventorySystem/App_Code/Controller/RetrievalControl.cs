@@ -310,10 +310,10 @@ public class RetrievalControl
         context.SaveChanges();
     }
 
-    public int AddRetrieval()
+    public int AddRetrieval(int empID)
     {
         Retrieval r = new Retrieval();
-        r.RetrievedBy = 1001;       //base on user session
+        r.RetrievedBy = empID;     //base on user session
         r.RetrievedDate = DateTime.Today;
         r.RetrievalStatus = "Pending";
         context.Retrievals.Add(r);

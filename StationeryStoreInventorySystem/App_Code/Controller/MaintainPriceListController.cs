@@ -37,7 +37,9 @@ public class MaintainPriceListController
 
     public void AddPriceListItem(PriceList obj)
     {
+        string itemCode = obj.ItemCode;
         EFBroker_PriceList.AddPriceListItem(obj);
+        ItemBusinessLogic.ActivateItem(itemCode);
     }
 
     public List<PriceList> GetCurrentYearSupplierPriceList(string supplierCode)

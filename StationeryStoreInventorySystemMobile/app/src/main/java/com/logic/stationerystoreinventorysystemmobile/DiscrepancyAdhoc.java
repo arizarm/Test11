@@ -2,6 +2,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -40,9 +41,19 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
 //                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description", "balanceQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName,R.id.tvBalanceQty});
                 SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
                 list.setAdapter(adapter);
+
             }
         }.execute(searchString);
+        list.setOnItemClickListener(this);
         hideKeyboard();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        CatalogueItem ci = (CatalogueItem) parent.getAdapter().getItem(position);
+        Intent i = new Intent(this, DiscrepancyAdhocItemDetails.class);
+        i.putExtra("itemCode", ci.get("itemCode"));
+        startActivity(i);
     }
 
     protected void finaliseClick(View v){
@@ -72,10 +83,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
         }.execute();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
 
     private void hideKeyboard(){
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

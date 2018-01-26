@@ -148,19 +148,34 @@ public class RetrievalControl
                         if (di.TotalRequestedQty == ActualQty[i] && di.ItemCode == r.ItemCode)
                         {
                             di.ActualQty = ActualQty[i];
-                            di.Disbursement.Retrieval.RetrievalStatus = "Retrieved";
-                            Item item = EFBroker_Item.GetItembyItemCode(di.ItemCode);
-                            item.BalanceQty -= ActualQty[i];//////////////////////////////////////////
-                            EFBroker_Item.UpdateItem(item);
+                            //don't use this, it makes the retrievalstatus ="Retrieved" even if one itemCode is processed.
+                            //di.Disbursement.Retrieval.RetrievalStatus = "Retrieved";
+                            //Item item = EFBroker_Item.GetItembyItemCode(di.ItemCode);
+                            //item.BalanceQty -= ActualQty[i];//////////////////////////////////////////
+                            //EFBroker_Item.UpdateItem(item);
+                            UpdateItemRetrieval(di.ItemCode, ActualQty[i]);
                         }
                     }
                 }
             }
             i++;
         }
+        EFBroker_Disbursement.UpdateRetrievalStatus(rId);
         context.SaveChanges();
     }
-
+    //// for testCode in RetrievalListDetail  FinalizeDisbursmentList_Click method
+    //public RetrievalShortfallItem CreateShortfallItemActualQty( int actualQty, RetrievalListDetailItem detailItem)
+    //{
+    //    RetrievalShortfallItem item = new RetrievalShortfallItem(detailItem.Description, actualQty, detailItem.ItemCode);
+    //    return item;
+    //}
+    public void UpdateItemRetrieval(string itemCode, int actualQty)
+    {
+        Item item = EFBroker_Item.GetItembyItemCode(itemCode);
+        item.BalanceQty = item.BalanceQty - actualQty;
+        EFBroker_Item.UpdateItem(item);
+        return;
+    }
     //Generate short fall item list when Genereate Disbursement is clicked
     public List<RetrievalShortfallItem> CheckShortfall(List<int> ActualQty)
     {
@@ -194,7 +209,8 @@ public class RetrievalControl
                 string deptCode = d.Department.DeptCode.ToString();
                 try
                 {
-                    int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
+                    //int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
+                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty??0;
 
                     //actual Qty bind with avialable Qty
                     RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);

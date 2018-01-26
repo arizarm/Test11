@@ -30,6 +30,15 @@ public class EFBroker_Requisition
         }
         return req;
     }
+    public static Requisition_Item FindReqItemsByReqIDItemID(int reqid, string itemcode)
+    {
+        Requisition_Item item;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            item = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(code) && ri.RequisitionID.Equals(id)).FirstOrDefault();
+        }
+        return item;
+    }
     public static DateTime? GetEarliestReqDateTimebyDisbID(int disbID)
     {
         DateTime? earliest;
@@ -124,15 +133,7 @@ public class EFBroker_Requisition
         }
         return rList;
     }
-    public static List<Requisition_Item> FindReqItemsByReqIDItemDescription(int id, string code)
-    {
-        List<Requisition_Item> items;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            items = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(code) && ri.RequisitionID.Equals(id)).ToList();
-        }
-        return items;
-    }
+
     public static List<Requisition_Item> GetRequisitionItemListbyReqID(int id)
     {
         List<Requisition_Item> tlist = new List<Requisition_Item>();

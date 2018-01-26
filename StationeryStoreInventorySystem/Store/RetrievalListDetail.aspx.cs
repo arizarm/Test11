@@ -88,10 +88,10 @@ public partial class RetrievalForm : System.Web.UI.Page
         //        RetrievalShortfallItem sfItem = new RetrievalShortfallItem(detailItem.Description, actualQty, detailItem.ItemCode);
         //        RetrievalShortfallItemList.Add(sfItem);
         //    }
-        //    retCon.UpdateItemRetrieval(actualQty, detailItem);
+        //    retCon.UpdateItemRetrieval(actualQty, detailItem.ItemCode);
         //    counter++;
         //}
-        //retCon.UpdateRetrievalStatus(retrievalId);
+        //EFBroker_Disbursement.UpdateRetrievalStatus(retrievalId);
         //retCon.GenerateAccessCode(retrievalId);
         //if (RetrievalListDetailItemList.Count == 0)
         //{

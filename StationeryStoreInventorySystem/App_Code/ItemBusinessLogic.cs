@@ -45,7 +45,7 @@ public class ItemBusinessLogic
             item.ReorderQty = qty;
             item.UnitOfMeasure = UOM;
             item.Bin = bin;
-            item.ActiveStatus = "Y";
+            item.ActiveStatus = "C";
             item.BalanceQty = 0;
             Category cat = EFBroker_Category.GetCategorybyName(categoryName);
             if (cat != null)
@@ -77,6 +77,12 @@ public class ItemBusinessLogic
         }
         EFBroker_Item.UpdateItem(i);
         return;
+    }
+    public static void ActivateItem(string itemCode)
+    {
+        Item item = EFBroker_Item.GetItembyItemCode(itemCode);
+        item.ActiveStatus = "Y";
+        EFBroker_Item.UpdateItem(item);
     }
     public static Item GetItembyItemCode(string itemCode)
     {

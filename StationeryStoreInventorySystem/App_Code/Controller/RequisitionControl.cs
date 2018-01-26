@@ -242,7 +242,7 @@ public class RequisitionControl
     //FIND REQUISITION ITEM BY REQUISITION ID AND ITEM CODE
     public static Requisition_Item findByReqIDItemCode(int id, string code)
     {
-        return EFBroker_Requisition.FindReqItemsByReqIDItemDescription(id, code).FirstOrDefault();
+        return EFBroker_Requisition.FindReqItemsByReqIDItemID(id, code);
     }
 
     //REMOVE REQUISITION

@@ -7,11 +7,15 @@ import java.util.HashMap;
  */
 
 public class DiscrepancyHolder {
-    public static HashMap<CatalogueItem, Integer> getItemList() {
+    static HashMap<String, Integer> discrepancies = new HashMap<String, Integer>();
+
+    public static HashMap<String, Integer> getDiscrepancyList() {
         return discrepancies;
     }
 
     public static void clearDiscrepancies(){discrepancies = new HashMap<>();}
 
-    static HashMap<CatalogueItem, Integer> discrepancies = new HashMap<CatalogueItem, Integer>();
+    public static void addDiscrepancy(String itemCode, Integer adj){
+        discrepancies.put(itemCode, adj);
+    }
 }

@@ -228,7 +228,7 @@ public class RequisitionControl
     }
     public static List<ReqisitionListItem> getRequisitionListByStatusAndDepCode(string status, string depCode)
     {
-        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(depCode, status);
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(status, depCode);
         return PopulateGridViewForDepartment(rlist);
     }
     

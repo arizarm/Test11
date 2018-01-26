@@ -15,13 +15,13 @@ public interface IDisbursementService
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement", ResponseFormat = WebMessageFormat.Json)]
     List<WCFDisbursement> getAllDisbursement();
 
-    [OperationContract]
-    [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    WCFDisbursement getDisbursement(string id);
+    //[OperationContract]
+    //[System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
+    //WCFDisbursement getDisbursement(string id);
 
     [OperationContract]
-    [WebGet(UriTemplate = "/DisbursementDetail", ResponseFormat = WebMessageFormat.Json)]
-    List<WCFDisbursementDetail> getDisbursementDetail();
+    [WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
+    List<WCFDisbursementDetail> getDisbursementDetail(string id);
 
 }
 

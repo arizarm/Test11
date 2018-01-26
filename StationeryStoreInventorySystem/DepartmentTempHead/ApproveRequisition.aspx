@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="RequisitionListDepartment.aspx"><-Back</a>
+    <a href="RequisitionListDepTempHead.aspx"><-Back</a>
     <br />
     <br />
 

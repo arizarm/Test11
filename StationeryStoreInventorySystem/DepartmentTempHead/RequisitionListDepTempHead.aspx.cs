@@ -16,7 +16,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 Employee emp = (Employee)Session["emp"];
 
                 //Dep Temp Head
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
+                GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
                 GridView1.DataBind();
             }
             else
@@ -25,23 +25,28 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
         }
     }
-
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
 
-            string selectedStatus = DropDownList1.SelectedValue;
-
-            GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
-            GridView1.DataBind();
+            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            {
+                GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
+                GridView1.DataBind();
+            }
+            else
+            {
+                string selectedStatus = DropDownList1.SelectedItem.ToString();
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(DropDownList1.SelectedItem.ToString(), emp.DeptCode);
+                GridView1.DataBind();
+            }
         }
         else
         {
             Utility.logout();
         }
-
     }
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
@@ -55,12 +60,12 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         {
             if (DropDownList1.SelectedItem.ToString() == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord, emp.DeptCode);
+                GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord.Trim(), emp.DeptCode);
                 GridView1.DataBind();
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord, emp.DeptCode, DropDownList1.SelectedItem.ToString());
+                GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord.Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
             }
         }
@@ -72,6 +77,4 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
         GridView1.DataBind();
     }
-
-
 }

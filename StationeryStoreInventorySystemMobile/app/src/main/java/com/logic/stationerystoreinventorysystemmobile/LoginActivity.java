@@ -3,6 +3,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class LoginActivity extends Activity {
         password = (EditText)findViewById(R.id.editText3);
         loginBtn = (Button) findViewById(R.id.button2);
 
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.LAX);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

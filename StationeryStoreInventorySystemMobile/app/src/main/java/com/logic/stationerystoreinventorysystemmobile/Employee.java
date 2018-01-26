@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class Employee extends java.util.HashMap<String,String> {
 
-    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "http://172.17.255.216/StationeryStoreInventorySystem/DeptService.svc/";
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));
         put("deptCode", deptCode);
@@ -43,15 +43,15 @@ public class Employee extends java.util.HashMap<String,String> {
         {
             try{
                 emp =
-                        new Employee(b.getInt("eid"),
-                        b.getString("deptCode"),
-                        b.getString("ename"),
-                        b.getString("role"),
-                        b.getString("password"),
-                        b.getString("email"),
-                        b.getString("isTemphead"),
-                        b.getString("startDate"),
-                        b.getString("endDate"));
+                        new Employee(b.getInt("Eid"),
+                        b.getString("DeptCode"),
+                        b.getString("Ename"),
+                        b.getString("Role"),
+                        b.getString("Password"),
+                        b.getString("Email"),
+                        b.getString("IsTemphead"),
+                        b.getString("StartDate"),
+                        b.getString("EndDate"));
             }
             catch (Exception ex){
                 Log.e("Department.list()","JSONArray error");

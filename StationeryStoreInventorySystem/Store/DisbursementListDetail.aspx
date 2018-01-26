@@ -25,7 +25,7 @@
         </tr>
     </table>                         
 
-    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns ="false">
+    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns ="false" Width="90%">
         <Columns>                
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>

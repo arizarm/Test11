@@ -14,10 +14,10 @@ public partial class DisbursementList : System.Web.UI.Page
     {
         if(!IsPostBack)
         {
-            List<DisbursementListItems> disbursementListItemsList = disbCon.gvDisbursementPopulate();
-            Session["disbItemsList"] = disbursementListItemsList;
+            List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems();
             gdvDisbList.DataSource = disbursementListItemsList;
             gdvDisbList.DataBind();
+            ViewState["sortDirection"] = "";
         }
     }
     
@@ -27,5 +27,33 @@ public partial class DisbursementList : System.Web.UI.Page
         GridViewRow gvRow = ((Button)sender).NamingContainer as GridViewRow;
         Session["SelectedDisb"] = Convert.ToInt32((gvRow.FindControl("lbldisbId") as Label).Text);
         Response.Redirect("~/Store/DisbursementListDetail.aspx");
+    }
+
+    protected void gdvDisbList_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        if ((string)ViewState["sortDirection"] == "desc" || (string)ViewState["sortDirection"] == "")
+        {
+            List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems().OrderBy(c => c.DepName).ToList();
+            Session["disbItemsList"] = disbursementListItemsList;
+            gdvDisbList.DataSource = disbursementListItemsList;
+            gdvDisbList.DataBind();
+            ViewState["sortDirection"] = "asc";
+        }
+        else if ((string)ViewState["sortDirection"] == "asc")
+        {
+            List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems().OrderByDescending(c => c.DepName).ToList();
+            Session["disbItemsList"] = disbursementListItemsList;
+            gdvDisbList.DataSource = disbursementListItemsList;
+            gdvDisbList.DataBind();
+            ViewState["sortDirection"] = "desc";
+
+        }
+    }
+
+    protected List<DisbursementListItems> FillDisbursementListItems()
+    {
+        List<DisbursementListItems> disbursementListItemsList = disbCon.gvDisbursementPopulate();
+        Session["disbItemsList"] = disbursementListItemsList;
+        return disbursementListItemsList;
     }
 }

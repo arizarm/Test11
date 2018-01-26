@@ -1,15 +1,19 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 
-public class DiscrepancyAdhoc extends Activity {
+public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClickListener {
     ListView list;
 
     @Override
@@ -17,34 +21,64 @@ public class DiscrepancyAdhoc extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_adhoc);
 
+        displayAll();
+    }
+
+    protected void searchClick(View v){
+        list = findViewById(R.id.listItemsAdhoc);
+        EditText txtSearch = findViewById(R.id.txtSearch);
+        String searchString = txtSearch.getText().toString();
+        new AsyncTask<String, Void, ArrayList<CatalogueItem>>(){
+
+            @Override
+            protected ArrayList<CatalogueItem> doInBackground(String... search){
+                return CatalogueItem.searchItems(search[0]);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<CatalogueItem> iList){
+//                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description", "balanceQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName,R.id.tvBalanceQty});
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
+                list.setAdapter(adapter);
+            }
+        }.execute(searchString);
+        hideKeyboard();
+    }
+
+    protected void finaliseClick(View v){
+
+    }
+
+    protected void displayAllClick(View v){
+        displayAll();
+        hideKeyboard();
+    }
+
+    private void displayAll(){
         list = findViewById(R.id.listItemsAdhoc);
         new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
 
             @Override
             protected ArrayList<CatalogueItem> doInBackground(Void... input){
-                return CatalogueItem.getAllBooks();
+                return CatalogueItem.getAllItems();
             }
 
             @Override
             protected void onPostExecute(ArrayList<CatalogueItem> iList){
+//                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description", "balanceQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName,R.id.tvBalanceQty});
                 SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
                 list.setAdapter(adapter);
             }
         }.execute();
-//        ArrayList<CatalogueItem> iList = new ArrayList<>();
-//        iList.add(new CatalogueItem("C001", "book", "each", 43));
-//        iList.add(new CatalogueItem("C002", "paper", "boxes", 34));
-//        iList.add(new CatalogueItem("C003", "apple", "each", 56));
-//        iList.add(new CatalogueItem("C004", "pear", "cup", 41));
-//        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
-//                list.setAdapter(adapter);
     }
 
-    protected void searchClick(View v){
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 
-    protected void finaliseClick(View v){
-
+    private void hideKeyboard(){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

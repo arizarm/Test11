@@ -16,6 +16,9 @@ public interface IItemService
     [OperationContract]
     [WebGet(UriTemplate = "/CatalogueItems/{search}", ResponseFormat = WebMessageFormat.Json)]
     List<WCFCatalogueItem> SearchItems(string search);
+    [OperationContract]
+    [WebGet(UriTemplate = "/GetItem/{itemCode}", ResponseFormat = WebMessageFormat.Json)]
+    WCFCatalogueItem GetItem(string itemCode);
 }
 
 [DataContract]

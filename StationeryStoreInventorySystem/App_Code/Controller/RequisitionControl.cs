@@ -43,6 +43,13 @@ public class RequisitionControl
         return PopulateGridViewForDepartment(rlist);
     }
 
+    public static List<ReqisitionListItem> DisplayAllByDeptCodeEmpID(string deptCode, int empID)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.DisplayReqByDeptCodeEmpID(deptCode, empID);
+        return PopulateGridViewForDepartment(rlist);
+    }
+
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
@@ -312,4 +319,10 @@ public class RequisitionControl
         return PopulateGridView(rlist);
     }
     
+    public static List<ReqisitionListItem> DisplayAllByDeptCode(string deptCode)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.displayAllByDeptCode(deptCode);
+        return PopulateGridView(rlist);
+    }
 }

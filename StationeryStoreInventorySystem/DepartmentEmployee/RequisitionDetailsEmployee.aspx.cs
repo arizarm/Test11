@@ -19,7 +19,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         Requisition r = RequisitionControl.getRequisition(id);
         int empid = Convert.ToInt32(r.RequestedBy);
-        Label2.Text = EmployeeController.getEmployee(empid);
+        //Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 
@@ -82,7 +82,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void New_Click(object sender, EventArgs e)
     {
         id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-        string des = RequisitionControl.getDescription(code);
+        //string des = RequisitionControl.getDescription(code);
         int qty = Convert.ToInt32(TextBox1.Text);
 
         if (GridView1.Rows.Count <= 0)

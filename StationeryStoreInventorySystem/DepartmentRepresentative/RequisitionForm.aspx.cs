@@ -14,8 +14,9 @@ public partial class RequisitionForm : System.Web.UI.Page
     List<RequestedItem> rItem = new List<RequestedItem>();
     //ArrayList reqItem =new ArrayList();
     static RequestedItem ri;
-    string des;
+    string code;
     Employee emp;
+    string des;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -104,7 +105,11 @@ public partial class RequisitionForm : System.Web.UI.Page
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
-                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+                //string receiver = "@gmail.com";
+                //string subject = "New Requisition";
+                //string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                //Utility.sendMail(receiver, subject, body);
+                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            
@@ -131,6 +136,7 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
     {
+        ValidationSummary1.Enabled = true;
         System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView2.Rows[e.RowIndex].FindControl("qtyText");
         int newQty = Convert.ToInt32(qtyText.Text);
 

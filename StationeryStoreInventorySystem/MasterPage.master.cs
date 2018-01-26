@@ -90,11 +90,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         //        StoreSuperMenu.Visible = false;
         //        StoreClerkMenu.Visible = true;
         //    }
-        //}
-        //else
-        //{
-        //    Utility.logout();
-        //}
+        }
+        else
+        {
+            Utility.logout();
+        }
 
     }
     

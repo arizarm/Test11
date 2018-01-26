@@ -11,5 +11,7 @@ public class DiscrepancyHolder {
         return discrepancies;
     }
 
+    public static void clearDiscrepancies(){discrepancies = new HashMap<>();}
+
     static HashMap<CatalogueItem, Integer> discrepancies = new HashMap<CatalogueItem, Integer>();
 }

@@ -276,6 +276,21 @@ public class EFBroker_Requisition
         }
         return;
     }
+    public static void UpdateRequisition(Requisition requisition)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Entry(requisition).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+        return;
+    }
+    public static void UpdateRequisitionStatus(int reqID, string status)
+    {
+        Requisition r = EFBroker_Requisition.GetRequisitionByID(reqID);
+        r.Status = status;
+        EFBroker_Requisition.UpdateRequisition(r);
+    }
     public static List<Requisition> getCollectionList(string deptCode)
     {
         using (StationeryEntities context = new StationeryEntities())

@@ -210,7 +210,7 @@ public class RetrievalControl
                 try
                 {
                     //int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
-                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty??0;
+                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty ?? 0;
 
                     //actual Qty bind with avialable Qty
                     RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);
@@ -470,9 +470,14 @@ public class RetrievalControl
             List<int> requisitionNos = depReqDic.dictionary[depCode];
             DepReqDictionary multicounter = GetRequisition_quantities(requisitionNos, depCode);
             CreateNewDisbursementItems(multicounter.keys, disbursementID, depCode, multicounter.accumulator);
+            foreach(int i in requNos)
+            {
+                EFBroker_Requisition.UpdateRequisitionStatus(i, "InProgress");
+            }
         }
-
     }
+    //Update RequisitionStatus for InProgress and Closed 
+
     public void CreateNewDisbursementItems(HashSet<string> itemCodes, int disbursementID, string depCode, Dictionary<string, int> accumulator)
     {
         List<Disbursement_Item> diList = new List<Disbursement_Item>();

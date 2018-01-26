@@ -49,6 +49,16 @@ public class EFBroker_Disbursement
         }
         return accessCode;
     }
+    public static void UpdateRetrievalStatus(int retrievalID)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Retrieval retrieval = context.Retrievals.Where(r => r.RetrievalID == retrievalID).FirstOrDefault();
+            retrieval.RetrievalStatus = "Retrieved";
+            context.SaveChanges();
+        }
+        return;
+    }
     public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty)
     {
         int i = 0;

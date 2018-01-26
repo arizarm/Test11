@@ -11,8 +11,8 @@ using System.Text;
 public interface IRequisitionListService
 {
     [OperationContract]
-    [WebGet(UriTemplate = "/Requisition", ResponseFormat = WebMessageFormat.Json)]
-    List<WCFRequisitionListItem> getRequisitionListByStatus();
+    [WebGet(UriTemplate = "/Requisitions/{deptCode}", ResponseFormat = WebMessageFormat.Json)]
+    List<WCFRequisitionListItem> getRequisitionListByStatusAndDept(string deptCode);
 
     [OperationContract]
     [WebGet(UriTemplate = "/Requisition/{id}", ResponseFormat = WebMessageFormat.Json)]

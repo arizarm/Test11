@@ -77,7 +77,6 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
                 TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text = "";
                 Response.Redirect(Request.RawUrl);
             }
-
         }
         return;
     }
@@ -95,14 +94,16 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     {
         if (ddList.SelectedItem.Text.Equals("Other"))
         {
-            
             //textbox.Enabled = true;
+            textbox.Visible = true;
+            textbox.Text = "";
             textbox.ReadOnly = false;
         }
         else
         {
             //textbox.Enabled = false;
             textbox.Text = ddList.SelectedItem.Text;
+            textbox.Visible = false;
             textbox.ReadOnly = true;
         }
         return;

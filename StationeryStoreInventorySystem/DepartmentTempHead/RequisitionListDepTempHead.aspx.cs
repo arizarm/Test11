@@ -34,7 +34,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
             string selectedStatus = DropDownList1.SelectedValue;
 
-            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", emp.DeptCode);
+            GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
             GridView1.DataBind();
         }
         else
@@ -68,7 +68,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
-        GridView1.DataSource = RequisitionControl.DisplayAllDepartment();
+        Employee emp = (Employee)Session["emp"];
+        GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
         GridView1.DataBind();
     }
 

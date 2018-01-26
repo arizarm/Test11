@@ -62,19 +62,11 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
 
-          string searchWord = SearchBox.Text;
+        string searchWord = SearchBox.Text;
 
-      //  if (SearchBox.Text == String.Empty)
-      //  {
-      //      ClientScript.RegisterStartupScript(Page.GetType(),
-      //"MessageBox",
-      //"<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-      //  }
-      //  else
-      //  {
-            gvReq.DataSource = RequisitionControl.DisplaySearch(searchWord);
-            gvReq.DataBind();
-       // }
+        gvReq.DataSource = RequisitionControl.DisplaySearch(searchWord);
+        gvReq.DataBind();
+
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
@@ -82,14 +74,14 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         DropDownList1.Text = "Select Status";
         gvReq.DataSource = RequisitionControl.DisplayAll();
         gvReq.DataBind();
-    }    
+    }
 
     protected void GenerateBtn_Click(object sender, EventArgs e)
     {
         bool check = false;
 
         List<int> reqNo = new List<int>();
-        
+
         foreach (GridViewRow row in gvReq.Rows)
         {
             if (((CheckBox)row.FindControl("CheckBox")).Checked == false)
@@ -103,12 +95,15 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             }
         }
 
-        if(check)
+        if (check)
         {
-            Session["RetrievalID"] = reqCon.AddRetrieval();
-            reqCon.AddDisbursement(reqNo);            
+            int empId = (int)Session["empID"];//////////
+            empId = 1001;
+            int retrievalID=reqCon.AddRetrieval(empId);
+            Session["RetrievalID"] = retrievalID;/////////////////////////////////////////////////
+            reqCon.AddDisbursement(reqNo, retrievalID);
             Response.Redirect("RetrievalListDetail.aspx");
-        }       
+        }
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

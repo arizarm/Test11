@@ -5,10 +5,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
   <div>
         <h2 class="mainPageHeader">Pending Retrieval List</h2>
-     <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
-           <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
+     <asp:TextBox ID="SearchBox" ValidationGroup="1" runat="server" Width="311px"></asp:TextBox>
+           <asp:button ID="SearchBtn" runat="server" Text="Search"  ValidationGroup="1"  CssClass="button" OnClick="SearchBtn_Click"/>
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
     </div>
+      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="SearchBox" style="color:red"> Please enter search key word!</asp:RequiredFieldValidator>
        <div>        
          <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid"  AutoGenerateColumns="False">
             <Columns>

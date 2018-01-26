@@ -23,17 +23,9 @@ public partial class RetrievalList : System.Web.UI.Page
     {
         string searchWord = SearchBox.Text;
 
-        if (SearchBox.Text == String.Empty)
-        {
-            ClientScript.RegisterStartupScript(Page.GetType(),
-      "MessageBox",
-      "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
-        }
-        else
-        {
-            gvReq.DataSource = retCon.DisplaySearch(searchWord);
-            gvReq.DataBind();
-        }
+        gvReq.DataSource = retCon.DisplaySearch(searchWord);
+        gvReq.DataBind();
+
     }
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
@@ -47,6 +39,6 @@ public partial class RetrievalList : System.Web.UI.Page
     {
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn        
         Session["RetrievalID"] = Convert.ToInt32((row.FindControl("LabelRetrievalID") as Label).Text); //row.Cells[1]
-        Response.Redirect("RetrievalListDetail.aspx");
+        Response.Redirect("~/Store/RetrievalListDetail.aspx");
     }
 }

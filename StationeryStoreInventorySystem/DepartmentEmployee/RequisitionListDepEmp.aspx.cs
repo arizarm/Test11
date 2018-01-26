@@ -55,12 +55,12 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         {
             if (DropDownList1.SelectedItem.ToString() == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord, emp.EmpID);
+                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
                 GridView1.DataBind();
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord, emp.EmpID, DropDownList1.SelectedItem.ToString());
+                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
             }
         }
@@ -68,7 +68,16 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
+        if (Session["emp"] != null)
+        {
+            Employee emp = (Employee)Session["emp"];
+            GridView1.DataSource = RequisitionControl.DisplayAllByDeptCodeEmpID(emp.DeptCode, emp.EmpID);
+            GridView1.DataBind();
+        }
+        else
+        {
+            Utility.logout();
+        }
     }
-
-
+}
 }

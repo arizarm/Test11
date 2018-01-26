@@ -22,18 +22,18 @@ public class DisbursementService : IDisbursementService
         return wcfDisbList;
     }
 
-    public WCFDisbursement getDisbursement(string id)
-    {
-        WCFDisbursement wcfDisb = new WCFDisbursement();
-        DisbursementListItems d = disbCon.DisbursementListItemsObj(Convert.ToInt32(id));
-        wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
-        return wcfDisb;
-    }
+    //public WCFDisbursement getDisbursement(string id)
+    //{
+    //    WCFDisbursement wcfDisb = new WCFDisbursement();
+    //    DisbursementListItems d = disbCon.DisbursementListItemsObj(Convert.ToInt32(id));
+    //    wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
+    //    return wcfDisb;
+    //}
 
-    public List<WCFDisbursementDetail> getDisbursementDetail()
+    public List<WCFDisbursementDetail> getDisbursementDetail(string id)
     {
         List<WCFDisbursementDetail> wcfDisbDetailList = new List<WCFDisbursementDetail>();
-        List<DisbursementDetailListItems> disbDetailList = disbCon.gvDisbursementDetailPopulate();
+        List<DisbursementDetailListItems> disbDetailList = disbCon.gvDisbursementDetailPopulate(Convert.ToInt32(id));
         foreach (DisbursementDetailListItems dI in disbDetailList)
         {
             wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode, dI.ItemDesc, dI.ReqQty, dI.ActualQty, dI.Remarks));

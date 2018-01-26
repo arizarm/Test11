@@ -43,6 +43,13 @@ public class RequisitionControl
         return PopulateGridViewForDepartment(rlist);
     }
 
+    public static List<ReqisitionListItem> DisplayAllByDeptCodeEmpID(string deptCode, int empID)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.DisplayReqByDeptCodeEmpID(deptCode, empID);
+        return PopulateGridViewForDepartment(rlist);
+    }
+
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
@@ -119,7 +126,7 @@ public class RequisitionControl
   
     public static List<ReqisitionListItem> DisplayCollectionListSearch(string deptCode, string searchWord)
     {
-        List<ReqisitionListItem> l = PopulateGridView(EFBroker_Requisition.SearchForCollectionList(deptCode));
+        List<ReqisitionListItem> l = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForCollectionList(deptCode));
         foreach(ReqisitionListItem i in l)
         {
             searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)).ToList();
@@ -221,7 +228,7 @@ public class RequisitionControl
     }
     public static List<ReqisitionListItem> getRequisitionListByStatusAndDepCode(string status, string depCode)
     {
-        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(depCode, status);
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(status, depCode);
         return PopulateGridViewForDepartment(rlist);
     }
     
@@ -312,4 +319,10 @@ public class RequisitionControl
         return PopulateGridView(rlist);
     }
     
+    public static List<ReqisitionListItem> DisplayAllByDeptCode(string deptCode)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.displayAllByDeptCode(deptCode);
+        return PopulateGridView(rlist);
+    }
 }

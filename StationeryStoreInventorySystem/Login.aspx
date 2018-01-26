@@ -18,35 +18,35 @@
 
 </head>
 <body>
-    <form id="form1" runat="server" action="Login.aspx">
-        <div class="wrapper">
+    <div style="margin:0% 0% 0% 30%;">
+        <form id="form1" runat="server" action="Login.aspx">
             <div class="header row">
                 <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
-                    <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />
+                    <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo"/>
                 </asp:HyperLink>
             </div>
-
-
-            <h3 style="color: rgba(118,180,50,1);">Stationery Deparment</h3>
             <div class="col-md-6">
                 <div class="form-group">
-                    <asp:Label ID="Label1" runat="server" Text="Enter User ID" for="TextBox1"></asp:Label>&nbsp&nbsp
-    <asp:TextBox ID="TextBox1" runat="server" class="form-control"></asp:TextBox>
+                    <asp:Label ID="Label1" runat="server" Text="Enter User ID : " for="TextBox1"></asp:Label>&nbsp&nbsp
+                    <asp:TextBox ID="TextBox1" runat="server" class="form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                        ControlToValidate="TextBox1" ForeColor="Red"
+                        ErrorMessage="RequiredFieldValidator">Name is required</asp:RequiredFieldValidator>
                 </div>
                 <div class="form-group">
-                    <asp:Label ID="Label2" runat="server" Text="Enter Password" for="Password1"></asp:Label>&nbsp&nbsp
-    <input id="Password1" type="password" runat="server" class="form-control" />
+                    <asp:Label ID="Label2" runat="server" Text="Enter Password : " for="Password1"></asp:Label>&nbsp&nbsp
+                    <input id="Password1" type="password" runat="server" class="form-control" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
+                        ControlToValidate="Password1" ForeColor="Red"
+                        ErrorMessage="RequiredFieldValidator">Password is required</asp:RequiredFieldValidator>
                 </div>
                 <asp:Label ID="Label3" runat="server"></asp:Label>
                 <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp
+               <asp:CheckBox ID="Persist" runat="server" /> Remember me?
                 <asp:Label ID="Label4" runat="server"></asp:Label>
-            </div>
-        </div>
-        <div>
-            Remember me?
-          <asp:CheckBox ID="Persist" runat="server" />
-        </div>
+            </div>       
     </form>
-
+    </div>
+    
 </body>
 </html>

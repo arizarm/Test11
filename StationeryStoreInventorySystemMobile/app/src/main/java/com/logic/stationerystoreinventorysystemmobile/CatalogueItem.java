@@ -33,7 +33,7 @@ public class CatalogueItem extends HashMap<String, String> {
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
         put("adjustments", adjustments);
-        put("balanceQtyWithAdj", balanceQty.toString() + " (" + adjustments + ")");
+//        put("balanceQtyWithAdj", balanceQty.toString() + " (" + adjustments + ")");
     }
 
     public static ArrayList<CatalogueItem> getAllItems(){
@@ -44,15 +44,7 @@ public class CatalogueItem extends HashMap<String, String> {
             {
                 JSONObject b= a.getJSONObject(i);
                 Integer adjustments = b.getInt("adjustments");
-                String adjStr = "";
-                if (adjustments > 0)
-                {
-                    adjStr = "+" + adjustments.toString();
-                }
-                else
-                {
-                    adjStr = adjustments.toString();
-                }
+                String adjStr = getAdjustmentString(adjustments);
                 CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"), adjStr);
                 ciList.add(ci);
             }
@@ -70,15 +62,7 @@ public class CatalogueItem extends HashMap<String, String> {
             {
                 JSONObject b= a.getJSONObject(i);
                 Integer adjustments = b.getInt("adjustments");
-                String adjStr = "";
-                if (adjustments > 0)
-                {
-                    adjStr = "+" + adjustments.toString();
-                }
-                else
-                {
-                    adjStr = adjustments.toString();
-                }
+                String adjStr = getAdjustmentString(adjustments);
                 CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"), adjStr);
                 ciList.add(ci);
             }
@@ -92,11 +76,27 @@ public class CatalogueItem extends HashMap<String, String> {
     public static CatalogueItem getItem(String itemCode) {
         CatalogueItem ci = null;
         try {
-            JSONObject b = JSONParser.getJSONFromUrl(host+"");
+            JSONObject b = JSONParser.getJSONFromUrl(host+"GetItem/"+itemCode);
+            Integer adjustments = b.getInt("adjustments");
+            String adjStr = getAdjustmentString(adjustments);
+            ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"), adjStr);
         }
         catch(Exception e){
             e.printStackTrace();
         }
         return ci;
+    }
+
+    private static String getAdjustmentString(Integer adjustments){
+        String adjStr = "";
+        if (adjustments > 0)
+        {
+            adjStr = "+" + adjustments.toString();
+        }
+        else
+        {
+            adjStr = adjustments.toString();
+        }
+        return adjStr;
     }
 }

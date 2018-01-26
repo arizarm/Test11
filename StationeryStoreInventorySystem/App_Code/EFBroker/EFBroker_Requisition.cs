@@ -104,6 +104,15 @@ public class EFBroker_Requisition
         return rlist;
     }
 
+    public static List<Requisition> GetRequisitionListByDisbursementID(int disbursementID)
+    {
+        List<Requisition> rlist;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = context.Requisitions.Where(x => x.DisbursementID==disbursementID).ToList();
+        }
+        return rlist;
+    }
 
     public static List<Requisition> displayAllByDeptCode(string deptCode)
     {
@@ -281,6 +290,15 @@ public class EFBroker_Requisition
         using (StationeryEntities context = new StationeryEntities())
         {
             context.Entry(requisition).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+        return;
+    }
+    public static void UpdateRequisitionList(List<Requisition> requisitions)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            requisitions.ForEach(requisition => context.Entry(requisition).State = System.Data.Entity.EntityState.Modified);
             context.SaveChanges();
         }
         return;

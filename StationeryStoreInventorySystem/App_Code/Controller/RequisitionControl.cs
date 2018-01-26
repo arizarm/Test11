@@ -126,7 +126,7 @@ public class RequisitionControl
   
     public static List<ReqisitionListItem> DisplayCollectionListSearch(string deptCode, string searchWord)
     {
-        List<ReqisitionListItem> l = PopulateGridView(EFBroker_Requisition.SearchForCollectionList(deptCode));
+        List<ReqisitionListItem> l = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForCollectionList(deptCode));
         foreach(ReqisitionListItem i in l)
         {
             searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)).ToList();

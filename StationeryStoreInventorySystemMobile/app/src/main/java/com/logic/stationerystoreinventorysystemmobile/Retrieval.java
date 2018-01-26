@@ -21,8 +21,8 @@ import java.util.List;
 
 public class Retrieval extends java.util.HashMap<String,String> {
 
-    //final static String host = "http://172.17.255.213/StationaryStoreTeam11/RetrievalService.svc";
-    final static String host = "http://192.168.1.8/StationaryStoreTeam11/RetrievalService.svc";
+    final static String host = "http://172.17.255.213/StationeryStoreInventorySystem/RetrievalService.svc";
+    //final static String host = "http://192.168.1.8/StationaryStoreTeam11/RetrievalService.svc";
 
 
     public Retrieval(String retrievedDate, String retrievalID, String retrievedBy) {

@@ -1,7 +1,9 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +28,23 @@ public class LoginActivity extends Activity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Employee.VerifyEmployee(email.getText().toString(), password.getText().toString())) {
+                Employee emp = Employee.VerifyEmployee(email.getText().toString(), password.getText().toString());
+                if(emp !=null) {
+
+                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = pref.edit();
+
+                    editor.putString("eid",emp.get("eid"));
+                    editor.putString("deptCode",emp.get("deptCode"));
+                    editor.putString("ename",emp.get("ename"));
+                    editor.putString("role",emp.get("role"));
+                    editor.putString("password",emp.get("password"));
+                    editor.putString("email",emp.get("email"));
+                    editor.putString("isTemphead",emp.get("isTemphead"));
+                    editor.putString("startDate",emp.get("startDate"));
+                    editor.putString("endDate",emp.get("endDate"));
+                    editor.commit();
+
                     Toast.makeText(getApplicationContext(),
                             "Redirecting...",Toast.LENGTH_SHORT).show();
                 }else{

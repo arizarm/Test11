@@ -1,5 +1,8 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -30,15 +33,16 @@ public class Employee extends java.util.HashMap<String,String> {
         put("password", password);
     }
 
-    public  static  boolean VerifyEmployee(String email,String password)
+    public  static  Employee VerifyEmployee(String email,String password)
     {
-        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"GetEmployeeByEmail/"+email);
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"GetEmployeeByEmail/"+email+"/"+password);
+        Employee emp = null;
         boolean loginSuccess = false ;
 
         if(b != null)
         {
             try{
-                Employee e =
+                emp =
                         new Employee(b.getInt("eid"),
                         b.getString("deptCode"),
                         b.getString("ename"),
@@ -48,9 +52,8 @@ public class Employee extends java.util.HashMap<String,String> {
                         b.getString("isTemphead"),
                         b.getString("startDate"),
                         b.getString("endDate"));
-                loginSuccess = true;
             }
-            catch (Exception e){
+            catch (Exception ex){
                 Log.e("Department.list()","JSONArray error");
             }
         }
@@ -59,7 +62,7 @@ public class Employee extends java.util.HashMap<String,String> {
             loginSuccess = false;
         }
 
-        return  loginSuccess;
+        return  emp;
     }
 
 //    WCFEmployee e = new WCFEmployee();

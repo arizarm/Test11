@@ -96,7 +96,15 @@ public class EFBroker_Requisition
     }
 
 
-
+    public static List<Requisition> displayAllByDeptCode(string deptCode)
+    {
+        List<Requisition> rlist;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = context.Requisitions.Where(x => x.DeptCode.Equals(deptCode)).ToList();
+        }
+        return rlist;
+    }
 
     public static List<Requisition> GetAllRequisitionList()
     {
@@ -279,7 +287,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).OrderBy(x=>x.Status.Equals("Approved")).ToList();
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).ToList();
         }
     }
 
@@ -296,6 +304,14 @@ public class EFBroker_Requisition
         using (StationeryEntities context = new StationeryEntities())
         {
             return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals(status)).ToList();
+        }
+    }
+
+    public static List<Requisition> DisplayReqByDeptCodeEmpID(string deptCode, int empID)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy.Equals(empID)).ToList();
         }
     }
 }

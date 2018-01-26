@@ -49,7 +49,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord);
+                GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
                 GridView1.DataBind();
             }
         }

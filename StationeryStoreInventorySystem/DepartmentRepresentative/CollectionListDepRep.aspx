@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <div>
-        <h2 class="mainPageHeader">Requisition List</h2>
+        <h2 class="mainPageHeader">Collection List</h2>
       <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
            <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>

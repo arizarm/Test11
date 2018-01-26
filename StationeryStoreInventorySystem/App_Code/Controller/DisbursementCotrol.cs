@@ -161,6 +161,9 @@ public class DisbursementCotrol
     {
         int disbIDInt = Convert.ToInt32(disbID);
         EFBroker_Disbursement.UpdateDisbursementStatus(disbIDInt);
+        List<Requisition> requisitionList=EFBroker_Requisition.GetRequisitionListByDisbursementID(disbIDInt);
+        requisitionList.ForEach(r => r.Status = "Closed");
+        EFBroker_Requisition.UpdateRequisitionList(requisitionList);
     }
 
     //Add disbursement transaction to Stockcard 

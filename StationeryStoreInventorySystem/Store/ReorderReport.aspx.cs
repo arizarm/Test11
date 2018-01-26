@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,16 +18,16 @@ public partial class ReorderReport : System.Web.UI.Page
     {
         if (Page.IsValid)
         {
-            DateTime startDate = Convert.ToDateTime(txtSDate.Text);
-            DateTime endDate = Convert.ToDateTime(txtEDate.Text);
-            sDate.Text = startDate.ToShortDateString();
-            eDate.Text = endDate.ToShortDateString();
+            DateTime sDate = Convert.ToDateTime(startDate.Text);
+            DateTime eDate = Convert.ToDateTime(endDate.Text);
+            startDate.Text = sDate.ToShortDateString();
+            endDate.Text = eDate.ToShortDateString();
             txtLbl.Text = "List of items running low on stock which are yet to be delivered from supplier";
-            gvPurchasedreoderItem.DataSource = pCtrlr.GenerateReorderReportForPurchasedItems(startDate, endDate);
+            gvPurchasedreoderItem.DataSource = pCtrlr.GenerateReorderReportForPurchasedItems(sDate, eDate);
             gvPurchasedreoderItem.DataBind();
 
             txtLbl2.Text = "List of items running low on stock with no purchases done yet";
-            gvShortfallItems.DataSource = pCtrlr.GenerateShortfallItemsReport(startDate, endDate);
+            gvShortfallItems.DataSource = pCtrlr.GenerateShortfallItemsReport(sDate, eDate);
             gvShortfallItems.DataBind();
         }
 
@@ -34,8 +35,11 @@ public partial class ReorderReport : System.Web.UI.Page
     }
     protected void CompareDateValidator(object sender, ServerValidateEventArgs e)
     {
-        DateTime sDate = Convert.ToDateTime(txtSDate.Text);
-        DateTime eDate = Convert.ToDateTime(txtEDate.Text);
+
+   
+        DateTime sDate = DateTime.ParseExact(startDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
+        DateTime eDate = DateTime.ParseExact(endDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
+      
         if (sDate > eDate)
         {
             e.IsValid = false;

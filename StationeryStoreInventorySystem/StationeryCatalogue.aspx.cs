@@ -110,7 +110,6 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ddl2.DataSource = EFBroker_Item.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
-        //ViewState["rowindex"] = index;
         return;
     }
     protected void RemoveRow(int index)
@@ -228,9 +227,9 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //    }
     //}
 
-    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
-        return;
-    }
+    //protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    //{
+    //    args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
+    //    return;
+    //}
 }

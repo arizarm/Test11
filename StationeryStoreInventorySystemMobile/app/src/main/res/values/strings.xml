@@ -20,8 +20,8 @@
     <string name="btnSave">Save</string>
     <string name="m">(</string>
     <string name="n">)</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="fragment_title">Remarks: </string>
+    <string name="reqList">Requisition List</string>
+    <string name="deptInfo">Department Info.</string>
+    <string name="fragment_title">Do you have any remark for this requisition? </string>
 
 </resources>

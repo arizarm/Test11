@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 
 public class CatalogueItem extends HashMap<String, String> {
-    static String host = "http://localhost:43605/ItemService.svc/";
+    static String host = "http://172.17.249.125/StationeryStoreInventorySystem/ItemService.svc/";
 
 //    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
 //        put("itemCode", itemCode);
@@ -27,21 +27,32 @@ public class CatalogueItem extends HashMap<String, String> {
 //        put("activeStatus", activeStatus);
 //    }
 
-    public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty){
+    public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments){
         put("itemCode", itemCode);
         put("description", description);
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
+        put("adjustments", adjustments);
     }
 
     public static ArrayList<CatalogueItem> getAllBooks(){
         ArrayList<CatalogueItem> ciList = new ArrayList<CatalogueItem>();
         try{
-            JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/CatalogueItems");
+            JSONArray a = JSONParser.getJSONArrayFromUrl(host+"CatalogueItems");
             for(int i =0;i<a.length();i++)
             {
                 JSONObject b= a.getJSONObject(i);
-                CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"));
+                Integer adjustments = b.getInt("adjustments");
+                String adjStr = "";
+                if (adjustments > 0)
+                {
+                    adjStr = "+" + adjustments.toString();
+                }
+                else
+                {
+                    adjStr = adjustments.toString();
+                }
+                CatalogueItem ci = new CatalogueItem(b.getString("itemCode"), b.getString("description"), b.getString("unitOfMeasure"), b.getInt("balanceQty"), adjStr);
                 ciList.add(ci);
             }
         }

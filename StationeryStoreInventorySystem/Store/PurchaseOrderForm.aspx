@@ -8,12 +8,7 @@
     <style type="text/css">
         .auto-style1 {
             color: rgba(118,180,50,1);
-            margin-left: 210px;
-        }
-    </style>
-    <style type="text/css">
-        .auto-style2 {
-            margin-left: 210px;
+            margin-left: 250px;
         }
     </style>
     <style type="text/css">
@@ -27,11 +22,6 @@
 
         .orderNoStyle {
             padding-left: 405px;
-        }
-
-        .auto-style3 {
-            margin-left: 40px;
-            margin-top: 0px;
         }
 
         .buttonstyle {
@@ -62,7 +52,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div>
         <br />
-        <h2 class="auto-style1">Purchase Order </h2>
+        <h2 class="mainPageHeader">Purchase Order </h2>
         <br />
     </div>
    
@@ -81,66 +71,58 @@
 
         <br />
         <br />
-        <asp:GridView ID="gvPurchaseItems" runat="server" AutoGenerateColumns="False" CssClass="mGrid" Height="109px" DataKeyNames="ItemCode" 
-            Width="858px" Font-Size="Large" OnRowDataBound="reoderItems_RowDataBound" OnRowCommand="gvreoderItems_RowCommand" 
-            OnRowDeleting="gvreoderItems_RowDeleting" >
+        <asp:GridView ID="gvPurchaseItems" runat="server" AutoGenerateColumns="False" CssClass="mGrid"  DataKeyNames="ItemCode" 
+              OnRowDataBound="reoderItems_RowDataBound">
             <Columns>
-                <asp:TemplateField HeaderText="ItemCode">
+                <asp:TemplateField HeaderText="ItemCode" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="ItemCode" runat="server" Text='<%# Bind("ItemCode") %>'></asp:Label>
-                    </ItemTemplate>
-                    <ControlStyle Font-Size="10pt" />
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
-                    <ItemStyle Font-Size="Smaller" HorizontalAlign="Center" Wrap="False" />
+                        <asp:Label ID="ItemCode" runat="server" Text='<%# Bind("ItemCode") %>' ForeColor="Black" ></asp:Label>
+                    </ItemTemplate>                    
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Description">
+
+                <asp:TemplateField HeaderText="Description" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="Label9" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
-                    </ItemTemplate>
-                    <ControlStyle Width="135px" />
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
+                        <asp:Label ID="Label9" runat="server" Text='<%# Bind("Description") %>' ForeColor="Black" ></asp:Label>
+                    </ItemTemplate>                    
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Reorder Level">
+
+                <asp:TemplateField HeaderText="Reorder Level" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="Label10" runat="server" Text='<%# Bind("ReorderLevel") %>'></asp:Label>
+                        <asp:Label ID="Label10" runat="server" Text='<%# Bind("ReorderLevel") %>' ForeColor="Black" ></asp:Label>
                     </ItemTemplate>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Available Quantity">
+
+                <asp:TemplateField HeaderText="Available Quantity" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="Label11" runat="server" Text='<%# Bind("Balance") %>'></asp:Label>
-                    </ItemTemplate>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
+                        <asp:Label ID="Label11" runat="server" Text='<%# Bind("Balance") %>' ForeColor="Black" ></asp:Label>
+                    </ItemTemplate>                    
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Re-order Quantity">
+
+                <asp:TemplateField HeaderText="Re-order Quantity" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="ReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black"  CssClass="textboxStyle" />
-                    </ItemTemplate>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
+                    </ItemTemplate>                   
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Unit Of Measure" ControlStyle-Width="100px">
+
+                <asp:TemplateField HeaderText="Unit Of Measure" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="Label12" Text='<%# Bind("UnitOfMeasure") %>' Height="38px" Width="100px" ForeColor="Black" />
-                    </ItemTemplate>
-
-<ControlStyle Width="100px"></ControlStyle>
-
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" VerticalAlign="Middle" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
+                    </ItemTemplate>                    
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Supplier / Price / Amount">
+
+                <asp:TemplateField HeaderText="Supplier / Price / Amount"  ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:DropDownList ID="SupplierList" runat="server" Width="270px">
+                        <asp:DropDownList ID="SupplierList" runat="server" Width="300px" ForeColor="Black" >
                         </asp:DropDownList>
-                    </ItemTemplate>
-                    <ControlStyle Width="355px" />
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Width="250px" />
-                    <ItemStyle Font-Size="10pt" HorizontalAlign="Center" Width="200px" />
+                    </ItemTemplate>                    
                 </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Delete" ItemStyle-HorizontalAlign="Center">
+                    <ItemTemplate>
+                        <asp:CheckBox runat="server" ID="DeleteChkBx" />
+                    </ItemTemplate>                    
+                </asp:TemplateField>
+
                 <%--<asp:TemplateField HeaderText="Amount" ControlStyle-Width="100px">                   
                     <ItemTemplate >
                         <asp:Label runat="server" ID="Label12" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
@@ -148,7 +130,7 @@
                      <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" VerticalAlign="Middle" />
                      <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
                 </asp:TemplateField> --%>
-                <asp:CommandField ShowDeleteButton="true" />
+               <%-- <asp:CommandField ShowDeleteButton="true" />--%>
 
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
@@ -162,7 +144,7 @@
         </asp:GridView>
         <br />
         <br />
-
+        
     </div>
 
     Item Description&nbsp;&nbsp;
@@ -171,6 +153,7 @@
     &nbsp;&nbsp;&nbsp;
     <asp:Button ID="Button4" runat="server" Text="Add Item" CssClass="button" OnClick="AddItem_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="DeleteBtn" runat="server" Text="Delete Item" CssClass="button" OnClick="DeleteItem_Click"  OnClientClick="return confirm('Are you sure you want to delete this item?');" />
    <br />
     <br />
     <br />
@@ -183,10 +166,10 @@
     <br />
     <br />
     <br />
-    <asp:Button ID="Reset" runat="server" Text="Reset" Height="35px" Width="93px" CssClass="button" OnClick="Reset_Click" />
+    <asp:Button ID="Reset" runat="server" Text="Reset" Height="42px" Width="109px" CssClass="button" OnClick="Reset_Click" />
     &nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-    <asp:Button ID="ProceedBtn" runat="server" Text="Proceed" Width="93px" Height="35px" CssClass="button" OnClick="ProceedBtn_Click" ValidationGroup="PurchaseOrderValidationGrp"/>
+    <asp:Button ID="ProceedBtn" runat="server" Text="Proceed" Width="115px" Height="39px" CssClass="button" OnClick="ProceedBtn_Click" ValidationGroup="PurchaseOrderValidationGrp"/>
     &nbsp;&nbsp;
 </asp:Content>
 

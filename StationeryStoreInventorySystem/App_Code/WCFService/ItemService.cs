@@ -16,10 +16,53 @@ public class ItemService : IItemService
         {
             if(i.BalanceQty != null)
             {
-                WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty);
+                int adjustments = GetAdjustmentSum(i);
+                WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
                 ciList.Add(ci);
             }
         }
         return ciList;
+    }
+    public List<WCFCatalogueItem> SearchItems(string search)
+    {
+        List<Item> iList = EFBroker_Item.SearchItemsByItemCodeOrDesc(search);
+        List<WCFCatalogueItem> ciList = new List<WCFCatalogueItem>();
+        foreach (Item i in iList)
+        {
+            if (i.BalanceQty != null)
+            {
+                int adjustments = GetAdjustmentSum(i);
+                WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
+                ciList.Add(ci);
+            }
+        }
+        return ciList;
+    }
+
+    private int GetAdjustmentSum(Item i)
+    {
+        Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+        List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+        int adjustment = 0;
+        if (dMonthly == null)
+        {
+            foreach (Discrepency d in dList)
+            {
+                adjustment += (int)d.AdjustmentQty;
+            }
+        }
+        else
+        {
+            adjustment = (int)dMonthly.AdjustmentQty;
+
+            foreach (Discrepency d in dList)
+            {
+                if ((int)d.DiscrepencyID > dMonthly.DiscrepencyID)
+                {
+                    adjustment += (int)d.AdjustmentQty;
+                }
+            }
+        }
+        return adjustment;
     }
 }

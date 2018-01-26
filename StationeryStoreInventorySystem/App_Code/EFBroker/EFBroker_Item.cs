@@ -56,25 +56,6 @@ public class EFBroker_Item
         }
     }
 
-    public static Item GetItembyDescription(string description)
-    {
-        Item result;
-        using (StationeryEntities inventoryDB = new StationeryEntities())
-        {
-            result = inventoryDB.Items.Where(x => x.Description.Equals(description)).FirstOrDefault();
-        }
-        return result;
-    }
-
-    public static string GetItemByDescription(string itemCode)
-    {
-        string description;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            description = context.Items.Where(x => x.ItemCode.Equals(itemCode)).Select(x=>x.Description).FirstOrDefault();
-        }
-        return description;
-    }
     public static void RemoveItem(string itemCode)
     {
 
@@ -151,14 +132,14 @@ public class EFBroker_Item
         }
         return unit;
     }
-    public static string GetUnitbyItemDesc(string itemDesc)
+    public static List<Item> SearchItemsByItemCodeOrDesc(string search)
     {
-        string unit;
+        List<Item> searchResults = new List<Item>();
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
-            unit = inventoryDB.Items.Where(x => x.Description.Equals(itemDesc)).Select(x => x.UnitOfMeasure).FirstOrDefault();
+            searchResults = inventoryDB.Items.Where(x => x.ItemCode.ToLower().Contains(search.ToLower()) || x.Description.ToLower().Contains(search.ToLower())).ToList();
         }
-        return unit;
+        return searchResults;
     }
     public static void UpdateItem(Item i)
     {

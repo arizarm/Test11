@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class Employee extends java.util.HashMap<String,String> {
 
-    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "172.17.250.219/StationeryStoreInventorySystem/DeptService.svc/";
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));
         put("deptCode", deptCode);
@@ -35,7 +35,8 @@ public class Employee extends java.util.HashMap<String,String> {
 
     public  static  Employee VerifyEmployee(String email,String password)
     {
-        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"GetEmployeeByEmail/"+email+"/"+password);
+        String url = hostURL + "GetEmployeeByEmail/"+email+"/"+password;
+        JSONObject b = JSONParser.getJSONFromUrl(url);
         Employee emp = null;
         boolean loginSuccess = false ;
 

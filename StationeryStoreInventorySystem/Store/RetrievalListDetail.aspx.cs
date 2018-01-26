@@ -15,7 +15,9 @@ public partial class RetrievalForm : System.Web.UI.Page
     {
         if (!IsPostBack) //first time 
         {
-            int retrievalId = (int)Session["RetrievalID"];            
+            int retrievalId = (int)Session["RetrievalID"];
+            //test
+            //retrievalId = 26;
 
             List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
 
@@ -73,6 +75,35 @@ public partial class RetrievalForm : System.Web.UI.Page
 
         List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
 
+        ////----TEST CODE
+        ////assuming RetrievalListDetailItemList is same size as gridview
+        //int counter =0;
+        //foreach (GridViewRow row in gvRe.Rows)
+        //{
+        //    int actualQty = Convert.ToInt32((row.FindControl("txtRetrieved") as TextBox).Text);
+        //    RetrievalListDetailItem detailItem= RetrievalListDetailItemList.ElementAt(counter);
+        //    if (actualQty < detailItem.TotalRequestedQty)
+        //    {
+        //        //Create shortfallItem
+        //        RetrievalShortfallItem sfItem = new RetrievalShortfallItem(detailItem.Description, actualQty, detailItem.ItemCode);
+        //        RetrievalShortfallItemList.Add(sfItem);
+        //    }
+        //    retCon.UpdateItemRetrieval(actualQty, detailItem);
+        //    counter++;
+        //}
+        //retCon.UpdateRetrievalStatus(retrievalId);
+        //retCon.GenerateAccessCode(retrievalId);
+        //if (RetrievalListDetailItemList.Count == 0)
+        //{
+        //    Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
+        //    Response.Redirect("RetrievalShortfall.aspx");
+        //}
+        //else
+        //{
+        //    Response.Redirect("CollectionPointUpdate.aspx");
+        //}
+        ////--TESTCODE END
+
         foreach (GridViewRow row in gvRe.Rows)
         {
             txtRetrievedList.Add(Convert.ToInt32((row.FindControl("txtRetrieved") as TextBox).Text));
@@ -83,7 +114,7 @@ public partial class RetrievalForm : System.Web.UI.Page
         retCon.GenerateAccessCode(retrievalId);
 
         RetrievalShortfallItemList = retCon.CheckShortfall(txtRetrievedList);
-
+        // what is this for???
         if (RetrievalShortfallItemList != null)  //if there's shortfall
         {
             foreach(RetrievalShortfallItem r in RetrievalShortfallItemList)

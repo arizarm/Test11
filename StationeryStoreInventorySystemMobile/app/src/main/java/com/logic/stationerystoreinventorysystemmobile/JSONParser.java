@@ -2,6 +2,8 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 import android.util.Log;
 
+import com.logic.stationerystoreinventorysystemmobile.StackTrace;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,16 +13,17 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by April Wang on 20/1/2018.
+ * Created by April Wang on 21/12/2017.
  */
 
 public class JSONParser {
-
     static String readStream(InputStream is) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -29,7 +32,7 @@ public class JSONParser {
             String line = null;
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
-                sb.append('\n');
+                final StringBuilder append = sb.append('\n');
             }
             is.close();
         } catch (Exception e) {
@@ -97,5 +100,5 @@ public class JSONParser {
         }
         return jArray;
     }
-}
 
+}

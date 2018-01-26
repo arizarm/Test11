@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 
 public class Requisition extends HashMap<String,String>{
-    final static String host ="http://172.17.254.6/StationeryStoreInventorySystem/RequisitionListService.svc";
+    final static String host ="http://172.17.255.216/StationeryStoreInventorySystem/RequisitionListService.svc";
     String requisitionNo;
     String approvedBy;
     String remarks;

@@ -13,6 +13,9 @@ public interface IItemService
     [OperationContract]
     [WebGet(UriTemplate = "/CatalogueItems", ResponseFormat = WebMessageFormat.Json)]
     List<WCFCatalogueItem> GetAllItems();
+    [OperationContract]
+    [WebGet(UriTemplate = "/CatalogueItems/{search}", ResponseFormat = WebMessageFormat.Json)]
+    List<WCFCatalogueItem> SearchItems(string search);
 }
 
 [DataContract]
@@ -26,12 +29,15 @@ public class WCFCatalogueItem
     string unitOfMeasure;
     [DataMember]
     int balanceQty;
+    [DataMember]
+    int adjustments;
     
-    public WCFCatalogueItem(string itemCode, string description, string unitOfMeasure, int balanceQty)
+    public WCFCatalogueItem(string itemCode, string description, string unitOfMeasure, int balanceQty, int adjustments)
     {
         this.itemCode = itemCode;
         this.description = description;
         this.unitOfMeasure = unitOfMeasure;
         this.balanceQty = balanceQty;
+        this.adjustments = adjustments;
     }
 }

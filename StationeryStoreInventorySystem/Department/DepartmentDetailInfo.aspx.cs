@@ -11,14 +11,32 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        if (!IsPostBack)
+        if (Session["emp"] != null)
         {
-            if (Session["emp"] != null)
+            Employee empSession = (Employee)Session["emp"];
+            string dcode = empSession.DeptCode;
+            string empRole = empSession.Role;
+            string tempHead = empSession.IsTempHead;
+
+            if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
             {
-                Employee empSession = (Employee)Session["emp"];
-                string dcode = empSession.DeptCode;
-                string empRole = empSession.Role;
-                string tempHead = empSession.IsTempHead;
+                Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                DateTime? endDate = empActingDHead.EndDate;
+                DateTime today = DateTime.Now;
+
+                if (today > endDate)
+                {
+                    EFBroker_DeptEmployee.UpdateRevoke();
+                    lblActingDHead.Text = null;
+
+
+                }
+            }
+                if (!IsPostBack)
+        {
+            string s = Request.QueryString["SuccessMsg"];
+            lblMessage.Text = s;
+            
 
                 if(empRole=="Employee" && tempHead == "N")
                 {
@@ -73,7 +91,16 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
                    
                     string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                    //DateTime? endDate = empActingDHead.EndDate;
+                    //DateTime today = DateTime.Now;
 
+                    //if (today > endDate)
+                    //{
+                    //    EFBroker_DeptEmployee.UpdateRevoke();
+                    //    lblActingDHead.Text = null;
+                        
+
+                    //}
 
                     lblDeptName.Text = dname;
                     lblContactName.Text = contactname;
@@ -85,14 +112,16 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     lblCollectPoint.Text = empCollectionname;
                     lblSDate.Text = startdate;
                     lblEDate.Text = enddate;
+                    
                 }
 
             }//ispostback
-            else
-            {
-                Utility.logout();
-            }
+           
 
+        }
+        else
+        {
+            Utility.logout();
         }
     }
 

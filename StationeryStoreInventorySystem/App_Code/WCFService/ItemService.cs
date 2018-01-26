@@ -39,6 +39,11 @@ public class ItemService : IItemService
         return ciList;
     }
 
+    public WCFCatalogueItem GetItem(string itemCode)
+    {
+
+    }
+
     private int GetAdjustmentSum(Item i)
     {
         Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);

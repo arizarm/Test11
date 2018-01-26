@@ -11,28 +11,40 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/txtSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ems="10"
+            android:hint="Search by Item Code or Name"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/txtSearch"
-                android:layout_width="300dp"
+            <Button
+                android:id="@+id/btnDisplayAll"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:hint="Search by Item Code or Name"
-                android:inputType="textPersonName" />
+                android:onClick="displayAllClick"
+                android:text="Display All"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnItemSearch"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="searchClick"
-                android:text="Search" />
+                android:text="Search"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <!--<FrameLayout-->
@@ -46,7 +58,7 @@
         <ListView
             android:id="@+id/listItemsAdhoc"
             android:layout_width="match_parent"
-            android:layout_height="420dp"
+            android:layout_height="380dp"
             android:layout_weight="1" />
 
         <Button
@@ -55,7 +67,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="finaliseClick"
-            android:text="Finalise Discrepancies" />
+            android:text="Finalise Discrepancies"
+            android:textSize="20sp" />
+
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

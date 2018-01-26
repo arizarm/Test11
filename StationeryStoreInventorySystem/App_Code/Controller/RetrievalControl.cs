@@ -270,60 +270,100 @@ public class RetrievalControl
         return;
     }
 
-    public void CreateCollectionPointItemList(Disbursement d, List<CollectionPointItem> collectionPointItemList, List<int> CollectionLocationIDList)
-    {
-        CollectionLocationIDList.Add((int)d.Department.CollectionLocationID);
-        string collectionPoint = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.CollectionPoint1.ToString()).First();
-        string defaultCollectionTime = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.DefaultCollectionTime.ToString()).First();
-        CollectionPointItem c = new CollectionPointItem(collectionPoint, defaultCollectionTime);
-        collectionPointItemList.Add(c);
-    }
+    //public void CreateCollectionPointItemList(Disbursement d, List<CollectionPointItem> collectionPointItemList, List<int> CollectionLocationIDList)
+    //{
+    //    CollectionLocationIDList.Add((int)d.Department.CollectionLocationID);
+    //    string collectionPoint = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.CollectionPoint1.ToString()).First();
+    //    string defaultCollectionTime = context.CollectionPoints.Where(x => x.CollectionLocationID == d.Department.CollectionLocationID).Select(x => x.DefaultCollectionTime.ToString()).First();
+    //    CollectionPointItem c = new CollectionPointItem(collectionPoint, defaultCollectionTime);
+    //    collectionPointItemList.Add(c);
+    //}
+    //public List<CollectionPointItem> DisplayCollectionPoint(int rId)
+    //{
+    //    List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+
+    //    List<CollectionPointItem> collectionPointItemList = new List<CollectionPointItem>();
+
+    //    List<int> CollectionLocationIDList = new List<int>();
+
+    //    foreach (Disbursement d in disbursementList)///same collect point from different DeptCode
+    //    {
+    //        if (CollectionLocationIDList.Count != 0)
+    //        {
+    //            bool add = true;
+    //            foreach (int cID in CollectionLocationIDList)
+    //            {
+    //                if (d.Department.CollectionLocationID == cID)
+    //                {
+    //                    add = false;
+    //                }
+    //            }
+    //            if (add)
+    //            {
+    //                CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
+    //        }
+    //    }
+    //    return collectionPointItemList;
+    //}
+
     public List<CollectionPointItem> DisplayCollectionPoint(int rId)
     {
         List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
-
+        List<CollectionPoint> collectionPointList = new List<CollectionPoint>();
         List<CollectionPointItem> collectionPointItemList = new List<CollectionPointItem>();
-
-        List<int> CollectionLocationIDList = new List<int>();
-
-        foreach (Disbursement d in disbursementList)///same collect point from different DeptCode
+        foreach (Disbursement d in disbursementList)
         {
-            if (CollectionLocationIDList.Count != 0)
+            CollectionPoint c = EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(d.DeptCode);
+            if (!collectionPointList.Contains(c))
             {
-                bool add = true;
-                foreach (int cID in CollectionLocationIDList)
-                {
-                    if (d.Department.CollectionLocationID == cID)
-                    {
-                        add = false;
-                    }
-                }
-                if (add)
-                {
-                    CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
-                }
-            }
-            else
-            {
-                CreateCollectionPointItemList(d, collectionPointItemList, CollectionLocationIDList);
+                collectionPointList.Add(c);
             }
         }
+        foreach (CollectionPoint c in collectionPointList)
+        {
+            CollectionPointItem cpItem = new CollectionPointItem(c.CollectionPoint1, c.DefaultCollectionTime);
+            collectionPointItemList.Add(cpItem);
+        }
+
         return collectionPointItemList;
     }
 
-    public void SaveCollectionTimeAndDateToDisbursement(int rId, string collectionPoint, DateTime date, string time)
-    {
-        List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
+    //public void SaveCollectionTimeAndDateToDisbursement(int rId, string collectionPoint, DateTime date, string time)
+    //{
+    //    List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
 
-        foreach (Disbursement d in disbursementList)
+    //    foreach (Disbursement d in disbursementList)
+    //    {
+    //        if (d.Department.CollectionPoint.CollectionPoint1 == collectionPoint)
+    //        {
+    //            d.CollectionDate = date;
+    //            d.CollectionTime = time;
+    //        }
+    //    }
+    //    context.SaveChanges();
+    //}
+    public void SaveCollectionTimeAndDateToDisbursement(int rId, List<string> collectionPoints, List<DateTime> datelist, List<string> timeList)
+    {
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        using (StationeryEntities context = new StationeryEntities())
         {
-            if (d.Department.CollectionPoint.CollectionPoint1 == collectionPoint)
+            foreach (Disbursement d in disbursementList)
             {
-                d.CollectionDate = date;
-                d.CollectionTime = time;
+                for (int i = 0; i < collectionPoints.Count; i++)
+                {
+                    if (d.Department.CollectionPoint.CollectionPoint1 == collectionPoints[i])
+                    {
+                        d.CollectionDate = datelist[i];
+                        d.CollectionTime = timeList[i];
+                    }
+                }
             }
         }
-        context.SaveChanges();
     }
 
     public int AddRetrieval(int empID)

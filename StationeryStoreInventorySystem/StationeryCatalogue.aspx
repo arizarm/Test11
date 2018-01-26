@@ -11,7 +11,7 @@
         </div>
         <asp:Button ID="PrintViewButton" runat="server" Text="View Printable Version" OnClick="PrintViewButton_Click" />
         <div class="col-md-6 pull-right">
-            <button type="button" id="PrintButton" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true">Print Catalogue</button>
+            <button type="button" id="PrintButton" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true">Print Catalogue</button>
         </div>
     </div>
 

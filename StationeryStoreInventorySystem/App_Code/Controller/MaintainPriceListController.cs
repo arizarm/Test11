@@ -11,7 +11,7 @@ public class MaintainPriceListController
 {
     public List<Item> GetActiveItemList()
     {
-            List<Item> items = EFBroker_Item.GetActiveItemList().ToList();
+            List<Item> items = EFBroker_Item.GetActiveOrNewItemList().ToList();
             return items;
     }
 

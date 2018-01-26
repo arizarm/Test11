@@ -28,7 +28,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
             lblDepartment.Text = disb.DepName.ToString();
             lblColPoint.Text = disb.CollectionPoint.ToString();
 
-            retrievedItem = disbCon.gvDisbursementDetailPopulate();
+            retrievedItem = disbCon.gvDisbursementDetailPopulate(disbId);
             gvDisbDetail.DataSource = retrievedItem;
             gvDisbDetail.DataBind();
         }

@@ -160,7 +160,29 @@ public class RetrievalControl
         }
         context.SaveChanges();
     }
-
+    //// for testCode in RetrievalListDetail  FinalizeDisbursmentList_Click method
+    //public void UpdateItemRetrieval(int actualQty, RetrievalListDetailItem detailItem)
+    //{
+    //    Item item = EFBroker_Item.GetItembyItemCode(detailItem.ItemCode);
+    //    item.BalanceQty = item.BalanceQty - actualQty;
+    //    EFBroker_Item.UpdateItem(item);
+    //    return;
+    //}
+    //public RetrievalShortfallItem CreateShortfallItemActualQty( int actualQty, RetrievalListDetailItem detailItem)
+    //{
+    //    RetrievalShortfallItem item = new RetrievalShortfallItem(detailItem.Description, actualQty, detailItem.ItemCode);
+    //    return item;
+    //}
+    //public void UpdateRetrievalStatus(int rID)
+    //{
+    //    using(StationeryEntities context = new StationeryEntities())
+    //    {
+    //        Retrieval retrieval = context.Retrievals.Where(r => r.RetrievalID == rID).FirstOrDefault();
+    //        retrieval.RetrievalStatus = "Retrieved";
+    //        context.SaveChanges();
+    //    }
+    //    return;
+    //}
     //Generate short fall item list when Genereate Disbursement is clicked
     public List<RetrievalShortfallItem> CheckShortfall(List<int> ActualQty)
     {

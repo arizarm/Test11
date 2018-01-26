@@ -55,7 +55,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-            string reason = ReasonLabel.Text;
+            string reason = TextBox2.Text;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -66,7 +66,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             approveSuccess.Text = "Process Failed , Please contact server admininstration";
         }
-
     }
 
     protected void RejectButton_Click(object sender, EventArgs e)
@@ -86,7 +85,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             approveSuccess.Text = "Process Failed , Please contact server admininstration";
         }
-
     }
 
     protected void backButton_Click(object sender, EventArgs e)

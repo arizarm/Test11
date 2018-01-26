@@ -210,7 +210,7 @@ public class RetrievalControl
                 try
                 {
                     //int requestedQty = (int)context.Requisition_Item.Where(x => x.RequisitionID == r.RequisitionID && x.ItemCode.Equals(shortfallItemCode)).Select(x => x.RequestedQty).First();
-                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty??0;
+                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty ?? 0;
 
                     //actual Qty bind with avialable Qty
                     RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);
@@ -229,8 +229,8 @@ public class RetrievalControl
 
     public void GenerateAccessCode(int rId)
     {
-        List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
-
+        //List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
         Random r = new Random();
 
         foreach (Disbursement d in disbursementList)
@@ -238,8 +238,8 @@ public class RetrievalControl
             int value = r.Next(1000, 9999);
             d.AccessCode = value.ToString();
             d.Status = "Ready";
-            // EFBroker_Disbursement.UpdateDisbursement(d);
-            context.SaveChanges();
+            EFBroker_Disbursement.UpdateDisbursement(d);
+            //context.SaveChanges();
         }
         return;
     }
@@ -280,7 +280,7 @@ public class RetrievalControl
     }
     public List<CollectionPointItem> DisplayCollectionPoint(int rId)
     {
-        List<Disbursement> disbursementList = context.Disbursements.Include("Retrieval").Include("Department").Include("Disbursement_Item").Where(x => x.RetrievalID == rId).ToList();
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
 
         List<CollectionPointItem> collectionPointItemList = new List<CollectionPointItem>();
 
@@ -328,14 +328,7 @@ public class RetrievalControl
 
     public int AddRetrieval(int empID)
     {
-        Retrieval r = new Retrieval();
-        r.RetrievedBy = empID;     //base on user session
-        r.RetrievedDate = DateTime.Today;
-        r.RetrievalStatus = "Pending";
-        context.Retrievals.Add(r);
-        context.SaveChanges();
-        retrievalId = r.RetrievalID; // get auto increasement data after SaveChanges        
-        return retrievalId;
+        return EFBroker_Disbursement.AddNewRetrieval(empID);
     }
 
     //public void AddDisbursement(List<int> requNo)
@@ -470,9 +463,13 @@ public class RetrievalControl
             List<int> requisitionNos = depReqDic.dictionary[depCode];
             DepReqDictionary multicounter = GetRequisition_quantities(requisitionNos, depCode);
             CreateNewDisbursementItems(multicounter.keys, disbursementID, depCode, multicounter.accumulator);
+            foreach (int i in requNos)
+            {
+                EFBroker_Requisition.UpdateRequisitionStatus(i, "InProgress");
+            }
         }
-
     }
+
     public void CreateNewDisbursementItems(HashSet<string> itemCodes, int disbursementID, string depCode, Dictionary<string, int> accumulator)
     {
         List<Disbursement_Item> diList = new List<Disbursement_Item>();
@@ -481,11 +478,7 @@ public class RetrievalControl
             Disbursement_Item disbursement_Item = CreateNewDisbursement_Item(disbursementID, itemCode, accumulator[itemCode]);
             diList.Add(disbursement_Item);
         }
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            context.Disbursement_Item.AddRange(diList);
-            context.SaveChanges();
-        }
+        EFBroker_Disbursement.AddNewDisbursementItemList(diList);
         return;
     }
     public static DepReqDictionary GetRequisition_quantities(List<int> requisitionNos, string depCode)
@@ -496,10 +489,7 @@ public class RetrievalControl
         List<Requisition_Item> rList;
         foreach (int i in requisitionNos)
         {
-            using (StationeryEntities context = new StationeryEntities())
-            {
-                rList = context.Requisition_Item.Where(ri => ri.RequisitionID == i).ToList();
-            }
+            rList = EFBroker_Requisition.GetRequisitionItemListbyReqID(i);
             foreach (Requisition_Item ri in rList)
             {
                 int qty;
@@ -519,7 +509,7 @@ public class RetrievalControl
         }
         return multiCounter;
     }
-    public DepReqDictionary GetSelectedRequisitionDepartmentList(List<int> requisitionNos)
+    public static DepReqDictionary GetSelectedRequisitionDepartmentList(List<int> requisitionNos)
     {
         DepReqDictionary complete = new DepReqDictionary();
         Dictionary<string, List<int>> depCodeDic = new Dictionary<string, List<int>>();
@@ -528,11 +518,7 @@ public class RetrievalControl
         foreach (int i in requisitionNos)
         {
             List<int> list = new List<int>(); ;
-            string d;
-            using (StationeryEntities context = new StationeryEntities())
-            {
-                d = context.Requisitions.Include("Employee").Where(r => r.RequisitionID == i).Select(r => r.DeptCode).FirstOrDefault();
-            }
+            string d = EFBroker_Requisition.GetDepartmentCodebyRequisitionID(i);
             if (depCodeDic.TryGetValue(d, out list))
             {
                 list.Add(i);
@@ -556,14 +542,8 @@ public class RetrievalControl
         d.RetrievalID = retrievalID;
         d.Status = "Pending";
         d.DeptCode = depCode;
-        //save
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            context.Disbursements.Add(d);
-            context.SaveChanges();
-            //saving changes get ID for disbursement
-            return d.DisbursementID;
-        }
+        //save and get disbursementID
+        return EFBroker_Disbursement.AddNewDisbursment(d);
     }
     public static Disbursement_Item CreateNewDisbursement_Item(int disbursementID, string itemCode, int totalReqQty)
     {

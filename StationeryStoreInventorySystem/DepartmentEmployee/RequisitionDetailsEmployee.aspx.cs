@@ -14,37 +14,42 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string code;
     protected void Page_Load(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-        //int id = 24;
-
-        Requisition r = RequisitionControl.getRequisition(id);
-        int empid = Convert.ToInt32(r.RequestedBy);
-        //Label2.Text = EmployeeController.getEmployee(empid);
-        Label3.Text = r.RequestDate.ToString();
-        Label4.Text = r.Status.ToString();
-
-        if (!IsPostBack)
+        if (RequisitionControl.getRequisition(int.Parse((string)Request.QueryString["requisitionNo"])) != null)
         {
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
+            //int id = 24;
 
-            showAllItems();
-            if (r.Status != "Pending")
+            Requisition r = RequisitionControl.getRequisition(id);
+            int empid = Convert.ToInt32(r.RequestedBy);
+            //Label2.Text = EmployeeController.getEmployee(empid);
+            Label3.Text = r.RequestDate.ToString();
+            Label4.Text = r.Status.ToString();
+
+            if (!IsPostBack)
             {
-                Cancel.Visible = false;
-                Add.Visible = false;
-                Update.Visible = false;
 
-                if (!String.IsNullOrWhiteSpace(r.Remarks))
-                    Label8.Text = r.Remarks.ToString();
+                showAllItems();
+                if (r.Status != "Pending")
+                {
+                    Cancel.Visible = false;
+                    Add.Visible = false;
+                    Update.Visible = false;
+
+                    if (!String.IsNullOrWhiteSpace(r.Remarks))
+                        Label8.Text = r.Remarks.ToString();
+                }
+
+                DropDownList2.DataSource = RequisitionControl.getItem();
+                DropDownList2.DataTextField = "Description";
+                DropDownList2.DataValueField = "ItemCode";
+                DropDownList2.DataBind();
             }
 
-            DropDownList2.DataSource = RequisitionControl.getItem();
-            DropDownList2.DataTextField = "Description";
-            DropDownList2.DataValueField = "ItemCode";
-            DropDownList2.DataBind();
+            code = DropDownList2.SelectedValue.ToString();
+            Label6.Text = RequisitionControl.getUOM(code);
         }
-
-        code = DropDownList2.SelectedValue.ToString();
-        Label6.Text = RequisitionControl.getUOM(code);
+        else
+            Response.Redirect("RequisitionListDepEmp.aspx");
     }
 
     protected void showAllItems()

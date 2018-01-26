@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 
 public partial class SupplierPriceList : System.Web.UI.Page
 {
@@ -111,14 +112,19 @@ public partial class SupplierPriceList : System.Web.UI.Page
             PopulateTenderSupplyList();
             Response.Write("<script>alert('" + Message.SuccessfulItemAdd + "');</script>");
         }
-        catch (DbUpdateException)
-        {
-            Response.Write("<script>alert('" + Message.OneItemPerSupplier + "');</script>");
-        }
         catch (InvalidOperationException)
         {
             Response.Write("<script>alert('" + Message.InvalidEntry + "');</script>");
         }
+        catch (DbUpdateException)
+        {
+            Response.Write("<script>alert('" + Message.ValidationError + "');</script>");
+        }
+        catch (DbEntityValidationException)
+        {
+            Response.Write("<script>alert('" + Message.ValidationError + "');</script>");
+        }
+
     }
 
     protected void CategoryDropDownList_SelectedIndexChanged(object sender, EventArgs e)
@@ -175,7 +181,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
         List<int> rank = new List<int>() { 1, 2, 3 };
         PriorityRankList.DataSource = rank;
         PriorityRankList.DataBind();
-        PriorityRankList.Items.Insert(0, new ListItem("Select", "NA"));
 
         TextBox7.Text = "";
         string Year = DateTime.Now.Year.ToString();

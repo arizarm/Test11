@@ -27,6 +27,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                     if (true)
                     {
                         HyperLink7.Visible = false;
+                        PrintViewButton.Visible = false;
                         GridView1.Columns[0].Visible = false;
                         GridView1.Columns[3].Visible = false;
                         GridView1.Columns[4].Visible = false;

@@ -21,6 +21,15 @@ public class EFBroker_Requisition
         }
         return req;
     }
+    public static string GetDepartmentCodebyRequisitionID(int requisitionID)
+    {
+        string depCode;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            depCode = context.Requisitions.(r => r.RequisitionID).Select(r => r.DeptCode).FirstOrDefault();
+        }
+        return depCode;
+    }
     public static Requisition GetRequisitionByID(int id)
     {
         Requisition req;
@@ -35,7 +44,7 @@ public class EFBroker_Requisition
         Requisition_Item item;
         using (StationeryEntities context = new StationeryEntities())
         {
-            item = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(code) && ri.RequisitionID.Equals(id)).FirstOrDefault();
+            item = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(itemcode) && ri.RequisitionID.Equals(reqid)).FirstOrDefault();
         }
         return item;
     }
@@ -104,6 +113,15 @@ public class EFBroker_Requisition
         return rlist;
     }
 
+    public static List<Requisition> GetRequisitionListByDisbursementID(int disbursementID)
+    {
+        List<Requisition> rlist;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rlist = context.Requisitions.Where(x => x.DisbursementID==disbursementID).ToList();
+        }
+        return rlist;
+    }
 
     public static List<Requisition> displayAllByDeptCode(string deptCode)
     {
@@ -129,7 +147,7 @@ public class EFBroker_Requisition
         List<Requisition> rList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList = context.Requisitions.Where(x => x.RequestedBy == empID).ToList();
+            rList = context.Requisitions.Where(x => x.RequestedBy == empID).OrderByDescending(c => c.RequestDate).ToList();
         }
         return rList;
     }
@@ -276,6 +294,30 @@ public class EFBroker_Requisition
         }
         return;
     }
+    public static void UpdateRequisition(Requisition requisition)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Entry(requisition).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+        }
+        return;
+    }
+    public static void UpdateRequisitionList(List<Requisition> requisitions)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            requisitions.ForEach(requisition => context.Entry(requisition).State = System.Data.Entity.EntityState.Modified);
+            context.SaveChanges();
+        }
+        return;
+    }
+    public static void UpdateRequisitionStatus(int reqID, string status)
+    {
+        Requisition r = EFBroker_Requisition.GetRequisitionByID(reqID);
+        r.Status = status;
+        EFBroker_Requisition.UpdateRequisition(r);
+    }
     public static List<Requisition> getCollectionList(string deptCode)
     {
         using (StationeryEntities context = new StationeryEntities())
@@ -312,7 +354,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy.Equals(empID)).ToList();
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy == (empID)).ToList();
         }
     }
 }

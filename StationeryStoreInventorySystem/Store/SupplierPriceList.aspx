@@ -141,7 +141,7 @@
                     </asp:TableCell></asp:TableRow><asp:TableRow />
                 <asp:TableRow>
                     <asp:TableCell>Year(Tender): </asp:TableCell><asp:TableCell>
-                        <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TextBox11" runat="server"></asp:TextBox><br />
                     </asp:TableCell></asp:TableRow><asp:TableRow>
                     <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
                         <asp:Button ID="AddItemButton" runat="server" Text="Add" OnClick="AddItemButton_Click"/>

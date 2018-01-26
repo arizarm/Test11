@@ -7,7 +7,7 @@
     <br /><br /> 
     <asp:Button ID="AddSupplierButton" runat="server" Text="Add New Supplier" OnClick="AddSupplierButton_Click" Visible="false" Enabled="false"/>
     <br /> <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="90%">
         <Columns>
             <asp:BoundField DataField="SupplierCode" HeaderText="Supplier Code" ItemStyle-Width="7.5%">
 <ItemStyle Width="7.5%"></ItemStyle>

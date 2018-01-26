@@ -193,14 +193,14 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         Dictionary<Item, int> discrepancyList = new Dictionary<Item, int>();
         Dictionary<Item, String> discrepancyDisplay = new Dictionary<Item, String>();
         List<String> missed = new List<String>();
-        itemError = false;
+        itemError = false;      //Whether there are any rows with errors in the whole page
         for (int i = 0; i < GridView1.Rows.Count; i++)
         {
             GridViewRow row = GridView1.Rows[i];
             bool ticked = (row.FindControl("CheckBox1") as CheckBox).Checked;
             string txtActual = (row.FindControl("txtActual") as TextBox).Text;
             string itemCode = (row.FindControl("lblItemCode1") as Label).Text;
-            bool error = false;
+            bool error = false;       //Whether a row has an error
 
             if (!ticked)   //If a row is not checked
             {

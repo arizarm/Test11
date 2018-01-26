@@ -141,10 +141,6 @@
                     android:textSize="22sp" />
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,13 +154,18 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Key in Adjustment Quantity"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:textSize="22sp" />
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -179,6 +180,7 @@
                 android:id="@+id/btnAddItem"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:onClick="addItemClick"
                 android:text="Add Item Discrepancy"
                 android:textSize="18sp" />
         </LinearLayout>

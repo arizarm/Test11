@@ -35,7 +35,7 @@ public class EFBroker_Requisition
         Requisition_Item item;
         using (StationeryEntities context = new StationeryEntities())
         {
-            item = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(code) && ri.RequisitionID.Equals(id)).FirstOrDefault();
+            item = context.Requisition_Item.Where(ri => ri.Item.ItemCode.Equals(itemcode) && ri.RequisitionID.Equals(reqid)).FirstOrDefault();
         }
         return item;
     }

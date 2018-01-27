@@ -8,7 +8,29 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="440dp">
 
     </ListView>
+
+    <Button
+        android:id="@+id/BtnSaveClick"
+        android:onClick="BtnSaveClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/BtnRestoreClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="BtnRestoreClick"
+        android:text="Restore" />
+
+    <Button
+        android:id="@+id/BtnFinalizeDisbursmentListClick"
+        android:onClick="BtnFinalizeDisbursmentListClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finalize Disbursment List" />
+
 </LinearLayout>

@@ -11,7 +11,7 @@ import android.widget.SimpleAdapter;
 
 import java.util.List;
 
-public class RetrievalList extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class RetrievalListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,9 @@ public class RetrievalList extends AppCompatActivity implements AdapterView.OnIt
             @Override
             protected void onPostExecute(List<Retrieval> result) {
 
+
                       lv.setAdapter(new SimpleAdapter
-                        (RetrievalList.this, result, R.layout.retrieval_list_row,
+                        (RetrievalListActivity.this, result, R.layout.retrieval_list_row,
                                 new String[]{"RetrievedDate","RetrievalID","RetrievedBy"},
                                 new int[]{R.id.text1, R.id.text2,R.id.text3}));
             }
@@ -40,7 +41,7 @@ public class RetrievalList extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         Retrieval s = (Retrieval) av.getAdapter().getItem(position);
-        Intent intent = new Intent(this, RetrievalListDetail.class);
+        Intent intent = new Intent(this, RetrievalListDetailActivity.class);
         intent.putExtra("RetrievalIDKey", s.get("RetrievalID"));
         startActivity(intent);
     }

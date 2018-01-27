@@ -39,7 +39,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
             String noSearchReturn;
             @Override
             protected void onPreExecute() {
-                progress = ProgressDialog.show(DiscrepancyAdhoc.this, "Loading", "Loading Items", true);
+                progress = ProgressDialog.show(DiscrepancyAdhoc.this, "Search", "Searching through items", true);
             }
             @Override
             protected ArrayList<CatalogueItem> doInBackground(String... search){

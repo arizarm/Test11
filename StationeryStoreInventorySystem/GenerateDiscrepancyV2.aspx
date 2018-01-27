@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <h2 class="mainPageHeader">Generate Discrepancy CheckList</h2>
+        <h2 class="mainPageHeader">Report Discrepancy</h2>
         <%--<br />
         Selection Type: 
         <asp:RadioButtonList ID="RadioButtonList1" runat="server">
@@ -68,6 +68,8 @@
         <br />
         <br />
         <%} %>
+
+        <asp:Panel ID="Panel1" runat="server" DefaultButton="Button4">
 
         <h4>Search by Item Code or Name</h4>
         <br />
@@ -156,6 +158,8 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button3" runat="server" Text="Check All" OnClick="Button3_Click" CssClass="button"/>
         <%} %>
+
+        </asp:Panel>
        
     </div>
 </asp:Content>

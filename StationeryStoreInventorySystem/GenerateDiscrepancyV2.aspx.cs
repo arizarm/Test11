@@ -59,7 +59,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             GridView2.DataBind();
         }
 
-        if(Request.UrlReferrer != null)
+        if (Request.UrlReferrer != null)
         {
             if (Request.UrlReferrer.ToString().Contains("AddItemDiscrepancy"))
             {    //Load full list after adding an item
@@ -134,37 +134,46 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button4_Click(object sender, EventArgs e)
     {        //Search button
-        List<Item> iList = new List<Item>();
-        iList = EFBroker_Item.GetActiveItemList();
+        //List<Item> iList = new List<Item>();
+        //iList = EFBroker_Item.GetActiveItemList();
 
         Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
         string search = txtSearch.Text.ToLower();
+        List<Item> iList = EFBroker_Item.SearchItemsByItemCodeOrDesc(search);
 
         foreach (Item i in iList)
         {
-            if (i.ItemCode.ToLower().Contains(search) || i.Description.ToLower().Contains(search))
+            //if (i.ItemCode.ToLower().Contains(search) || i.Description.ToLower().Contains(search))
+            //{
+            //If a monthly inventory check discrepancy is not yet approved, the sum of only
+            //discrepancies starting from the monthly one will be displayed
+            Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+            List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            if (dMonthly == null)
             {
-                //If a monthly inventory check discrepancy is not yet approved, the sum of only
-                //discrepancies starting from the monthly one will be displayed
-                Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
-                List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-                if (dMonthly == null)
-                {
 
-                    string adjStr = GetAdjustmentString(dList);
+                string adjStr = GetAdjustmentsString(dList);
 
-                    searchResults.Add(i, adjStr);
-                }
-                else
-                {
-                    string adjStr = GetPartialAdjustmentString(dList, dMonthly);
-                    searchResults.Add(i, adjStr);
-                }
+                searchResults.Add(i, adjStr);
             }
+            else
+            {
+                string adjStr = GetPartialAdjustmentsString(dList, dMonthly);
+                searchResults.Add(i, adjStr);
+            }
+            //}
         }
 
         GridView1.DataSource = searchResults;
         GridView1.DataBind();
+
+        foreach (GridViewRow row in GridView1.Rows)
+        {
+            HyperLink link = row.FindControl("lnkItem") as HyperLink;
+            Label lbl = row.FindControl("lblItemCode1") as Label;
+            string itemCode = lbl.Text;
+            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+        }
     }
 
     protected void Button5_Click(object sender, EventArgs e)
@@ -173,9 +182,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     }
     protected void Button6_Click(object sender, EventArgs e)
     {       //Clear list button
-        Dictionary<Item, String> empty = new Dictionary<Item, String>();
-        Session["discrepancyList"] = empty;
-        GridView2.DataSource = empty;
+        Dictionary<Item, int> emptyList = new Dictionary<Item, int>();
+        Dictionary<Item, String> emptyDisplay = new Dictionary<Item, string>();
+        Session["discrepancyList"] = emptyList;
+        Session["discrepancyDisplay"] = emptyDisplay;
+        GridView2.DataSource = emptyDisplay;
         GridView2.DataBind();
     }
     private void ErrorClear()
@@ -256,7 +267,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 Label7.Text = "Please double-check the highlighted items.";
                 missed.Add(itemCode);
             }
-        }
+        }   //end of iterating through gridview rows
 
         string missedMessage = "Items with issues: ";
         if (missed.Count > 0)     //Create message listing items with issues
@@ -276,7 +287,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         //Indicate monthly inventory check mode if the number of items in GridView1
         //when generating discrepancies matches the number of active items in the database
         if (GridView1.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
-        {     
+        {
             Session["monthly"] = true;
         }
         else
@@ -291,7 +302,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         GridView2.DataBind();
     }
 
-    private string GetAdjustmentString(List<Discrepency> dList)
+    private string GetAdjustmentsString(List<Discrepency> dList)
     {
         int adj = 0;
 
@@ -313,7 +324,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         return adjStr;
     }
 
-    private string GetPartialAdjustmentString(List<Discrepency> dList, Discrepency dMonthly)
+    private string GetPartialAdjustmentsString(List<Discrepency> dList, Discrepency dMonthly)
     {
         int adj = (int)dMonthly.AdjustmentQty;
 
@@ -352,12 +363,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
             if (dMonthly == null)
             {
-                string adjStr = GetAdjustmentString(dList);
+                string adjStr = GetAdjustmentsString(dList);
                 displayItems.Add(i, adjStr);
             }
             else
             {
-                string adjStr = GetPartialAdjustmentString(dList, dMonthly);
+                string adjStr = GetPartialAdjustmentsString(dList, dMonthly);
                 displayItems.Add(i, adjStr);
             }
         }

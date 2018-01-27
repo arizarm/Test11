@@ -17,18 +17,6 @@ public class CatalogueItem extends HashMap<String, String> {
     static String ip = "172.23.200.138";
     static String host = "http://"+ ip + "/StationeryStoreInventorySystem/ItemService.svc/";
 
-//    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
-//        put("itemCode", itemCode);
-//        put("description", description);
-//        put("unitOfMeasure", unitOfMeasure);
-//        put("balanceQty", balanceQty.toString());
-//        put("categoryID", categoryID.toString());
-//        put("reorderLevel", reorderLevel.toString());
-//        put("reorderQty", reorderQty.toString());
-//        put("bin", bin);
-//        put("activeStatus", activeStatus);
-//    }
-
     public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments){
         put("itemCode", itemCode);
         put("description", description);

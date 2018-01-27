@@ -15,11 +15,14 @@ public class DiscrepancyMenuActivity extends Activity {
     }
 
     protected void adhocClick(View v){
+        DiscrepancyHolder.clearDiscrepancies();
+        DiscrepancyHolder.setAdhocMode();
         Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
         startActivity(i);
     }
 
     protected void monthlyClick(View v){
-
+        DiscrepancyHolder.clearDiscrepancies();
+        DiscrepancyHolder.setMonthlyMode();
     }
 }

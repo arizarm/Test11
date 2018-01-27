@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="horizontal">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -12,80 +11,13 @@
         <TextView android:id="@+id/disbIDHidden"
             android:visibility="gone"/>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TableRow>
 
             <TextView
-                android:id="@+id/lbldepName"
-                android:layout_width="167dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:text="Department Name "
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/depName"
-                android:layout_width="222dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/lbldisDate"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:text="Disbursement Date "
-                android:textSize="16sp" />
-            <TextView
-                android:id="@+id/disDate"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/lbldisTime"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp"
-                android:text="Disbursement Time "/>
-            <TextView
-                android:id="@+id/disTime"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/lbldisColPoint"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp"
-                android:text="Department Name "/>
-            <TextView
-                android:id="@+id/disColPoint"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:id="@+id/disDepName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                style="@style/TextStyle" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DisbursementDetailListItems extends HashMap<String,String>
 {
-    final static String host="http://192.168.0.100/StationaryStoreInventorySystem/DisbursementService.svc";
+    final static String host="http://172.17.156.145/StationeryStoreInventorySystem/DisbursementService.svc";
 
     public DisbursementDetailListItems(){}
 
@@ -28,13 +28,13 @@ public class DisbursementDetailListItems extends HashMap<String,String>
         put("ReqQty",ReqQty);
     }
 
-    public static List<DisbursementDetailListItems> getDisbursementDetailListItems(){
+    public static List<DisbursementDetailListItems> getDisbursementDetailListItems(String id){
         List<DisbursementDetailListItems> list = new ArrayList<>();
-        JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/DisbursementDetail");
+        JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/Disbursement/"+id);
         try{
             for(int i=0;i<a.length();i++){
                 JSONObject b = a.getJSONObject(i);
-                list.add(new DisbursementDetailListItems(b.getString("ActualQty"),Integer.toString(b.getInt ("ItemCode")),
+                list.add(new DisbursementDetailListItems(b.getString("ActualQty"),b.getString("ItemCode"),
                         b.getString("ItemDesc"),b.getString("Remarks"),Integer.toString(b.getInt ("ReqQty"))));
             }
         }catch(Exception e){

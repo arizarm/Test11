@@ -68,8 +68,9 @@ public class DiscrepancyAdhocItemDetailsActivity extends Activity {
                 t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
                 t.show();
                 hideKeyboard();
-                Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
-                startActivity(i);
+                finish();
+//                Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
+//                startActivity(i);
             }
             else{
                 tvError.setText("Please input a non-zero integer quantity");

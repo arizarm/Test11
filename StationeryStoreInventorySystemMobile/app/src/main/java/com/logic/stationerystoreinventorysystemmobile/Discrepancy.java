@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Created by edwon on 27/1/2018.
  */
 
-public class Discrepancy extends HashMap<String, String> {
+public class Discrepancy extends HashMap<String, String> implements Comparable<Discrepancy>{
 
 //    static String ip = "172.17.249.125";
     static String ip = "172.23.200.138";
@@ -22,9 +22,9 @@ public class Discrepancy extends HashMap<String, String> {
 //    }
 
     //for display in summary page
-    public Discrepancy(String itemCode, String itemName, Integer balanceQty, Integer adjustmentQty){
+    public Discrepancy(String itemCode, String description, Integer balanceQty, Integer adjustmentQty){
         put("itemCode", itemCode);
-        put("itemName", itemName);
+        put("description", description);
         put("balanceQty", balanceQty.toString());
         put("adjustmentQty", getAdjustmentString(adjustmentQty));
     }
@@ -40,5 +40,9 @@ public class Discrepancy extends HashMap<String, String> {
             adjStr = adj.toString();
         }
         return adjStr;
+    }
+
+    public int compareTo(Discrepancy d){
+        return this.get("itemCode").compareTo(d.get("itemCode"));
     }
 }

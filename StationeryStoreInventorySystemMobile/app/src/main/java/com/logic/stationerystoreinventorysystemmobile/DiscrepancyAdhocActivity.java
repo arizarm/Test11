@@ -72,7 +72,8 @@ public class DiscrepancyAdhocActivity extends Activity implements AdapterView.On
     }
 
     protected void finaliseClick(View v){
-
+        Intent i = new Intent(this, DiscrepancySummaryActivity.class);
+        startActivity(i);
     }
 
     protected void displayAllClick(View v){

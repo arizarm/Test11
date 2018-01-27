@@ -23,15 +23,24 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
     protected void Submit_Click(object sender, EventArgs e)
     {
         int retrievalId = (int)Session["RetrievalID"];
+        //alternative
+        List<string> locationList = new List<string>();
+        List<DateTime> dateList = new List<DateTime>();
+        List<string> timeList = new List<string>();
 
         foreach (GridViewRow row in gvCollectionPoint.Rows)
         {
             string collectionPoint = (row.FindControl("labCollectionPoint") as Label).Text;
             DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
             string time = (row.FindControl("time") as TextBox).Text;
-            retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
-        }
+            //retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
+            //alternative
+            locationList.Add(collectionPoint);
+            dateList.Add(date);
+            timeList.Add(time);
 
+        }
+        retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, locationList, dateList, timeList);
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
             Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");

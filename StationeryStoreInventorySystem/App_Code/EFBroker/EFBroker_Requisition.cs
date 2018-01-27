@@ -26,7 +26,7 @@ public class EFBroker_Requisition
         string depCode;
         using (StationeryEntities context = new StationeryEntities())
         {
-            depCode = context.Requisitions.(r => r.RequisitionID).Select(r => r.DeptCode).FirstOrDefault();
+            depCode = context.Requisitions.Where(r => r.RequisitionID==requisitionID).Select(r => r.DeptCode).FirstOrDefault();
         }
         return depCode;
     }

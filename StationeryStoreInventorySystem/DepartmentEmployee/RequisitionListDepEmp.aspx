@@ -6,10 +6,11 @@
 
     <div>
         <h2 class="mainPageHeader">Requisition List</h2>
+        <br /><br />
       <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
            <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
-    </div>
+    </div><br /><br />
     <div>
         <asp:Label ID="Label2" runat="server" Text="To View Requisition by Status : "></asp:Label>
         <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
@@ -19,10 +20,10 @@
             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
             <asp:ListItem Value="Closed">Closed</asp:ListItem>
         </asp:DropDownList>
-    </div>
+    </div><br /><br />
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid" >
+            DataKeyNames="RequisitionNo" CssClass="mGrid" Width="90%">
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">

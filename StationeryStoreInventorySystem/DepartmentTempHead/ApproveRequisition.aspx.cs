@@ -13,9 +13,9 @@ public partial class ApproveRequisition : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null)
+        if (Request.QueryString["requisitionNo"] != null)
         {
-            id = Convert.ToInt32(Request.QueryString["id"]);
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
 
@@ -51,11 +51,11 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
     protected void ApproveButton_Click(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        if (Request.QueryString["requisitionNo"] != null && Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = ReasonLabel.Text;
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
+            string reason = TextBox2.Text;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -66,7 +66,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             approveSuccess.Text = "Process Failed , Please contact server admininstration";
         }
-
     }
 
     protected void RejectButton_Click(object sender, EventArgs e)
@@ -74,7 +73,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         if (Request.QueryString["id"] != null && Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            id = Convert.ToInt32(Request.QueryString["id"]);
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
             string reason = ReasonLabel.Text;
             RequisitionControl.rejectRequisition(id, reason, emp.EmpID);
 
@@ -86,7 +85,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             approveSuccess.Text = "Process Failed , Please contact server admininstration";
         }
-
     }
 
     protected void backButton_Click(object sender, EventArgs e)
@@ -104,9 +102,5 @@ public partial class ApproveRequisition : System.Web.UI.Page
                 Response.Redirect("~/DepartmentRepresentative/RequisitionListDepartment.aspx");
             }
         }
-
-
-
     }
-
 }

@@ -73,4 +73,8 @@ public class Message
 
     public const String RTReport
         = "Requisition Trend Report";
+
+    public const String ValidationError
+    = "One or more fields are incorrect. Please try again";
+
 }

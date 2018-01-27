@@ -27,6 +27,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                     if (true)
                     {
                         HyperLink7.Visible = false;
+                        PrintViewButton.Visible = false;
                         GridView1.Columns[0].Visible = false;
                         GridView1.Columns[3].Visible = false;
                         GridView1.Columns[4].Visible = false;
@@ -232,4 +233,21 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     //    args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
     //    return;
     //}
+
+    protected void PrintViewButton_Click(object sender, EventArgs e)
+    {
+        if (PrintViewButton.Text == "View Printable Version")
+        {
+            GridView1.Columns[7].Visible = false;
+            GridView1.Columns[8].Visible = false;
+            PrintViewButton.Text = "Back";
+        }
+        else
+        {
+            GridView1.Columns[7].Visible = true;
+            GridView1.Columns[8].Visible = true;
+            PrintViewButton.Text = "View Printable Version";
+
+        }
+    }
 }

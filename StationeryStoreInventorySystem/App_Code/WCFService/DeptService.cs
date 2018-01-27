@@ -9,14 +9,34 @@ using System.Text;
 public class DeptService : IDeptService
 {
     // Start Login
+    //public WCFEmployee ValidateUser(WCFEmployee emp)
+    //{
+    //    String email = emp.Email;
+    //    String password = emp.Password;
+    //    bool verifyLogin = EmployeeController.verifyLogin(email, password);
+    //    Employee employee = null;
+    //    if (verifyLogin ==  true)
+    //        {
+    //        employee = EmployeeController.GetEmployeeByEmail(email);
+    //        }
+    //    return WCFEmployee.Make(employee.EmpID, employee.DeptCode, employee.EmpName, employee.Role, employee.Password
+    //   , employee.Email, employee.IsTempHead, employee.StartDate.GetValueOrDefault().ToShortDateString()
+    //   , employee.EndDate.GetValueOrDefault().ToShortDateString());
 
-    public WCFEmployee GetEmployeeByEmail(string email)
+       
+    //}
+
+    public WCFEmployee GetEmployeeByEmail(string email,String password)
     {
-        Employee emp = EmployeeController.GetEmployeeByEmail(email);
-
-        return WCFEmployee.Make(emp.EmpID, emp.DeptCode, emp.EmpName, emp.Role, emp.Password
-        , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
-        , emp.EndDate.GetValueOrDefault().ToShortDateString());
+        bool verifyLogin = EmployeeController.verifyLogin(email, password);
+        Employee employee = null;
+        if (verifyLogin == true)
+        {
+            employee = EmployeeController.GetEmployeeByEmail(email);
+        }
+        return WCFEmployee.Make(employee.EmpID, employee.DeptCode, employee.EmpName, employee.Role, employee.Password
+       , employee.Email, employee.IsTempHead, employee.StartDate.GetValueOrDefault().ToShortDateString()
+       , employee.EndDate.GetValueOrDefault().ToShortDateString());
     }
 
     //End Login

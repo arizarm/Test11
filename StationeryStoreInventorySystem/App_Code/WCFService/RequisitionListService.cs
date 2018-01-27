@@ -8,10 +8,10 @@ using System.Text;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "RequisitionListService" in code, svc and config file together.
 public class RequisitionListService : IRequisitionListService
 {
-    List<WCFRequisitionListItem> IRequisitionListService.getRequisitionListByStatus()
+    List<WCFRequisitionListItem> IRequisitionListService.getRequisitionListByStatusAndDept(string deptCode)
     {
         List<WCFRequisitionListItem> wlist = new List<WCFRequisitionListItem>();
-        List<ReqisitionListItem> rlist = RequisitionControl.getRequisitionListByStatus("Pending");
+        List<ReqisitionListItem> rlist = RequisitionControl.getRequisitionListByStatusAndDepCode("Pending", deptCode);
         
         foreach(ReqisitionListItem r in rlist)
         {
@@ -53,6 +53,6 @@ public class RequisitionListService : IRequisitionListService
             Remarks = requisition.Remarks,
         };
 
-        RequisitionControl.approveRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks,1);
+        RequisitionControl.rejectRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks, Convert.ToInt32(r.ApprovedBy));
     }
 }

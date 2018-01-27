@@ -19,4 +19,14 @@ public class Util {
         return properties.getProperty(key);
 
     }
+
+    public static boolean isInt(String toBeChecked){
+        try{
+            Integer i = Integer.parseInt(toBeChecked);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
 }

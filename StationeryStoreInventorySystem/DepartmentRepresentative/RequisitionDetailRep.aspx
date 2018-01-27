@@ -8,14 +8,15 @@
     <br />
     <a href="RequisitionListDepRep.aspx"><-Back</a>
     <br />
-    <h2>
+<%--    <h2>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
     <h3>Requested By:
     <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
         <br />
-    </h3>
+    </h3>--%>
+    <h3>
     Requested Date:
-    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label></h3>
     <br />
     <strong>Status:
     <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>

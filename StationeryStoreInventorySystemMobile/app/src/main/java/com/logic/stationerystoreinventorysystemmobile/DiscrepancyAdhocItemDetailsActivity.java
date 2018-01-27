@@ -9,14 +9,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class DiscrepancyAdhocItemDetails extends Activity {
+public class DiscrepancyAdhocItemDetailsActivity extends Activity {
     TextView tvItemCode;
     TextView tvItemName;
     TextView tvBalanceQty;
@@ -72,7 +68,7 @@ public class DiscrepancyAdhocItemDetails extends Activity {
                 t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
                 t.show();
                 hideKeyboard();
-                Intent i = new Intent(this, DiscrepancyAdhoc.class);
+                Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
                 startActivity(i);
             }
             else{

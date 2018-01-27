@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
-public class DiscrepancyMenu extends Activity {
+public class DiscrepancyMenuActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +15,7 @@ public class DiscrepancyMenu extends Activity {
     }
 
     protected void adhocClick(View v){
-        Intent i = new Intent(this, DiscrepancyAdhoc.class);
+        Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
         startActivity(i);
     }
 

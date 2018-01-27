@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClickListener {
+public class DiscrepancyAdhocActivity extends Activity implements AdapterView.OnItemClickListener {
     ListView list;
 
     @Override
@@ -39,7 +39,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
             String noSearchReturn;
             @Override
             protected void onPreExecute() {
-                progress = ProgressDialog.show(DiscrepancyAdhoc.this, "Search", "Searching through items", true);
+                progress = ProgressDialog.show(DiscrepancyAdhocActivity.this, "Search", "Searching through items", true);
             }
             @Override
             protected ArrayList<CatalogueItem> doInBackground(String... search){
@@ -66,7 +66,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CatalogueItem ci = (CatalogueItem) parent.getAdapter().getItem(position);
-        Intent i = new Intent(this, DiscrepancyAdhocItemDetails.class);
+        Intent i = new Intent(this, DiscrepancyAdhocItemDetailsActivity.class);
         i.putExtra("itemCode", ci.get("itemCode"));
         startActivity(i);
     }
@@ -86,7 +86,7 @@ public class DiscrepancyAdhoc extends Activity implements AdapterView.OnItemClic
             ProgressDialog progress;
             @Override
             protected void onPreExecute() {
-                progress = ProgressDialog.show(DiscrepancyAdhoc.this, "Loading", "Loading Items", true);
+                progress = ProgressDialog.show(DiscrepancyAdhocActivity.this, "Loading", "Loading Items", true);
             }
             @Override
             protected ArrayList<CatalogueItem> doInBackground(Void... input){

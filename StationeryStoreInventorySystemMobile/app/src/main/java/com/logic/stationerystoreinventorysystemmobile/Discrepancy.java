@@ -28,11 +28,6 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("AdjustmentQty",adjustmentQty.toString());
         put("Remarks",remarks);
         put("Status",status);
-//        this.itemCode = itemCode;
-//        this.requestedBy = requestedBy;
-//        this.adjustmentQty = adjustmentQty;
-//        this.remarks = remarks;
-//        this.status = status;
     }
 
     //for display in summary page

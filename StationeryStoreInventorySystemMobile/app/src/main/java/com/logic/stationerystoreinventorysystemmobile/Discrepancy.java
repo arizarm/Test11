@@ -15,13 +15,7 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
     static String ip = "172.23.202.59";
     static String host = "http://"+ ip + "/StationeryStoreInventorySystem/DiscrepancyService.svc/";
 
-    String itemCode;
-    Integer requestedBy;
-    Integer adjustmentQty;
-    String remarks;
-    String status;
-
-    //for submission
+    //for submission to WCF
     public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status){
         put("ItemCode", itemCode);
         put("RequestedBy",requestedBy.toString());

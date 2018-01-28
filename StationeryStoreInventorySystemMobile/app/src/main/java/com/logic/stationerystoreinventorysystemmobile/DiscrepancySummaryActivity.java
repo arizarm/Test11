@@ -2,6 +2,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -97,20 +98,35 @@ public class DiscrepancySummaryActivity extends Activity {
                 }
             }
             if(complete){
-                new AsyncTask<Void, Void, Boolean>(){
-                    ArrayList<Discrepancy> dList = toBeSubmitted;
-                    @Override
-                    public Boolean doInBackground(Void... voids){
-                        Discrepancy.submitDiscrepancies(dList);
-                        return true;
-                    }
+                try {
+                    new AsyncTask<Void, Void, Boolean>() {
+                        ArrayList<Discrepancy> dList = toBeSubmitted;
+                        ProgressDialog progress;
+                        @Override
+                        protected void onPreExecute() {
+                            progress = ProgressDialog.show(DiscrepancySummaryActivity.this, "Search", "Searching through items", true);
+                        }
+                        @Override
+                        public Boolean doInBackground(Void... voids) {
+                            Discrepancy.submitDiscrepancies(dList);
+                            return true;
+                        }
 
-                    @Override
-                    public void onPostExecute(Boolean bool){
-                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                    }
-                }.execute();
-
+                        @Override
+                        public void onPostExecute(Boolean bool) {
+                            progress.dismiss();
+                            Toast t = Toast.makeText(getApplicationContext(), "Discrepancies reported", Toast.LENGTH_LONG);
+                            Context c = getApplicationContext();
+                            int offset = Math.round(150 * c.getResources().getDisplayMetrics().density);
+                            t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
+                            t.show();
+                        }
+                    }.execute();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Discrepancy reporting failed, please try again", Toast.LENGTH_LONG).show();
+                }
             }
         }
         else{

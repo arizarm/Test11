@@ -157,4 +157,27 @@ public class EFBroker_Item
         }
         return;
     }
+	public static List<ItemPrice> GetActiveItemWithPrice()
+    {
+        List<ItemPrice> activeitemList = null;
+        using (StationeryEntities entities = new StationeryEntities())
+        {
+           
+            activeitemList = (from item in entities.Items
+                              join price in entities.PriceLists on item.ItemCode equals price.ItemCode into g
+                              where item.ActiveStatus == "Y"
+                              orderby item.ItemCode
+                              select new ItemPrice
+                              {
+                                  ItemCode = item.ItemCode,
+                                  Description = item.Description,
+                                  SupplierCode = g.FirstOrDefault().SupplierCode,
+                                  SupplierName = g.FirstOrDefault().Supplier.SupplierName,
+                                  Price = g.FirstOrDefault().Price,
+
+                              }).ToList();
+        }
+        return activeitemList;
+
+    }
 }

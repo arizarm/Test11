@@ -60,6 +60,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     {
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
+        bool informSupervisor = false;
+        bool informManager = false;
+
         foreach (GridViewRow row in GridView1.Rows)
         {
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
@@ -136,10 +139,12 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     if (d.TotalDiscrepencyAmount < 250)
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
+                        informSupervisor = true;
                     }
                     else
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].EmpID;
+                        informManager = true;
                     }
                     dList.Add(d);
                 }
@@ -175,19 +180,18 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
 
-            bool informSupervisor = false;
-            bool informManager = false;
-            foreach (Discrepency d in dList)
-            {
-                if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
-                {
-                    informSupervisor = true;
-                }
-                else
-                {
-                    informManager = true;
-                }
-            }
+            
+            //foreach (Discrepency d in dList)
+            //{
+            //    if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+            //    {
+            //        informSupervisor = true;
+            //    }
+            //    else
+            //    {
+            //        informManager = true;
+            //    }
+            //}
 
             if (informSupervisor)
             {

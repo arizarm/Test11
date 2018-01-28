@@ -90,13 +90,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="360dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/listDiscrepancies"
                     android:layout_width="match_parent"
-                    android:layout_height="430dp" />
+                    android:layout_height="340dp" />
 
                 <TextView
                     android:id="@+id/tvError"
@@ -111,6 +111,7 @@
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="submitClick"
                 android:text="Submit Discrepancies"
                 android:textSize="20sp" />
         </LinearLayout>

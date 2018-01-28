@@ -34,13 +34,78 @@ public class WCFCatalogueItem
     int balanceQty;
     [DataMember]
     int adjustments;
-    
+
+    public string ItemCode
+    {
+        get
+        {
+            return itemCode;
+        }
+
+        set
+        {
+            itemCode = value;
+        }
+    }
+
+    public string Description
+    {
+        get
+        {
+            return description;
+        }
+
+        set
+        {
+            description = value;
+        }
+    }
+
+    public string UnitOfMeasure
+    {
+        get
+        {
+            return unitOfMeasure;
+        }
+
+        set
+        {
+            unitOfMeasure = value;
+        }
+    }
+
+    public int BalanceQty
+    {
+        get
+        {
+            return balanceQty;
+        }
+
+        set
+        {
+            balanceQty = value;
+        }
+    }
+
+    public int Adjustments
+    {
+        get
+        {
+            return adjustments;
+        }
+
+        set
+        {
+            adjustments = value;
+        }
+    }
+
     public WCFCatalogueItem(string itemCode, string description, string unitOfMeasure, int balanceQty, int adjustments)
     {
-        this.itemCode = itemCode;
-        this.description = description;
-        this.unitOfMeasure = unitOfMeasure;
-        this.balanceQty = balanceQty;
-        this.adjustments = adjustments;
+        this.ItemCode = itemCode;
+        this.Description = description;
+        this.UnitOfMeasure = unitOfMeasure;
+        this.BalanceQty = balanceQty;
+        this.Adjustments = adjustments;
     }
 }

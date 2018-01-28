@@ -376,46 +376,27 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     protected void ReorderQtyValidation(object sender, ServerValidateEventArgs e)
     {
-        foreach (GridViewRow row in gvPurchaseItems.Rows)
-        {
-            TextBox qty = row.FindControl("ReorderQty") as TextBox;
-            CustomValidator validator = row.FindControl("ReorderQtyVal") as CustomValidator;
-            //string rqty = qty.Text;
-          //  var validationControl = sender as CustomValidator;
-
-           // var textBox = FindControl(validationControl.ControlToValidate) as TextBox;
-
+       
+        CustomValidator custval = new CustomValidator();
+        custval = (CustomValidator)sender;
+        GridViewRow row = custval.NamingContainer as GridViewRow;
+         TextBox qty = row.FindControl("ReorderQty") as TextBox;        
             if (qty != null)
             {
                 //GridViewRow row = textBox.NamingContainer as GridViewRow;
                 Label itemLbl = (Label)row.FindControl("ItemCode");
                 Item item = EFBroker_Item.GetActiveItembyItemCode(itemLbl.Text);
-                if (item.ReorderQty < Convert.ToInt32(qty.Text))
+                if (item.ReorderQty <= Convert.ToInt32(qty.Text))
                 {
-                    validator.IsValid = true;
+                    e.IsValid = true;
                 }
                 else
-                    validator.IsValid = false;
+                    e.IsValid = false;
             }
-        }
+        
     }
-    //TextBox qtytxt1 = sender as TextBox;
-    //    TextBox qtyTxt = (TextBox)gvPurchaseItems.FindControl("ReorderQty");
-    //    if (qtyTxt.Text != null)
-    //    {
-           
-    //            GridViewRow row = qtyTxt.NamingContainer as GridViewRow;
-    //            Label itemLbl = (Label)row.FindControl("ItemCode");
-    //            Item item = EFBroker_Item.GetActiveItembyItemCode(itemLbl.Text);
-    //            if (item.ReorderQty < Convert.ToInt32(e.Value))
-    //            {
-    //                e.IsValid = true;
-    //            }
-    //            else
-    //                e.IsValid = false;
-    //     }
-      //}            
-  
+        
+
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
     {
         if (((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CheckAll")).Checked)

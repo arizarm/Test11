@@ -34,4 +34,6 @@ public class EFBroker_Department
             return allDepts;
         }
     }
+
+
 }

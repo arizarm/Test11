@@ -42,7 +42,7 @@ public partial class ItemStockCardList : System.Web.UI.Page
         {
             HyperLink itemLink = row.FindControl("lnkStockCard") as HyperLink;
             Label lblItemCode = row.FindControl("lblItemCode") as Label;
-            itemLink.NavigateUrl = "~/ItemStockCard.aspx?itemCode=" + lblItemCode.Text;
+            itemLink.NavigateUrl = "~/Store/ItemStockCard.aspx?itemCode=" + lblItemCode.Text;
         }
     }
 }

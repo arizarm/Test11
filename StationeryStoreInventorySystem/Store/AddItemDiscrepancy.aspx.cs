@@ -33,12 +33,12 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
             }
             else
             {
-                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+                Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
             }
         }
         else
         {
-            Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+            Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
         }
         Label1.Text = "";      //Resetting error text field
     }
@@ -112,7 +112,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
                 
                 Session["discrepancyList"] = discrepancies;
                 Session["discrepancyDisplay"] = discrepancyDisplay;
-                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+                Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
             }
             else
             {

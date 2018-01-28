@@ -121,7 +121,7 @@ public partial class StockAdjustment : System.Web.UI.Page
             }
         }
         Session["discrepancySummary"] = summary;
-        Response.Redirect("~/StockAdjustmentSummary.aspx");
+        Response.Redirect("~/StoreManagerSupervisor/StockAdjustmentSummary.aspx");
     }
 }
 

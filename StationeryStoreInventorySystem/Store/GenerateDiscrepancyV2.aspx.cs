@@ -124,7 +124,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //    }
             //    Session["discrepancyList"] = discrepanciesOutput;
             //}
-            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+            Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {
@@ -172,7 +172,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;
             string itemCode = lbl.Text;
-            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+            link.NavigateUrl = "~/Store/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
         }
     }
 
@@ -381,7 +381,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;
             string itemCode = lbl.Text;
-            link.NavigateUrl = "~/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+            link.NavigateUrl = "~/Store/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
         }
     }
 }

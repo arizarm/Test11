@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <h2 class="mainPageHeader">Report Discrepancy</h2>
+        <h2 class="mainPageHeader">Report Discrepancies</h2>
         <%--<br />
         Selection Type: 
         <asp:RadioButtonList ID="RadioButtonList1" runat="server">

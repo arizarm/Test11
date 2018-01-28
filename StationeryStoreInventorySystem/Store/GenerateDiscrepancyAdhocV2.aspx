@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <h2 class="mainPageHeader">Discrepency Item List</h2>
+        <h2 class="mainPageHeader">Discrepancies Summary</h2>
       
                
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">

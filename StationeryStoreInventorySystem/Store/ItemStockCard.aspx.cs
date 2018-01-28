@@ -88,14 +88,14 @@ public partial class ItemStockCard : System.Web.UI.Page
                 GridView1.DataSource = scDisplayList;
                 GridView1.DataBind();
             }
-            else
+            else    //if item is not found or no entries found in price list table
             {
-                Response.Redirect("~/ItemStockCardList.aspx");
+                Response.Redirect("~/Store/ItemStockCardList.aspx");
             }
         }
-        else
+        else   //if there is no itemCode in querystring
         {
-            Response.Redirect("~/ItemStockCardList.aspx");
+            Response.Redirect("~/Store/ItemStockCardList.aspx");
         }
     }
 

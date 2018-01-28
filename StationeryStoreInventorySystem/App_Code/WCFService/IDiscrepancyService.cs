@@ -19,87 +19,49 @@ public interface IDiscrepancyService
 public class WCFDiscrepancy
 {
     [DataMember]
-    string requestedBy;
-    [DataMember]
-    string itemCode;
-    [DataMember]
-    string adjustmentQty;
-    [DataMember]
-    string remarks;
-    [DataMember]
-    string status;
-
     public string ItemCode
     {
-        get
-        {
-            return itemCode;
-        }
+        get;
 
-        set
-        {
-            itemCode = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string RequestedBy
     {
-        get
-        {
-            return requestedBy;
-        }
+        get;
 
-        set
-        {
-            requestedBy = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string AdjustmentQty
     {
-        get
-        {
-            return adjustmentQty;
-        }
+        get;
 
-        set
-        {
-            adjustmentQty = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string Remarks
     {
-        get
-        {
-            return remarks;
-        }
+        get;
 
-        set
-        {
-            remarks = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string Status
     {
-        get
-        {
-            return status;
-        }
+        get;
 
-        set
-        {
-            status = value;
-        }
+        set;
     }
 
-    public WCFDiscrepancy(string itemCode, int requestedBy, int adjustmentQty, string remarks, string status)
+    public static WCFDiscrepancy Make(string itemCode, string requestedBy, string adjustmentQty, string remarks, string status)
     {
-        this.ItemCode = itemCode;
-        this.RequestedBy = requestedBy;
-        this.AdjustmentQty = adjustmentQty;
-        this.Remarks = remarks;
-        this.Status = status;
+        WCFDiscrepancy wd = new WCFDiscrepancy();
+        wd.ItemCode = itemCode;
+        wd.RequestedBy = requestedBy;
+        wd.AdjustmentQty = adjustmentQty;
+        wd.Remarks = remarks;
+        wd.Status = status;
+        return wd;
     }
 }

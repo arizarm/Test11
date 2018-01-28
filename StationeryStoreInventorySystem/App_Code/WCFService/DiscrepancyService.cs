@@ -59,15 +59,7 @@ public class DiscrepancyService : IDiscrepancyService
             }
             dList.Add(d);
         }
-
-        try
-        {
             EFBroker_Discrepancy.SaveDiscrepencies(dList);
-        }
-        catch(Exception e)
-        {
-            
-        }
 
         if (informSupervisor)
         {

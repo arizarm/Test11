@@ -23,36 +23,16 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
 
     //for submission
     public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status){
-        put("itemCode", itemCode);
-        put("requestedBy",requestedBy.toString());
-        put("adjustmentQty",adjustmentQty.toString());
-        put("remarks",remarks);
-        put("status",status);
+        put("ItemCode", itemCode);
+        put("RequestedBy",requestedBy.toString());
+        put("AdjustmentQty",adjustmentQty.toString());
+        put("Remarks",remarks);
+        put("Status",status);
 //        this.itemCode = itemCode;
 //        this.requestedBy = requestedBy;
 //        this.adjustmentQty = adjustmentQty;
 //        this.remarks = remarks;
 //        this.status = status;
-    }
-
-    public String getItemCode() {
-        return itemCode;
-    }
-
-    public Integer getRequestedBy() {
-        return requestedBy;
-    }
-
-    public Integer getAdjustmentQty() {
-        return adjustmentQty;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     //for display in summary page

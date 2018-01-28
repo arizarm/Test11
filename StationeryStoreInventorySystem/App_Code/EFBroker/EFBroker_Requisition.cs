@@ -26,7 +26,7 @@ public class EFBroker_Requisition
         string depCode;
         using (StationeryEntities context = new StationeryEntities())
         {
-            depCode = context.Requisitions.Where(r => r.RequisitionID==requisitionID).Select(r => r.DeptCode).FirstOrDefault();
+            depCode = context.Requisitions.Where(r => r.RequisitionID == requisitionID).Select(r => r.DeptCode).FirstOrDefault();
         }
         return depCode;
     }
@@ -78,6 +78,13 @@ public class EFBroker_Requisition
             return allMonths;
         }
     }
+    public static List<int> GetRequisitionIDListbyDisbID(int disbID)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DisbursementID == disbID).Select(x => x.RequisitionID).ToList();
+        }
+    }
     public static List<Requisition> GetAllApprovedOrPriorityReq()
     {
         List<Requisition> rList;
@@ -118,7 +125,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.DisbursementID==disbursementID).ToList();
+            rlist = context.Requisitions.Where(x => x.DisbursementID == disbursementID).ToList();
         }
         return rlist;
     }

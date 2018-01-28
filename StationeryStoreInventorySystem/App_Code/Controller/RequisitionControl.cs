@@ -272,7 +272,7 @@ public class RequisitionControl
     public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
-        Department dep = EmployeeController.GetDepartByDepCode(emp.DeptCode);
+        Department dep = EmployeeController.GetDepartByDepCode("idon'tknow");
         List<String> clerkEmails = EmployeeController.getAllClerkMails();
 
         if (clerkEmails != null)

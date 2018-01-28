@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class DisbursementDetailFragment extends Fragment {
 
-    private DisbursementListItems d;
+    private static HashMap<String,String> d;
 
     SimpleAdapter sa;
 
@@ -71,21 +72,16 @@ public class DisbursementDetailFragment extends Fragment {
 
                     lv.setAdapter(sa = new SimpleAdapter(getActivity(), result,
                             R.layout.disbursement_detail_list_row,
-                            new String[]{"ItemCode","ItemDesc", "ReqQty"},
-                            new int[]{R.id.itemCodeHidden, R.id.txtIDesc, R.id.txtReqQty}));
+                            new String[]{"ItemCode","ItemDesc", "ReqQty","ActualQty","Remarks"},
+                            new int[]{R.id.itemCodeHidden, R.id.txtIDesc, R.id.txtReqQty, R.id.editTxtActQty, R.id.editTxtRemark}));
                 }
             }.execute();
         }
     }
 
-        public  void  setDisbursementListItems(DisbursementListItems d)
+        public  void  setDisbursementListItems(HashMap<String,String> d)
         {
             this.d = d;
         }
 
-
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        outState.putParcelable("DisbursementListItems",d);
-//    }
 }

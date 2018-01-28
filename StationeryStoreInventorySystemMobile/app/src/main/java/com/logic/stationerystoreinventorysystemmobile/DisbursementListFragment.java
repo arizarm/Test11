@@ -50,8 +50,8 @@ public class DisbursementListFragment extends ListFragment {
 
                 SimpleAdapter sa = new SimpleAdapter(inf.getContext(), result,
                         R.layout.disbursement_list_row,
-                        new String[]{"DisbId","DepName"},
-                        new int[]{R.id.disbIDHidden, R.id.disDepName});
+                        new String[]{"DisbId","DepName", "CollectionDate"},
+                        new int[]{R.id.disbIDHidden, R.id.disDepName, R.id.disbDate});
 
                 setListAdapter(sa);
             }

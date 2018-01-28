@@ -83,7 +83,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                     {
                         //make discrepancy item list
                         int disQty = actualQty - retrievedQty;
-                        Item disItem = GenerateDiscrepancyController.GetItemByItemCode(iCode);
+                        Item disItem = EFBroker_Item.GetItembyItemCode(iCode);
                         string finalQty = (disItem.BalanceQty + disQty).ToString();
                         discToUpdate.Add(disItem, disQty);
                     }

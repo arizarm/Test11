@@ -13,35 +13,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            //Dictionary<InventoryItem, String> invItems = new Dictionary<InventoryItem, String>();
-
-            //foreach (InventoryItem ii in invItemList)
-            //{
-            //    List<Discrepency> dList = GenerateDiscrepancyController.GetPendingDiscrepanciesByItemCode(ii.I.ItemCode);
-            //    int adj = 0;
-
-            //    foreach(Discrepency d in dList)
-            //    {
-            //        adj += (int) d.AdjustmentQty;
-            //    }
-
-            //    string adjStr = "";
-
-            //    if (adj > 0)
-            //    {
-            //        adjStr = "+" + adj.ToString();
-            //    }
-            //    else
-            //    {
-            //        adjStr = adj.ToString();
-            //    }
-
-            //    string stockWithAdj = ii.Stock + " (" + adjStr + ")";
-
-            //    invItems.Add(ii, stockWithAdj);
-            //}
-
-
             Session["itemError"] = null;
         }
         else
@@ -88,42 +59,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     {     //Finalise discrepancy button
         if (itemError == false)
         {
-            //foreach (GridViewRow row in GridView2.Rows)
-            //for (int i = 0; i < GridView2.Rows.Count; i++)
-            //{
-            //    GridViewRow row = GridView2.Rows[i];
-            //    string itemCode = (row.FindControl("lblItemCode2") as Label).Text;
-            //    //string stock = (row.FindControl("lblStock") as Label).Text;
-            //    string actual = (row.FindControl("lblActual") as Label).Text;
-            //    Item item = GenerateDiscrepancyController.GetItemByItemCode(itemCode);
-            //    //InventoryItem invItem = new InventoryItem(item, stock);
-
-            //    discrepancies.Add(item, actual);
-            //}
-            //Session["discrepancyList"] = discrepancies;
-
-            //if ((bool)Session["monthly"] == false)
-            //{
-            //    Dictionary<Item, int> discrepancies = (Dictionary<Item, int>)Session["discrepancyList"];
-            //    Dictionary<Item, int> discrepanciesOutput = new Dictionary<Item, int>();
-
-            //    foreach (KeyValuePair<Item, int> kvp in discrepancies)
-            //    {
-            //        string actual = "";
-            //        if (kvp.Value[0] == '+')
-            //        {
-            //            string adj = kvp.Value.Substring(1);
-            //            actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
-            //        }
-            //        else
-            //        {
-            //            string adj = kvp.Value;
-            //            actual = (kvp.Key.BalanceQty + Int32.Parse(adj)).ToString();
-            //        }
-            //        discrepanciesOutput.Add(kvp.Key, actual);
-            //    }
-            //    Session["discrepancyList"] = discrepanciesOutput;
-            //}
             Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
         }
         else

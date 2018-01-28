@@ -20,6 +20,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Item Description">
                 <ItemTemplate>
+                    <asp:HiddenField ID="hdnflditemCode" runat="server" Value='<%# Bind("itemCode") %>'/>
                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("description") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
@@ -30,7 +31,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Total Quantity Retrieved">
                 <ItemTemplate>
-                    <asp:TextBox ID="txtRetrieved" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtRetrieved" runat="server" Text='<%# Bind("retrievedQty") %>'></asp:TextBox>
     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
                 </ItemTemplate>
             </asp:TemplateField>

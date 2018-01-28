@@ -106,7 +106,7 @@
                 android:id="@+id/btnAck"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
-                android:text="Acknowledge" />
+                android:text="Acknowledge"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>

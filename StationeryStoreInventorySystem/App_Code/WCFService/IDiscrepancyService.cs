@@ -19,11 +19,11 @@ public interface IDiscrepancyService
 public class WCFDiscrepancy
 {
     [DataMember]
+    string requestedBy;
+    [DataMember]
     string itemCode;
     [DataMember]
-    int requestedBy;
-    [DataMember]
-    int adjustmentQty;
+    string adjustmentQty;
     [DataMember]
     string remarks;
     [DataMember]
@@ -42,7 +42,7 @@ public class WCFDiscrepancy
         }
     }
 
-    public int RequestedBy
+    public string RequestedBy
     {
         get
         {
@@ -55,7 +55,7 @@ public class WCFDiscrepancy
         }
     }
 
-    public int AdjustmentQty
+    public string AdjustmentQty
     {
         get
         {

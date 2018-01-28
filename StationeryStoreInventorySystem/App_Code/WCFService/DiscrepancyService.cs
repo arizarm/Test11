@@ -18,8 +18,8 @@ public class DiscrepancyService : IDiscrepancyService
         {
             Discrepency d = new Discrepency();
             d.ItemCode = wd.ItemCode;
-            d.RequestedBy = wd.RequestedBy;
-            d.AdjustmentQty = wd.AdjustmentQty;
+            d.RequestedBy = Int32.Parse(wd.RequestedBy);
+            d.AdjustmentQty = Int32.Parse(wd.AdjustmentQty);
             d.Remarks = wd.Remarks;
             d.Status = wd.Status;
             d.Date = DateTime.Now;

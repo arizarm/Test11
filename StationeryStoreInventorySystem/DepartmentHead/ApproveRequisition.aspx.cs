@@ -59,7 +59,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
-
             approveSuccess.Text = "You apporved the requisition requested by " + Label1.Text + " Successfully";
         }
         else

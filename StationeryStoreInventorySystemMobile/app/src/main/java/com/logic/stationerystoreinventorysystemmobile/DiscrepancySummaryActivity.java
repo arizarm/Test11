@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -51,5 +52,9 @@ public class DiscrepancySummaryActivity extends Activity {
                 progress.dismiss();
             }
         }.execute();
+    }
+
+    protected void submitClick(View v){
+
     }
 }

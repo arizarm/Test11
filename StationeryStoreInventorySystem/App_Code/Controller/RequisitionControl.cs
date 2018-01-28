@@ -272,6 +272,16 @@ public class RequisitionControl
     public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
+        Department dep = EmployeeController.GetDepartByDepCode(emp.DeptCode);
+        List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+        if (clerkEmails != null)
+        {
+            for (int i = 0; i < clerkEmails.Count; i++)
+            {
+                Utility.sendMail(clerkEmails[i].ToString(), "Request Stationery Items", "New Requisition Form from " + dep.DeptName + " is requested");
+            }
+        }
     }
     public static void rejectRequisition(int id, string reason, int empID)
     {

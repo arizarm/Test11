@@ -58,17 +58,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
             string reason = TextBox2.Text;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
-            Department dep = EmployeeController.GetDepartByDepCode(emp.DeptCode);
-            List<String> clerkEmails = EmployeeController.getAllClerkMails();
-
-            if(clerkEmails != null)
-            {
-                for(int i=0; i < clerkEmails.Count; i++)
-                {
-                    Utility.sendMail(clerkEmails[i].ToString(),"Request Stationery Items","New Requisition Form from "+dep.DeptName+" is requested");
-                }
-            }
-
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
             approveSuccess.Text = "You apporved the requisition requested by " + Label1.Text + " Successfully";
         }

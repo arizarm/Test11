@@ -86,6 +86,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         }
                     }
 
+                    //Code to determine the discrepancy amount
                     List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
                     List<PriceList> itemPrices = new List<PriceList>();
 
@@ -136,6 +137,8 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         d.Status = "Pending";
                     }
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
+
+                    //Set the approver based on discrepancy amount, and email notify them
                     if (d.TotalDiscrepencyAmount < 250)
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;

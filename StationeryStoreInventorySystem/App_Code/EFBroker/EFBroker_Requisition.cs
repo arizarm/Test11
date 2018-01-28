@@ -268,7 +268,6 @@ public class EFBroker_Requisition
             context.Entry(r).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
-        return;
     }
     public static void RejectRequisition(int id, string reason, int empID)
     {

@@ -1,5 +1,8 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -9,17 +12,28 @@ import java.util.HashMap;
 public class Discrepancy extends HashMap<String, String> implements Comparable<Discrepancy>{
 
 //    static String ip = "172.17.249.125";
-    static String ip = "172.23.200.138";
-    static String host = "http://"+ ip + "/StationeryStoreInventorySystem/ItemService.svc/";
+    static String ip = "172.23.202.59";
+    static String host = "http://"+ ip + "/StationeryStoreInventorySystem/DiscrepancyService.svc/";
 
-//    //for submission
-//    public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status){
-//        put("itemCode", itemCode);
-//        put("requestedBy",requestedBy.toString());
-//        put("adjustmentQty",adjustmentQty.toString());
-//        put("remarks",remarks);
-//        put("status",status);
-//    }
+    String itemCode;
+    Integer requestedBy;
+    Integer adjustmentQty;
+    String remarks;
+    String status;
+
+    //for submission
+    public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status){
+        put("ItemCode", itemCode);
+        put("RequestedBy",requestedBy.toString());
+        put("AdjustmentQty",adjustmentQty.toString());
+        put("Remarks",remarks);
+        put("Status",status);
+//        this.itemCode = itemCode;
+//        this.requestedBy = requestedBy;
+//        this.adjustmentQty = adjustmentQty;
+//        this.remarks = remarks;
+//        this.status = status;
+    }
 
     //for display in summary page
     public Discrepancy(String itemCode, String description, Integer balanceQty, Integer adjustmentQty){
@@ -27,6 +41,12 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("description", description);
         put("balanceQty", balanceQty.toString());
         put("adjustmentQty", getAdjustmentString(adjustmentQty));
+    }
+
+    public static void submitDiscrepancies(ArrayList<Discrepancy> dList){
+        JSONArray a = new JSONArray(dList);
+        String url = host + "SubmitDiscrepancies";
+        JSONParser.postStream(url, a.toString());
     }
 
     private String getAdjustmentString(Integer adj){

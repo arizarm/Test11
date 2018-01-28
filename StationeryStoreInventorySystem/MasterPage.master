@@ -71,7 +71,9 @@
                     <asp:HyperLink ID="PurchaseOrderListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>  
                     <asp:HyperLink ID="ReorderReportManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink> 
                     <asp:HyperLink ID="SupplierCreateManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
-					
+					<asp:HyperLink ID="StockAdjustmentManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>
+                    <asp:HyperLink ID="GenerateDiscrepancyManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
+                    <asp:HyperLink ID="ItemStockCardListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
 			 </div>
 
                 <!-- Menu For Store Supervisor -->
@@ -82,6 +84,9 @@
                      <asp:HyperLink ID="PurchaseOrderListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>  
                     <asp:HyperLink ID="ReorderReportSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink> 
                     <asp:HyperLink ID="SupplierCreateSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
+                    <asp:HyperLink ID="StockAdjustmentSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>
+                    <asp:HyperLink ID="GenerateDiscrepancySupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
+                    <asp:HyperLink ID="ItemStockCardListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
                 </div>
 
 
@@ -95,6 +100,8 @@
                      <asp:HyperLink ID="PurchaseOrderFormClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderForm.aspx">Purchase Order Form</asp:HyperLink>  
                     <asp:HyperLink ID="PurchaseOrderListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>   
                     <asp:HyperLink ID="ReorderReportClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink>
+                    <asp:HyperLink ID="GenerateDiscrepancyClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
+                    <asp:HyperLink ID="ItemStockCardListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
 			   </div>
 
                 <div class="right-col">

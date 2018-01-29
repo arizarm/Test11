@@ -12,6 +12,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView.OnItemClickListener  {
     ListView list;
@@ -24,12 +25,15 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         list.setOnItemClickListener(this);
         ArrayList<CatalogueItem> ciList = DiscrepancyHolder.getMonthlyItems();
 
+        //If the static list of CatalogueItems in DiscrepancyHolder hasn't been initialised,
+        //initialise it by querying the database, otherwise, get it and use it to populate the listview
         if(ciList != null){
             if(ciList.size() == 0){
                 initialiseItemList();
             }
             else{
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                Collections.sort(ciList, new CatalogueItemMonthlyComparator());
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
                 list.setAdapter(adapter);
             }
         }
@@ -71,6 +75,7 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //When exiting from DiscrepancyMonthlyItemDetailsActivity, the list will be refreshed to reflect the new input
         recreate();
     }
 
@@ -89,7 +94,8 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
 
             @Override
             protected void onPostExecute(ArrayList<CatalogueItem> ciList){
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                Collections.sort(ciList, new CatalogueItemMonthlyComparator());
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
                 list.setAdapter(adapter);
                 progress.dismiss();
             }

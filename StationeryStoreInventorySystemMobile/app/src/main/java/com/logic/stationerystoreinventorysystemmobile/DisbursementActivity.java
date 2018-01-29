@@ -20,9 +20,9 @@ public class DisbursementActivity extends Activity
     {
         //DisbursementDetailActivity details = new DisbursementDetailActivity();
         //details.setDisbursementListItems(d);
-        Intent intent = new Intent(this, DisbursementDetailActivity.class);
-        intent.putExtra("disbursement", d);
-        startActivity(intent);
+//        Intent intent = new Intent(this, DisbursementDetailActivity.class);
+//        intent.putExtra("disbursement", d);
+//        startActivity(intent);
 
 //        DisbursementDetailFragment details = new DisbursementDetailFragment();
 //        FragmentTransaction ft = getFragmentManager().beginTransaction();

@@ -56,39 +56,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
 
         }
         TotalAmount.Text = String.Format("{0:C}", totAmnt);
-        if (pOrder.Status == "Closed" || pOrder.Status == "Rejected")
-        {
-            deliveryLbl.Visible = false;
-            DeliveryOrderIDTxtBx.Visible = false;
-            CloseOrderBtn.Visible = false;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = false;
-        }
-        else if (pOrder.Status == "Approved")
-        {
-            deliveryLbl.Visible = true;
-            DeliveryOrderIDTxtBx.Visible = true;
-            CloseOrderBtn.Visible = true;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = true;
-        }
-        else 
-        {
-            deliveryLbl.Visible = true;
-            DeliveryOrderIDTxtBx.Visible = true;
-            CloseOrderBtn.Visible = true;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = true;
-        }
+       
         foreach (GridViewRow row in gvPurchaseDetail.Rows)
         {
             if (Session["emp"] != null)
@@ -109,17 +77,21 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                             gvPurchaseDetail.Columns[5].Visible = false;
 
                         }
-                        else if (pOrder.Status == "Approved" || pOrder.Status == "Pending")
+                        else if (pOrder.Status == "Approved")
                         {
                             deliveryLbl.Visible = true;
                             DeliveryOrderIDTxtBx.Visible = true;
                             CloseOrderBtn.Visible = true;                           
                             gvPurchaseDetail.Columns[5].Visible = true;
                         }
-                        RemarkLbl.Visible = false;
-                        RemarkTxtBx.Visible = false;
-                        ApproveBtn.Visible = false;
-                        RejectBtn.Visible = false;
+                        else if (pOrder.Status == "Pending")
+                        {
+                            deliveryLbl.Visible = false;
+                            DeliveryOrderIDTxtBx.Visible = false;
+                            CloseOrderBtn.Visible = false;
+                            gvPurchaseDetail.Columns[5].Visible = true;
+                        }
+
                     }
                     else
                     {
@@ -133,24 +105,35 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                             gvPurchaseDetail.Columns[5].Visible = false;
 
                         }                       
-                        RemarkLbl.Visible = false;
-                        RemarkTxtBx.Visible = false;
-                        ApproveBtn.Visible = false;
-                        RejectBtn.Visible = false;
 
                     }
+                    RemarkLbl.Visible = false;
+                    RemarkTxtBx.Visible = false;
+                    ApproveBtn.Visible = false;
+                    RejectBtn.Visible = false;
 
                 }
                 else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
                 {
-                    gvPurchaseDetail.Columns[5].Visible = true;
-                    deliveryLbl.Visible = true;
-                    DeliveryOrderIDTxtBx.Visible = true;
-                    CloseOrderBtn.Visible = true;
-                    RemarkLbl.Visible = true;
-                    RemarkTxtBx.Visible = true;
-                    ApproveBtn.Visible = true;
-                    RejectBtn.Visible = true;
+                    if (pOrder.Status == "Closed" || pOrder.Status == "Rejected"|| pOrder.Status == "Approved")
+                    {
+                       
+                        RemarkLbl.Visible = false;
+                        RemarkTxtBx.Visible = false;
+                        ApproveBtn.Visible = false;
+                        RejectBtn.Visible = false;                        
+                    }                    
+                    else
+                    {                       
+                        RemarkLbl.Visible = true;
+                        RemarkTxtBx.Visible = true;
+                        ApproveBtn.Visible = true;
+                        RejectBtn.Visible = true;                       
+                    }
+                    gvPurchaseDetail.Columns[5].Visible = false;
+                    deliveryLbl.Visible = false;
+                    DeliveryOrderIDTxtBx.Visible = false;
+                    CloseOrderBtn.Visible = false;
                 }
 
             }

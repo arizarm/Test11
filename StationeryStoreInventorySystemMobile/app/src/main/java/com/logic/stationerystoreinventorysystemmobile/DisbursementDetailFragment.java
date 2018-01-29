@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,10 +30,11 @@ public class DisbursementDetailFragment extends Fragment {
     ListView lv;
 
     Button button;
-    EditText edtAccessCode;
-    String accessCode;
+    EditText edtAccessCode, editTxtActQty;
+    String accessCode, actQty;
 
     View view;
+
 
     public DisbursementDetailFragment() {
         // Required empty public constructor
@@ -89,22 +91,42 @@ public class DisbursementDetailFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-//                        new AsyncTask<Void, Void, String>() {
-//                            @Override
-//                            protected String doInBackground(Void... params) {
-//
-//                                edtAccessCode = view.findViewById(R.id.accessCode);
-//                                accessCode = edtAccessCode.getText().toString();
-//                                final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
-//
-//                                return AccessCodeCheck.checkAccessCode(codeCheckObj);
-//                            }
-//
-//                            @Override
-//                            protected void onPostExecute(String result) {
-//                                Log.i("Result", result);
-//                            }
-//                        }.execute();
+                        new AsyncTask<Void, Void, String>() {
+                            @Override
+                            protected String doInBackground(Void... params) {
+
+                                edtAccessCode = view.findViewById(R.id.accessCode);
+                                accessCode = edtAccessCode.getText().toString();
+                                final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
+                                //return AccessCodeCheck.checkAccessCode(codeCheckObj);
+                                boolean chkR = AccessCodeCheck.checkAccessCode(codeCheckObj); //return {"AccessCodeValidateResult":"True"}
+                                final ArrayList<DisbursementDetailListItems> toBeUpdated = new ArrayList<DisbursementDetailListItems>();
+
+                                String Status;
+                                if (chkR) {
+                                    for (int i = 0; i < lv.getCount(); i++) {
+                                        View vv = lv.getChildAt(i);
+                                        editTxtActQty = vv.findViewById(R.id.editTxtActQty);
+                                        actQty = editTxtActQty.getText().toString();
+                                        DisbursementDetailListItems detailListItems = new DisbursementDetailListItems(disbId, actQty);
+                                        toBeUpdated.add(detailListItems);
+                                    }
+                                    DisbursementDetailListItems.UpdateDisbursement(toBeUpdated);
+                                    Status = "OK";
+                                }
+                                else
+                                {
+                                    //to display error message
+                                    Status = "Not Ok";
+                                }
+                                return  Status;
+                            }
+
+                            @Override
+                            protected void onPostExecute(String result) {
+                                Log.i("Result", result);
+                            }
+                        }.execute();
                     }
                 });
             } catch (Exception e) {
@@ -117,15 +139,15 @@ public class DisbursementDetailFragment extends Fragment {
         this.d = d;
     }
 
-    protected void btnAckClick(View v) {
-        EditText edtAccessCode = (EditText) v.findViewById(R.id.accessCode);
-
-        String accessCode = edtAccessCode.getText().toString();
-        String disbId = d.get("DisbId");
-
+//    protected void btnAckClick(View v) {
+//        EditText edtAccessCode = (EditText) v.findViewById(R.id.accessCode);
+//
+//        String accessCode = edtAccessCode.getText().toString();
+//        String disbId = d.get("DisbId");
+//
 //        AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
 //
-//        String s = AccessCodeCheck.checkAccessCode(codeCheckObj);
-    }
+//        AccessCodeCheck.checkAccessCode(codeCheckObj);
+//    }
 
 }

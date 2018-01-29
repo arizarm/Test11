@@ -101,7 +101,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
             if (c == cid && empid == empRepid)
             {
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI);
             }
             else
             {
@@ -122,7 +122,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
                     Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
                     Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
                 }
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
 
             }
 
@@ -136,7 +136,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
 
-        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+        Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }
 
 

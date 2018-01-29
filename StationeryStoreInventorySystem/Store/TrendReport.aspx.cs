@@ -188,7 +188,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             {
                 if (((List<string>)ViewState["catAdded"])[i].ToString() == addMe)
                 {
-                    Response.Write("<script>alert('" + Message.CategoryAlreadyInList + "');</script>");
+                    Utility.DisplayAlertMessage(Message.CategoryAlreadyInList);
                     break;
                 }
                 if (i == ((List<string>)ViewState["catAdded"]).Count - 1)
@@ -238,9 +238,9 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 if (((List<string>)ViewState["sharedListAdded"])[i].ToString() == addMe)
                 {
                     if (ReportToSelect == "RTR")
-                        Response.Write("<script>alert('" + Message.DepartmentAlreadyInList + "');</script>");
+                        Utility.DisplayAlertMessage(Message.DepartmentAlreadyInList);
                     else if (ReportToSelect == "ROR")
-                        Response.Write("<script>alert('" + Message.SupplierAlreadyInList + "');</script>");
+                        Utility.DisplayAlertMessage(Message.SupplierAlreadyInList);
                     break;
                 }
                 if (i == ((List<string>)ViewState["sharedListAdded"]).Count - 1)
@@ -271,7 +271,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             {
                 if (((List<string>)ViewState["dateAdded"])[i].ToString() == addMe)
                 {
-                    Response.Write("<script>alert('" + Message.DateAlreadyInList + "');</script>");
+                    Utility.DisplayAlertMessage(Message.DateAlreadyInList);
                     break;
                 }
                 if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
@@ -289,7 +289,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             {
                 if (((List<string>)ViewState["dateAdded"])[i].ToString() == addMe)
                 {
-                    Response.Write("<script>alert('" + Message.DateAlreadyInList + "');</script>");
+                    Utility.DisplayAlertMessage(Message.DateAlreadyInList);
                     break;
                 }
                 if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
@@ -412,7 +412,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             }
             else
             {
-                Response.Write("<script>alert('" + Message.CustomFieldsNotSelected + "');</script>");
+                Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
             }
         }
         else if (ReportToSelect == "ROR")
@@ -511,7 +511,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             }
             else
             {
-                Response.Write("<script>alert('" + Message.CustomFieldsNotSelected + "');</script>");
+                Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
             }
         }
     }

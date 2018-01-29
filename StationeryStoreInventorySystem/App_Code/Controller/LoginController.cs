@@ -60,4 +60,9 @@ public class LoginController
     public static readonly string EmployeeRequisitionFormURI = "~/DepartmentEmployee/RequisitionForm.aspx";
     public static readonly string RepresentativeRequisitionFormURI = "~/DepartmentRepresentative/RequisitionForm.aspx";
     public static readonly string DepartmentDetailInfoURI = "~/Department/DepartmentDetailInfo.aspx";
+    public static readonly string RequistionListDepartmentURI = "RequisitionListDepartment.aspx";
+    public static readonly string DisbursementListURI = "~/Store/DisbursementList.aspx";
+    public static readonly string DisbursementListDetailURI = "~/Store/DisbursementListDetail.aspx";
+    public static readonly string RegenerateRequestURI = "~/Store/RegenerateRequest.aspx";
+    public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
 }

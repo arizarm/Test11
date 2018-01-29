@@ -110,6 +110,6 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn
         string s = (row.FindControl("lblrequisitionNo") as Label).Text; //row.Cells[2]
         Session["RequisitionNo"] = s;
-        Response.Redirect("RequisitionDetails.aspx");
+        Response.Redirect("~/Store/RequisitionDetail.aspx");
     }
 }

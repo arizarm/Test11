@@ -9,34 +9,15 @@ using System.Text;
 public class DeptService : IDeptService
 {
     // Start Login
-    //public WCFEmployee ValidateUser(WCFEmployee emp)
-    //{
-    //    String email = emp.Email;
-    //    String password = emp.Password;
-    //    bool verifyLogin = EmployeeController.verifyLogin(email, password);
-    //    Employee employee = null;
-    //    if (verifyLogin ==  true)
-    //        {
-    //        employee = EmployeeController.GetEmployeeByEmail(email);
-    //        }
-    //    return WCFEmployee.Make(employee.EmpID, employee.DeptCode, employee.EmpName, employee.Role, employee.Password
-    //   , employee.Email, employee.IsTempHead, employee.StartDate.GetValueOrDefault().ToShortDateString()
-    //   , employee.EndDate.GetValueOrDefault().ToShortDateString());
 
-       
-    //}
-
-    public WCFEmployee GetEmployeeByEmail(string email,String password)
+    DeptController deptController = new DeptController();
+    public WCFEmployee GetEmployeeByEmail(string email)
     {
-        bool verifyLogin = EmployeeController.verifyLogin(email, password);
-        Employee employee = null;
-        if (verifyLogin == true)
-        {
-            employee = EmployeeController.GetEmployeeByEmail(email);
-        }
-        return WCFEmployee.Make(employee.EmpID, employee.DeptCode, employee.EmpName, employee.Role, employee.Password
-       , employee.Email, employee.IsTempHead, employee.StartDate.GetValueOrDefault().ToShortDateString()
-       , employee.EndDate.GetValueOrDefault().ToShortDateString());
+        Employee emp = EmployeeController.GetEmployeeByEmail(email);
+
+        return WCFEmployee.Make(emp.EmpID, emp.DeptCode, emp.EmpName, emp.Role, emp.Password
+        , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
+        , emp.EndDate.GetValueOrDefault().ToShortDateString());
     }
 
     //End Login
@@ -45,7 +26,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> EmployeeList()
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeList();
+        List<Employee> elist = deptController.GetEmployeeList();
 
         foreach (Employee e in elist)
         {
@@ -59,8 +40,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetDeptHead(string dcode)
     {
 
-        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-        Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+        Department d = deptController.GetDepartByDepCode(dcode);
+        Employee emp = deptController.GetDHeadByDeptCode(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -69,8 +50,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetActingDHead(string dcode)
     {
 
-        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-        Employee emp = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+        Department d = deptController.GetDepartByDepCode(dcode);
+        Employee emp = deptController.GetEmployeeListForActingDHeadSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -79,7 +60,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> ListForActingDHead(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeListForActingDHead(dcode, Convert.ToInt16(id));
+        List<Employee> elist = deptController.GetEmployeeListForActingDHead(dcode, Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -93,8 +74,8 @@ public class DeptService : IDeptService
     public WCFEmployee GetDeptRep(string dcode)
     {
 
-        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-        Employee emp = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+        Department d = deptController.GetDepartByDepCode(dcode);
+        Employee emp = deptController.GetEmployeeListForDRepSelected(dcode);
         return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
          , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
@@ -103,7 +84,7 @@ public class DeptService : IDeptService
     public List<WCFEmployee> ListForDeptRep(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
-        List<Employee> elist = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, Convert.ToInt16(id));
+        List<Employee> elist = deptController.GetEmployeeListForDRep(dcode, Convert.ToInt16(id));
 
         foreach (Employee e in elist)
         {
@@ -125,7 +106,7 @@ public class DeptService : IDeptService
             StartDate = Convert.ToDateTime(e.StartDate),
             EndDate = Convert.ToDateTime(e.EndDate)
         };
-        EFBroker_DeptEmployee.UpdateActingDHead(e.DeptCode, e.Eid, e.StartDate, e.EndDate);
+        deptController.UpdateActingDHead(e.DeptCode, e.Eid, e.StartDate, e.EndDate);
     }
 
     public void UpdateDeptRep(WCFEmployee e)
@@ -136,7 +117,7 @@ public class DeptService : IDeptService
             DeptCode = e.DeptCode,
             Role = e.Role,
         };
-        EFBroker_DeptEmployee.UpdateDeptRep(e.DeptCode, e.Eid);
+        deptController.UpdateDeptRep(e.DeptCode, e.Eid);
     }
 
     //End Employee Function Part
@@ -146,7 +127,7 @@ public class DeptService : IDeptService
     public List<WCFDept> DepartmentList()
     {
         List<WCFDept> wlist = new List<WCFDept>();
-        List<Department> dlist = EFBroker_DeptEmployee.GetDepartList();
+        List<Department> dlist = deptController.GetDepartList();
 
         foreach (Department d in dlist)
         {
@@ -158,8 +139,8 @@ public class DeptService : IDeptService
 
     public WCFDept GetDeptInfo(string dcode)
     {
-        string collectpoint = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
-        Department d = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
+        string collectpoint = deptController.GetDepartmentForCollectionPointSelected(dcode);
+        Department d = deptController.GetDepartByDepCode(dcode);
 
         return WCFDept.Make(d.DeptCode, collectpoint, d.DeptName, d.DeptContactName, d.DeptTelephone, d.DeptFax);
     }
@@ -171,7 +152,7 @@ public class DeptService : IDeptService
     public List<WCFCollectPoint> CollectionPointList()
     {
         List<WCFCollectPoint> wlist = new List<WCFCollectPoint>();
-        List<CollectionPoint> clist = EFBroker_DeptEmployee.GetCollectionPointList();
+        List<CollectionPoint> clist = deptController.GetCollectionPointList();
 
         foreach (CollectionPoint c in clist)
         {
@@ -181,14 +162,24 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    public string GetCollectionPointByDeptCode(string deptcode)
+    {  
+        return deptController.GetCollectionidbyDeptCode(deptcode).ToString();
+    }
+
     public void UpdateCollect(WCFDept d)
     {
         Department dept = new Department
         {
             DeptCode = d.DeptCode,
-            CollectionLocationID = Convert.ToInt16(d.Collectid)
+            CollectionLocationID = Convert.ToInt32(d.Collectid)
         };
-        EFBroker_DeptEmployee.UpdateCollectionPoint(dept.DeptCode, dept.CollectionLocationID);
+        deptController.UpdateCollectionPoint(dept.DeptCode,Convert.ToInt16(dept.CollectionLocationID));
+    }
+
+    public WCFEmployee GetEmployeeByEmail(string email, string password)
+    {
+        throw new NotImplementedException();
     }
 
     //End Collection Function Part

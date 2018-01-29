@@ -26,24 +26,13 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
 
         if(ciList != null){
             if(ciList.size() == 0){
-                new AsyncTask<Void, Void, Void>(){
-                    ProgressDialog progress;
-                    @Override
-                    protected void onPreExecute() {
-                        progress = ProgressDialog.show(DiscrepancyMonthlyActivity.this, "Loading", "Loading Items", true);
-                    }
-                    @Override
-                    protected Void doInBackground(Void... input){
-                        DiscrepancyHolder.initialiseMonthlyItems();
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void voids){
-                        progress.dismiss();
-                    }
-                }.execute();
+                initialiseItemList();
+                ciList = DiscrepancyHolder.getMonthlyItems();
             }
+        }
+        else{
+            initialiseItemList();
+            ciList = DiscrepancyHolder.getMonthlyItems();
         }
 
         SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
@@ -76,5 +65,25 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         Intent i = new Intent(this, DiscrepancyMonthlyItemDetailsActivity.class);
         i.putExtra("itemCode", ci.get("itemCode"));
         startActivity(i);
+    }
+
+    private void initialiseItemList(){
+        new AsyncTask<Void, Void, Void>(){
+            ProgressDialog progress;
+            @Override
+            protected void onPreExecute() {
+                progress = ProgressDialog.show(DiscrepancyMonthlyActivity.this, "Loading", "Loading Items", true);
+            }
+            @Override
+            protected Void doInBackground(Void... input){
+                DiscrepancyHolder.initialiseMonthlyItems();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void voids){
+                progress.dismiss();
+            }
+        }.execute();
     }
 }

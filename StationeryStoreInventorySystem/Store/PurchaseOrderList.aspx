@@ -55,7 +55,7 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate>
-                        <asp:Label ID="ReqstdBy" runat="server" Text='<%# Bind("Employee.EmpName") %>' Font-Bold="true" Width="120px"></asp:Label>
+                        <asp:Label ID="ReqstdBy" runat="server" Text='<%# Bind("Employee1.EmpName") %>' Font-Bold="true" Width="120px"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 

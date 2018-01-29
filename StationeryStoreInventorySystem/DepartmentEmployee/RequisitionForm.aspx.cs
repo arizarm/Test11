@@ -109,7 +109,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                 //string subject = "New Requisition";
                 //string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
                 //Utility.sendMail(receiver, subject, body);
-                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+                Response.Redirect(LoginController.RequisitionListDepEmpURI);
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

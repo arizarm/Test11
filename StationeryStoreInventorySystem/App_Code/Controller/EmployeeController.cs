@@ -15,7 +15,7 @@ public static class EmployeeController
             {    //Check if email exists
                 if (context.Employees.Where(x => x.Email == email).Select(y => y.Password).First() == password)
                 {      //Check if the password is correct
-                    
+
                     return true;
                 }
                 else

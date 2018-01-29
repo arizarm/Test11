@@ -10,7 +10,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        DeptController deptController = new DeptController();
         if (Session["emp"] != null)
         {
             Employee empSession = (Employee)Session["emp"];
@@ -18,15 +18,15 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
             string empRole = empSession.Role;
             string tempHead = empSession.IsTempHead;
 
-            if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
+            if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
             {
-                Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
+                Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
                 DateTime? endDate = empActingDHead.EndDate;
                 DateTime today = DateTime.Now;
 
                 if (today > endDate)
                 {
-                    EFBroker_DeptEmployee.UpdateRevoke();
+                    deptController.UpdateRevoke();
                     lblActingDHead.Text = null;
 
 
@@ -44,11 +44,11 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     
                 }
 
-                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {
-                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
-                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = deptController.GetDepartByDepCode(dcode);
+                    Employee emp = deptController.GetDHeadByDeptCode(dcode);
 
                     string aheadname = "No Acting Head";
                     string detpRname = empDRep.EmpName;
@@ -57,7 +57,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string telephone = dept.DeptTelephone;
                     string fax = dept.DeptFax;
                     string dheadname = emp.EmpName;
-                    string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                    string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
 
 
                     lblDeptName.Text = dname;
@@ -74,10 +74,10 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                 }
                 else
                 {
-                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
-                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
-                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                    Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = deptController.GetDepartByDepCode(dcode);
+                    Employee emp = deptController.GetDHeadByDeptCode(dcode);
 
                     string aheadname = empActingDHead.EmpName;
                     string detpRname = empDRep.EmpName;
@@ -90,13 +90,13 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string enddate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
 
                    
-                    string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
+                    string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
                     //DateTime? endDate = empActingDHead.EndDate;
                     //DateTime today = DateTime.Now;
 
                     //if (today > endDate)
                     //{
-                    //    EFBroker_DeptEmployee.UpdateRevoke();
+                    //    deptController.UpdateRevoke();
                     //    lblActingDHead.Text = null;
                         
 
@@ -136,15 +136,15 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
             if (empRole == "DepartmentHead")
             {
-                Response.Redirect("~/DepartmentHead/DepartmentListDHead.aspx");
+                Response.Redirect(LoginController.DepartmentListDHeadURI);
             }
             else if (empRole == "Representative")
             {
-                Response.Redirect("~/DepartmentRepresentative/DepartmentListDRep.aspx");
+                Response.Redirect(LoginController.DepartmentListDRepURI);
             }
             else if (empRole == "DepartmentTempHead")
             {
-                Response.Redirect("~/DepartmentTempHead/DepartmentListActingDHead.aspx");
+                Response.Redirect(LoginController.DepartmentListActingDHeadURI);
             }
         }
         else

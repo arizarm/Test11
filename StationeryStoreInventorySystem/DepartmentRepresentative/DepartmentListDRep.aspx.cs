@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class DepartmentListDRep : System.Web.UI.Page
 {
-
+    DeptController deptController = new DeptController();
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,11 +20,11 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
 
-                if (EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
+                if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {
-                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
-                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = deptController.GetDepartByDepCode(dcode);
+                    Employee emp = deptController.GetDHeadByDeptCode(dcode);
+                    Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
                     string aheadname = "No Acting Head";
                     string detpRname = empDRep.EmpName;
                     string dname = dept.DeptName;
@@ -46,10 +46,10 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                 }
                 else
                 {
-                    Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-                    Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
-                    Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
-                    Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
+                    Department dept = deptController.GetDepartByDepCode(dcode);
+                    Employee emp = deptController.GetDHeadByDeptCode(dcode);
+                    Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
+                    Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
                     string aheadname = empActingDHead.EmpName;
                     string detpRname = empDRep.EmpName;
                     string dname = dept.DeptName;
@@ -69,8 +69,8 @@ public partial class DepartmentListDRep : System.Web.UI.Page
                     lblDeptRep.Text = detpRname;
                 }
                 //UpdateCollectionPoint
-                string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = EFBroker_DeptEmployee.GetCollectionPointList();
+                string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
+                DropDownListCollectionPoint.DataSource = deptController.GetCollectionPointList();
                 DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
                 DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
                 DropDownListCollectionPoint.DataBind();
@@ -93,18 +93,18 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
 
-            int cid = EFBroker_DeptEmployee.GetCollectionidbyDeptCode(dcode);
+            int cid = deptController.GetCollectionidbyDeptCode(dcode);
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
             //lblFax.Text = cid.ToString();
             //lblPhone.Text = c.ToString();
             if (c != cid)
             {
-                EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+                deptController.UpdateCollectionPoint(dcode, c);
+                Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
             }
             else
             {
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI);
             }
         }
         else
@@ -117,7 +117,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
 
-        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+        Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }
 
 

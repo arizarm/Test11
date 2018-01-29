@@ -16,13 +16,15 @@ public class RetrievalListDetailItem
     private string description;
     private int totalRequestedQty;
     private string itemCode;
+    private int retrievedQty;
 
-    public RetrievalListDetailItem(string bin, string description, int totalRequestedQty, string itemCode)
+    public RetrievalListDetailItem(string bin, string description, int totalRequestedQty, string itemCode, int retrievedQty)
     {
         this.bin = bin;
         this.description = description;
         this.totalRequestedQty = totalRequestedQty;
         this.itemCode = itemCode;
+        this.retrievedQty = retrievedQty;
     }
 
     public string Bin
@@ -74,6 +76,19 @@ public class RetrievalListDetailItem
         set
         {
             itemCode = value;
+        }
+    }
+
+    public int RetrievedQty
+    {
+        get
+        {
+            return retrievedQty;
+        }
+
+        set
+        {
+            retrievedQty = value;
         }
     }
 }

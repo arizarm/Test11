@@ -69,23 +69,21 @@ public class EFBroker_PurchaseOrder
         }
         return rList;
     }
-    public static List<PurchaseItems> GetReorderItemList()
+    public static List<ReorderItem> GetReorderItemList()
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            var itemList = (from Stock in entities.StockCards
-                            group Stock by Stock.ItemCode into stck
-                            join item in entities.Items on stck.Key equals item.ItemCode
-                            where item.ReorderLevel >= stck.Min(x => x.Balance)
-                            select new PurchaseItems
+            var itemList = (from item in entities.Items
+                            where item.ReorderLevel >= item.BalanceQty && item.ActiveStatus=="Y"
+                            select new ReorderItem
                             {
                                 ItemCode = item.ItemCode,
                                 Description = item.Description,
                                 ReorderQty = item.ReorderQty,
                                 ReorderLevel = item.ReorderLevel,
                                 UnitOfMeasure = item.UnitOfMeasure,
-                                Balance = stck.Min(x => x.Balance)
-                            }).ToList<PurchaseItems>();
+                                Balance = item.BalanceQty
+                            }).ToList<ReorderItem>();
             return itemList;
         }
 
@@ -110,39 +108,42 @@ public class EFBroker_PurchaseOrder
             return porderDetails;
         }
     }
-    public static List<SupplierInfo> GetPurchaseSupplierInfoList()
+    public static List<ItemPrice> GetItemPriceList()
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            var supplierList = (from item in entities.Items
+            var itemPriceList = (from item in entities.Items
                                 join price in entities.PriceLists on item.ItemCode equals price.ItemCode
                                 orderby price.SupplierRank ascending
-                                select new SupplierInfo
+                                select new ItemPrice
                                 {
-                                    SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),
+                                    //SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),
+                                    SupplierName = price.Supplier.SupplierName,
                                     SupplierCode = price.Supplier.SupplierCode,
                                     ItemCode = item.ItemCode,
+                                    Price =price.Price,
                                     Amount = price.Price * item.ReorderQty,
-                                }).Distinct().ToList<SupplierInfo>();
-            return supplierList;
+                                }).Distinct().ToList<ItemPrice>();
+            return itemPriceList;
         }
     }
-    public static List<SupplierInfo> GetPurchaseSupplierListByItemCode(string itemCode)
+    public static List<ItemPrice> GetItemPriceByItemCode(string itemCode)
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            var supplierInfoList = (from item in entities.Items
+            var itemPriceList = (from item in entities.Items
                                     join price in entities.PriceLists on item.ItemCode equals price.ItemCode
                                     where item.ItemCode == itemCode
                                     orderby price.SupplierRank ascending
-                                    select new SupplierInfo
+                                    select new ItemPrice
                                     {
-                                        SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),
+                                        //SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),
                                         SupplierCode = price.Supplier.SupplierCode,
                                         ItemCode = item.ItemCode,
+                                        Price =price.Price,
                                         Amount = price.Price * item.ReorderQty,
-                                    }).Distinct().ToList<SupplierInfo>();
-            return supplierInfoList;
+                                    }).Distinct().ToList<ItemPrice>();
+            return itemPriceList;
         }
     }
     public static void AddPurchaseOrder(Dictionary<PurchaseOrder, List<Item_PurchaseOrder>> orderItems)
@@ -221,6 +222,21 @@ public class EFBroker_PurchaseOrder
             ts.Complete();
         }
         return;
+    }
+
+    public static void DeletePurchaseOrder(int orderID)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities entities = new StationeryEntities();
+            PurchaseOrder pOrder = entities.PurchaseOrders.Where(x => x.PurchaseOrderID == orderID).FirstOrDefault();
+            List<Item_PurchaseOrder> pitemList = entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == orderID).ToList();
+            entities.Item_PurchaseOrder.RemoveRange(pitemList);
+            entities.PurchaseOrders.Attach(pOrder);
+            entities.PurchaseOrders.Remove(pOrder);
+            entities.SaveChanges();
+            ts.Complete();
+        }
     }
 
     public static List<ShortfallItems> GenerateReorderReportForPurchasedItems(DateTime startDate, DateTime endDate)

@@ -34,19 +34,19 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         adjustment = adj.ToString();
                     }
                     KeyValuePair<Item, String> displayKvp = new KeyValuePair<Item, String>(kvp.Key, actualQuantity.ToString());
-                    fullDiscrepancies.Add(displayKvp, adjustment);
+                      fullDiscrepancies.Add(displayKvp, adjustment);
                 }
             }
             else
             {
-                Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
+                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
             }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
 
-            if (Session["monthly"] != null)
+            if(Session["monthly"] != null)
             {
-                if ((bool)Session["monthly"] == false)
+                if((bool) Session["monthly"] == false)
                 {
                     GridView1.Columns[4].Visible = false;
                 }
@@ -57,14 +57,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     }
 
     protected void Button2_Click(object sender, EventArgs e)
-    {
+    {  
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
-        bool informSupervisor = false;
-        bool informManager = false;
-
         foreach (GridViewRow row in GridView1.Rows)
-        {
+        {        
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
             string stock = (row.FindControl("lblStock") as Label).Text;
             string actual = (row.FindControl("lblActual") as Label).Text;
@@ -89,9 +86,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
                     List<PriceList> itemPrices = new List<PriceList>();
 
-                    foreach (PriceList pl in plHistory)
+                    foreach(PriceList pl in plHistory)
                     {    //Get only currently active suppliers for an item
-                        if (pl.TenderYear == DateTime.Now.Year.ToString())
+                        if(pl.TenderYear == DateTime.Now.Year.ToString())
                         {
                             itemPrices.Add(pl);
                         }
@@ -108,7 +105,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
                     Discrepency d = new Discrepency();
                     d.ItemCode = itemCode;
-                    if (Session["empID"] != null)
+                    if(Session["empID"] != null)
                     {
                         int empID = (int)Session["empID"];
                         d.RequestedBy = empID;
@@ -120,7 +117,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
-                    if (Session["monthly"] != null)
+                    if(Session["monthly"] != null)
                     {
                         if ((bool)Session["monthly"] == true)
                         {
@@ -136,15 +133,13 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         d.Status = "Pending";
                     }
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
-                    if (d.TotalDiscrepencyAmount < 250)
+                    if(d.TotalDiscrepencyAmount < 250)
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
-                        informSupervisor = true;
                     }
                     else
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].EmpID;
-                        informManager = true;
                     }
                     dList.Add(d);
                 }
@@ -167,31 +162,28 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
         if (complete)
         {
-            try
-            {
-                EFBroker_Discrepancy.SaveDiscrepencies(dList);
-            }
-            catch (Exception ex)
-            {
-                Label5.Text = "Discrepancy report submission failed, please try again.";
-            }
+            EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
             Session["discrepancyList"] = null;
+            Session["RetrievalShortfallItemList"] = null;
+            Session["RetrievalID"] = null;
+
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
 
-            
-            //foreach (Discrepency d in dList)
-            //{
-            //    if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
-            //    {
-            //        informSupervisor = true;
-            //    }
-            //    else
-            //    {
-            //        informManager = true;
-            //    }
-            //}
+            bool informSupervisor = false;
+            bool informManager = false;
+            foreach (Discrepency d in dList)
+            {
+                if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+                {
+                    informSupervisor = true;
+                }
+                else
+                {
+                    informManager = true;
+                }
+            }
 
             if (informSupervisor)
             {
@@ -203,9 +195,8 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
-
-            Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
-
+            
+            Response.Redirect("~/GenerateDiscrepancyV2.aspx");
         }
     }
 }

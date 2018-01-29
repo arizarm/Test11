@@ -57,12 +57,13 @@ public partial class ItemStockCard : System.Web.UI.Page
                 {
                     if(sc.TransactionType == adjustment || sc.TransactionType == disbursement || sc.TransactionType == purchase)
                     {
+                        //Possible to display 3 types of stock card entries (each accessing different tables)
                         StockCardDisplayRow scdr = new StockCardDisplayRow();
                         if (sc.TransactionType == adjustment)
                         {
                             Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById((int)sc.TransactionDetailID);
                             scdr.TransDate = ((DateTime)d.Date).ToShortDateString();
-                            scdr.TransDetails = "Adjustment Id. " + sc.TransactionDetailID;
+                            scdr.TransDetails = "Adjustment ID. " + sc.TransactionDetailID;
                             scdr.Quantity = "ADJ " + GetQuantityString((int)sc.Qty);
                         }
                         else if (sc.TransactionType == purchase)

@@ -1,5 +1,8 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import org.apache.http.params.CoreConnectionPNames;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +12,7 @@ import java.util.Map;
 
 public class DiscrepancyHolder {
     static HashMap<String, Integer> discrepancies = new HashMap<String, Integer>();
+    static ArrayList<CatalogueItem> monthlyItems;
     static boolean monthly = false;
 
     public static HashMap<String, Integer> getDiscrepancyList()
@@ -34,5 +38,58 @@ public class DiscrepancyHolder {
 
     public static void setMonthlyMode(){
         monthly = true;
+    }
+
+    //For monthly inventory check mode
+    public static void initialiseMonthlyItems(){
+        monthlyItems = CatalogueItem.getAllItems();
+    }
+
+    public static ArrayList<CatalogueItem> getMonthlyItems() {
+        return monthlyItems;
+    }
+
+    public static boolean monthlyComplete(){
+        for(CatalogueItem ci : monthlyItems){
+            String correctQty = ci.get("correctQty");
+            if(correctQty == null){
+                if(!(correctQty.equals("N") || correctQty.equals("Y"))){
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String getMissedItems(){
+        StringBuilder sb = new StringBuilder();
+        boolean firstItem = true;
+        for(CatalogueItem ci : monthlyItems){
+            String correctQty = ci.get("correctQty");
+            if(correctQty == null){
+                if(!(correctQty.equals("N") || correctQty.equals("Y"))){
+                    if(!firstItem){
+                        sb.append(", ");
+                    }
+                    else{
+                        firstItem = false;
+                    }
+                    sb.append(ci.get("itemCode"));
+                }
+            }
+            else{
+                if(!firstItem){
+                    sb.append(", ");
+                }
+                else{
+                    firstItem = false;
+                }
+                sb.append(ci.get("itemCode"));
+            }
+        }
+        return sb.toString();
     }
 }

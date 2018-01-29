@@ -40,7 +40,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     {
         int searchID = Convert.ToInt32(SearchTxtBx.Text);
         List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrderByID(searchID);
-        if(porderList !=null)
+        if(porderList != null)
         {
             gvPurchaseOrder.DataSource = pCtlr.SearchPurchaseOrderByID(searchID);
             gvPurchaseOrder.DataBind();
@@ -64,26 +64,85 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+        //PurchaseOrder pOrder = pCtlr.GetPurchaseOrderList().Where(x => x.PurchaseOrderID == (int)DataBinder.Eval(e.Row.DataItem, "PurchaseOrderID")).First() ;
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+
             Label statusLbl = (Label)e.Row.FindControl("OrderStatus");
+            Button delBtn = (Button)e.Row.FindControl("btn_Delete");
             string status = statusLbl.Text;
             if (status == "Pending")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Blue;
+                delBtn.Visible = true;
+                delBtn.Enabled = true;
             }
-            else if(status == "Approved")
+            else if (status == "Approved")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Green;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
             else if (status == "Rejected")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Red;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
             else if (status == "Closed")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Orange;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
+         
+            if (Session["empRole"] != null)
+            {
+                if (Session["empRole"].ToString() == "Store Clerk")
+                {
+                    gvPurchaseOrder.Columns[5].Visible = true;
+
+                }
+                else if (Session["empRole"].ToString() == "Store Supervisor"|| Session["empRole"].ToString() == "Store Manager")
+                {
+                    gvPurchaseOrder.Columns[5].Visible = false;
+                }
+              
+            }           
         }
+    }
+
+ 
+
+    //protected void gvPurchaseOrder_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    int pID = Convert.ToInt32(gvPurchaseOrder.DataKeys[e.CommandArgument]).;
+    //    pCtlr.DeletePurchaseOrder(pID);
+    //    ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+    //        "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
+    //}
+
+
+    //protected void gvPurchaseOrder_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{ 
+    //    if (e.CommandName == "Delete")
+    //    {
+    //        int pID = Int32.Parse(e.CommandArgument.ToString());
+    //        pCtlr.DeletePurchaseOrder(pID);
+    //        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+    //            "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
+    //        BindData();
+    //    }
+    //}
+
+    protected void btn_Delete_Click(object sender, EventArgs e)
+    {
+
+        Button delteBtn = (Button)sender;
+        int pID = Int32.Parse(delteBtn.CommandArgument.ToString());
+        pCtlr.DeletePurchaseOrder(pID);
+        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+            "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
+        BindData();
     }
 }

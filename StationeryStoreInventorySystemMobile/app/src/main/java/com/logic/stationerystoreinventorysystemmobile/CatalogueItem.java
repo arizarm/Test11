@@ -14,8 +14,8 @@ import java.util.HashMap;
 
 public class CatalogueItem extends HashMap<String, String> {
 //    static String ip = "172.17.249.125";
-//    static String ip = "172.23.200.138";
-    static String ip = "192.168.1.224";
+    static String ip = "172.23.202.59";
+//    static String ip = "192.168.1.224";
 
     static String host = "http://"+ ip + "/StationeryStoreInventorySystem/ItemService.svc/";
 
@@ -25,7 +25,15 @@ public class CatalogueItem extends HashMap<String, String> {
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
         put("adjustments", adjustments);
-//        put("balanceQtyWithAdj", balanceQty.toString() + " (" + adjustments + ")");
+    }
+
+    public void monthlyActualInput(String actualQty){
+        put("correctQty", "N");
+        put("actualQty", actualQty.toString());
+    }
+
+    public void monthlyCorrectInput(){
+        put("correctQty", "Y");
     }
 
     public static ArrayList<CatalogueItem> getAllItems(){

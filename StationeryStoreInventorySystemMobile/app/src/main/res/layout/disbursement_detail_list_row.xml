@@ -12,11 +12,12 @@
 
     <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="210dp">
+        android:layout_height="166dp">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
@@ -25,9 +26,9 @@
 
             <TextView
                 android:id="@+id/txtIDesc"
+                style="@style/TextStyle"
                 android:layout_width="@dimen/TextWidth"
-                android:layout_height="@dimen/MyHeight"
-                style="@style/TextStyle"/>
+                android:layout_height="@dimen/MyHeight" />
         </TableRow>
 
         <TableRow
@@ -42,19 +43,21 @@
 
             <TextView
                 android:id="@+id/txtReqQty"
+                style="@style/TextStyle"
                 android:layout_width="@dimen/TextWidth"
-                android:layout_height="@dimen/MyHeight"
-                style="@style/TextStyle"/>
+                android:layout_height="@dimen/MyHeight" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
                 android:text="Actual Qty" />
+
             <EditText
                 android:id="@+id/editTxtActQty"
                 android:layout_width="@dimen/TextWidth"
@@ -65,11 +68,13 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
                 android:text="Remarks" />
+
             <EditText
                 android:id="@+id/editTxtRemark"
                 android:layout_width="@dimen/TextWidth"

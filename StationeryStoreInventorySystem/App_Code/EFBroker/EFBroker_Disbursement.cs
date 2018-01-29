@@ -14,12 +14,30 @@ public class EFBroker_Disbursement
         // TODO: Add constructor logic here
         //
     }
+    public static int GetRequestedQtybyDisbursementIDItemCode(int disbID, string itemCode)
+    {
+        int qty;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            qty = context.Disbursement_Item.Where(x => x.DisbursementID == disbID && x.ItemCode.ToString().Equals(itemCode)).Select(x => x.TotalRequestedQty).FirstOrDefault() ?? 0;
+        }
+        return qty;
+    }
     public static List<Retrieval> GetAllRetrievalList()
     {
         using (StationeryEntities context = new StationeryEntities())
         {
             return context.Retrievals.ToList();
         }
+    }
+    public static List<Retrieval> GetPendingAndProgressRetrievalList()
+    {
+        List<Retrieval> rList = new List<Retrieval>();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Retrievals.Where(x => x.RetrievalStatus == "Pending" || x.RetrievalStatus == "InProgress").ToList();////
+        }
+        return rList;
     }
     public static List<Disbursement> GetAllDisbursementList()
     {
@@ -29,21 +47,6 @@ public class EFBroker_Disbursement
             disbursements = context.Disbursements.Include("Department").Where(x => x.Status.Equals("Ready")).ToList();
         }
         return disbursements;
-    }
-    public static int AddNewRetrieval(int empID)
-    {
-        int retrievalID;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            Retrieval r = new Retrieval();
-            r.RetrievedBy = empID;     //base on user session
-            r.RetrievedDate = DateTime.Today;
-            r.RetrievalStatus = "Pending";
-            context.Retrievals.Add(r);
-            context.SaveChanges();
-            retrievalID = r.RetrievalID; // get auto increasement data after SaveChanges        
-        }
-        return retrievalID;
     }
     public static List<Disbursement> GetDisbursmentListbyRetrievalID(int retrievalID)
     {
@@ -83,6 +86,21 @@ public class EFBroker_Disbursement
         }
         return disbursementDetail;
     }
+    public static int AddNewRetrieval(int empID)
+    {
+        int retrievalID;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            Retrieval r = new Retrieval();
+            r.RetrievedBy = empID;     //base on user session
+            r.RetrievedDate = DateTime.Today;
+            r.RetrievalStatus = "Pending";
+            context.Retrievals.Add(r);
+            context.SaveChanges();
+            retrievalID = r.RetrievalID; // get auto increasement data after SaveChanges        
+        }
+        return retrievalID;
+    }
     public static int AddNewDisbursment(Disbursement disbursment)
     {
         using (StationeryEntities context = new StationeryEntities())
@@ -92,6 +110,16 @@ public class EFBroker_Disbursement
             //saving changes get ID for disbursement
             return disbursment.DisbursementID;
         }
+    }
+    public static void AddNewDisbursementItem(Disbursement_Item disitem)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            context.Disbursement_Item.Add(disitem);
+            context.SaveChanges();
+        }
+        return;
+
     }
     public static void AddNewDisbursementItemList(List<Disbursement_Item> disitems)
     {
@@ -112,15 +140,14 @@ public class EFBroker_Disbursement
         }
         return accessCode;
     }
-    public static void UpdateRetrievalStatus(int retrievalID)
+    public static void UpdateRetrievalStatus(int rId, string status)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            Retrieval retrieval = context.Retrievals.Where(r => r.RetrievalID == retrievalID).FirstOrDefault();
-            retrieval.RetrievalStatus = "Retrieved";
+            Retrieval retrieval = context.Retrievals.Where(x => x.RetrievalID == rId).FirstOrDefault();
+            retrieval.RetrievalStatus = status;
             context.SaveChanges();
         }
-        return;
     }
     public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty)
     {

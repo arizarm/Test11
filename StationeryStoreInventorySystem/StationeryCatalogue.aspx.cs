@@ -15,7 +15,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         {
             try
             {
-                GridView1.DataSource = EFBroker_Item.GetCatalogueList();
+                GridView1.DataSource = ItemBusinessLogic.GetCatalogueList();
             }
             catch (Exception sql)
             {

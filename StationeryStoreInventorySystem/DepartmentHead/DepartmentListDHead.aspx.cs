@@ -230,8 +230,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     else
                     {  
                         int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-                        Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
-                        String newDeptTempEmail = newDeptTemp.Email;
+                        //Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
+                        //String newDeptTempEmail = newDeptTemp.Email;
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
                         string lbsdate = lblStartDate.Text;
@@ -260,10 +260,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                                 Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
                                 Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
                             }
-                            if (Aempid != 0 || sdate != "" || edate != "")
-                            {
-                                Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
-                            }
+                            //if (Aempid != 0 || sdate != "" || edate != "")
+                            //{
+                            //    Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
+                            //}
                             Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
 
                         }

@@ -161,7 +161,7 @@
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField><ItemTemplate>
-                    <asp:Button ID="ItemDelete" runat="server" Text="Delete" OnClick="ItemDelete_Click" />
+                    <asp:Button ID="ItemDelete" runat="server" Text="Delete" OnClientClick="return confirm('Confirm Delete?');" OnClick="ItemDelete_Click" />
                                    </ItemTemplate>
                     <EditItemTemplate>
                         <asp:Button ID="CancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" />

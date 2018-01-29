@@ -101,7 +101,8 @@
                     <asp:HyperLink ID="PurchaseOrderListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>   
                     <asp:HyperLink ID="ReorderReportClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink>
                     <asp:HyperLink ID="GenerateDiscrepancyClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
-                    <asp:HyperLink ID="ItemStockCardListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
+                    <%--<asp:HyperLink ID="ItemStockCardListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>--%>
+                    <asp:HyperLink ID="ItemStockCardListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl='<%# Bind("LoginController.ItemStockCardListURI") %>'>Stock Cards</asp:HyperLink>
 			   </div>
 
                 <div class="right-col">

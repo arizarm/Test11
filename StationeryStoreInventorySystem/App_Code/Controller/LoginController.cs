@@ -52,7 +52,6 @@ public class LoginController
     public static readonly string DepartmentListDHeadURI = "~/DepartmentHead/DepartmentListDHead.aspx";
     public static readonly string DepartmentListDRepURI= "~/DepartmentRepresentative/DepartmentListDRep.aspx";
     public static readonly string DepartmentListActingDHeadURI ="~/DepartmentTempHead/DepartmentListActingDHead.aspx";
-    //public static readonly string RequisitionListDepEmpURI = "RequisitionListDepEmp.aspx";
     public static readonly string RequisitionListDepEmpURI = "~/DepartmentEmployee/RequisitionListDepEmp.aspx";
     public static readonly string RequisitionListDepHeadURI = "~/DepartmentHead/RequisitionListDepHead.aspx";
     public static readonly string RequisitionListTempDepHeadURI = "~/DepartmentTempHead/RequisitionListDepTempHead.aspx";
@@ -60,7 +59,7 @@ public class LoginController
     public static readonly string RequisitionListClerkURI = "~/Store/RequisitionListClerk.aspx";
     public static readonly string RequisitionDetailURI = "RequisitionDetails.aspx";
     public static readonly string RetrievalListDetailURI = "~/Store/RetrievalListDetail.aspx";
-    public static readonly string RetrievalShortfallURI = "RetrievalShortfall.aspx";
+    public static readonly string RetrievalShortfallURI = "~/RetrievalShortfall.aspx";
     public static readonly string PurchaseOrderListURI = "~/Store/PurchaseOrderList.aspx";
     public static readonly string PurchaseOrderDetailURI= "~/Store/PurchaseOrderDetail.aspx";
     public static readonly string EmployeeRequisitionFormURI = "~/DepartmentEmployee/RequisitionFormEmp.aspx";
@@ -71,5 +70,9 @@ public class LoginController
     public static readonly string DisbursementListDetailURI = "~/Store/DisbursementListDetail.aspx";
     public static readonly string RegenerateRequestURI = "~/Store/RegenerateRequest.aspx";
     public static readonly string ItemStockCardListURI = "~/Store/ItemStockCardList.aspx";
+    public static readonly string SupplierCreateURI = "~/StoreManagerSupervisor/SupplierCreate.aspx";
+    public static readonly string SupplierListURI = "~/Store/SupplierList.aspx";
+    public static readonly string TrendReportDisplayURI = "~/Store/TrendReportDisplay.aspx";
+    public static readonly string StockAdjustmentSummaryURI = "~/StoreManagerSupervisor/StockAdjustmentSummary.aspx";
     public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
 }

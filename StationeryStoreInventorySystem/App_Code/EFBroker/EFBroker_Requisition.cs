@@ -363,4 +363,12 @@ public class EFBroker_Requisition
             return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy == (empID)).ToList();
         }
     }
+
+    public static int CountPending(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode)).Count();
+        }
+    }
 }

@@ -40,6 +40,13 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
                 Intent i2 = new Intent(this, RequisitionListActivity.class);
                 startActivity(i2);
                 return true;
+            case R.id.item3:
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit();
+                Intent i3 = new Intent(this, LoginActivity.class);
+                startActivity(i3);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

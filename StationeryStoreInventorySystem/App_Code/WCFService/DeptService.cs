@@ -177,6 +177,11 @@ public class DeptService : IDeptService
         deptController.UpdateCollectionPoint(dept.DeptCode,Convert.ToInt16(dept.CollectionLocationID));
     }
 
+    public WCFEmployee GetEmployeeByEmail(string email, string password)
+    {
+        throw new NotImplementedException();
+    }
+
     //End Collection Function Part
 
 }

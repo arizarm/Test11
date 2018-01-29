@@ -106,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:text=""
                     android:textColor="@android:color/holo_red_dark"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

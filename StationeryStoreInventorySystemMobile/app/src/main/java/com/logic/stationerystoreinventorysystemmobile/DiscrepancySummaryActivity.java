@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -79,10 +81,10 @@ public class DiscrepancySummaryActivity extends Activity {
             final ArrayList<Discrepancy> toBeSubmitted = new ArrayList<Discrepancy>();
 
             for (int i = 0; i < listDisc.getCount(); i++) {
-                v = listDisc.getChildAt(i);
-                tvItemCode = v.findViewById(R.id.tvItemCode);
-                tvAdjustmentQty = v.findViewById(R.id.tvAdj);
-                etRemarks = v.findViewById(R.id.etRemarks);
+                v2 = listDisc.getChildAt(i);
+                tvItemCode = v2.findViewById(R.id.tvItemCode);
+                tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
+                etRemarks = v2.findViewById(R.id.etRemarks);
 
 
                 String itemCode = tvItemCode.getText().toString();

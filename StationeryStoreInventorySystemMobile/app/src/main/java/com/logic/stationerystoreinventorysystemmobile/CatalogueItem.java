@@ -28,11 +28,13 @@ public class CatalogueItem extends HashMap<String, String> {
         put("bin", bin);
     }
 
+    //For use in DiscrepancyMonthlyActivity
     public void monthlyActualInput(String actualQty){
         put("correctQty", "N");
         put("actualQty", actualQty.toString());
     }
 
+    //For use in DiscrepancyMonthlyActivity
     public void monthlyCorrectInput(){
         put("correctQty", "Y");
     }

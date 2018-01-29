@@ -49,6 +49,10 @@ public class DiscrepancyHolder {
         return monthlyItems;
     }
 
+    public static void clearMonthlyItems(){
+        monthlyItems = new ArrayList<CatalogueItem>();
+    }
+
     public static boolean monthlyComplete(){
         for(CatalogueItem ci : monthlyItems){
             String correctQty = ci.get("correctQty");

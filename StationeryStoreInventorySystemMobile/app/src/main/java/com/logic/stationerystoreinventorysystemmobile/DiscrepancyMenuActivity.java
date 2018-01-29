@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class DiscrepancyMenuActivity extends Activity {
 
     @Override
@@ -16,6 +18,7 @@ public class DiscrepancyMenuActivity extends Activity {
 
     protected void adhocClick(View v){
         DiscrepancyHolder.clearDiscrepancies();
+        DiscrepancyHolder.clearMonthlyItems();
         DiscrepancyHolder.setAdhocMode();
         Intent i = new Intent(this, DiscrepancyAdhocActivity.class);
         startActivity(i);
@@ -23,6 +26,7 @@ public class DiscrepancyMenuActivity extends Activity {
 
     protected void monthlyClick(View v){
         DiscrepancyHolder.clearDiscrepancies();
+        DiscrepancyHolder.clearMonthlyItems();
         DiscrepancyHolder.setMonthlyMode();
         Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
         startActivity(i);

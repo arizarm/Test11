@@ -2,6 +2,8 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +49,10 @@ public class DiscrepancySummaryAdapter extends ArrayAdapter<Discrepancy> {
             etRemarks.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v2, boolean hasFocus) {
-                    String remarks = etRemarks.getText().toString();
-                    d.saveRemarks(remarks);
+                    if(!hasFocus){
+                        String remarks = etRemarks.getText().toString();
+                        d.saveRemarks(remarks);
+                    }
                 }
             });
         }

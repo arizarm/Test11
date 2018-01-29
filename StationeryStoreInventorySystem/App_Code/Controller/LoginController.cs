@@ -74,5 +74,7 @@ public class LoginController
     public static readonly string SupplierListURI = "~/Store/SupplierList.aspx";
     public static readonly string TrendReportDisplayURI = "~/Store/TrendReportDisplay.aspx";
     public static readonly string StockAdjustmentSummaryURI = "~/StoreManagerSupervisor/StockAdjustmentSummary.aspx";
+    public static readonly string StationeryCatalogueDetailURI = "~/Store/StationeryCatalogueDetail.aspx";
+    public static readonly string StationeryCatalogueURI = "~/StationeryCatalogue.aspx";
     public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
 }

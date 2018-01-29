@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<TextView android:id="@+id/disbIDHidden"-->
-        <!--android:visibility="gone"/>-->
+        <TextView android:id="@+id/iCodeHidden"
+        android:visibility="gone"/>
 
         <TableRow
             android:layout_width="match_parent"

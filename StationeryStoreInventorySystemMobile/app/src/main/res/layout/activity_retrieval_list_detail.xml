@@ -8,29 +8,29 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="440dp">
+        android:layout_height="520dp">
 
     </ListView>
 
     <Button
         android:id="@+id/BtnSaveClick"
-        android:onClick="BtnSaveClick"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="62dp"
+        android:onClick="BtnSaveClick"
         android:text="Save" />
 
-    <Button
-        android:id="@+id/BtnRestoreClick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="BtnRestoreClick"
-        android:text="Restore" />
+    <!--<Button-->
+        <!--android:id="@+id/BtnRestoreClick"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="BtnRestoreClick"-->
+        <!--android:text="Restore" />-->
 
-    <Button
-        android:id="@+id/BtnFinalizeDisbursmentListClick"
-        android:onClick="BtnFinalizeDisbursmentListClick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Finalize Disbursment List" />
+    <!--<Button-->
+        <!--android:id="@+id/BtnFinalizeDisbursmentListClick"-->
+        <!--android:onClick="BtnFinalizeDisbursmentListClick"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Finalize Disbursment List" />-->
 
 </LinearLayout>

@@ -32,6 +32,8 @@ public partial class ReorderReport : System.Web.UI.Page
         }
         else
         {
+            txtLbl.Text = "";
+            txtLbl2.Text = "";
             gvPurchasedreoderItem.DataSource = null;
             gvPurchasedreoderItem.DataBind();
             gvShortfallItems.DataSource = null;

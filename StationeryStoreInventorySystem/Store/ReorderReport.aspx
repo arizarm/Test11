@@ -42,7 +42,7 @@
     <br />
     <br />
     <div id="printable">:
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvPurchasedreoderItem" EmptyDataText="No records founds within the dates !!" EmptyDataRowStyle-BackColor="Window">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvPurchasedreoderItem"  EmptyDataRowStyle-BackColor="Window">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                     <ControlStyle Font-Size="10pt" Height="65px"/>
@@ -99,7 +99,7 @@
     <asp:Label runat="server" Text="" ForeColor="Red" ID="txtLbl2"></asp:Label>
     <br />
     <br />
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems" EmptyDataText="No records founds within the dates !!" EmptyDataRowStyle-BackColor="Window">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems"  EmptyDataRowStyle-BackColor="Window">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                <ControlStyle Font-Size="10pt" Height="65px"/>

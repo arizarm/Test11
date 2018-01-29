@@ -35,7 +35,7 @@ public class EFBroker_Disbursement
         List<Retrieval> rList = new List<Retrieval>();
         using (StationeryEntities context = new StationeryEntities())
         {
-            context.Retrievals.Where(x => x.RetrievalStatus == "Pending" || x.RetrievalStatus == "InProgress").ToList();////
+            context.Retrievals.Where(x => x.RetrievalStatus.Equals("Pending") || x.RetrievalStatus.Equals("InProgress")).ToList();////
         }
         return rList;
     }

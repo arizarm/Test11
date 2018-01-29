@@ -17,8 +17,6 @@ public class RetrievalControl
 
     List<Disbursement_Item> Disbursement_ItemList = new List<Disbursement_Item>();
 
-    int retrievalId;
-
     //Get all Retrieval List
     public List<Retrieval> DisplayRetrievalList()
     {
@@ -134,7 +132,6 @@ public class RetrievalControl
                 }
             }
         }
-
 
         return CheckShortfall(rId, retrievedData);///// to call after testing
     }
@@ -334,20 +331,7 @@ public class RetrievalControl
     }
 
 
-    public int AddRetrieval()
-    {
-        Retrieval r = new Retrieval();
-        r.RetrievedBy = 1001;       //base on user session
-        r.RetrievedDate = DateTime.Today;
-        r.RetrievalStatus = "Pending";
-        //context.Retrievals.Add(r);
-        //context.SaveChanges();
-        //retrievalId = r.RetrievalID; // get auto increasement data after SaveChanges        
-        //return retrievalId;
-        return EFBroker_Disbursement.AddNewRetrieval(1001);
-    }
-
-    public void AddDisbursement(List<int> requNo)//////////////////////////////////InProgress doesn't work
+    public void AddDisbursement(int rId, List<int> requNo)//////////////////////////////////InProgress doesn't work
     {
         List<int> disbursementID = new List<int>();
         Disbursement d = new Disbursement();
@@ -389,7 +373,7 @@ public class RetrievalControl
         foreach (string i in deptCodeList)
         {
             //add Disbursement
-            d.RetrievalID = retrievalId;
+            d.RetrievalID = rId;
             d.DeptCode = i;
             d.Status = "Pending";
             int disbID = EFBroker_Disbursement.AddNewDisbursment(d);

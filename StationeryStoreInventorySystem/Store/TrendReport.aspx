@@ -140,11 +140,9 @@
                 </asp:GridView>
             </td>
         </tr>
-    </table>
-    
-    <br />
-    <br />
-  
+                        <tr><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td><td class="auto-style1"/><td><br /><br /><br /></td></tr>
+        <tr>
+            <td>
     <asp:Label ID="SplitLabel" runat="server" Text="Split report by: " Visible="false"/><br />
     <asp:RadioButtonList ID="SplitReportRadioButtonList" runat="server" Visible="false">
                 <asp:ListItem Text="Department" Selected="True"/>
@@ -154,9 +152,21 @@
                 <asp:ListItem Text="Supplier" Selected="True"/>
         <asp:ListItem Text="Category" />
     </asp:RadioButtonList>
+            </td>
+        </tr>
+                        <tr><td><br /></td><td class="auto-style1"/><td><br /></td><td class="auto-style1"/><td><br /></td></tr>
+        <tr>
+            <td>
+    <asp:Button ID="GenerateButton" runat="server" CssClass="button" Text="Generate Report" OnClick="GenerateButton_Click" Visible="false"/>
+            </td>
+        </tr>
+    </table>
+    
+    <br />
+    <br />
+  
   <br />
     <br />
-    <asp:Button ID="GenerateButton" runat="server" CssClass="button" Text="Generate Report" OnClick="GenerateButton_Click" Visible="false"/>
     <br />
     <br />
 </asp:Content>

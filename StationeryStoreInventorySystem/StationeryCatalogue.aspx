@@ -32,7 +32,7 @@
 
     <br />
     <div id="printable">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width="90%" HorizontalAlign="Center">
+        <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width="90%" HorizontalAlign="Center">
             <Columns>
                 <asp:TemplateField HeaderText="Item Number">
                     <ItemTemplate>
@@ -52,7 +52,8 @@
                         <asp:TextBox ID="TextBoxDesc" runat="server" Text='<%# Bind("description") %>'></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
+                        <asp:Label ID="LabelDescription" runat="server" Visible="true" Text='<%# Bind("description") %>'></asp:Label>
+                        <asp:HyperLink ID="lnkStockCard" runat="server" Visible="false" NavigateUrl="" Text='<%# Bind("Description") %>'></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Level">

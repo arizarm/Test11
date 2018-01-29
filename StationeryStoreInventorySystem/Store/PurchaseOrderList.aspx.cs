@@ -60,7 +60,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     {
         LinkButton btn = (LinkButton)(sender);
         string orderID = btn.CommandArgument;
-        Response.Redirect(PurchaseOrderDetailURI +"? OrderID=" + orderID);
+        Response.Redirect("~/Store/PurchaseOrderDetail.aspx?OrderID=" + orderID);
     }
 
     protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)

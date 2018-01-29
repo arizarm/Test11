@@ -36,7 +36,7 @@
                     </EditItemTemplate>--%>
                     <ItemTemplate>
                          
-                        <asp:Label ID="orderDate" runat="server" Text='<%# Bind("OrderDate") %>' Font-Bold="true" Width="180px"></asp:Label>
+                        <asp:Label ID="orderDate" runat="server" Text='<%# Bind("OrderDate","{0:MM/dd/yyyy}") %>' Font-Bold="true" Width="130px"></asp:Label>
                     </ItemTemplate> 
                 </asp:TemplateField>
 

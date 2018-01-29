@@ -54,7 +54,7 @@ public partial class Login : System.Web.UI.Page
               FormsAuthentication.Encrypt(ticket1));
             Response.Cookies.Add(cookie1);
 
-            NavigateMain();
+            LoginController.NavigateMain();
 
         }
         else
@@ -63,36 +63,6 @@ public partial class Login : System.Web.UI.Page
         }
     }
 
-    protected void NavigateMain()
-    {
-       
-        Employee e = (Employee)Session["emp"];
-        string role = e.Role;
-
-        if (role == "Store Clerk")
-        {
-            Response.Redirect("~/RequisitionListClerk.aspx");
-        }
-        else if (role == "Store Supervisor" || role == "Store Manager")
-        {
-            Response.Redirect("~/Store/PurchaseOrderList.aspx");
-        }
-        else if (role == "DepartmentHead")
-        {        
-            Response.Redirect("~/DepartmentHead/RequisitionListDepHead.aspx");
-        }
-        else if(role == "DepartmentTempHead")
-        {
-            Response.Redirect("~/DepartmentTempHead/RequisitionListDepTempHead.aspx");
-        }
-        else if (role == "Employee")
-        {
-            Response.Redirect("~/DepartmentEmployee/RequisitionForm.aspx");
-        }
-        else if (role == "Representative")
-        {
-            Response.Redirect("~/DepartmentRepresentative/RequisitionForm.aspx");
-        }
-    }
+   
 
 }

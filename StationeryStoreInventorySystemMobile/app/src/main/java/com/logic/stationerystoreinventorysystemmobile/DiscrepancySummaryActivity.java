@@ -99,7 +99,7 @@ public class DiscrepancySummaryActivity extends Activity {
             }
             if(complete){
                 try {
-                    new AsyncTask<Void, Void, Boolean>() {
+                    new AsyncTask<Void, Void, Void>() {
                         ArrayList<Discrepancy> dList = toBeSubmitted;
                         ProgressDialog progress;
                         @Override
@@ -107,13 +107,13 @@ public class DiscrepancySummaryActivity extends Activity {
                             progress = ProgressDialog.show(DiscrepancySummaryActivity.this, "Search", "Searching through items", true);
                         }
                         @Override
-                        public Boolean doInBackground(Void... voids) {
+                        public Void doInBackground(Void... voids) {
                             Discrepancy.submitDiscrepancies(dList);
-                            return true;
+                            return null;
                         }
 
                         @Override
-                        public void onPostExecute(Boolean bool) {
+                        public void onPostExecute(Void voids) {
                             progress.dismiss();
                             Toast t = Toast.makeText(getApplicationContext(), "Discrepancies reported", Toast.LENGTH_LONG);
                             Context c = getApplicationContext();

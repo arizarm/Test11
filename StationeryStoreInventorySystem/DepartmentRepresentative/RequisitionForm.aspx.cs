@@ -72,7 +72,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             }
             if (isEqual)
             {
-                Response.Write("<script>alert('Item is already in the form.');</script>");
+                Utility.DisplayAlertMessage("Item is already in the form.");
             }
             else
             {
@@ -100,7 +100,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             string DeptCode = emp.DeptCode;
             if (GridView2.Rows.Count <= 0)
             {
-                Response.Write("<script>alert('You have not requested any item yet!');</script>");
+                Utility.DisplayAlertMessage("You have not requested any item yet!");
             }
             else
             {

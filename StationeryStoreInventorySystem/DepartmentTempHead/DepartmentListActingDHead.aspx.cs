@@ -8,11 +8,11 @@ using System.Web.UI.WebControls;
 public partial class DepartmentListActingDHead : System.Web.UI.Page
 {
 
+    DeptController deptController = new DeptController();
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
+        
         if (!IsPostBack)
         {
             if (Session["emp"] != null)
@@ -21,10 +21,10 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
                 string dcode = empSession.DeptCode;
                 string empRole = empSession.Role;
 
-                Employee empActingDHead = EFBroker_DeptEmployee.GetEmployeeListForActingDHeadSelected(dcode);
-                Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
-                Department dept = EFBroker_DeptEmployee.GetDepartByDepCode(dcode);
-                Employee emp = EFBroker_DeptEmployee.GetDHeadByDeptCode(dcode);
+                Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
+                Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
+                Department dept = deptController.GetDepartByDepCode(dcode);
+                Employee emp = deptController.GetDHeadByDeptCode(dcode);
 
                 string aheadname = empActingDHead.EmpName;
                 string dname = dept.DeptName;
@@ -54,15 +54,15 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
                 //UpdateDeptRp
                 string empDRepname = empDRep.EmpName;
-                DropDownListDRep.DataSource = EFBroker_DeptEmployee.GetEmployeeListForDRep(dcode, empid);
+                DropDownListDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
                 DropDownListDRep.DataTextField = "EmpName";
                 DropDownListDRep.DataValueField = "EmpID";
                 DropDownListDRep.DataBind();
                 DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
 
                 //UpdateCollectionPoint
-                string empCollectionname = EFBroker_DeptEmployee.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = EFBroker_DeptEmployee.GetCollectionPointList();
+                string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
+                DropDownListCollectionPoint.DataSource = deptController.GetCollectionPointList();
                 DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
                 DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
                 DropDownListCollectionPoint.DataBind();
@@ -86,14 +86,14 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             string dcode = empSession.DeptCode;
             string empRole = empSession.Role;
 
-            Employee empDRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(dcode);
-            int cid = EFBroker_DeptEmployee.GetCollectionidbyDeptCode(dcode);
+            Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
+            int cid = deptController.GetCollectionidbyDeptCode(dcode);
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-            EFBroker_DeptEmployee.UpdateCollectionPoint(dcode, c);
+            deptController.UpdateCollectionPoint(dcode, c);
 
             int empRepid = empDRep.EmpID;
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
-            EFBroker_DeptEmployee.UpdateDeptRep(dcode, empid);
+            deptController.UpdateDeptRep(dcode, empid);
 
             if (c == cid && empid == empRepid)
             {

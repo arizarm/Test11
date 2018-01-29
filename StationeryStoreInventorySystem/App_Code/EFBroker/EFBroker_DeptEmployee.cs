@@ -108,6 +108,9 @@ public class EFBroker_DeptEmployee
         }
         return collectionid;
     }
+
+    
+
     public static List<Employee> GetEmployeeListByRole(string role)
     {  //goes to employee broker
         List<Employee> e;
@@ -308,5 +311,11 @@ public class EFBroker_DeptEmployee
         emp.EndDate = null;
         context.SaveChanges();
 
+    }
+
+    public static List<string> GetCollectionPointNames()
+    {
+        StationeryEntities context = new StationeryEntities();
+        return context.CollectionPoints.Select(x => x.CollectionPoint1).ToList();
     }
 }

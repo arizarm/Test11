@@ -15,7 +15,9 @@ import java.util.List;
 
 public class DisbursementDetailListItems extends HashMap<String,String>
 {
-    final static String host="http://172.17.249.194/StationeryStoreInventorySystem/DisbursementService.svc";
+
+    final static String host="http://192.168.0.100/StationeryStoreInventorySystem/DisbursementService.svc";
+    //final static String host="http://172.17.249.194/StationeryStoreInventorySystem/DisbursementService.svc";
 
     public DisbursementDetailListItems(){}
 
@@ -28,9 +30,10 @@ public class DisbursementDetailListItems extends HashMap<String,String>
         put("ReqQty",ReqQty);
     }
 
-    public DisbursementDetailListItems(String DisbId, String ActualQty){
+    public DisbursementDetailListItems(String DisbId, String ActualQty, String Remark){
         put("DisbId",DisbId);
         put("ActualQty",ActualQty);
+        put("Remark",Remark);
     }
 
     public static void UpdateDisbursement(ArrayList<DisbursementDetailListItems> dList){

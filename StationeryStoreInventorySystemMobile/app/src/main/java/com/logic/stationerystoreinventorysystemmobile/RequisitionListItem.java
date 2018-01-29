@@ -23,7 +23,12 @@ public class RequisitionListItem extends HashMap<String,String>{
         put("Department",department);
         put("Status",status);
         put("EmployeeName",employeeName);
-        /*put("Remarks",remarks);*/
+    }
+
+    public RequisitionListItem(String Code, String Description, String ShortfallQty){
+        put("Code",Code);
+        put("Description",Description);
+        put("ShortfallQty",ShortfallQty);
     }
 
     public RequisitionListItem(){}

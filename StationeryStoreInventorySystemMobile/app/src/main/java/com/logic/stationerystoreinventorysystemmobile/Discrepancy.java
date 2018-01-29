@@ -32,6 +32,10 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("adjustmentQty", getAdjustmentString(adjustmentQty));
     }
 
+    public void saveRemarks(String remarks){
+        put("remarks", remarks);
+    }
+
     public static void submitDiscrepancies(ArrayList<Discrepancy> dList){
         JSONArray a = new JSONArray(dList);
         String url = host + "SubmitDiscrepancies";

@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class Employee extends java.util.HashMap<String,String> {
 
-    final static String hostURL = "http://172.17.255.216/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));
         put("deptCode", deptCode);

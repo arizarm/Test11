@@ -76,5 +76,6 @@ public class LoginController
     public static readonly string StockAdjustmentSummaryURI = "~/StoreManagerSupervisor/StockAdjustmentSummary.aspx";
     public static readonly string StationeryCatalogueDetailURI = "~/Store/StationeryCatalogueDetail.aspx";
     public static readonly string StationeryCatalogueURI = "~/StationeryCatalogue.aspx";
+    public static readonly string ItemStockCardURI= "~/Store/ItemStockCard.aspx";
     public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
 }

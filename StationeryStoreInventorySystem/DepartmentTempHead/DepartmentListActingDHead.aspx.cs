@@ -92,7 +92,11 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             deptController.UpdateCollectionPoint(dcode, c);
 
             int empRepid = empDRep.EmpID;
+
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
+            string empRepEmail = empDRep.Email;
+            Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
+            String newempEmail = newDeptRep.Email;
             deptController.UpdateDeptRep(dcode, empid);
 
             if (c == cid && empid == empRepid)
@@ -101,7 +105,23 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             }
             else
             {
+                if (c != cid)
+                {
+                    List<String> clerkEmails = EmployeeController.getAllClerkMails();
 
+                    if (clerkEmails != null)
+                    {
+                        for (int i = 0; i < clerkEmails.Count; i++)
+                        {
+                            Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                        }
+                    }
+                }
+                if (empid != empRepid)
+                {
+                    Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                    Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                }
                 Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
 
             }

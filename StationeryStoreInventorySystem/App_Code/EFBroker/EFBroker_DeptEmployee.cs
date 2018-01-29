@@ -219,6 +219,16 @@ public class EFBroker_DeptEmployee
         }
 
     }
+
+    public static Employee GetEmployeeEmailByEid(int eid)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Employees.Where(x => x.EmpID == eid).First();
+        }
+
+    }
+
     public static string GetDepartmentForCollectionPointSelected(string deptcode)
     {
         using (StationeryEntities smodel = new StationeryEntities())

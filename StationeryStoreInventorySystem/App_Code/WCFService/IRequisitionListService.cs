@@ -30,7 +30,17 @@ public interface IRequisitionListService
     ResponseFormat = WebMessageFormat.Json)]
     void Reject(WCFRequisition requisition);
 
+    //[OperationContract]
+    //[WebInvoke(UriTemplate = "/Regenerate", Method = "POST",
+    //RequestFormat = WebMessageFormat.Json,
+    //ResponseFormat = WebMessageFormat.Json)]
+    //void Regenerate(WCFRequestedItem requisition);
 
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/Regenerate", Method = "POST",
+    RequestFormat = WebMessageFormat.Json,
+    ResponseFormat = WebMessageFormat.Json)]
+    void Regenerate(WCFRequestedItem requisition);
 }
 
 [DataContract]
@@ -117,4 +127,28 @@ public class WCFRequisition
     public string Status { get { return status; }set { status = value; } }
     [DataMember]
     public string Remarks { get { return remarks; } set { remarks = value; } }
+}
+
+[DataContract]
+public class WCFRequestedItem
+{
+    private string code;
+    private string description;
+    private string shortfallQty;
+
+    public static WCFRequestedItem Make(string code, string description, string shortfallQty)
+    {
+        WCFRequestedItem item = new WCFRequestedItem();
+        item.Code = code;
+        item.Description = description;
+        item.ShortfallQty = shortfallQty;
+        return item;
+    }
+
+    [DataMember]
+    public string Code { get { return code; } set { code = value; } }
+    [DataMember]
+    public string Description { get { return description; } set { description = value; } }
+    [DataMember]
+    public string ShortfallQty { get { return shortfallQty; } set { shortfallQty = value; } }
 }

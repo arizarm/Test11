@@ -7,27 +7,25 @@ using System.Web.UI.WebControls;
 
 public partial class RegenerateRequest : System.Web.UI.Page
 {
-    static DateTime date;
-    static string depName;
-    static string requestedBy;
     static string status = "Priority";
 
-    static List<RequestedItem> shortfallItem;
-    List<RequestedItem> regenerateItem = new List<RequestedItem>();    
+    DisbursementCotrol disbCon = new DisbursementCotrol();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        DateTime date = (DateTime)Session["RegenerateDate"];
+        string depName = (string)Session["RegenerateDep"]; ;
+        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+
         if (!IsPostBack)
         {
-            date = (DateTime)Session["RegenerateDate"];
-            depName = (string)Session["RegenerateDep"];
-            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];      
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
         }
 
         lblReqDate.Text = date.ToLongDateString();
         lblDepartment.Text = depName;
+        string requestedBy = EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
         lblReqBy.Text = requestedBy;
 
     }
@@ -53,36 +51,32 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void btnReGenReq_Click(object sender, EventArgs e)
     {
-        foreach(GridViewRow r in gvRegenerate.Rows)
+        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+
+        List<RequestedItem> regenerateItem = new List<RequestedItem>();
+
+        foreach (GridViewRow r in gvRegenerate.Rows)
         {
-            if( ( (CheckBox) r.FindControl("CheckBox")).Checked)
+            if (((CheckBox)r.FindControl("CheckBox")).Checked)
             {
                 int i = r.RowIndex;
                 regenerateItem.Add(shortfallItem[i]);
             }
         }
-        //RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
 
         redirectCheck();
-
-        //ModalPopupExtender1.Show();
     }
-
-    //protected void btnOkay_Click(object sender, EventArgs e)
-    //{
-
-    //}
 
     protected void redirectCheck()
     {
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
             Session["ItemToUpdate"] = true;
-            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
+            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {
-            Response.Redirect(LoginController.DisbursementListURI);
+            Response.Redirect("~/Store/DisbursementList.aspx");
         }
     }
 

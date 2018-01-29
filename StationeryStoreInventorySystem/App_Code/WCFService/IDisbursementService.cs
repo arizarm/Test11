@@ -15,14 +15,20 @@ public interface IDisbursementService
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement", ResponseFormat = WebMessageFormat.Json)]
     List<WCFDisbursement> getAllDisbursement();
 
-    //[OperationContract]
-    //[System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    //WCFDisbursement getDisbursement(string id);
-
     [OperationContract]
     [WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
     List<WCFDisbursementDetail> getDisbursementDetail(string id);
 
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/AccessCodeValidate", Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+    string AccessCodeValidate(string disbId, string accessCode);
+
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/UpdateDisbursement", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+    void UpdateDisbursement(List<WCFUpdateDisbursement> qtyList);
 }
 
 [DataContract]
@@ -97,3 +103,30 @@ public class WCFDisbursementDetail
     public string Remarks { get { return remarks; } set { remarks = value; } }
 }
 
+
+
+[DataContract]
+public class WCFUpdateDisbursement
+{
+    private string disbId;
+    private string actualQty;
+    private string remark;
+
+    public static WCFUpdateDisbursement Make(string disbId, string actualQty, string remark)
+    {
+        WCFUpdateDisbursement d = new WCFUpdateDisbursement();
+        d.DisbId = disbId;
+        d.ActualQty = actualQty;
+        d.Remark = remark;
+        return d;
+    }
+
+    [DataMember]
+    public string DisbId { get { return disbId; } set { disbId = value; } }
+
+    [DataMember]
+    public string ActualQty { get { return actualQty; } set { actualQty = value; } }
+
+    [DataMember]
+    public string Remark { get { return remark; } set { remark = value; } }
+}

@@ -149,7 +149,9 @@ public class EFBroker_Disbursement
             context.SaveChanges();
         }
     }
-    public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty)
+
+    //updated
+    public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty, List<string> disbRemark)
     {
         int i = 0;
         using (StationeryEntities context = new StationeryEntities())
@@ -158,9 +160,10 @@ public class EFBroker_Disbursement
             foreach (Disbursement_Item di in disbursement.Disbursement_Item)
             {
                 di.ActualQty = actualQty[i];
+                di.Remarks = disbRemark[i];
+                EFBroker_Disbursement.UpdateDisbursementItem(di);
                 i++;
             }
-            context.SaveChanges();
         }
     }
     public static void UpdateDisbursementStatus(int disbID)

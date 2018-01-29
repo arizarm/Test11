@@ -69,4 +69,9 @@ public static class EmployeeController
     {
         return EFBroker_DeptEmployee.GetDepartByDepCode(DepCode);
     }
+
+    public static Employee GetDeptHeadTempHeadEmail(Employee em)
+    {
+        return EFBroker_DeptEmployee.GetHeadEmail(em);
+    }
 }

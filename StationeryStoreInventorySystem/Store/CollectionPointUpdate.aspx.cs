@@ -36,21 +36,21 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
         {
             if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)////////////////////////////////////
             {
-                Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+                Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
             }
             else
             {
                 Session["discrepancyList"] = null;
                 Session["RetrievalShortfallItemList"] = null;
                 Session["RetrievalID"] = null;
-                Response.Redirect("~/Store/DisbursementList.aspx");
+                Response.Redirect(LoginController.DisbursementListURI);
             }
         }       
         else
         {
             Session["RetrievalShortfallItemList"] = null;
             Session["RetrievalID"] = null;  
-            Response.Redirect("~/Store/DisbursementList.aspx");
+            Response.Redirect(LoginController.DisbursementListURI);
         }        
     }
 }

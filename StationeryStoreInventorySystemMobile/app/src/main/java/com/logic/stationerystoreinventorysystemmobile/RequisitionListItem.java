@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class RequisitionListItem extends HashMap<String,String>{
-    final static String host="http://172.17.255.216/StationeryStoreInventorySystem/RequisitionListService.svc";
+    final static String host="http://172.17.254.6/StationeryStoreInventorySystem/RequisitionListService.svc";
 
 
     public RequisitionListItem(String date, String requisitionNo, String department, String status, String employeeName/*, String remarks*/){
@@ -32,10 +32,9 @@ public class RequisitionListItem extends HashMap<String,String>{
         put("Date",date);
         put("EmployeeName",empName);
     }
-
-    public static List<RequisitionListItem> list(){
+    public static List<RequisitionListItem> list(String deptCode){
         List<RequisitionListItem> list = new ArrayList<RequisitionListItem>();
-        JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/Requisition");
+        JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/Requisitions/"+deptCode);
         try{
             for(int i=0;i<a.length();i++){
                 JSONObject b = a.getJSONObject(i);

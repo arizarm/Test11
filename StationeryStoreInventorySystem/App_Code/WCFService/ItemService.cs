@@ -17,7 +17,7 @@ public class ItemService : IItemService
             if (i.BalanceQty != null)
             {
                 int adjustments = GetAdjustmentSum(i);
-                WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
+                WCFCatalogueItem ci = WCFCatalogueItem.Make(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments, i.Bin);
                 ciList.Add(ci);
             }
         }
@@ -32,7 +32,7 @@ public class ItemService : IItemService
             if (i.BalanceQty != null)
             {
                 int adjustments = GetAdjustmentSum(i);
-                WCFCatalogueItem ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
+                WCFCatalogueItem ci = WCFCatalogueItem.Make(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments, i.Bin);
                 ciList.Add(ci);
             }
         }
@@ -46,7 +46,7 @@ public class ItemService : IItemService
         if (i.BalanceQty != null)
         {
             int adjustments = GetAdjustmentSum(i);
-            ci = new WCFCatalogueItem(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments);
+            ci = WCFCatalogueItem.Make(i.ItemCode, i.Description, i.UnitOfMeasure, (int)i.BalanceQty, adjustments, i.Bin);
         }
         return ci;
     }

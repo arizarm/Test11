@@ -25,87 +25,57 @@ public interface IItemService
 public class WCFCatalogueItem
 {
     [DataMember]
-    string itemCode;
-    [DataMember]
-    string description;
-    [DataMember]
-    string unitOfMeasure;
-    [DataMember]
-    int balanceQty;
-    [DataMember]
-    int adjustments;
-
     public string ItemCode
     {
-        get
-        {
-            return itemCode;
-        }
+        get;
 
-        set
-        {
-            itemCode = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string Description
     {
-        get
-        {
-            return description;
-        }
+        get;
 
-        set
-        {
-            description = value;
-        }
+        set;
     }
-
+    [DataMember]
     public string UnitOfMeasure
     {
-        get
-        {
-            return unitOfMeasure;
-        }
+        get;
 
-        set
-        {
-            unitOfMeasure = value;
-        }
+        set;
     }
-
+    [DataMember]
     public int BalanceQty
     {
-        get
-        {
-            return balanceQty;
-        }
+        get;
 
-        set
-        {
-            balanceQty = value;
-        }
+        set;
     }
-
+    [DataMember]
     public int Adjustments
     {
-        get
-        {
-            return adjustments;
-        }
+        get;
 
-        set
-        {
-            adjustments = value;
-        }
+        set;
+    }
+    [DataMember]
+    public string Bin
+    {
+        get;
+
+        set;
     }
 
-    public WCFCatalogueItem(string itemCode, string description, string unitOfMeasure, int balanceQty, int adjustments)
+    public static WCFCatalogueItem Make(string itemCode, string description, string unitOfMeasure, int balanceQty, int adjustments, string bin)
     {
-        this.ItemCode = itemCode;
-        this.Description = description;
-        this.UnitOfMeasure = unitOfMeasure;
-        this.BalanceQty = balanceQty;
-        this.Adjustments = adjustments;
+        WCFCatalogueItem wci = new WCFCatalogueItem();
+        wci.ItemCode = itemCode;
+        wci.Description = description;
+        wci.UnitOfMeasure = unitOfMeasure;
+        wci.BalanceQty = balanceQty;
+        wci.Adjustments = adjustments;
+        wci.Bin = bin;
+        return wci;
     }
 }

@@ -11,14 +11,16 @@ public class DeptService : IDeptService
     // Start Login
 
     DeptController deptController = new DeptController();
-    public WCFEmployee GetEmployeeByEmail(string email)
+    public WCFEmployee GetEmployeeByEmail(string email,string password)
     {
-        Employee emp = EmployeeController.GetEmployeeByEmail(email);
+        Employee emp = LoginController.login(email,password);
 
         return WCFEmployee.Make(emp.EmpID, emp.DeptCode, emp.EmpName, emp.Role, emp.Password
         , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
         , emp.EndDate.GetValueOrDefault().ToShortDateString());
     }
+
+
 
     //End Login
 
@@ -177,10 +179,7 @@ public class DeptService : IDeptService
         deptController.UpdateCollectionPoint(dept.DeptCode,Convert.ToInt16(dept.CollectionLocationID));
     }
 
-    public WCFEmployee GetEmployeeByEmail(string email, string password)
-    {
-        throw new NotImplementedException();
-    }
+
 
     //End Collection Function Part
 

@@ -13,7 +13,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
     DeptController deptController = new DeptController();
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+
 
         if (!IsPostBack)
         {
@@ -69,15 +69,15 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     DropDownListActingDHead.SelectedIndex = 0;
                     //if (DropDownListActingDHead.SelectedValue == "0")
                     //{
-                        txtSDate.Enabled = false;
-                        txtEDate.Enabled = false;
-                        txtSDate.Visible = true;
-                        txtEDate.Visible = true;
-                        btnEditDate.Visible = false;
-                        RequiredFieldValidator1.Enabled = false;
-                        RequiredFieldValidator2.Enabled = false;
+                    txtSDate.Enabled = false;
+                    txtEDate.Enabled = false;
+                    txtSDate.Visible = true;
+                    txtEDate.Visible = true;
+                    btnEditDate.Visible = false;
+                    RequiredFieldValidator1.Enabled = false;
+                    RequiredFieldValidator2.Enabled = false;
 
-                   // }
+                    // }
 
 
                     int empid = 0;
@@ -108,7 +108,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     DateTime? endDate = empActingDHead.EndDate;
                     DateTime? startDate = empActingDHead.StartDate;
                     DateTime today = DateTime.Now;
-                    
+
                     //if (today <= endDate && today>=startDate && txtEDate.Text==enddate && txtSDate.Text==startdate)
                     //{
                     //    cmpToday.Enabled = false;
@@ -168,7 +168,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                 Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
                 int empRepid = empDRep.EmpID;
+                string empRepEmail = empDRep.Email;
                 int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
+                Employee newDeptRep =deptController.GetEmployeeEmailByEid(empid);
+                String newempEmail = newDeptRep.Email;
                 deptController.UpdateDeptRep(dcode, empid);
 
 
@@ -178,6 +181,11 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
                         int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        Employee oldDeptTemp = deptController.GetEmployeeListForActingDHeadSelected(dcode);
+                        string oldDeptTempEmail = oldDeptTemp.Email;
+                       
+
+
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
                         string lbsdate = lblStartDate.Text;
@@ -191,16 +199,39 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         }
                         else
                         {
+                            if (c != cid)
+                            {
+                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+                                if (clerkEmails != null)
+                                {
+                                    for (int i = 0; i < clerkEmails.Count; i++)
+                                    {
+                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                                    }
+                                }
+                            }
+                            if (empid != empRepid)
+                            {
+                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                            }
+                            if (Aempid != 0 || sdate != "" || edate != "")
+                            {
+                                Utility.sendMail(oldDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
+                            }
                             deptController.UpdateRevoke();
-                            Utility.sendMail("branda120300@gmail.com", "Purchase order", "Please find the order for items and approve to proceed");
-                            Response.Redirect(LoginController.DepartmentDetailInfoURI + " ? SuccessMsg=" + "Successfully Updated!!");
+
+                            Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
 
                         }
 
                     }
                     else
-                    {
+                    {  
                         int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        //Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
+                        //String newDeptTempEmail = newDeptTemp.Email;
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
                         string lbsdate = lblStartDate.Text;
@@ -212,7 +243,27 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         }
                         else
                         {
-                            
+                            if (c != cid)
+                            {
+                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+                                if (clerkEmails != null)
+                                {
+                                    for (int i = 0; i < clerkEmails.Count; i++)
+                                    {
+                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                                    }
+                                }
+                            }
+                            if (empid != empRepid)
+                            {
+                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                            }
+                            //if (Aempid != 0 || sdate != "" || edate != "")
+                            //{
+                            //    Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
+                            //}
                             Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
 
                         }
@@ -233,11 +284,13 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         string edate = txtEDate.Text;
 
 
-                    
+
 
                         Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
                         int aid = empActingDHead.EmpID;
-
+                        string oldDeptTempEmail = empActingDHead.Email;
+                        Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
+                        String newDeptTempEmail = newDeptTemp.Email;
                         string ssdate = empActingDHead.StartDate.GetValueOrDefault().ToShortDateString();
                         string eedate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
                         string lbsdate = lblStartDate.Text;
@@ -251,13 +304,39 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         }
                         else
                         {
+                            if (c != cid)
+                            {
+                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+                                if (clerkEmails != null)
+                                {
+                                    for (int i = 0; i < clerkEmails.Count; i++)
+                                    {
+                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                                    }
+                                }
+                            }
+                            if (empid != empRepid)
+                            {
+                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                            }
+                            if (Aempid != aid || sdate != ssdate || edate != eedate)
+                            {
+                                Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
+                                Utility.sendMail(oldDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
+                               
+                            }
                             deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
                             Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
 
                         }
-                    }else
+                    }
+                    else
                     {
                         int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
+                        String newDeptTempEmail = newDeptTemp.Email;
                         RequiredFieldValidator1.Enabled = true;
                         RequiredFieldValidator2.Enabled = true;
                         cmpToday.Enabled = true;
@@ -265,6 +344,26 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
+
+                        if (c != cid)
+                        {
+                            List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+                            if (clerkEmails != null)
+                            {
+                                for (int i = 0; i < clerkEmails.Count; i++)
+                                {
+                                    Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                                }
+                            }
+                        }
+                        if (empid != empRepid)
+                        {
+                            Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                            Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                        }
+                        Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
+                        
                         deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
                         Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
                     }
@@ -333,7 +432,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     lblEndDate.Visible = true;
                     btnEditDate.Visible = true;
                 }
-            }else
+            }
+            else
             {
                 if (a == 0)
                 {
@@ -349,7 +449,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     //txtSDate.Visible = true;
                     //lblStartDate.Visible = false;
                     //lblEndDate.Visible = false;
-                    
+
                 }
                 else
                 {
@@ -374,7 +474,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
     }
 
 
-   
+
 
 
 

@@ -55,7 +55,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         catch (InvalidOperationException)
         {
             Utility.DisplayAlertMessage(Message.PageInvalidEntry);
-            Response.Redirect("SupplierList.aspx");
+            Response.Redirect(LoginController.SupplierListURI);
         }
 
     }
@@ -78,7 +78,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
         slc.DeleteSupplier(code);
-        Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
+        Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, LoginController.SupplierListURI);
     }
 
     protected void AddNewItemButton_Click(object sender, EventArgs e)

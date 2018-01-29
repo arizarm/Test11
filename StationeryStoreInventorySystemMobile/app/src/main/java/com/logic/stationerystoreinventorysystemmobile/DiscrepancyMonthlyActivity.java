@@ -12,6 +12,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView.OnItemClickListener  {
     ListView list;
@@ -29,7 +30,7 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
                 initialiseItemList();
             }
             else{
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
                 list.setAdapter(adapter);
             }
         }
@@ -89,7 +90,8 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
 
             @Override
             protected void onPostExecute(ArrayList<CatalogueItem> ciList){
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                Collections.sort(ciList, new CatalogueItemBinComparator());
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
                 list.setAdapter(adapter);
                 progress.dismiss();
             }

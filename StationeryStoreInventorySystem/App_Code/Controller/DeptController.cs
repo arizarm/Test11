@@ -16,6 +16,11 @@ public class DeptController
         return EFBroker_DeptEmployee.GetEmployeeList();
     }
 
+    public  Employee GetEmployeeEmailByEid(int eid)
+    {
+        return EFBroker_DeptEmployee.GetEmployeeEmailByEid(eid);
+    }
+
     //Department List
     public List<Department> GetDepartList()
     {
@@ -60,10 +65,7 @@ public class DeptController
         return EFBroker_DeptEmployee.GetEmployeeListForActingDHead(deptcode, id);
     }
 
-
-
     //Department Head
-
 
     public Employee GetDHeadByDeptCode(string deptcode)
     {

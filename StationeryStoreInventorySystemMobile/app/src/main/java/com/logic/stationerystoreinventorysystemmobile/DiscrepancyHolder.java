@@ -53,12 +53,12 @@ public class DiscrepancyHolder {
         for(CatalogueItem ci : monthlyItems){
             String correctQty = ci.get("correctQty");
             if(correctQty == null){
+                return false;
+            }
+            else{
                 if(!(correctQty.equals("N") || correctQty.equals("Y"))){
                     return false;
                 }
-            }
-            else{
-                return false;
             }
         }
         return true;
@@ -69,7 +69,7 @@ public class DiscrepancyHolder {
         boolean firstItem = true;
         for(CatalogueItem ci : monthlyItems){
             String correctQty = ci.get("correctQty");
-            if(correctQty == null){
+            if(correctQty != null){
                 if(!(correctQty.equals("N") || correctQty.equals("Y"))){
                     if(!firstItem){
                         sb.append(", ");

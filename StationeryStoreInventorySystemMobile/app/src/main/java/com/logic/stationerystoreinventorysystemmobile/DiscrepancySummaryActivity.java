@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -53,7 +55,8 @@ public class DiscrepancySummaryActivity extends Activity {
 
             @Override
             protected void onPostExecute(ArrayList<Discrepancy> dList){
-                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), dList, R.layout.discrepancy_summary_row, new String[]{"itemCode", "description", "balanceQty", "adjustmentQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBalance, R.id.tvAdj});
+//                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), dList, R.layout.discrepancy_summary_row, new String[]{"itemCode", "description", "balanceQty", "adjustmentQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBalance, R.id.tvAdj});
+                DiscrepancySummaryAdapter adapter = new DiscrepancySummaryAdapter(getApplicationContext(), R.layout.discrepancy_summary_row, dList);
                 list.setAdapter(adapter);
                 progress.dismiss();
             }
@@ -78,16 +81,26 @@ public class DiscrepancySummaryActivity extends Activity {
             int requestedBy = Integer.parseInt(eid);
             final ArrayList<Discrepancy> toBeSubmitted = new ArrayList<Discrepancy>();
 
-            for (int i = 0; i < listDisc.getCount(); i++) {
-                v = listDisc.getChildAt(i);
-                tvItemCode = v.findViewById(R.id.tvItemCode);
-                tvAdjustmentQty = v.findViewById(R.id.tvAdj);
-                etRemarks = v.findViewById(R.id.etRemarks);
+//            for (int i = 0; i < listDisc.getCount(); i++) {
+//                v2 = listDisc.getChildAt(i);
+//                tvItemCode = v2.findViewById(R.id.tvItemCode);
+//                tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
+//                etRemarks = v2.findViewById(R.id.etRemarks);
 
+//                String itemCode = tvItemCode.getText().toString();
+//                int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
+//                String remarks = etRemarks.getText().toString();
+            for(int i = 0; i < listDisc.getAdapter().getCount(); i++){
+                v2 = listDisc.getAdapter().getView(i, null, null);
+
+                tvItemCode = v2.findViewById(R.id.tvItemCode);
+                tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
+                etRemarks = v2.findViewById(R.id.etRemarks);
 
                 String itemCode = tvItemCode.getText().toString();
                 int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
                 String remarks = etRemarks.getText().toString();
+
                 if(remarks.isEmpty()){
                     tvError.setText("Please input remarks for all items");
                     complete = false;

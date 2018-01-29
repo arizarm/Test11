@@ -25,7 +25,15 @@ public class CatalogueItem extends HashMap<String, String> {
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
         put("adjustments", adjustments);
-//        put("balanceQtyWithAdj", balanceQty.toString() + " (" + adjustments + ")");
+    }
+
+    public void monthlyActualInput(String actualQty){
+        put("correctQty", "N");
+        put("actualQty", actualQty.toString());
+    }
+
+    public void monthlyCorrectInput(){
+        put("correctQty", "Y");
     }
 
     public static ArrayList<CatalogueItem> getAllItems(){

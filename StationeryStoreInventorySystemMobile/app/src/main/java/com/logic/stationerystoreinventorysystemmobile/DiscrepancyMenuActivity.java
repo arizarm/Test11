@@ -24,5 +24,7 @@ public class DiscrepancyMenuActivity extends Activity {
     protected void monthlyClick(View v){
         DiscrepancyHolder.clearDiscrepancies();
         DiscrepancyHolder.setMonthlyMode();
+        Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
+        startActivity(i);
     }
 }

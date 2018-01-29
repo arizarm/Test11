@@ -87,7 +87,7 @@ public static class Utility
         HttpContext.Current.Session.Remove("empRole");
         HttpContext.Current.Session.Remove("empID");
         HttpContext.Current.Session.Remove("itemlist");
-        HttpContext.Current.Response.Redirect("~/Login.aspx");
+        HttpContext.Current.Response.Redirect(LoginController.LoginURI);
     }
 }
 

@@ -45,4 +45,5 @@ public class LoginController
             HttpContext.Current.Response.Redirect("~/DepartmentRepresentative/RequisitionForm.aspx");
         }
     }
+    public static readonly string GenerateDiscrepancyV2URI = "~/Store/GenerateDiscrepancyV2.aspx";
 }

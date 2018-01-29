@@ -24,4 +24,5 @@
     <string name="deptInfo">Department Info.</string>
     <string name="fragment_title">Do you have any remark for this requisition? </string>
     <string name="spinner_title">Choose one</string>
+    <string name="department_actinghead_Spinner">Acting Department Head : </string>
 </resources>

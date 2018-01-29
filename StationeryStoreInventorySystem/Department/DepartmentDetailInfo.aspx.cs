@@ -136,15 +136,15 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
             if (empRole == "DepartmentHead")
             {
-                Response.Redirect("~/DepartmentHead/DepartmentListDHead.aspx");
+                Response.Redirect(LoginController.DepartmentListDHeadURI);
             }
             else if (empRole == "Representative")
             {
-                Response.Redirect("~/DepartmentRepresentative/DepartmentListDRep.aspx");
+                Response.Redirect(LoginController.DepartmentListDRepURI);
             }
             else if (empRole == "DepartmentTempHead")
             {
-                Response.Redirect("~/DepartmentTempHead/DepartmentListActingDHead.aspx");
+                Response.Redirect(LoginController.DepartmentListActingDHeadURI);
             }
         }
         else

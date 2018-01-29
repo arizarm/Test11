@@ -100,11 +100,11 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             if (c != cid)
             {
                 deptController.UpdateCollectionPoint(dcode, c);
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
             }
             else
             {
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI);
             }
         }
         else
@@ -117,7 +117,7 @@ public partial class DepartmentListDRep : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
 
-        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+        Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }
 
 

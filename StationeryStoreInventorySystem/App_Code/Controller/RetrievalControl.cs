@@ -184,7 +184,7 @@ public class RetrievalControl
 
         foreach (Disbursement d in disbursementList)
         {
-            foreach (Requisition r in d.Requisitions)
+            foreach (Requisition r in EFBroker_Requisition.GetRequisitionListByDisbursementID(d.DisbursementID))
             {
                 //if only one deptName
                 string deptName = d.Department.DeptName.ToString();

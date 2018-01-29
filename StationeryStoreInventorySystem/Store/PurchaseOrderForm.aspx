@@ -64,13 +64,15 @@
     <br />
     <div>
         <asp:Label ID="Label5" runat="server" Text="Deliver to : Logic University Stationery Store"  CssClass="labelStyle" ></asp:Label>
+        <br />
+        <asp:Label ID="Label3" runat="server" Text="Address  : 25 Heng Mui Keng Terrace Singapore 119615" CssClass="labelStyle" />
     </div>
     <br />
     <br />
     Please supply the following items by: &nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtDate" runat="server" Text=""></asp:TextBox>
     <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter a date" ControlToValidate="txtDate" ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red"/>
     <asp:CustomValidator runat="server" ControlToValidate="txtDate" ErrorMessage ="Date cannot be lesser than today." ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red" OnServerValidate="DateValidator"></asp:CustomValidator>
- 
+    <asp:CompareValidator id="dateValidator" runat="server" Type="Date" Operator="DataTypeCheck" ControlToValidate="txtDate" ForeColor="Red" ErrorMessage="Please enter a valid date."></asp:CompareValidator>
 
     <div>
 
@@ -117,11 +119,11 @@
                         <asp:TextBox  runat="server" ID="ReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black"  CausesValidation="True"  CssClass="textboxStyle"  AutoPostBack="true"  OnTextChanged="orderQtyTxtBx_TextChanged"/>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter Quantity" ControlToValidate="ReorderQty" Display="Dynamic" ForeColor="Red"/>
                         <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="ReorderQty" ValidationExpression="[0-9]+"   Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
-                        <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>
+                       <%-- <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>--%>
                     </ItemTemplate>                   
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Unit Of Measure" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
+                <asp:TemplateField HeaderText="Unit Of Measure" ItemStyle-VerticalAlign="Middle" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="Label12" Text='<%# Bind("UnitOfMeasure") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>                    
@@ -133,13 +135,13 @@
                         </asp:DropDownList>
                     </ItemTemplate>                    
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Price" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
+                <asp:TemplateField HeaderText="Price"  ItemStyle-VerticalAlign="Middle" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="Price" Text='<%# Bind("Price") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>                    
                 </asp:TemplateField>
                 
-                <asp:TemplateField HeaderText="Amount" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
+                <asp:TemplateField HeaderText="Amount"  ItemStyle-VerticalAlign="Middle" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
                         <asp:Label runat="server" ID="Amount" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>                    

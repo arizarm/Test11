@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.logic.stationerystoreinventorysystemmobile.DiscrepancyAdhocItemDetails">
+    tools:context="com.logic.stationerystoreinventorysystemmobile.DiscrepancyAdhocItemDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Key in Adjustment Quantity"
-                    android:inputType="number"
+                    android:inputType="number|numberSigned"
                     android:textSize="22sp" />
             </LinearLayout>
 

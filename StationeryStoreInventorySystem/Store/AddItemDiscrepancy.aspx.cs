@@ -33,12 +33,12 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
             }
             else
             {
-                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+                Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
             }
         }
         else
         {
-            Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+            Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
         }
         Label1.Text = "";      //Resetting error text field
     }
@@ -74,6 +74,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
             {
                 alreadyInDiscrepancyList = true;
                 toBeReplaced = kvp;
+                break;
             }
         }
 
@@ -98,14 +99,20 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
 
                 if (alreadyInDiscrepancyList)
                 {
-                    discrepancies.Remove(toBeReplaced.Key);
-                    discrepancyDisplay.Remove(toBeReplaced.Key);
-                    //discrepancies[item] = adjStr;
+                    //discrepancies.Remove(toBeReplaced.Key);
+                    //discrepancyDisplay.Remove(toBeReplaced.Key);
+                    discrepancies[toBeReplaced.Key] = adjustment;
+                    discrepancyDisplay[toBeReplaced.Key] = adjStr;
                 }
-                discrepancies.Add(item, adjustment);
-                discrepancyDisplay.Add(item, adjStr);
+                else
+                {
+                    discrepancies.Add(item, adjustment);
+                    discrepancyDisplay.Add(item, adjStr);
+                }
+                
                 Session["discrepancyList"] = discrepancies;
-                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+                Session["discrepancyDisplay"] = discrepancyDisplay;
+                Response.Redirect("~/Store/GenerateDiscrepancyV2.aspx");
             }
             else
             {

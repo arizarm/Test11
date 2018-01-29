@@ -165,6 +165,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
             Session["discrepancyList"] = null;
+            Session["RetrievalShortfallItemList"] = null;
+            Session["RetrievalID"] = null;
+
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
 

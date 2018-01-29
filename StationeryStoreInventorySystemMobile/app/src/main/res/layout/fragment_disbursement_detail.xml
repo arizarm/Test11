@@ -1,0 +1,113 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="182dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Disbursement Date" />
+
+            <TextView
+                android:id="@+id/disbDate"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="@dimen/MyHeight" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Disbursement Time " />
+
+            <TextView
+                android:id="@+id/disbTime"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="@dimen/MyHeight" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Department Name" />
+
+            <TextView
+                android:id="@+id/depName"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="@dimen/MyHeight" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Collection Point" />
+
+            <TextView
+                android:id="@+id/disColPoint"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="60dp" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/lstDisbDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/accessCode"
+                style="@style/TextStyle"
+                android:layout_width="189dp"
+                android:layout_height="50dp"
+                android:hint="Enter Access Code" />
+
+            <Button
+                android:id="@+id/btnAck"
+                android:layout_width="192dp"
+                android:layout_height="wrap_content"
+                android:text="Acknowledge"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+

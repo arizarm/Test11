@@ -9,6 +9,7 @@ public partial class DepartmentList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        DeptController deptController = new DeptController();
         if (!IsPostBack)
         {
 
@@ -17,7 +18,7 @@ public partial class DepartmentList : System.Web.UI.Page
             GridViewDept.DataSource =EFBroker_DeptEmployee.GetDepartDetailInfoList();
 
             StationeryEntities smodel = new StationeryEntities();
-            GridViewDept.DataSource = EFBroker_DeptEmployee.GetDepartList();
+            GridViewDept.DataSource = deptController.GetDepartDetailInfoList();
 
             GridViewDept.DataBind();
 

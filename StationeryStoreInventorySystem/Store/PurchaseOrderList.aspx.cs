@@ -16,6 +16,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     private void BindData()
     {
+        
         gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
         gvPurchaseOrder.DataBind();
     }
@@ -40,7 +41,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     {
         int searchID = Convert.ToInt32(SearchTxtBx.Text);
         List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrderByID(searchID);
-        if(porderList !=null)
+        if(porderList != null)
         {
             gvPurchaseOrder.DataSource = pCtlr.SearchPurchaseOrderByID(searchID);
             gvPurchaseOrder.DataBind();
@@ -64,26 +65,73 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
     {
+       
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            PurchaseOrder pOrder = pCtlr.GetPurchaseOrderList().Where(x => x.PurchaseOrderID == (int)DataBinder.Eval(e.Row.DataItem, "PurchaseOrderID")).First();
             Label statusLbl = (Label)e.Row.FindControl("OrderStatus");
+            Button delBtn = (Button)e.Row.FindControl("btn_Delete");
             string status = statusLbl.Text;
             if (status == "Pending")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Blue;
+                delBtn.Visible = true;
+                delBtn.Enabled = true;
             }
-            else if(status == "Approved")
+            else if (status == "Approved")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Green;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
             else if (status == "Rejected")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Red;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
             else if (status == "Closed")
             {
                 statusLbl.ForeColor = System.Drawing.Color.Orange;
+                delBtn.Visible = true;
+                delBtn.Enabled = false;
             }
+         
+            if (Session["emp"] != null)
+            {
+                if (Session["empRole"].ToString() == "Store Clerk")
+                {
+                    Employee emp = (Employee)Session["emp"];                    
+                    Label reqby = (Label)e.Row.FindControl("ReqstdBy");
+                    if(emp.EmpID == pOrder.RequestedBy)
+                    {
+                        delBtn.Visible = true;
+                    }
+                    else
+                    {
+                        delBtn.Enabled = false;
+                    }
+                   
+
+                }
+                else if (Session["empRole"].ToString() == "Store Supervisor"|| Session["empRole"].ToString() == "Store Manager")
+                {
+                    gvPurchaseOrder.Columns[5].Visible = false;
+                }
+              
+            }           
         }
+    }
+
+
+    protected void btn_Delete_Click(object sender, EventArgs e)
+    {
+
+        Button delteBtn = (Button)sender;
+        int pID = Int32.Parse(delteBtn.CommandArgument.ToString());
+        pCtlr.DeletePurchaseOrder(pID);
+        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+            "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
+        BindData();
     }
 }

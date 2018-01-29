@@ -13,19 +13,11 @@ import java.util.HashMap;
  */
 
 public class CatalogueItem extends HashMap<String, String> {
-    static String host = "http://172.17.249.125/StationeryStoreInventorySystem/ItemService.svc/";
+//    static String ip = "172.17.249.125";
+    static String ip = "172.23.202.59";
+//    static String ip = "192.168.1.224";
 
-//    public CatalogueItem(String itemCode, Integer categoryID, String description, Integer reorderLevel, Integer reorderQty, String unitOfMeasure, String bin, String activeStatus, Integer balanceQty){
-//        put("itemCode", itemCode);
-//        put("description", description);
-//        put("unitOfMeasure", unitOfMeasure);
-//        put("balanceQty", balanceQty.toString());
-//        put("categoryID", categoryID.toString());
-//        put("reorderLevel", reorderLevel.toString());
-//        put("reorderQty", reorderQty.toString());
-//        put("bin", bin);
-//        put("activeStatus", activeStatus);
-//    }
+    static String host = "http://"+ ip + "/StationeryStoreInventorySystem/ItemService.svc/";
 
     public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments){
         put("itemCode", itemCode);
@@ -33,7 +25,15 @@ public class CatalogueItem extends HashMap<String, String> {
         put("unitOfMeasure", unitOfMeasure);
         put("balanceQty", balanceQty.toString());
         put("adjustments", adjustments);
-//        put("balanceQtyWithAdj", balanceQty.toString() + " (" + adjustments + ")");
+    }
+
+    public void monthlyActualInput(String actualQty){
+        put("correctQty", "N");
+        put("actualQty", actualQty.toString());
+    }
+
+    public void monthlyCorrectInput(){
+        put("correctQty", "Y");
     }
 
     public static ArrayList<CatalogueItem> getAllItems(){

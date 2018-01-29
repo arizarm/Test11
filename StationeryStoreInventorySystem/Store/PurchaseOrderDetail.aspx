@@ -37,6 +37,11 @@
             height: 10px;
             
         }
+        .gvHeaderColumn{
+            /*padding-left:20px;
+            margin-left:40px;*/
+            text-align:center;
+        }
     </style>
     <script>
 
@@ -85,28 +90,28 @@
     <br />
     <br />
     <br />
-    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" CssClass="mGrid"
+    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False"  CssClass="mGrid"
         EmptyDataText="No items haven been ordered for this order" OnRowEditing="gvPurchaseDetail_RowEditing"
         OnRowUpdating="gvPurchaseDetail_RowUpdating" OnRowCancelingEdit="gvPurchaseDetail_RowCancelingEdit">
         <Columns>
-            <asp:TemplateField HeaderText="ItemNo" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
-                <HeaderStyle Width="130px" />
+            <asp:TemplateField HeaderText="ItemCode" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
+                <HeaderStyle Width="90px" />
                 <ItemTemplate>
-                    <asp:Label ID="ItemCode" runat="server" Text='<%# Bind("ItemCode") %>' Width="130px" ForeColor="Black"></asp:Label>
+                    <asp:Label ID="ItemCode" runat="server" Text='<%# Bind("ItemCode") %>' Width="90px" ForeColor="Black"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Description" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
-               <HeaderStyle Width="130px" />
+            <asp:TemplateField HeaderText="Description" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-CssClass="gvHeaderColumn">
+               <HeaderStyle Width="350px" />
                  <ItemTemplate>
-                    <asp:Label ID="Description" runat="server" Text='<%# Bind("Description") %>' Width="290px" ForeColor="Black"></asp:Label>
+                    <asp:Label ID="Description" runat="server" Text='<%# Bind("Description") %>' Width="250px" ForeColor="Black"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Order Quantity" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
-                <HeaderStyle Width="130px" />
+            <asp:TemplateField HeaderText="Order Quantity" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-CssClass="gvHeaderColumn">
+                <HeaderStyle Width="170px" />
                 <ItemTemplate>
-                    <asp:Label ID="orderQtyLbl" runat="server"  Width="130px" Text='<%# Bind("OrderQty") %>' ForeColor="Black"></asp:Label>
+                    <asp:Label ID="orderQtyLbl" runat="server"  Width="170px" Text='<%# Bind("OrderQty") %>' ForeColor="Black"></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:TextBox ID="orderQtyTxtBx" runat="server" Width="60px" Text='<%# Bind("OrderQty") %>' ForeColor="Black" OnTextChanged="orderQtyTxtBx_TextChanged"></asp:TextBox>
@@ -115,21 +120,21 @@
                 </EditItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Price"  HeaderStyle-HorizontalAlign="Center">
-                <HeaderStyle Width="130px" />
+            <asp:TemplateField HeaderText="Price" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-CssClass="gvHeaderColumn">
+                <HeaderStyle Width="6px" />
                 <ItemTemplate>
-                    <asp:Label ID="Price" runat="server" Text='<%# Bind("FormattedPrice") %>' Width="130px" ForeColor="Black"></asp:Label>
+                    <asp:Label ID="Price" runat="server" Text='<%# Bind("FormattedPrice") %>' Width="60px" ForeColor="Black"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Amount" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
-                <HeaderStyle Width="130px" />
+            <asp:TemplateField HeaderText="Amount" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-CssClass="gvHeaderColumn">
+                <HeaderStyle Width="70px" />
                 <ItemTemplate>
-                    <asp:Label ID="Amount" runat="server" Text='<%# Bind("FormattedAmount") %>' Width="130px" ForeColor="Black"></asp:Label>
+                    <asp:Label ID="Amount" runat="server" Text='<%# Bind("FormattedAmount") %>' Width="70px" ForeColor="Black"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" >
+            <asp:TemplateField ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-CssClass="gvHeaderColumn">
                 <HeaderStyle Width="130px" />                
                 <ItemTemplate>
                     <asp:Button ID="btn_Edit" runat="server" Text="Edit" CommandName="Edit" CssClass="gridviewEditbutton"  Width="130px"/>
@@ -142,6 +147,7 @@
             </asp:TemplateField>
 
         </Columns>
+        
     </asp:GridView>
     <br />
     <h3 class="labelStyle">Total Amount:

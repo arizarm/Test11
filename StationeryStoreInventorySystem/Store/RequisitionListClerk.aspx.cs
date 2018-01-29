@@ -98,10 +98,9 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         if (check)
         {
             int empId = (int)Session["empID"];//////////
-            empId = 1001;
-            int retrievalID=reqCon.AddRetrieval(empId);
-            Session["RetrievalID"] = retrievalID;/////////////////////////////////////////////////
-            reqCon.AddDisbursement(reqNo, retrievalID);
+            int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
+            Session["RetrievalID"] = retrievalId;/////////////////////////////////////////////////
+            reqCon.AddDisbursement(retrievalId, reqNo);
             Response.Redirect("RetrievalListDetail.aspx");
         }
     }

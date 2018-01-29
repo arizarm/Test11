@@ -9,28 +9,18 @@ public partial class ItemStockCardList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        showAll();
     }
 
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-        List<Item> iList = EFBroker_Item.GetActiveItemList();
-        List<Item> searchResults = new List<Item>();
-        string searchString = SearchBox.Text.ToLower();
-        foreach(Item i in iList)
-        {
-            if(i.ItemCode.ToLower().Contains(searchString) || i.Description.ToLower().Contains(searchString))
-            {
-                searchResults.Add(i);
-            }
-        }
-        BindGrid(iList);
+        List<Item> searchResults = EFBroker_Item.SearchItemsByItemCodeOrDesc(SearchBox.Text.ToLower());
+        BindGrid(searchResults);
     }
 
     protected void Display_Click(object sender, EventArgs e)
     {
-        List<Item> iList = EFBroker_Item.GetActiveItemList();
-        BindGrid(iList);
+        showAll();
     }
 
     private void BindGrid(List<Item> iList)
@@ -42,7 +32,13 @@ public partial class ItemStockCardList : System.Web.UI.Page
         {
             HyperLink itemLink = row.FindControl("lnkStockCard") as HyperLink;
             Label lblItemCode = row.FindControl("lblItemCode") as Label;
-            itemLink.NavigateUrl = "~/ItemStockCard.aspx?itemCode=" + lblItemCode.Text;
+            itemLink.NavigateUrl = "~/Store/ItemStockCard.aspx?itemCode=" + lblItemCode.Text;
         }
+    }
+
+    private void showAll()
+    {
+        List<Item> iList = EFBroker_Item.GetActiveItemList();
+        BindGrid(iList);
     }
 }

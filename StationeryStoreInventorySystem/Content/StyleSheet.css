@@ -276,3 +276,28 @@
     padding:3px 2% 3px 2%;
     
 }
+.deletebutton{
+    padding: 10px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: rgba(100,150,40,1);
+    color:white;
+    border: 2px solid  rgba(100,150,40,1);
+    border-radius:4px;
+    
+}
+
+    .deletebutton:hover:enabled{
+        background-color: white ;
+        color: rgba(100,150,40,1);
+    }
+   .deletebutton:disabled{
+         opacity: 0.6;
+        cursor: not-allowed;
+    }

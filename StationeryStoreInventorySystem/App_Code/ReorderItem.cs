@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Summary description for ReorderItems
 /// </summary>
-public class PurchaseItems
+public class ReorderItem
 {
     private string itemCode;
     private string description;
@@ -14,9 +14,10 @@ public class PurchaseItems
     private string unitOfMeasure;
     private int? balance;
     private int reorderLevel;
-    
+    private decimal? price;
+    private decimal? amount;
 
-    public PurchaseItems()
+    public ReorderItem()
     {
 
     }
@@ -87,13 +88,30 @@ public class PurchaseItems
             reorderLevel = value;
         }
     }
-   
 
+    public decimal? Price
+    {
+        get
+        {
+            return price;
+        }
 
+        set
+        {
+            price = value;
+        }
+    }
 
+    public decimal? Amount
+    {
+        get
+        {
+            return amount;
+        }
 
-   
-
-   
-       
+        set
+        {
+           amount = value;
+        }
+    }
 }

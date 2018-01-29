@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
 
 public class Employee extends java.util.HashMap<String,String> {
 
-    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "http://172.17.250.219/StationeryStoreInventorySystem/DeptService.svc/";
 
     public Employee(){
 
@@ -29,7 +29,6 @@ public class Employee extends java.util.HashMap<String,String> {
         put("role",role);
 
     }
-
 
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));
@@ -43,41 +42,36 @@ public class Employee extends java.util.HashMap<String,String> {
         put("endDate", endDate);
     }
 
-    public Employee(String email, String password){
+    public Employee(String email, String password) {
         put("email", email);
         put("password", password);
     }
 
-    public  static  Employee VerifyEmployee(String email,String password)
-    {
-        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"GetEmployeeByEmail/"+email+"/"+password);
+    public static Employee VerifyEmployee(String email, String password) {
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL + "GetEmployeeByEmail/" + email + "/" + password);
         Employee emp = null;
-        boolean loginSuccess = false ;
+        boolean loginSuccess = false;
 
-        if(b != null)
-        {
-            try{
+        if (b != null) {
+            try {
                 emp =
                         new Employee(b.getInt("Eid"),
-                        b.getString("DeptCode"),
-                        b.getString("Ename"),
-                        b.getString("Role"),
-                        b.getString("Password"),
-                        b.getString("Email"),
-                        b.getString("IsTemphead"),
-                        b.getString("StartDate"),
-                        b.getString("EndDate"));
+                                b.getString("DeptCode"),
+                                b.getString("Ename"),
+                                b.getString("Role"),
+                                b.getString("Password"),
+                                b.getString("Email"),
+                                b.getString("IsTemphead"),
+                                b.getString("StartDate"),
+                                b.getString("EndDate"));
+            } catch (Exception ex) {
+                Log.e("Department.list()", "JSONArray error");
             }
-            catch (Exception ex){
-                Log.e("Department.list()","JSONArray error");
-            }
-        }
-        else
-        {
+        } else {
             loginSuccess = false;
         }
 
-        return  emp;
+        return emp;
     }
 
 //    WCFEmployee e = new WCFEmployee();
@@ -108,14 +102,13 @@ public class Employee extends java.util.HashMap<String,String> {
 //        , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
 //        , emp.EndDate.GetValueOrDefault().ToShortDateString());
 
-
-    public static LinkedHashMap<String,String> listEmployee(String dcode) {
-        LinkedHashMap<String,String> elist = new LinkedHashMap<String,String>();
-        JSONArray a = JSONParser.getJSONArrayFromUrl(hostURL + "Employee/ForDeptRep/"+dcode+"/0");
+    public static LinkedHashMap<String, String> listEmployee(String dcode) {
+        LinkedHashMap<String, String> elist = new LinkedHashMap<String, String>();
+        JSONArray a = JSONParser.getJSONArrayFromUrl(hostURL + "Employee/ForDeptRep/" + dcode + "/0");
         try {
             for (int i = 0; i < a.length(); i++) {
                 JSONObject b = a.getJSONObject(i);
-                elist.put(Integer.toString(b.getInt("Eid")),b.getString("Ename"));
+                elist.put(Integer.toString(b.getInt("Eid")), b.getString("Ename"));
 
             }
         } catch (Exception e) {
@@ -125,7 +118,7 @@ public class Employee extends java.util.HashMap<String,String> {
     }
 
     public static String getDeptRepID(String dcode) {
-        JSONObject b = JSONParser.getJSONFromUrl(hostURL + "Employee/DeptRep/"+dcode);
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL + "Employee/DeptRep/" + dcode);
 
         try {
             return b.getString("Ename");
@@ -134,20 +127,17 @@ public class Employee extends java.util.HashMap<String,String> {
         }
         return (null);
     }
-    public static void updateDeptRep(Employee emp){
-        JSONObject jdeptRep=new JSONObject();
-        try
-        {
-            jdeptRep.put("DeptCode",emp.get("dCode"));
-            jdeptRep.put("Eid",emp.get("eId"));
-            jdeptRep.put("Role",emp.get("role"));
-        }catch (Exception e)
-        {
+
+    public static void updateDeptRep(Employee emp) {
+        JSONObject jdeptRep = new JSONObject();
+        try {
+            jdeptRep.put("DeptCode", emp.get("dCode"));
+            jdeptRep.put("Eid", emp.get("eId"));
+            jdeptRep.put("Role", emp.get("role"));
+        } catch (Exception e) {
 
         }
-        String result=JSONParser.postStream(hostURL+"UpdateDeptRep",jdeptRep.toString());
+        String result = JSONParser.postStream(hostURL + "UpdateDeptRep", jdeptRep.toString());
     }
-
-
 
 }

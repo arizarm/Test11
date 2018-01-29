@@ -233,14 +233,10 @@ public class EFBroker_DeptEmployee
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
-
             var d = smodel.Departments.Where(p => p.DeptCode == deptcode)
                             .Join(smodel.CollectionPoints, p => p.CollectionLocationID, c => c.CollectionLocationID, (p, c) => new { Department = p, CollectionPoint = c })
                             .Select(a => new { a.CollectionPoint.CollectionPoint1 }).First();
             return d.CollectionPoint1;
-
-
-
         }
 
     }

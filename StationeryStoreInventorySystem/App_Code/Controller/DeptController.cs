@@ -65,10 +65,7 @@ public class DeptController
         return EFBroker_DeptEmployee.GetEmployeeListForActingDHead(deptcode, id);
     }
 
-
-
     //Department Head
-
 
     public Employee GetDHeadByDeptCode(string deptcode)
     {

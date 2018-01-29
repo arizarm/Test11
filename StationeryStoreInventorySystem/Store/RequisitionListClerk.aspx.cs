@@ -101,7 +101,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
             Session["RetrievalID"] = retrievalId;/////////////////////////////////////////////////
             reqCon.AddDisbursement(retrievalId, reqNo);
-            Response.Redirect("RetrievalListDetail.aspx");
+            Response.Redirect(LoginController.RetrievalListDetailURI);
         }
     }
 
@@ -110,6 +110,6 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn
         string s = (row.FindControl("lblrequisitionNo") as Label).Text; //row.Cells[2]
         Session["RequisitionNo"] = s;
-        Response.Redirect("RequisitionDetails.aspx");
+        Response.Redirect(LoginController.RequisitionDetailURI);
     }
 }

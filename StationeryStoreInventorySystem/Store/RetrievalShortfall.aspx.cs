@@ -81,7 +81,7 @@ public partial class RetrievalDecision : System.Web.UI.Page
         if (SaveActualQty())
         {
             //retCon.GenerateAccessCode(retrievalId);
-            Response.Redirect("CollectionPointUpdate.aspx");
+            Response.Redirect(LoginController.CollectionPointUpdateURI);
         }
     }
 

@@ -26,7 +26,7 @@ public partial class DisbursementList : System.Web.UI.Page
     {
         GridViewRow gvRow = ((Button)sender).NamingContainer as GridViewRow;
         Session["SelectedDisb"] = Convert.ToInt32((gvRow.FindControl("lbldisbId") as Label).Text);
-        Response.Redirect("~/Store/DisbursementListDetail.aspx");
+        Response.Redirect(LoginController.DisbursementListDetailURI);
     }
 
     protected void gdvDisbList_Sorting(object sender, GridViewSortEventArgs e)

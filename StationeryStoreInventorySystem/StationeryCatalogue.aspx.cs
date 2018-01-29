@@ -19,7 +19,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             }
             catch(Exception sql)
             {
-                Response.Redirect("~/ErrorPage.aspx");
+                Response.Redirect(LoginController.ErrorPageURI);
             }
             if (!IsPostBack)
             {

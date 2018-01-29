@@ -104,7 +104,7 @@
                     android:id="@+id/tvError"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="err"
+                    android:text=""
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="22sp" />
 
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="finaliseClick"
-                android:text="Submit Discrepancies"
+                android:text="Finalise Discrepancies"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

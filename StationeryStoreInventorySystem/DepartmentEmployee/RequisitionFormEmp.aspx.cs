@@ -14,14 +14,14 @@ public partial class RequisitionForm : System.Web.UI.Page
     List<RequestedItem> rItem = new List<RequestedItem>();
     //ArrayList reqItem =new ArrayList();
     static RequestedItem ri;
-    string code;
-    Employee emp;
     string des;
+    Employee emp;
+    string code;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         Label1.Text = DateTime.Now.ToLongDateString();
-        emp = (Employee)Session["emp"];
+         emp = (Employee)Session["emp"];
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
@@ -105,11 +105,16 @@ public partial class RequisitionForm : System.Web.UI.Page
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
-                //string receiver = "@gmail.com";
-                //string subject = "New Requisition";
-                //string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
-                //Utility.sendMail(receiver, subject, body);
-                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
+
+                Employee empHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
+                string mail = empHead.Email;
+                string receiver = mail;
+                string subject = "New Requisition";
+                string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                Utility.sendMail(receiver, subject, body);
+                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+
+                Response.Redirect(LoginController.RequisitionListDepEmpURI);
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

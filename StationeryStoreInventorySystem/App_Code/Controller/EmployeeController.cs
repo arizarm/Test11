@@ -56,4 +56,17 @@ public static class EmployeeController
             return context.Employees.Where(e => e.EmpID.Equals(id)).Select(e => e.EmpName).FirstOrDefault();
         }
     }
+
+    public static List<String> getAllClerkMails()
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Employees.Where(e => e.Role.Equals("Store Clerk")).Select(e => e.Email).ToList();
+        }
+    }
+
+    public static Department GetDepartByDepCode(string DepCode)
+    {
+        return EFBroker_DeptEmployee.GetDepartByDepCode(DepCode);
+    }
 }

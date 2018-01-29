@@ -49,13 +49,13 @@ public class DisbursementCotrol
         return disbursementListItems;
     }
     //GET DISBURSEMENT DETAIL LIST TO DISPLAY
-    public List<DisbursementDetailListItems> gvDisbursementDetailPopulate()
+    public List<DisbursementDetailListItems> gvDisbursementDetailPopulate(int disbId)
     {
         List<DisbursementDetailListItems> disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
 
         List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
 
-        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbID);
+        disbursementDetail = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbId);
 
         foreach (Disbursement_Item disbDetails in disbursementDetail)
         {
@@ -161,6 +161,9 @@ public class DisbursementCotrol
     {
         int disbIDInt = Convert.ToInt32(disbID);
         EFBroker_Disbursement.UpdateDisbursementStatus(disbIDInt);
+        List<Requisition> requisitionList=EFBroker_Requisition.GetRequisitionListByDisbursementID(disbIDInt);
+        requisitionList.ForEach(r => r.Status = "Closed");
+        EFBroker_Requisition.UpdateRequisitionList(requisitionList);
     }
 
     //Add disbursement transaction to Stockcard 

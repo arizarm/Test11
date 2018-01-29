@@ -5,18 +5,6 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/BtnFinalizeDisbursmentList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Finalize Disbursment List" />
-
-    <Button
-        android:id="@+id/BtnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save" />
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,11 +25,10 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/EditText1"
-                android:layout_width="222dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView1" />
         </TableRow>
 
         <TableRow
@@ -55,33 +42,13 @@
                 android:ellipsize="end"
                 android:text="Item Description "
                 android:textSize="16sp" />
+
             <TextView
-                android:id="@+id/EditText2"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView2" />
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/ItemCode"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:text="Item Description "
-                android:textSize="16sp" />
-            <TextView
-                android:id="@+id/EditText3"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
-        </TableRow>
-
 
         <TableRow
             android:layout_width="match_parent"
@@ -89,37 +56,41 @@
 
             <TextView
                 android:id="@+id/totalQuantityRequested"
-                android:layout_width="100dp"
+                android:layout_width="193dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:textSize="16sp"
-                android:text="Total Quantity Requested	"/>
-            <TextView
-                android:id="@+id/EditText4"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:ellipsize="end"
+                android:text="Total Quantity Requested	"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView3" />
         </TableRow>
 
-        <!--<TableRow-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
 
-            <!--<TextView-->
-                <!--android:id="@+id/totalQuantityRetrieved"-->
-                <!--android:layout_width="100dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:ellipsize="end"-->
-                <!--android:textSize="16sp"-->
-                <!--android:text="Total Quantity Retrieved	"/>-->
-            <!--<EditText-->
-                <!--android:id="@+id/editText"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"  />-->
-        <!--</TableRow>-->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/totalQuantityRetrieved"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:text="Total Quantity Retrieved	"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </TableRow>
 
     </TableLayout>
-
 </LinearLayout>

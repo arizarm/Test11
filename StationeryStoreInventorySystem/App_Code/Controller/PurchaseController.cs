@@ -11,14 +11,14 @@ public class PurchaseController
 {
     //StationeryEntities entities;
 
-    List<PurchaseItems> lowStockItemList = null;
+    List<ReorderItem> lowStockItemList = null;
 
     public PurchaseController()
     {
         //entities = new StationeryEntities();
     }
 
-    public List<PurchaseItems> GetReorderItemList()
+    public List<ReorderItem> GetReorderItemList()
     {
 
         return EFBroker_PurchaseOrder.GetReorderItemList();
@@ -35,50 +35,20 @@ public class PurchaseController
         return EFBroker_PurchaseOrder.GenerateShortfallItemsReport(startDate, endDate);
 
     }
-    public List<SupplierInfo> GetSupplierList()
+    public List<ItemPrice> GetItemPriceList()
     {
-        return EFBroker_PurchaseOrder.GetPurchaseSupplierInfoList();
+        return EFBroker_PurchaseOrder.GetItemPriceList();
     }
-    public List<SupplierInfo> GetSupplierListByItemCode(string itemCode)
+    public List<ItemPrice> GetItemPriceByItemCode(string itemCode)
     {
-        return EFBroker_PurchaseOrder.GetPurchaseSupplierListByItemCode(itemCode);
+        return EFBroker_PurchaseOrder.GetItemPriceByItemCode(itemCode);
     }
 
-    //public List<PurchaseItems> AddItems(String itemCode)
-    //{
-    //    var itemList = (from Stock in entities.StockCards
-    //                    group Stock by Stock.ItemCode into stck
-    //                    join item in entities.Items on stck.FirstOrDefault().ItemCode equals item.ItemCode
-    //                    where item.ItemCode == itemCode
-    //                    select new PurchaseItems
-    //                    {
-    //                        ItemCode = item.ItemCode,
-    //                        Description = item.Description,
-    //                        ReorderQty = item.ReorderQty,
-    //                        ReorderLevel = item.ReorderLevel,
-    //                        UnitOfMeasure = item.UnitOfMeasure,
-    //                        Balance = stck.Min(x => x.Balance)
-    //                    }).ToList<PurchaseItems>();
-    //    if (itemList != null)
-    //    {
-    //        itemList = (from item in entities.Items
-    //                    where item.ItemCode == itemCode
-    //                    select new PurchaseItems
-    //                    {
-    //                        ItemCode = item.ItemCode,
-    //                        Description = item.Description,
-    //                        ReorderQty = item.ReorderQty,
-    //                        ReorderLevel = item.ReorderLevel,
-    //                        UnitOfMeasure = item.UnitOfMeasure,
-    //                        Balance = 0
-    //                    }).ToList<PurchaseItems>();
-    //    }
-    //    return itemList;
-    //}
-    public PurchaseItems AddPurchaseItem(String itemCode)
+  
+    public ReorderItem AddPurchaseItem(String itemCode)
     {
         Item item = EFBroker_Item.GetActiveItembyItemCode(itemCode);
-        PurchaseItems purchaseItem = new PurchaseItems
+        ReorderItem purchaseItem = new ReorderItem
         {
             ItemCode = item.ItemCode,
             Description = item.Description,
@@ -159,6 +129,11 @@ public class PurchaseController
     {
         EFBroker_PurchaseOrder.UpdatePurchaseItem(pItem);
         return;
+    }
+    
+    public void DeletePurchaseOrder(int orderID)
+    {
+        EFBroker_PurchaseOrder.DeletePurchaseOrder(orderID);
     }
 
 

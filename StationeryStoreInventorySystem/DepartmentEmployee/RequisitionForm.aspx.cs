@@ -105,6 +105,10 @@ public partial class RequisitionForm : System.Web.UI.Page
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
+                //string receiver = "@gmail.com";
+                //string subject = "New Requisition";
+                //string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                //Utility.sendMail(receiver, subject, body);
                 Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
@@ -132,6 +136,7 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
     {
+        ValidationSummary1.Enabled = true;
         System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView2.Rows[e.RowIndex].FindControl("qtyText");
         int newQty = Convert.ToInt32(qtyText.Text);
 

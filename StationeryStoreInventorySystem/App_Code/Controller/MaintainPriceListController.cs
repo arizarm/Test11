@@ -11,7 +11,7 @@ public class MaintainPriceListController
 {
     public List<Item> GetActiveItemList()
     {
-            List<Item> items = EFBroker_Item.GetActiveItemList().ToList();
+            List<Item> items = EFBroker_Item.GetActiveOrNewItemList().ToList();
             return items;
     }
 
@@ -37,7 +37,9 @@ public class MaintainPriceListController
 
     public void AddPriceListItem(PriceList obj)
     {
+        string itemCode = obj.ItemCode;
         EFBroker_PriceList.AddPriceListItem(obj);
+        ItemBusinessLogic.ActivateItem(itemCode);
     }
 
     public List<PriceList> GetCurrentYearSupplierPriceList(string supplierCode)

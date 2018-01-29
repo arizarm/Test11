@@ -43,6 +43,13 @@ public class RequisitionControl
         return PopulateGridViewForDepartment(rlist);
     }
 
+    public static List<ReqisitionListItem> DisplayAllByDeptCodeEmpID(string deptCode, int empID)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.DisplayReqByDeptCodeEmpID(deptCode, empID);
+        return PopulateGridViewForDepartment(rlist);
+    }
+
     public static List<ReqisitionListItem> DisplayPriority()
     {
         rlist = new List<Requisition>();
@@ -119,7 +126,7 @@ public class RequisitionControl
   
     public static List<ReqisitionListItem> DisplayCollectionListSearch(string deptCode, string searchWord)
     {
-        List<ReqisitionListItem> l = PopulateGridView(EFBroker_Requisition.SearchForCollectionList(deptCode));
+        List<ReqisitionListItem> l = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForCollectionList(deptCode));
         foreach(ReqisitionListItem i in l)
         {
             searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)).ToList();
@@ -221,7 +228,7 @@ public class RequisitionControl
     }
     public static List<ReqisitionListItem> getRequisitionListByStatusAndDepCode(string status, string depCode)
     {
-        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(depCode, status);
+        List<Requisition> rlist = EFBroker_Requisition.getRequisitionListByStatusAndDepCode(status, depCode);
         return PopulateGridViewForDepartment(rlist);
     }
     
@@ -235,7 +242,7 @@ public class RequisitionControl
     //FIND REQUISITION ITEM BY REQUISITION ID AND ITEM CODE
     public static Requisition_Item findByReqIDItemCode(int id, string code)
     {
-        return EFBroker_Requisition.FindReqItemsByReqIDItemDescription(id, code).FirstOrDefault();
+        return EFBroker_Requisition.FindReqItemsByReqIDItemID(id, code);
     }
 
     //REMOVE REQUISITION
@@ -265,6 +272,15 @@ public class RequisitionControl
     public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
+        List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+        if (clerkEmails != null)
+        {
+            for (int i = 0; i < clerkEmails.Count; i++)
+            {
+                Utility.sendMail(clerkEmails[i].ToString(), "Request Stationery Items", "New Requisition Form from is requested");
+            }
+        }
     }
     public static void rejectRequisition(int id, string reason, int empID)
     {
@@ -312,4 +328,10 @@ public class RequisitionControl
         return PopulateGridView(rlist);
     }
     
+    public static List<ReqisitionListItem> DisplayAllByDeptCode(string deptCode)
+    {
+        rlist = new List<Requisition>();
+        rlist = EFBroker_Requisition.displayAllByDeptCode(deptCode);
+        return PopulateGridView(rlist);
+    }
 }

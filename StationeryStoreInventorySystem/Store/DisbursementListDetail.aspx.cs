@@ -28,7 +28,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
             lblDepartment.Text = disb.DepName.ToString();
             lblColPoint.Text = disb.CollectionPoint.ToString();
 
-            retrievedItem = disbCon.gvDisbursementDetailPopulate();
+            retrievedItem = disbCon.gvDisbursementDetailPopulate(disbId);
             gvDisbDetail.DataSource = retrievedItem;
             gvDisbDetail.DataBind();
         }
@@ -83,7 +83,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                     {
                         //make discrepancy item list
                         int disQty = actualQty - retrievedQty;
-                        Item disItem = GenerateDiscrepancyController.GetItemByItemCode(iCode);
+                        Item disItem = EFBroker_Item.GetItembyItemCode(iCode);
                         string finalQty = (disItem.BalanceQty + disQty).ToString();
                         discToUpdate.Add(disItem, disQty);
                     }

@@ -12,9 +12,15 @@ public interface IDeptService
 {
     //Start Login
 
+
+    //[OperationContract]
+    //[WebInvoke(UriTemplate = "/ValidateUser",Method ="POST",RequestFormat =WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+    //bool ValidateUser(WCFEmployee emp);
+
+
     [OperationContract]
-    [WebGet(UriTemplate = "/GetEmployeeByEmail/{email}", ResponseFormat = WebMessageFormat.Json)]
-    WCFEmployee GetEmployeeByEmail(string email);
+    [WebGet(UriTemplate = "/GetEmployeeByEmail/{email}/{password}", ResponseFormat = WebMessageFormat.Json)]
+    WCFEmployee GetEmployeeByEmail(string email,String password);
 
     // End Login
 

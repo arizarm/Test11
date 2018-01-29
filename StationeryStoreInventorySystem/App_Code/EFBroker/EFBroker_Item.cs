@@ -55,18 +55,6 @@ public class EFBroker_Item
             return result;
         }
     }
-
-    public static void RemoveItem(string itemCode)
-    {
-
-        using (StationeryEntities inventoryDB = new StationeryEntities())
-        {
-            Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
-            i.ActiveStatus = "N";
-            inventoryDB.SaveChanges();
-        }
-        return;
-    }
     public static List<Item> GetItemsbyCategoryID(int categoryID)
     {
         List<Item> itemList;
@@ -91,6 +79,15 @@ public class EFBroker_Item
         using (StationeryEntities inventoryDB = new StationeryEntities())
         {
             itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y").OrderBy(x => x.ItemCode).ToList();
+        }
+        return itemList;
+    }
+    public static List<Item> GetActiveOrNewItemList()
+    {
+        List<Item> itemList;
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            itemList = inventoryDB.Items.Where(x => x.ActiveStatus == "Y"|| x.ActiveStatus == "C").OrderBy(x => x.ItemCode).ToList();
         }
         return itemList;
     }
@@ -149,5 +146,38 @@ public class EFBroker_Item
             inventoryDB.SaveChanges();
         }
         return;
+    }
+    public static void RemoveItem(string itemCode)
+    {
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            Item i = inventoryDB.Items.Where(x => x.ItemCode == itemCode).FirstOrDefault();
+            i.ActiveStatus = "N";
+            inventoryDB.SaveChanges();
+        }
+        return;
+    }
+	public static List<ItemPrice> GetActiveItemWithPrice()
+    {
+        List<ItemPrice> activeitemList = null;
+        using (StationeryEntities entities = new StationeryEntities())
+        {
+           
+            activeitemList = (from item in entities.Items
+                              join price in entities.PriceLists on item.ItemCode equals price.ItemCode into g
+                              where item.ActiveStatus == "Y"
+                              orderby item.ItemCode
+                              select new ItemPrice
+                              {
+                                  ItemCode = item.ItemCode,
+                                  Description = item.Description,
+                                  SupplierCode = g.FirstOrDefault().SupplierCode,
+                                  SupplierName = g.FirstOrDefault().Supplier.SupplierName,
+                                  Price = g.FirstOrDefault().Price,
+
+                              }).ToList();
+        }
+        return activeitemList;
+
     }
 }

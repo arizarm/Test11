@@ -49,7 +49,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
             Label6.Text = RequisitionControl.getUOM(code);
         }
         else
-            Response.Redirect("RequisitionListDepEmp.aspx");
+            Response.Redirect(LoginController.RequisitionListDepEmpURI);
     }
 
     protected void showAllItems()
@@ -70,12 +70,12 @@ public partial class RequisitionDetails : System.Web.UI.Page
             id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
             RequisitionControl.cancelRejectRequisition(id);
 
-            Response.Redirect("RequisitionListDepEmp.aspx");
+            Response.Redirect(LoginController.RequisitionListDepEmpURI);
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Response.Write("<script language='javascript'>alert('Error! Retry.');</script>");
+            Utility.DisplayAlertMessage("Error! Retry.");
         }
     }
 

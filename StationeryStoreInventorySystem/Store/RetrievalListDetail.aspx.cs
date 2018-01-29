@@ -66,13 +66,13 @@ public partial class RetrievalForm : System.Web.UI.Page
 
             Session["discrepancyList"] = discToUpdate;
             Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
-            Response.Redirect("RetrievalShortfall.aspx");
+            Response.Redirect(LoginController.RetrievalShortfallURI);
         }
         else //if there is no short fall go to collectionpoint
         {
             Session["discrepancyList"] = null;
             Session["RetrievalShortfallItemList"] = null;
-            Response.Redirect("CollectionPointUpdate.aspx");
+            Response.Redirect(LoginController.CollectionPointUpdateURI);
         }
     }
 }

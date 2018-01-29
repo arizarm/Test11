@@ -96,11 +96,11 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
             if (emp.Role == "DepartmentHead")
             {
-                Response.Redirect("~/DepartmentHead/RequisitionListDepHead.aspx");
+                Response.Redirect(LoginController.RequisitionListDepHeadURI);
             }
             else if (emp.Role == "Representative")
             {
-                Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
+                Response.Redirect(LoginController.RequisitionListTempDepRedURI);
             }
         }
 

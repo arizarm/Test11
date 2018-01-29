@@ -89,22 +89,22 @@ public class DisbursementDetailFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        new AsyncTask<Void, Void, String>() {
-                            @Override
-                            protected String doInBackground(Void... params) {
-
-                                edtAccessCode = view.findViewById(R.id.accessCode);
-                                accessCode = edtAccessCode.getText().toString();
-                                final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
-
-                                return AccessCodeCheck.checkAccessCode(codeCheckObj);
-                            }
-
-                            @Override
-                            protected void onPostExecute(String result) {
-                                Log.i("Result", result);
-                            }
-                        }.execute();
+//                        new AsyncTask<Void, Void, String>() {
+//                            @Override
+//                            protected String doInBackground(Void... params) {
+//
+//                                edtAccessCode = view.findViewById(R.id.accessCode);
+//                                accessCode = edtAccessCode.getText().toString();
+//                                final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
+//
+//                                return AccessCodeCheck.checkAccessCode(codeCheckObj);
+//                            }
+//
+//                            @Override
+//                            protected void onPostExecute(String result) {
+//                                Log.i("Result", result);
+//                            }
+//                        }.execute();
                     }
                 });
             } catch (Exception e) {
@@ -123,9 +123,9 @@ public class DisbursementDetailFragment extends Fragment {
         String accessCode = edtAccessCode.getText().toString();
         String disbId = d.get("DisbId");
 
-        AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
-
-        String s = AccessCodeCheck.checkAccessCode(codeCheckObj);
+//        AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
+//
+//        String s = AccessCodeCheck.checkAccessCode(codeCheckObj);
     }
 
 }

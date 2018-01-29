@@ -72,7 +72,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             }
             if (isEqual)
             {
-                Utility.DisplayAlertMessage("Item is already in the form.");
+                Response.Write("<script>alert('Item is already in the form.');</script>");
             }
             else
             {
@@ -100,18 +100,16 @@ public partial class RequisitionForm : System.Web.UI.Page
             string DeptCode = emp.DeptCode;
             if (GridView2.Rows.Count <= 0)
             {
-                Utility.DisplayAlertMessage("You have not requested any item yet!");
+                Response.Write("<script>alert('You have not requested any item yet!');</script>");
             }
             else
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
-                Employee empHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
-                string mail = empHead.Email;
-                string receiver = mail;
-                string subject = "New Requisition";
-                string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
-                Utility.sendMail(receiver, subject, body);
-                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+                //string receiver = "@gmail.com";
+                //string subject = "New Requisition";
+                //string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                //Utility.sendMail(receiver, subject, body);
+                Response.Redirect(LoginController.RequisitionListTempDepRedURI);
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

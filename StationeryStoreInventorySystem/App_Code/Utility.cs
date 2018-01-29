@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 /// <summary>
 /// Summary description for Utility
@@ -89,5 +90,20 @@ public static class Utility
         HttpContext.Current.Session.Remove("itemlist");
         HttpContext.Current.Response.Redirect(LoginController.LoginURI);
     }
-}
 
+    public static void DisplayAlertMessage(string message)
+    {
+        Page page = HttpContext.Current.CurrentHandler as Page;
+        string script = string.Format("alert('{0}');", message);
+        if (page != null && !page.ClientScript.IsClientScriptBlockRegistered("alert"))
+        {
+            page.ClientScript.RegisterClientScriptBlock(page.GetType(), "alert", script, true);
+        }
+    }
+
+    public static void AlertMessageThenRedirect(string message, string redirectAddress)
+    {
+        var page = HttpContext.Current.CurrentHandler as Page;
+        ScriptManager.RegisterStartupScript(page, page.GetType(), "alert", "alert('" + message + "');window.location ='" + redirectAddress + "';", true);
+    }
+}

@@ -28,9 +28,6 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
         SupplierListController slc = new SupplierListController();
         slc.CreateSupplier(S);
-        Page.ClientScript.RegisterStartupScript(Page.GetType(), "my", "alert('" + Message.SupplierSuccessfulAdd + "');", true);
-        //Response.Write("<script>alert('" + Message.SupplierSuccessfulAdd + "');</script>");
-
-        Response.Redirect("~/Store/SupplierList.aspx", false);
+        Utility.AlertMessageThenRedirect(Message.SupplierSuccessfulAdd, "/Store/SupplierList.aspx");
     }
 }

@@ -68,9 +68,9 @@ public partial class RequisitionDetails : System.Web.UI.Page
             Response.Redirect("RequisitionListDepartment.aspx");
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Response.Write("<script language='javascript'>alert('Error! Retry.');</script>");
+            Utility.DisplayAlertMessage("Error!Retry.");
         }
     }
 

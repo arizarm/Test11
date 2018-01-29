@@ -71,7 +71,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
     protected void RejectButton_Click(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null && Session["emp"] != null)
+        if (Request.QueryString["requisitionNo"] != null && Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);

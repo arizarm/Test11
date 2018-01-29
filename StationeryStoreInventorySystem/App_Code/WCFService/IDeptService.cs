@@ -77,6 +77,10 @@ public interface IDeptService
     [WebInvoke(UriTemplate = "/UpdateCollect", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
     void UpdateCollect(WCFDept d);
 
+    [OperationContract]
+    [WebGet(UriTemplate = "/Collectpoint/{deptCode}", ResponseFormat = WebMessageFormat.Json)]
+    string GetCollectionPointByDeptCode(string deptCode);
+
     //End Collection Point
 
 }

@@ -54,7 +54,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         }
         catch (InvalidOperationException)
         {
-            Response.Write("<script>alert('" + Message.PageInvalidEntry + "');</script>");
+            Utility.DisplayAlertMessage(Message.PageInvalidEntry);
             Response.Redirect("SupplierList.aspx");
         }
 
@@ -72,17 +72,13 @@ public partial class SupplierPriceList : System.Web.UI.Page
         s.SupplierEmail = TextBox8.Text;
         s.ActiveStatus = TextBox9.Text;
         slc.UpdateSupplier(s);
-        Response.Write("<script>alert('" + Message.UpdateSuccessful + "');</script>");
+        Utility.DisplayAlertMessage(Message.UpdateSuccessful);
     }
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
         slc.DeleteSupplier(code);
-
-        Response.Write(@"
-         <script>
-        alert('" + Message.InactiveSuccessful + "'); window.location = '" + "SupplierList.aspx" + @"';    
-            </script>");
+        Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
     }
 
     protected void AddNewItemButton_Click(object sender, EventArgs e)
@@ -110,19 +106,19 @@ public partial class SupplierPriceList : System.Web.UI.Page
             mplc.AddPriceListItem(pl);
             DefaultDropDownListRestore();
             PopulateTenderSupplyList();
-            Response.Write("<script>alert('" + Message.SuccessfulItemAdd + "');</script>");
+            Utility.DisplayAlertMessage(Message.SuccessfulItemAdd);
         }
         catch (InvalidOperationException)
         {
-            Response.Write("<script>alert('" + Message.InvalidEntry + "');</script>");
+            Utility.DisplayAlertMessage(Message.InvalidEntry);
         }
         catch (DbUpdateException)
         {
-            Response.Write("<script>alert('" + Message.ValidationError + "');</script>");
+            Utility.DisplayAlertMessage(Message.ValidationError);
         }
         catch (DbEntityValidationException)
         {
-            Response.Write("<script>alert('" + Message.ValidationError + "');</script>");
+            Utility.DisplayAlertMessage(Message.ValidationError);
         }
 
     }
@@ -217,7 +213,7 @@ public partial class SupplierPriceList : System.Web.UI.Page
         //repopulate tender list
         PopulateTenderSupplyList();
 
-        Response.Write("<script>alert('" + Message.DeleteSuccessful + "');</script>");
+        Utility.DisplayAlertMessage(Message.DeleteSuccessful);
     }
 
     protected void TenderPriceDropDownList_RowEditing(object sender, GridViewEditEventArgs e)

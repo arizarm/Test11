@@ -6,18 +6,22 @@
 
     <div>
         <h2 class="mainPageHeader">Requisition List</h2>
-      <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
-           <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
-           <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
+        <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
+        <asp:Button ID="SearchBtn" runat="server" Text="Search" CssClass="button" OnClick="SearchBtn_Click" />
+        <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />
     </div>
     <div>
         <asp:DropDownList ID="DropDownList1" runat="server" CssClass="align-right" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
-            <asp:ListItem Selected="True" >Select Status</asp:ListItem>
+            <asp:ListItem Selected="True">Select Status</asp:ListItem>
             <asp:ListItem Value="Pending">Pending Approval</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
             <asp:ListItem Value="Closed">Closed</asp:ListItem>
         </asp:DropDownList>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h3><strong>
+            <asp:Label ID="pendingCount" runat="server" Text="Label" Font-Underline="true"></asp:Label></strong></h3>
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
@@ -58,7 +62,7 @@
                     DataNavigateUrlFormatString="ApproveRequisition.aspx?requisitionNo={0}" Text="View Details" />
             </Columns>
 
-        </asp:GridView>      
+        </asp:GridView>
     </div>
 </asp:Content>
 

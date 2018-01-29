@@ -71,5 +71,9 @@ public class LoginController
     public static readonly string DisbursementListDetailURI = "~/Store/DisbursementListDetail.aspx";
     public static readonly string RegenerateRequestURI = "~/Store/RegenerateRequest.aspx";
     public static readonly string ItemStockCardListURI = "~/Store/ItemStockCardList.aspx";
+    public static readonly string SupplierCreateURI = "~/StoreManagerSupervisor/SupplierCreate.aspx";
+    public static readonly string SupplierListURI = "/Store/SupplierList.aspx";
+    public static readonly string TrendReportDisplayURI = "~/Store/TrendReportDisplay.aspx";
+    public static readonly string StockAdjustmentSummaryURI = "~/StoreManagerSupervisor/StockAdjustmentSummary.aspx";
     public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
 }

@@ -18,14 +18,14 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             }
             catch
             {
-                Response.Redirect("~/StoreManagerSupervisor/StockAdjustment.aspx");
+                Response.Redirect(LoginController.StockAdjustmentSummaryURI);
             }
             GridView1.DataSource = summary;
             GridView1.DataBind();
         }
         else
         {
-            Response.Redirect("~/StoreManagerSupervisor/StockAdjustment.aspx");
+            Response.Redirect(LoginController.StockAdjustmentSummaryURI);
         }
     }
 
@@ -72,6 +72,6 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             }
         }
         Session["discrepancySummary"] = null;
-        Response.Redirect("~/StoreManagerSupervisor/StockAdjustment.aspx");
+        Response.Redirect(LoginController.StockAdjustmentSummaryURI);
     }
 }

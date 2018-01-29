@@ -43,6 +43,16 @@ public class EFBroker_PurchaseOrder
         }
         return rList;
     }
+    public static List<PurchaseOrder> GetPurchaseOrderListByUser(int empID)
+    {
+        List<PurchaseOrder> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x=>x.Employee.EmpID==empID).ToList();
+        }
+        return rList;
+    }
+
     public static List<PurchaseOrder> GetPurchaseOrderListByStatus(string status)
     {
         using (StationeryEntities entities = new StationeryEntities())

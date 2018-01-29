@@ -29,11 +29,10 @@ public class RetrievalListActivity extends AppCompatActivity implements AdapterV
             @Override
             protected void onPostExecute(List<Retrieval> result) {
 
-
                       lv.setAdapter(new SimpleAdapter
                         (RetrievalListActivity.this, result, R.layout.retrieval_list_row,
-                                new String[]{"RetrievedDate","RetrievalID","RetrievedBy"},
-                                new int[]{R.id.text1, R.id.text2,R.id.text3}));
+                                new String[]{"RetrievedDate","RetrievalID","RetrievedBy","RetrievalStatus"},
+                                new int[]{R.id.text1, R.id.text2,R.id.text3,R.id.text4}));
             }
         }.execute();
     }
@@ -43,6 +42,11 @@ public class RetrievalListActivity extends AppCompatActivity implements AdapterV
         Retrieval s = (Retrieval) av.getAdapter().getItem(position);
         Intent intent = new Intent(this, RetrievalListDetailActivity.class);
         intent.putExtra("RetrievalIDKey", s.get("RetrievalID"));
-        startActivity(intent);
+        startActivityForResult(intent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      recreate();
     }
 }

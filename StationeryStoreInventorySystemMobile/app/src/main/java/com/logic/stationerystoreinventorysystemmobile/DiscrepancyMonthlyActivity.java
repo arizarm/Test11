@@ -27,16 +27,17 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         if(ciList != null){
             if(ciList.size() == 0){
                 initialiseItemList();
-                ciList = DiscrepancyHolder.getMonthlyItems();
+            }
+            else{
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                list.setAdapter(adapter);
             }
         }
         else{
             initialiseItemList();
-            ciList = DiscrepancyHolder.getMonthlyItems();
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
-        list.setAdapter(adapter);
+
     }
 
     protected void finaliseClick(View v){
@@ -64,24 +65,32 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         CatalogueItem ci = (CatalogueItem) parent.getAdapter().getItem(position);
         Intent i = new Intent(this, DiscrepancyMonthlyItemDetailsActivity.class);
         i.putExtra("itemCode", ci.get("itemCode"));
-        startActivity(i);
+//        startActivity(i);
+        startActivityForResult(i, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        recreate();
     }
 
     private void initialiseItemList(){
-        new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
             ProgressDialog progress;
             @Override
             protected void onPreExecute() {
                 progress = ProgressDialog.show(DiscrepancyMonthlyActivity.this, "Loading", "Loading Items", true);
             }
             @Override
-            protected Void doInBackground(Void... input){
+            protected ArrayList<CatalogueItem> doInBackground(Void... input){
                 DiscrepancyHolder.initialiseMonthlyItems();
-                return null;
+                return DiscrepancyHolder.getMonthlyItems();
             }
 
             @Override
-            protected void onPostExecute(Void voids){
+            protected void onPostExecute(ArrayList<CatalogueItem> ciList){
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
+                list.setAdapter(adapter);
                 progress.dismiss();
             }
         }.execute();

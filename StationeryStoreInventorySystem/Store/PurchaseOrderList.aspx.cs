@@ -16,6 +16,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     private void BindData()
     {
+        
         gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
         gvPurchaseOrder.DataBind();
     }
@@ -64,10 +65,10 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //PurchaseOrder pOrder = pCtlr.GetPurchaseOrderList().Where(x => x.PurchaseOrderID == (int)DataBinder.Eval(e.Row.DataItem, "PurchaseOrderID")).First() ;
+       
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-
+            PurchaseOrder pOrder = pCtlr.GetPurchaseOrderList().Where(x => x.PurchaseOrderID == (int)DataBinder.Eval(e.Row.DataItem, "PurchaseOrderID")).First();
             Label statusLbl = (Label)e.Row.FindControl("OrderStatus");
             Button delBtn = (Button)e.Row.FindControl("btn_Delete");
             string status = statusLbl.Text;
@@ -96,11 +97,21 @@ public partial class PurchaseOrderList : System.Web.UI.Page
                 delBtn.Enabled = false;
             }
          
-            if (Session["empRole"] != null)
+            if (Session["emp"] != null)
             {
                 if (Session["empRole"].ToString() == "Store Clerk")
                 {
-                    gvPurchaseOrder.Columns[5].Visible = true;
+                    Employee emp = (Employee)Session["emp"];                    
+                    Label reqby = (Label)e.Row.FindControl("ReqstdBy");
+                    if(emp.EmpID == pOrder.RequestedBy)
+                    {
+                        delBtn.Visible = true;
+                    }
+                    else
+                    {
+                        delBtn.Enabled = false;
+                    }
+                   
 
                 }
                 else if (Session["empRole"].ToString() == "Store Supervisor"|| Session["empRole"].ToString() == "Store Manager")
@@ -112,28 +123,6 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         }
     }
 
- 
-
-    //protected void gvPurchaseOrder_RowCommand(object sender, GridViewCommandEventArgs e)
-    //{
-    //    int pID = Convert.ToInt32(gvPurchaseOrder.DataKeys[e.CommandArgument]).;
-    //    pCtlr.DeletePurchaseOrder(pID);
-    //    ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-    //        "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
-    //}
-
-
-    //protected void gvPurchaseOrder_RowCommand(object sender, GridViewCommandEventArgs e)
-    //{ 
-    //    if (e.CommandName == "Delete")
-    //    {
-    //        int pID = Int32.Parse(e.CommandArgument.ToString());
-    //        pCtlr.DeletePurchaseOrder(pID);
-    //        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-    //            "<script language='javascript'>alert('" + "Purchase Order Deleted!" + "');</script>");
-    //        BindData();
-    //    }
-    //}
 
     protected void btn_Delete_Click(object sender, EventArgs e)
     {

@@ -94,6 +94,10 @@ public class PurchaseController
     {
         return EFBroker_PurchaseOrder.GetPurchaseOrderList();
     }
+    public List<PurchaseOrder> GetPurchaseOrderListByUser(int empId)
+    {
+        return EFBroker_PurchaseOrder.GetPurchaseOrderListByUser(empId);
+    }
 
     public List<PurchaseOrder> GetPurchaseOrderListByStatus(string status)
     {

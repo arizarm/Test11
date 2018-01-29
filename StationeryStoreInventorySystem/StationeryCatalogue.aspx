@@ -88,7 +88,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" OnClientClick="return confirm('Confirm Delete?');" ></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 

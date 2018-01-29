@@ -118,6 +118,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         Label r = (Label)GridView1.Rows[index].FindControl("LabelICode");
         string itemCode = r.Text;
         EFBroker_Item.RemoveItem(itemCode);
+        Utility.DisplayAlertMessage(Message.DeleteSuccessful);
         return;
     }
     protected void UpdateRow(int index)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 /// <summary>
 /// Summary description for LoginController
@@ -13,6 +14,25 @@ public class LoginController
         //
         // TODO: Add constructor logic here
         //
+    }
+
+    public static Employee login(string email, string password)
+    {
+
+        bool isValid = EmployeeController.verifyLogin(email, password);
+
+        if (isValid)
+        {
+            Employee emp = EmployeeController.GetEmployeeByEmail(email);
+            //Check is temp head or not 
+            if (Utility.checkIsTempDepHead(emp) == true)
+            {
+                //set role for temp head
+                emp.Role = "DepartmentTempHead";
+            }
+            return emp;
+        }
+        return null;
     }
     public static void NavigateMain()
     {

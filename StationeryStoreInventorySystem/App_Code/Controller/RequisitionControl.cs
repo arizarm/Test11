@@ -76,7 +76,7 @@ public class RequisitionControl
 
     public static List<ReqisitionListItem> SearchForRepRequisitionWithStatus(string searchWord, int empID, string status)
     {
-        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.getRequisitionListByEmpIDAndStatus(empID, status));
+        List<ReqisitionListItem> list = PopulateGridViewForDepartment(EFBroker_Requisition.getRequisitionListByEmpIDAndStatus(empID, status));
 
         searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord.ToLower()) || x.Date.ToString().Contains(searchWord.ToString())).ToList();
         //itemList = getCollectionList();
@@ -89,7 +89,7 @@ public class RequisitionControl
 
     public static List<ReqisitionListItem> SearchForRepRequisitionWithoutStatus(string searchWord, int empID)
     {
-        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.GetRequisitionListByRequestorID(empID));
+        List<ReqisitionListItem> list = PopulateGridViewForDepartment(EFBroker_Requisition.GetRequisitionListByRequestorID(empID));
         searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord.ToLower()) || Convert.ToDateTime(x.Date).ToLongDateString().Contains(searchWord.ToString())).ToList();
 
         //itemList = getCollectionList();
@@ -102,14 +102,14 @@ public class RequisitionControl
 
     public static List<ReqisitionListItem> HeadSearchWithoutStatus(string searchWord, string deptCode)
     {
-        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.SearchForReqHeadWithoutStatus(deptCode)).ToList();
+        List<ReqisitionListItem> list = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForReqHeadWithoutStatus(deptCode)).ToList();
         searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord) || Convert.ToDateTime(x.Date).ToLongDateString().ToLower().Contains(searchWord.ToLower()) || x.EmployeeName.ToLower().Contains(searchWord.ToLower())).ToList();
         return searchList;
     }
 
     public static List<ReqisitionListItem> HeadSearchWithStatus(string searchWord,string deptCode,string status)
     {
-        List<ReqisitionListItem> list = PopulateGridView(EFBroker_Requisition.SearchForReqHeadWithStatus(deptCode,status)).ToList();
+        List<ReqisitionListItem> list = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForReqHeadWithStatus(deptCode,status)).ToList();
         searchList = list.Where(x => x.RequisitionNo.ToString().Contains(searchWord) || Convert.ToDateTime(x.Date).ToLongDateString().ToLower().Contains(searchWord.ToLower()) || x.EmployeeName.ToLower().Contains(searchWord.ToLower())).ToList();
         return searchList;
     }
@@ -317,7 +317,7 @@ public class RequisitionControl
     {
         rlist = new List<Requisition>();
         rlist = EFBroker_Requisition.GetRequisitionListByRequestorID(empCode);
-        return PopulateGridView(rlist);
+        return PopulateGridViewForDepartment(rlist);
 
     }
 
@@ -325,13 +325,13 @@ public class RequisitionControl
     {
         rlist = new List<Requisition>();
         rlist = EFBroker_Requisition.getCollectionList(depCode);
-        return PopulateGridView(rlist);
+        return PopulateGridViewForDepartment(rlist);
     }
     
     public static List<ReqisitionListItem> DisplayAllByDeptCode(string deptCode)
     {
         rlist = new List<Requisition>();
         rlist = EFBroker_Requisition.displayAllByDeptCode(deptCode);
-        return PopulateGridView(rlist);
+        return PopulateGridViewForDepartment(rlist);
     }
 }

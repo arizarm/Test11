@@ -106,13 +106,23 @@ public partial class RequisitionForm : System.Web.UI.Page
             {
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
 
+                DeptController dc = new DeptController();
                 Employee empHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
+                Employee deptHead = dc.GetDHeadByDeptCode(emp.DeptCode);
+
                 string mail = empHead.Email;
                 string receiver = mail;
                 string subject = "New Requisition";
                 string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
                 Utility.sendMail(receiver, subject, body);
-                Response.Redirect("~/DepartmentEmployee/RequisitionListDepEmp.aspx");
+                if (empHead != deptHead)
+                {
+                    string mail1 = deptHead.Email;
+                    string receiver1 = mail1;
+                    string subject1 = "New Requisition";
+                    string body1 = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                    Utility.sendMail(receiver1, subject1, body1);
+                }
 
                 Response.Redirect(LoginController.RequisitionListDepEmpURI);
             }

@@ -13,7 +13,7 @@
         android:layout_marginTop="10dip"
 
         android:textStyle="bold"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -31,29 +31,53 @@
         android:prompt="@string/spinner_title"
         />
 
+    <TextView
+        android:id="@+id/txtDateFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="From: "/>
+
 
     <TextView
-        android:id="@+id/txtError"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold" />
-
-    <DatePicker
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
+        android:id="@+id/txtSDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date" />
+        android:text="" />
 
     <Button
-        android:id="@+id/btnUpdateCollectPoint"
+        android:id="@+id/btnForSDate"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:text="Edit Start Date" />
+
+    <TextView
+        android:id="@+id/txtDateTo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delegate Authority" />
+        android:text="To:"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/txtEDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+
+    <Button
+        android:id="@+id/btnForEDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit End Date" />
+
+    <Button
+        android:id="@+id/btnUpdateAHead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Acting Head" />
 
 
 

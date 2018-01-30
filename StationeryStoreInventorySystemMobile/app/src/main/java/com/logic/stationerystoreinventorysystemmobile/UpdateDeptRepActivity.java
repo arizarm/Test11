@@ -110,8 +110,8 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                 }
                 if (!isSame) {
                    // name.setVisibility(View.GONE);
-                    emp.put("dCode", bid);
-                    emp.put("eId", cid);
+                    emp.put("deptcode", bid);
+                    emp.put("eid", cid);
                     emp.put("role","Representative");
 
                     new AsyncTask<Employee, Void, Void>() {

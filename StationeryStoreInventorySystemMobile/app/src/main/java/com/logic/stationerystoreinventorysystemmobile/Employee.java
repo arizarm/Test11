@@ -17,18 +17,18 @@ import java.util.LinkedHashMap;
 
 public class Employee extends java.util.HashMap<String,String> {
 
-    final static String hostURL = "http://172.17.250.219/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
 
     public Employee(){
 
     }
     public Employee(String dCode,String eId,String eName,String role) {
-        put("dCode", dCode);
-        put("eId", eId);
-        put("eName", eName);
+        put("deptCode", dCode);
+        put("eid", eId);
+        put("ename", eName);
         put("role",role);
-
     }
+
 
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));
@@ -38,6 +38,11 @@ public class Employee extends java.util.HashMap<String,String> {
         put("password", password);
         put("email", email);
         put("isTemphead", isTemphead);
+        put("startDate", startDate);
+        put("endDate", endDate);
+    }
+    public  Employee(String ename,String startDate,String endDate){
+        put("ename", ename);
         put("startDate", startDate);
         put("endDate", endDate);
     }
@@ -131,13 +136,58 @@ public class Employee extends java.util.HashMap<String,String> {
     public static void updateDeptRep(Employee emp) {
         JSONObject jdeptRep = new JSONObject();
         try {
-            jdeptRep.put("DeptCode", emp.get("dCode"));
-            jdeptRep.put("Eid", emp.get("eId"));
+            jdeptRep.put("DeptCode", emp.get("deptcode"));
+            jdeptRep.put("Eid", emp.get("eid"));
             jdeptRep.put("Role", emp.get("role"));
         } catch (Exception e) {
 
         }
         String result = JSONParser.postStream(hostURL + "UpdateDeptRep", jdeptRep.toString());
     }
+
+    public static LinkedHashMap<String, String> listActingHead(String dcode) {
+        LinkedHashMap<String, String> elist = new LinkedHashMap<String, String>();
+        JSONArray a = JSONParser.getJSONArrayFromUrl(hostURL + "Employee/ForActingDHead/" + dcode + "/0");
+        try {
+            elist.put("0","--Revoked Authority--");
+            for (int i = 0; i < a.length(); i++) {
+                JSONObject b = a.getJSONObject(i);
+
+                elist.put(Integer.toString(b.getInt("Eid")), b.getString("Ename"));
+
+            }
+        } catch (Exception e) {
+            Log.e("Employee.list()", "JSONArray error");
+        }
+        return (elist);
+    }
+
+    public static Employee getActingDeptHeadID(String dcode) {
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL + "Employee/ActingDHead/" + dcode);
+
+        try {
+            return
+                    new Employee(b.getString("Ename"), b.getString("StartDate"), b.getString("EndDate"));
+        } catch (Exception ex) {
+            Log.e("Employee.list()", "JSONArray error");
+        }
+        return (null);
+    }
+
+    public static void updateActingDHead(Employee emp) {
+        JSONObject jdeptAHead= new JSONObject();
+        try {
+            jdeptAHead.put("DeptCode", emp.get("deptcode"));
+            jdeptAHead.put("Eid", emp.get("eid"));
+            jdeptAHead.put("Role", emp.get("role"));
+            jdeptAHead.put("IsTemphead",emp.get("isTemphead"));
+            jdeptAHead.put("StartDate",emp.get("startDate"));
+            jdeptAHead.put("EndDate",emp.get("endDate"));
+        } catch (Exception e) {
+
+        }
+        String result = JSONParser.postStream(hostURL + "UpdateActingDHead", jdeptAHead.toString());
+    }
+
 
 }

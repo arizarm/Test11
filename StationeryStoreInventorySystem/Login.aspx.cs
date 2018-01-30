@@ -18,15 +18,26 @@ public partial class Login : System.Web.UI.Page
     {
         string email = TextBox1.Text;
         string password = Password1.Value;
-        Employee emp = LoginController.login(email, password);
-        if ( emp != null)
+        bool isValid = EmployeeController.verifyLogin(email, password);
+
+        if (isValid)
         {
-            HttpContext.Current.Session["empRole"] = emp.Role;
-            HttpContext.Current.Session["empID"] = emp.EmpID;
-            HttpContext.Current.Session["emp"] = emp;
-           
+            Employee emp = EmployeeController.GetEmployeeByEmail(email);
+            //Check is temp head or not 
+            if(Utility.checkIsTempDepHead(emp) == true)
+            {
+                //set role for temp head
+                emp.Role = "DepartmentTempHead";              
+            }
+            Session["empRole"] = emp.Role;           
+            Session["empID"] = emp.EmpID;         
+            Session["emp"] = emp;
+
+            Label4.Text = "Success User";
+
             FormsAuthentication.RedirectFromLoginPage
-             (emp.Email, Persist.Checked);
+          (emp.Email, Persist.Checked);
+
 
             FormsAuthenticationTicket ticket1 =
                new FormsAuthenticationTicket(
@@ -36,17 +47,19 @@ public partial class Login : System.Web.UI.Page
                     DateTime.Now.AddMinutes(30),         // expires in 30 minutes
                     false,      // cookie is not persistent
                     emp.Role                             // role assignment is stored
-                                                         // in userData
+                                                      // in userData
                     );
             HttpCookie cookie1 = new HttpCookie(
               FormsAuthentication.FormsCookieName,
               FormsAuthentication.Encrypt(ticket1));
-            HttpContext.Current.Response.Cookies.Add(cookie1);
+            Response.Cookies.Add(cookie1);
+
             LoginController.NavigateMain();
+
         }
         else
         {
-            Label4.Text = "Invalid User";
+            Label4.Text = "User ID and Password is not match";
         }
     }
 

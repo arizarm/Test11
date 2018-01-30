@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class RequisitionListItem extends HashMap<String,String>{
-    final static String host="http:// 172.17.250.219/StationeryStoreInventorySystem/RequisitionListService.svc";
+    final static String host="http://172.17.254.6/StationeryStoreInventorySystem/RequisitionListService.svc";
 
 
     public RequisitionListItem(String date, String requisitionNo, String department, String status, String employeeName/*, String remarks*/){
@@ -27,6 +27,12 @@ public class RequisitionListItem extends HashMap<String,String>{
     }
 
     public RequisitionListItem(){}
+
+    public RequisitionListItem(String Code, String Description, String ShortfallQty){
+        put("Code",Code);
+        put("Description",Description);
+        put("ShortfallQty",ShortfallQty);
+    }
 
     public RequisitionListItem(String date, String empName){
         put("Date",date);

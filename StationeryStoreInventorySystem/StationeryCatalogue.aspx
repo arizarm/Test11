@@ -2,37 +2,22 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <script src="/Content/JavaScript.js"></script>
-    <script>
-        function hideColumn() {
-            col_num = [document.getElementById("LinkButton1").value,
-                document.getElementById("LinkButton2").value,
-                document.getElementById("LinkButton3").value,
-            document.getElementById("LinkButton4").value];
-            rows = document.getElementById("GridView1").rows;
-            for (j = 0; j < col_num.length; i++) {
-                for (i = 0; i < rows.length; i++) {
-                    rows[i].cells[col_num[j]].style.display = "none";
-                }
-            }
-        }
-    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
     <div class="row">
         <div class="col-md-6 pull-left">
-            <asp:LinkButton ID="LinkButton5" runat="server" CssClass="pull-left" OnClick="LinkButton5_Click">&lt &lt Create New Item &gt &gt</asp:LinkButton>
+            <asp:HyperLink ID="HyperLink7" runat="server" CssClass="pull-left" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">&lt &lt Create New Item &gt &gt</asp:HyperLink>
         </div>
-        
+        <asp:Button ID="PrintViewButton" runat="server" Text="View Printable Version" OnClick="PrintViewButton_Click" />
         <div class="col-md-6 pull-right">
-            <asp:Button ID="PrintViewButton" runat="server" Text="View Printable Version" class="btn btn-default pull-right" OnClick="PrintViewButton_Click" />
-            <button type="button" id="PrintButton" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true" visible="false">Print Catalogue</button>
+            <button type="button" id="PrintButton" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true">Print Catalogue</button>
         </div>
     </div>
 
     <br />
     <div id="printable">
-        <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width="90%" HorizontalAlign="Center">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width="90%" HorizontalAlign="Center">
             <Columns>
                 <asp:TemplateField HeaderText="Item Number">
                     <ItemTemplate>
@@ -52,8 +37,7 @@
                         <asp:TextBox ID="TextBoxDesc" runat="server" Text='<%# Bind("description") %>'></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="LabelDescription" runat="server" Visible="true" Text='<%# Bind("description") %>'></asp:Label>
-                        <asp:HyperLink ID="lnkStockCard" runat="server" Visible="false" NavigateUrl="" Text='<%# Bind("Description") %>'></asp:HyperLink>
+                        <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Level">
@@ -99,18 +83,18 @@
                         <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="CancelEdit" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <ItemTemplate>
-                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" OnClientClick="return confirm('Confirm Delete?');"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 
 
             </Columns>
         </asp:GridView>
-    </div>
+        </div>
 </asp:Content>
 

@@ -31,7 +31,7 @@
                     <asp:TextBox ID="TextBox1" runat="server" class="form-control"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                         ControlToValidate="TextBox1" ForeColor="Red"
-                        ErrorMessage="RequiredFieldValidator">Name is required</asp:RequiredFieldValidator>
+                        ErrorMessage="RequiredFieldValidator">User ID is required</asp:RequiredFieldValidator>
                 </div>
                 <div class="form-group">
                     <asp:Label ID="Label2" runat="server" Text="Enter Password : " for="Password1"></asp:Label>&nbsp&nbsp

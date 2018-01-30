@@ -78,11 +78,11 @@ public partial class RegenerateRequest : System.Web.UI.Page
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
             Session["ItemToUpdate"] = true;
-            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
+            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {
-            Response.Redirect(LoginController.DisbursementListURI);
+            Response.Redirect("~/Store/DisbursementList.aspx");
         }
     }
 

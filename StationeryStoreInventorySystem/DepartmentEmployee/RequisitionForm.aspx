@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionFormDepRep.aspx.cs" Inherits="RequisitionForm" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="RequisitionForm.aspx.cs" Inherits="RequisitionForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style type="text/css">
@@ -61,7 +61,7 @@
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
 
         <Columns>
-            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="false">
+            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                 <ItemTemplate>
                     <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
                 </ItemTemplate>

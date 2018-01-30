@@ -14,26 +14,18 @@ import java.util.List;
 
 public class Department extends  java.util.HashMap<String,String> {
     final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
-
-    public Department(){
-
-    }
-    public Department(String dCode,String collectId, String departmentName, String contactName, String phone, String fax, String dHead) {
+    public Department(String dCode,String collectId, String departmentName, String contactName, String phone,String fax) {
         put("dCode", dCode);
         put("collectId", collectId);
         put("departmentName", departmentName);
         put("contactName", contactName);
         put("phone", phone);
         put("fax", fax);
-        put("dHead",dHead);
     }
     public Department(String dCode, String departmentName){
         put("dCode", dCode);
         put("departmentName", departmentName);
     }
-
-
-
 
 
     public  static List<Department> listDepartment(){
@@ -52,43 +44,14 @@ public class Department extends  java.util.HashMap<String,String> {
 
     public static Department getDept(String dcode){
         JSONObject b=JSONParser.getJSONFromUrl(hostURL+"Dept/"+dcode);
-        JSONObject e=JSONParser.getJSONFromUrl(hostURL+"Employee/DeptHead/"+dcode);
         try{
-            return new Department(b.getString("DeptCode"),
-                    b.getString("Collectid"), b.getString("Dname"),b.getString("Contactname"),
-                    b.getString("Telephone"),b.getString("Fax"),e.getString("Ename"));
+            return new Department(b.getString("DeptCode"),b.getString
+                    ("Collectid"),b.getString("Dname"),b.getString("Contactname"),
+                    b.getString("Telephone"),b.getString("Fax"));
         }
-        catch (Exception ex){
+        catch (Exception e){
             Log.e("Department.list()","JSONArray error");
         }
         return(null);
     }
-
-    public static String getCollectionID(String dcode) {
-        JSONObject b = JSONParser.getJSONFromUrl(hostURL + "Dept/"+dcode);
-
-        try {
-            return b.getString("Collectid");
-        } catch (Exception ex) {
-            Log.e("Department.list()", "JSONArray error");
-        }
-        return (null);
-    }
-
-    public static void updateCollectionPoint(Department dept){
-        JSONObject jcpoint=new JSONObject();
-        try
-        {
-            jcpoint.put("DeptCode",dept.get("dCode"));
-            jcpoint.put("Collectid",dept.get("collectId"));
-        }catch (Exception e)
-        {
-
-        }
-        String result=JSONParser.postStream(hostURL+"UpdateCollect",jcpoint.toString());
-    }
-
-
-
-
 }

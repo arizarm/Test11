@@ -7,8 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,38 +19,6 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
     String deptCode;
     SharedPreferences pref;
     SimpleAdapter sa;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item1:
-                Intent i1 = new Intent(this, LoginActivity.class);
-                startActivity(i1);
-                return true;
-            case R.id.item2:
-                Intent i2 = new Intent(this, RequisitionListActivity.class);
-                startActivity(i2);
-                return true;
-            case R.id.item3:
-                SharedPreferences.Editor editor = pref.edit();
-                editor.clear();
-                editor.commit();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                startActivity(i3);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

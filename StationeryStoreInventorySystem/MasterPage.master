@@ -23,9 +23,7 @@
     <form id="form2" runat="server">
         <div class="wrapper">
             <div class="header row">
-                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
                     <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />                  
-                </asp:HyperLink>
                 <asp:Label ID="LoginUserName" runat="server" Text="Label" class ="loginUser"></asp:Label>                           
                 <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
             </div>
@@ -57,7 +55,7 @@
 
                 <!-- Menu For Department Employee -->
                 <div class="left-col" id="DepMember" runat="server">
-                    <asp:HyperLink ID="HyperLink14" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>              
+                    <asp:HyperLink ID="HyperLink14" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionFormEmp.aspx">Generate Requisition</asp:HyperLink>              
                     <asp:HyperLink ID="HyperLink11" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionListDepEmp.aspx">Requisition List</asp:HyperLink>                  
                     <asp:HyperLink ID="HyperLink12" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
                 </div>

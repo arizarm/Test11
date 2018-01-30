@@ -14,14 +14,14 @@ public partial class RequisitionForm : System.Web.UI.Page
     List<RequestedItem> rItem = new List<RequestedItem>();
     //ArrayList reqItem =new ArrayList();
     static RequestedItem ri;
-    string des;
-    Employee emp;
     string code;
+    Employee emp;
+    string des;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         Label1.Text = DateTime.Now.ToLongDateString();
-         emp = (Employee)Session["emp"];
+        emp = (Employee)Session["emp"];
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
@@ -72,7 +72,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             }
             if (isEqual)
             {
-                Utility.DisplayAlertMessage("Item is already in the form.");
+                Response.Write("<script>alert('Item is already in the form.');</script>");
             }
             else
             {
@@ -100,7 +100,7 @@ public partial class RequisitionForm : System.Web.UI.Page
             string DeptCode = emp.DeptCode;
             if (GridView2.Rows.Count <= 0)
             {
-                Utility.DisplayAlertMessage("You have not requested any item yet!");
+                Response.Write("<script>alert('You have not requested any item yet!');</script>");
             }
             else
             {
@@ -109,7 +109,6 @@ public partial class RequisitionForm : System.Web.UI.Page
                 DeptController dc = new DeptController();
                 Employee empHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
                 Employee deptHead = dc.GetDHeadByDeptCode(emp.DeptCode);
-
 
                 string mail = empHead.Email;
                 string receiver = mail;
@@ -124,7 +123,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                     string body1 = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
                     Utility.sendMail(receiver1, subject1, body1);
                 }
-                Response.Redirect(LoginController.RequisitionListDepEmpURI);
+                Response.Redirect(LoginController.RequisitionListTempDepRedURI);
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

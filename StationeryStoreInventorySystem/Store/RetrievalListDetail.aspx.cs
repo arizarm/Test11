@@ -8,22 +8,32 @@ using System.Web.UI.WebControls;
 public partial class RetrievalForm : System.Web.UI.Page
 {
     RetrievalControl retCon = new RetrievalControl();
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack) //first time 
         {
-            int retrievalId = (int)Session["RetrievalID"];            
+            int retrievalId = (int)Session["RetrievalID"];
 
             List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
-            
+
             gvRe.DataSource = RetrievalListDetailItemList;
-            gvRe.DataBind();          
+            gvRe.DataBind();
+
+            //RangeValidator
+            foreach (GridViewRow subR in gvRe.Rows)
+            {
+                int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+
+                RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
+                rv.MaximumValue = totalRequestedQty.ToString();
+            }
+            //
         }
     }
 
     protected void Save_Click(object sender, EventArgs e)
-    {    
+    {
         saveRetrievalQty();
     }
 
@@ -44,7 +54,7 @@ public partial class RetrievalForm : System.Web.UI.Page
     }
 
     protected void FinalizeDisbursmentList_Click(object sender, EventArgs e)
-    {        
+    {
         List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
 
         Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();  //shortfall item + adjustment qty
@@ -66,13 +76,13 @@ public partial class RetrievalForm : System.Web.UI.Page
 
             Session["discrepancyList"] = discToUpdate;
             Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
-            Response.Redirect(LoginController.RetrievalShortfallURI);
+            Response.Redirect("RetrievalShortfall.aspx");
         }
         else //if there is no short fall go to collectionpoint
         {
             Session["discrepancyList"] = null;
             Session["RetrievalShortfallItemList"] = null;
-            Response.Redirect(LoginController.CollectionPointUpdateURI);
+            Response.Redirect("CollectionPointUpdate.aspx");
         }
     }
 }

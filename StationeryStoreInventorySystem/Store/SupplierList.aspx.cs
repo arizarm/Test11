@@ -29,6 +29,6 @@ public partial class SupplierList : System.Web.UI.Page
 
     protected void AddSupplierButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect(LoginController.SupplierCreateURI);
+        Response.Redirect("~/StoreManagerSupervisor/SupplierCreate.aspx");
     }
 }

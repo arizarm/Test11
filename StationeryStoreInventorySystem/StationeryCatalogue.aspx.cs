@@ -17,28 +17,25 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             {
                 GridView1.DataSource = EFBroker_Item.GetCatalogueList();
             }
-            catch (Exception sql)
+            catch(Exception sql)
             {
                 Response.Redirect(LoginController.ErrorPageURI);
             }
             if (!IsPostBack)
             {
-                GridView1.DataBind();
                 if (user.DeptCode != "STATS")
-                {
-                    LinkButton5.Visible = false;
-                    GridView1.Columns[0].Visible = false;
-                    GridView1.Columns[3].Visible = false;
-                    GridView1.Columns[4].Visible = false;
-                    GridView1.Columns[6].Visible = false;
-                    GridView1.Columns[7].Visible = false;
-                    GridView1.Columns[8].Visible = false;
-                }
-                else
-                {
-                    DisplayClickableURL();
-                }
-
+                    if (true)
+                    {
+                        HyperLink7.Visible = false;
+                        PrintViewButton.Visible = false;
+                        GridView1.Columns[0].Visible = false;
+                        GridView1.Columns[3].Visible = false;
+                        GridView1.Columns[4].Visible = false;
+                        GridView1.Columns[6].Visible = false;
+                        GridView1.Columns[7].Visible = false;
+                        GridView1.Columns[8].Visible = false;
+                    }
+                GridView1.DataBind();
             }
         }
         else
@@ -47,18 +44,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         }
 
     }
-    public void DisplayClickableURL()
-    {
-        foreach (GridViewRow row in GridView1.Rows)
-        {
-            HyperLink itemLink = row.FindControl("lnkStockCard") as HyperLink;
-            Label lblItemCode = row.FindControl("LabelICode") as Label;
-            Label lbldesc = row.FindControl("LabelDescription") as Label;
-            itemLink.Visible = true;
-            lbldesc.Visible = false;
-            itemLink.NavigateUrl = LoginController.ItemStockCardURI + "?itemCode=" + lblItemCode.Text;
-        }
-    }
+
 
 
     protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -132,25 +118,23 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         Label r = (Label)GridView1.Rows[index].FindControl("LabelICode");
         string itemCode = r.Text;
         EFBroker_Item.RemoveItem(itemCode);
-        Utility.DisplayAlertMessage(Message.DeleteSuccessful);
         return;
     }
     protected void UpdateRow(int index)
     {
-        if (Page.IsValid)
-        {
-            GridViewRow row = GridView1.Rows[index];
-            Label itemCode = (Label)row.FindControl("LabelICode");
-            DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
-            TextBox description = (TextBox)row.FindControl("TextboxDesc");
-            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
-            int level = Convert.ToInt32(reorderLevel.Text);
-            TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
-            int qty = Convert.ToInt32(reorderQty.Text);
-            TextBox bin = (TextBox)row.FindControl("TextBoxBin");
-            DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
-            ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
-            cancelEdit(index);
+        if (Page.IsValid) { 
+        GridViewRow row = GridView1.Rows[index];
+        Label itemCode = (Label)row.FindControl("LabelICode");
+        DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
+        TextBox description = (TextBox)row.FindControl("TextboxDesc");
+        TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
+        int level = Convert.ToInt32(reorderLevel.Text);
+        TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
+        int qty = Convert.ToInt32(reorderQty.Text);
+        TextBox bin = (TextBox)row.FindControl("TextBoxBin");
+        DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
+        ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
+        cancelEdit(index);
         }
     }
     protected void cancelEdit(int index)
@@ -257,20 +241,13 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             GridView1.Columns[7].Visible = false;
             GridView1.Columns[8].Visible = false;
             PrintViewButton.Text = "Back";
-            PrintButton.Visible = true;
         }
         else
         {
             GridView1.Columns[7].Visible = true;
             GridView1.Columns[8].Visible = true;
             PrintViewButton.Text = "View Printable Version";
-            PrintButton.Visible = false;
 
         }
-    }
-
-    protected void LinkButton5_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(LoginController.StationeryCatalogueDetailURI);
     }
 }

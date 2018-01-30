@@ -14,6 +14,7 @@ public class DiscrepancyHolder {
     static HashMap<String, Integer> discrepancies = new HashMap<String, Integer>();
     static ArrayList<CatalogueItem> monthlyItems;
     static boolean monthly = false;
+    static boolean itemToUpdate = false;
 
     public static HashMap<String, Integer> getDiscrepancyList()
     {
@@ -40,6 +41,18 @@ public class DiscrepancyHolder {
         monthly = true;
     }
 
+    public static boolean itemToUpdate(){
+        return itemToUpdate;
+    }
+
+    public static void itemToUpdatePresent(){
+        itemToUpdate = true;
+    }
+
+    public static void resetItemToUpdate(){
+        itemToUpdate = false;
+    }
+
     //For monthly inventory check mode
     public static void initialiseMonthlyItems(){
         monthlyItems = CatalogueItem.getAllItems();
@@ -53,12 +66,12 @@ public class DiscrepancyHolder {
         for(CatalogueItem ci : monthlyItems){
             String correctQty = ci.get("correctQty");
             if(correctQty == null){
-                return false;
-            }
-            else{
                 if(!(correctQty.equals("N") || correctQty.equals("Y"))){
                     return false;
                 }
+            }
+            else{
+                return false;
             }
         }
         return true;
@@ -69,7 +82,7 @@ public class DiscrepancyHolder {
         boolean firstItem = true;
         for(CatalogueItem ci : monthlyItems){
             String correctQty = ci.get("correctQty");
-            if(correctQty != null){
+            if(correctQty == null){
                 if(!(correctQty.equals("N") || correctQty.equals("Y"))){
                     if(!firstItem){
                         sb.append(", ");

@@ -5,7 +5,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <h2 class="mainPageHeader">Logic University Stationery Catalogue (New Item)</h2>
-    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">&lt &lt Return to Catalogue List &gt &gt</asp:LinkButton>
+
+    <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/StationeryCatalogue.aspx" >&lt &lt Return to Catalogue List &gt &gt</asp:HyperLink>
     <asp:panel id="Panel1" runat="server">
             <table>
         <tr>

@@ -47,8 +47,49 @@ public class LoginActivity extends Activity {
                     editor.putString("endDate",emp.get("endDate"));
                     editor.commit();
 
-                    Toast.makeText(getApplicationContext(),
-                            "Redirecting...",Toast.LENGTH_SHORT).show();
+                    if(emp.get("role").equals("DepartmentHead"))
+                    {
+                        Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
+                        startActivity(i);
+                        Toast.makeText(getApplicationContext(),
+                                "Department Head Access Granted",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(emp.get("isTemphead").equals("Y") )
+                            /*startDate.before(yestDate) && endDate.before(tmrDate))*/
+                    {
+                        new AsyncTask<String,Void,Boolean>(){
+                            @Override
+                            protected Boolean doInBackground(String...params){
+                                return Employee.CheckIsTempHead(params[0]);
+                            }
+
+                            @Override
+                            protected void onPostExecute(Boolean result){
+                                if(result){
+                                    Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
+                                    startActivity(i);
+                                    Toast.makeText(getApplicationContext(),
+                                            "Acting Dept Head Access Granted", Toast.LENGTH_SHORT).show();
+                                }else
+                                {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Access Denied",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }.execute(emp.get("eid"));
+
+                        /*if((today.equals(startCal) || today.after(startCal)) && (today.equals(endCal)||today.before(endCal))){
+                            Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
+                            startActivity(i);
+                            Toast.makeText(getApplicationContext(),
+                                    "Acting Dept Head Access Granted", Toast.LENGTH_SHORT).show();
+                        }*/
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),
+                                "Access Denied",Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                 }

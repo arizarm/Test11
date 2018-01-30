@@ -43,6 +43,15 @@ public class EFBroker_PurchaseOrder
         }
         return rList;
     }
+    public static List<PurchaseOrder> GetPurchaseOrderListByUser(int empID)
+    {
+        List<PurchaseOrder> rList;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x=>x.Employee.EmpID==empID).ToList();
+        }
+        return rList;
+    }
 
     public static List<PurchaseOrder> GetPurchaseOrderListByStatus(string status)
     {
@@ -210,22 +219,15 @@ public class EFBroker_PurchaseOrder
             order.Status = pOrder.Status;
             order.ExpectedDate = DateTime.Now.Date;
 
-            List<Item_PurchaseOrder> pitemList = entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == order.PurchaseOrderID).ToList();
-            foreach (Item_PurchaseOrder pitem in pitemList)
+            List<Item_PurchaseOrder> itemList = entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == order.PurchaseOrderID).ToList();
+            foreach (Item_PurchaseOrder item in itemList)
             {
                 StockCard itemStockCard = (from stck in entities.StockCards.OrderBy(x => x.Balance)
-                                           where stck.ItemCode == pitem.ItemCode
+                                           where stck.ItemCode == item.ItemCode
                                            select stck).FirstOrDefault();
-                itemStockCard.Qty = pitem.OrderQty;
+                itemStockCard.Qty = item.OrderQty;
                 itemStockCard.Balance = itemStockCard.Balance + itemStockCard.Qty;
-                itemStockCard.ItemCode = pitem.ItemCode;
-                itemStockCard.TransactionType = "Purchase";               
-                itemStockCard.TransactionDetailID = pitem.PurchaseOrderID;
-                entities.StockCards.Add(itemStockCard);
-                Item item = entities.Items.Where(x => x.ItemCode == pitem.ItemCode).First();
-                item.BalanceQty += itemStockCard.Qty;
             }
-            
             entities.SaveChanges();
             ts.Complete();
         }

@@ -3,21 +3,18 @@ package com.logic.stationerystoreinventorysystemmobile;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
 import android.preference.PreferenceManager;
-import android.text.Layout;
+>>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +65,12 @@ public class DiscrepancySummaryActivity extends Activity {
         String eid = "1001";
         boolean complete = true;
         String status = DiscrepancyHolder.isMonthly() ? "Monthly":"Pending";
+<<<<<<< HEAD
+        final TextView tvError = findViewById(R.id.tvError);
+        tvError.setText("");
+=======
         TextView tvError = findViewById(R.id.tvError);
+>>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
 
         if(Util.isInt(eid)){
             View v2;
@@ -81,10 +83,10 @@ public class DiscrepancySummaryActivity extends Activity {
             final ArrayList<Discrepancy> toBeSubmitted = new ArrayList<Discrepancy>();
 
             for (int i = 0; i < listDisc.getCount(); i++) {
-                v2 = listDisc.getChildAt(i);
-                tvItemCode = v2.findViewById(R.id.tvItemCode);
-                tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
-                etRemarks = v2.findViewById(R.id.etRemarks);
+                v = listDisc.getChildAt(i);
+                tvItemCode = v.findViewById(R.id.tvItemCode);
+                tvAdjustmentQty = v.findViewById(R.id.tvAdj);
+                etRemarks = v.findViewById(R.id.etRemarks);
 
 
                 String itemCode = tvItemCode.getText().toString();
@@ -104,24 +106,41 @@ public class DiscrepancySummaryActivity extends Activity {
                     new AsyncTask<Void, Void, Void>() {
                         ArrayList<Discrepancy> dList = toBeSubmitted;
                         ProgressDialog progress;
+                        boolean submissionSuccessful = false;
                         @Override
                         protected void onPreExecute() {
                             progress = ProgressDialog.show(DiscrepancySummaryActivity.this, "Search", "Searching through items", true);
                         }
                         @Override
                         public Void doInBackground(Void... voids) {
-                            Discrepancy.submitDiscrepancies(dList);
+                            submissionSuccessful = Discrepancy.submitDiscrepancies(dList);
                             return null;
                         }
 
                         @Override
                         public void onPostExecute(Void voids) {
                             progress.dismiss();
+<<<<<<< HEAD
+                            if(submissionSuccessful){
+                                Toast t = Toast.makeText(getApplicationContext(), "Discrepancies reported", Toast.LENGTH_LONG);
+                                Context c = getApplicationContext();
+                                int offset = Math.round(150 * c.getResources().getDisplayMetrics().density);
+                                t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
+                                t.show();
+                                DiscrepancyHolder.clearDiscrepancies();
+                                DiscrepancyHolder.clearMonthlyItems();
+                                DiscrepancyHolder.setAdhocMode();    //Reset to adhoc mode as default, monthly mode is strictly for monthly inventory check
+                            }
+                            else{
+                                tvError.setText("Failed to send, please try again");
+                            }
+=======
                             Toast t = Toast.makeText(getApplicationContext(), "Discrepancies reported", Toast.LENGTH_LONG);
                             Context c = getApplicationContext();
                             int offset = Math.round(150 * c.getResources().getDisplayMetrics().density);
                             t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
                             t.show();
+>>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
                         }
                     }.execute();
                 }

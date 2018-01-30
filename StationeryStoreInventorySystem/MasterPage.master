@@ -95,7 +95,7 @@
                     <asp:HyperLink ID="SupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>   
                     <asp:HyperLink ID="CatalogueListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
                     <asp:HyperLink ID="CatalogDetailClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">Add New Catalogue Item</asp:HyperLink>
-                     <asp:HyperLink ID="PurchaseOrderFormClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderForm.aspx">Purchase Order Form</asp:HyperLink>  
+                     <asp:HyperLink ID="PurchaseOrderFormClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreClerk/PurchaseOrderForm.aspx">Purchase Order Form</asp:HyperLink>  
                     <asp:HyperLink ID="PurchaseOrderListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>   
                     <asp:HyperLink ID="ReorderReportClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink>
                     <asp:HyperLink ID="GenerateDiscrepancyClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>

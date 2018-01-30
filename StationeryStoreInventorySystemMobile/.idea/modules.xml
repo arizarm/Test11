@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../lastclone/StationeryStoreInventorySystemMobile/StationeryStoreInventorySystemMobile.iml" filepath="$PROJECT_DIR$/../../lastclone/StationeryStoreInventorySystemMobile/StationeryStoreInventorySystemMobile.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../lastclone/StationeryStoreInventorySystemMobile/app/app.iml" filepath="$PROJECT_DIR$/../../lastclone/StationeryStoreInventorySystemMobile/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StationeryStoreInventorySystemMobile.iml" filepath="$PROJECT_DIR$/StationeryStoreInventorySystemMobile.iml" />
+      <module fileurl="file://C:\Users\edwon\Documents\gitrepos7\lastclone\StationeryStoreInventorySystemMobile\StationeryStoreInventorySystemMobile.iml" filepath="C:\Users\edwon\Documents\gitrepos7\lastclone\StationeryStoreInventorySystemMobile\StationeryStoreInventorySystemMobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\edwon\Documents\gitrepos7\lastclone\StationeryStoreInventorySystemMobile\app\app.iml" filepath="C:\Users\edwon\Documents\gitrepos7\lastclone\StationeryStoreInventorySystemMobile\app\app.iml" />
     </modules>
   </component>
 </project>

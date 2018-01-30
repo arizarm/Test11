@@ -69,8 +69,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     protected void Button4_Click(object sender, EventArgs e)
     {        //Search button
-        //List<Item> iList = new List<Item>();
-        //iList = EFBroker_Item.GetActiveItemList();
 
         Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
         string search = txtSearch.Text.ToLower();
@@ -78,8 +76,6 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
         foreach (Item i in iList)
         {
-            //if (i.ItemCode.ToLower().Contains(search) || i.Description.ToLower().Contains(search))
-            //{
             //If a monthly inventory check discrepancy is not yet approved, the sum of only
             //discrepancies starting from the monthly one will be displayed
             Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);

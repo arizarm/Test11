@@ -12,7 +12,7 @@ public interface IDiscrepancyService
 {
     [OperationContract]
     [WebInvoke(UriTemplate = "/SubmitDiscrepancies", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-    void SubmitDiscrepancies(List<WCFDiscrepancy> wdList);
+    bool SubmitDiscrepancies(List<WCFDiscrepancy> wdList);
 }
 
 [DataContract]

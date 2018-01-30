@@ -32,10 +32,26 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("adjustmentQty", getAdjustmentString(adjustmentQty));
     }
 
+<<<<<<< HEAD
+    public void saveRemarks(String remarks){
+        put("remarks", remarks);
+    }
+
+    public static boolean submitDiscrepancies(ArrayList<Discrepancy> dList){
+=======
     public static void submitDiscrepancies(ArrayList<Discrepancy> dList){
+>>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
         JSONArray a = new JSONArray(dList);
         String url = host + "SubmitDiscrepancies";
-        JSONParser.postStream(url, a.toString());
+        String result = JSONParser.postStream(url, a.toString());
+
+        //Check whether saving to database was successful, based on bool return from WCF
+        if(result.toLowerCase().contains("true")){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private String getAdjustmentString(Integer adj){

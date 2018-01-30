@@ -14,6 +14,7 @@ public class DiscrepancyHolder {
     static HashMap<String, Integer> discrepancies = new HashMap<String, Integer>();
     static ArrayList<CatalogueItem> monthlyItems;
     static boolean monthly = false;
+    static boolean itemToUpdate = false;
 
     public static HashMap<String, Integer> getDiscrepancyList()
     {
@@ -38,6 +39,18 @@ public class DiscrepancyHolder {
 
     public static void setMonthlyMode(){
         monthly = true;
+    }
+
+    public static boolean itemToUpdate(){
+        return itemToUpdate;
+    }
+
+    public static void itemToUpdatePresent(){
+        itemToUpdate = true;
+    }
+
+    public static void resetItemToUpdate(){
+        itemToUpdate = false;
     }
 
     //For monthly inventory check mode

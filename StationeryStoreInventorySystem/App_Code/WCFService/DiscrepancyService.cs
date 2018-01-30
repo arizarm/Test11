@@ -8,13 +8,13 @@ using System.Text;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "DiscrepancyService" in code, svc and config file together.
 public class DiscrepancyService : IDiscrepancyService
 {
-    public void SubmitDiscrepancies(List<WCFDiscrepancy> wdList)
+    public bool SubmitDiscrepancies(List<WCFDiscrepancy> wdList)
     {
         List<Discrepency> dList = new List<Discrepency>();
         bool informSupervisor = false;
         bool informManager = false;
 
-        foreach(WCFDiscrepancy wd in wdList)
+        foreach (WCFDiscrepancy wd in wdList)
         {
             Discrepency d = new Discrepency();
             d.ItemCode = wd.ItemCode;
@@ -47,7 +47,11 @@ public class DiscrepancyService : IDiscrepancyService
             d.TotalDiscrepencyAmount = d.AdjustmentQty * averageUnitPrice;
 
             //Set the approver based on discrepancy amount, and email notify them
+<<<<<<< HEAD
+            if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
+=======
             if (d.TotalDiscrepencyAmount < 250)
+>>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
             {
                 d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                 informSupervisor = true;
@@ -59,17 +63,38 @@ public class DiscrepancyService : IDiscrepancyService
             }
             dList.Add(d);
         }
-            EFBroker_Discrepancy.SaveDiscrepencies(dList);
+        bool successfullySent = sendDiscrepanciesToDatabase(dList);
 
-        if (informSupervisor)
+        if (successfullySent)
         {
-            string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
-            Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+            if (informSupervisor)
+            {
+                string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
+                Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+            }
+            if (informManager)
+            {
+                string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
+                Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+            }
+            return true;
         }
-        if (informManager)
+        else
         {
-            string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
-            Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+            return false;
+        }
+    }
+
+    private bool sendDiscrepanciesToDatabase(List<Discrepency> dList)
+    {
+        try
+        {
+            EFBroker_Discrepancy.SaveDiscrepencies(dList);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 }

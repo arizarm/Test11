@@ -28,6 +28,12 @@ public class RequisitionListItem extends HashMap<String,String>{
 
     public RequisitionListItem(){}
 
+    public RequisitionListItem(String Code, String Description, String ShortfallQty){
+        put("Code",Code);
+        put("Description",Description);
+        put("ShortfallQty",ShortfallQty);
+    }
+
     public RequisitionListItem(String date, String empName){
         put("Date",date);
         put("EmployeeName",empName);

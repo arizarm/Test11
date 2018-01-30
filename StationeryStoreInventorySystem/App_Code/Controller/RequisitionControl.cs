@@ -334,4 +334,9 @@ public class RequisitionControl
         rlist = EFBroker_Requisition.displayAllByDeptCode(deptCode);
         return PopulateGridViewForDepartment(rlist);
     }
+
+    public static int CountPending(string deptCode)
+    {
+        return EFBroker_Requisition.CountPending(deptCode);
+    }
 }

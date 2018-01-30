@@ -20,6 +20,10 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
                 GridView1.DataBind();
                 //Dep Representative
+
+                int count = RequisitionControl.CountPending(emp.DeptCode);
+
+                pendingCount.Text = "Total Pendings: " + count.ToString();
             }
             else
             {

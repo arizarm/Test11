@@ -92,7 +92,13 @@ public class DiscrepancySummaryActivity extends Activity {
                     complete = false;
                 }
                 else{
-                    Discrepancy d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status);
+                    Discrepancy d = null;
+//                    if(itemToUpdate){
+//                        d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status, itemToUpdate);
+//                    }
+//                    else{
+                        d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status);
+//                    }
                     toBeSubmitted.add(d);
                 }
             }
@@ -108,7 +114,7 @@ public class DiscrepancySummaryActivity extends Activity {
                         }
                         @Override
                         public Void doInBackground(Void... voids) {
-                            submissionSuccessful = Discrepancy.submitDiscrepancies(dList);
+                            submissionSuccessful = Discrepancy.submitDiscrepancies(dList, DiscrepancyHolder.itemToUpdate());
                             return null;
                         }
 
@@ -123,6 +129,7 @@ public class DiscrepancySummaryActivity extends Activity {
                                 t.show();
                                 DiscrepancyHolder.clearDiscrepancies();
                                 DiscrepancyHolder.clearMonthlyItems();
+                                DiscrepancyHolder.resetItemToUpdate();
                                 DiscrepancyHolder.setAdhocMode();    //Reset to adhoc mode as default, monthly mode is strictly for monthly inventory check
                             }
                             else{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Transactions;
 
 /// <summary>
 /// Summary description for EFBroker_Discrepancy
@@ -25,6 +26,20 @@ public class EFBroker_Discrepancy
             context.SaveChanges();
         }
         return;
+    }
+    public static void SaveDiscrepenciesWithItemUpdates(List<Discrepency> dList)
+    {
+        using(TransactionScope ts = new TransactionScope())
+        {
+            foreach(Discrepency d in dList)
+            {
+                Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
+                i.BalanceQty = i.BalanceQty + (d.AdjustmentQty * -1);
+                EFBroker_Item.UpdateItem(i);
+            }
+            SaveDiscrepencies(dList);
+            ts.Complete();
+        }
     }
     public static int GetDiscrepancyID(Discrepency d)
     {

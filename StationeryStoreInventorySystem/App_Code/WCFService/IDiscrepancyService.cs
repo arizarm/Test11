@@ -13,6 +13,10 @@ public interface IDiscrepancyService
     [OperationContract]
     [WebInvoke(UriTemplate = "/SubmitDiscrepancies", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
     bool SubmitDiscrepancies(List<WCFDiscrepancy> wdList);
+
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/SubmitDiscrepanciesWithItemUpdate", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+    bool SubmitDiscrepanciesWithItemUpdate(List<WCFDiscrepancy> wdList);
 }
 
 [DataContract]
@@ -53,8 +57,15 @@ public class WCFDiscrepancy
 
         set;
     }
+    [DataMember]
+    public string ItemToUpdate
+    {
+        get;
 
-    public static WCFDiscrepancy Make(string itemCode, string requestedBy, string adjustmentQty, string remarks, string status)
+        set;
+    }
+
+    public static WCFDiscrepancy Make(string itemCode, string requestedBy, string adjustmentQty, string remarks, string status, string itemToUpdate)
     {
         WCFDiscrepancy wd = new WCFDiscrepancy();
         wd.ItemCode = itemCode;
@@ -62,6 +73,7 @@ public class WCFDiscrepancy
         wd.AdjustmentQty = adjustmentQty;
         wd.Remarks = remarks;
         wd.Status = status;
+        wd.ItemToUpdate = itemToUpdate;
         return wd;
     }
 }

@@ -47,11 +47,9 @@ public class DiscrepancyService : IDiscrepancyService
             d.TotalDiscrepencyAmount = d.AdjustmentQty * averageUnitPrice;
 
             //Set the approver based on discrepancy amount, and email notify them
-<<<<<<< HEAD
             if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
-=======
+
             if (d.TotalDiscrepencyAmount < 250)
->>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
             {
                 d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                 informSupervisor = true;

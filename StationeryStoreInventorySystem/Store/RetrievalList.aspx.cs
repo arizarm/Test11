@@ -39,6 +39,6 @@ public partial class RetrievalList : System.Web.UI.Page
     {
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn        
         Session["RetrievalID"] = Convert.ToInt32((row.FindControl("LabelRetrievalID") as Label).Text); //row.Cells[1]
-        Response.Redirect(LoginController.RetrievalListDetailURI);
+        Response.Redirect("~/Store/RetrievalListDetail.aspx");
     }
 }

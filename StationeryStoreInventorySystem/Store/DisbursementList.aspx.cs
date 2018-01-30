@@ -12,7 +12,7 @@ public partial class DisbursementList : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if(!IsPostBack)
         {
             List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems();
             gdvDisbList.DataSource = disbursementListItemsList;
@@ -20,13 +20,13 @@ public partial class DisbursementList : System.Web.UI.Page
             ViewState["sortDirection"] = "";
         }
     }
-
+    
 
     protected void btnDetail_Click(object sender, EventArgs e)
     {
         GridViewRow gvRow = ((Button)sender).NamingContainer as GridViewRow;
         Session["SelectedDisb"] = Convert.ToInt32((gvRow.FindControl("lbldisbId") as Label).Text);
-        Response.Redirect("~/Store/DisbursementListDetail.aspx");
+        Response.Redirect(LoginController.DisbursementListDetailURI);
     }
 
     protected void gdvDisbList_Sorting(object sender, GridViewSortEventArgs e)

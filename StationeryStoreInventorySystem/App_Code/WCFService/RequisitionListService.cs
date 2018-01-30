@@ -55,9 +55,4 @@ public class RequisitionListService : IRequisitionListService
 
         RequisitionControl.rejectRequisition(Convert.ToInt32(requisition.RequisitionNo), requisition.Remarks, Convert.ToInt32(r.ApprovedBy));
     }
-
-    public void Regenerate(WCFRequestedItem requisition)
-    {
-        throw new NotImplementedException();
-    }
 }

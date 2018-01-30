@@ -59,7 +59,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
     {     //Finalise discrepancy button
         if (itemError == false)
         {
-            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
+            Response.Redirect("~/Store/GenerateDiscrepancyAdhocV2.aspx");
         }
         else
         {

@@ -163,18 +163,18 @@
         <Button
             android:id="@+id/btnInputActual"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:onClick="inputActualClick"
             android:text="Input Actual Quantity" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="20dp" />
 
         <Button
             android:id="@+id/btnCorrect"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:onClick="markCorrectClick"
             android:text="Mark as Correct Quantity" />
 

@@ -22,4 +22,13 @@ public class EFBroker_Employee
         return employeeList;
     }
 
+    public static Employee GetEmployee(int id)
+    {
+        Employee e = new Employee();
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            e = context.Employees.Where(em => em.EmpID == id).FirstOrDefault();
+        }
+        return e;
+    }
 }

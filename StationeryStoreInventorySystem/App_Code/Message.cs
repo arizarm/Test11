@@ -77,7 +77,4 @@ public class Message
     public const String ValidationError
     = "One or more fields are incorrect. Please try again";
 
-    public const String ConfirmDeletion
-    = "Confirm Deletion?";
-
 }

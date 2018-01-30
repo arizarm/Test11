@@ -101,7 +101,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             else if (dictnry[gvrowItemCode] == 2)
                 supplierList.SelectedValue = itemPriceList[1].SupplierCode;
 
-            if (itemPriceList.Count ==3)
+            if (itemPriceList.Count >=3)
             {
                
                 if (dictnry[gvrowItemCode] == 3)
@@ -211,7 +211,6 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
                     pOrder.SupplierCode = suplierInfo.Value;
                     Label amntlbl = (Label)gvRow.FindControl("Amount");
-                   // string amnt = amntlbl.Text.ToString();
                     if (!purchaseItemList.ContainsKey(pOrder))
                     {
                         pOrder.OrderDate = DateTime.Now.Date;
@@ -219,7 +218,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                         pOrder.ExpectedDate = DateTime.Parse(txtDate.Text);
                         pOrder.Status = "Pending";
 
-                        pOrder.TotalAmount += decimal.Parse(amntlbl.Text,System.Globalization.NumberStyles.Currency);
+                        pOrder.TotalAmount += Convert.ToDecimal(amntlbl.Text);
                         pOrder.RequestedBy = (int)Session["empID"];
                         purchaseItemList.Add(pOrder, null);
                     }
@@ -232,8 +231,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     pItems.OrderQty = Convert.ToInt32(qtyTxtBx.Text);
                     Label priceLbl = (Label)gvRow.FindControl("Price");
                     pItems.ItemCode = itemlbl.Text;
-                    //pItems.Amount = pItems.OrderQty * Convert.ToDecimal(priceLbl.Text);
-                    pItems.Amount = pItems.OrderQty * decimal.Parse(priceLbl.Text, System.Globalization.NumberStyles.Currency);
+                    pItems.Amount = pItems.OrderQty * Convert.ToDecimal(priceLbl.Text);
+
                     List<Item_PurchaseOrder> ItemList = null;
                     if (purchaseItemList[pOrder] != null)
                     {
@@ -251,18 +250,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 }
                
             }
-            if(purchaseItemList.Count==0)
-            {
-                ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-                 "<script language='javascript'>alert('" + "Please select items first!" + "');</script>");
-            }
-            else
-            {
-                pCtrlr.AddPurchaseOrder(purchaseItemList);
-                ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-             "<script language='javascript'>alert('" + "Purchase Done, Awaiting Approval!" + "');</script>");
-            }
-            
+            pCtrlr.AddPurchaseOrder(purchaseItemList);
+            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+         "<script language='javascript'>alert('" + "Purchase Done, Awaiting Approval!" + "');</script>");
         }
                 
     }
@@ -285,7 +275,89 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     }
 
-   
+    //protected void DeleteSelectedItem_Click(object sender, EventArgs e)
+    //{
+
+    //    List<ReorderItem> reorderItems = null;
+    //    if (Session["ReorderItem"] !=null)
+    //    {
+    //       reorderItems = (List<ReorderItem>)Session["ReorderItem"];
+    //    }
+    //    else
+    //    {
+    //        reorderItems= pCtrlr.GetReorderItemList();
+    //    }
+       
+       
+    //    List<ReorderItem> newReorderList = new List<ReorderItem>();
+    //    foreach (GridViewRow gvrow in gvPurchaseItems.Rows)
+    //    {
+    //        CheckBox chkbx = (CheckBox)gvrow.FindControl("DeleteChkBx");
+    //        if (!chkbx.Checked)
+    //        {
+
+
+    //            int index = Convert.ToInt32(gvrow.RowIndex);
+    //            newReorderList.Add(reorderItems.ElementAt(index));                
+    //        }
+           
+    //    }
+    //    if (newReorderList.Count == reorderItems.Count)
+    //    {
+    //        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+    //     "<script language='javascript'>alert('" + "Please Select to delete!" + "');</script>");
+    //    }
+    //    else
+    //    {
+          
+    //            Session["ReorderItem"] = newReorderList;
+    //            gvPurchaseItems.DataSource = newReorderList;
+    //            gvPurchaseItems.DataBind();
+    //            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+    //            "<script language='javascript'>alert('" + "Item Deleted!" + "');</script>");
+    //     }
+            
+          
+    //}
+
+    //protected void DeleteAllItem_Click(object sender, EventArgs e)
+    //{
+
+    //    List<ReorderItem> reorderItems = null;
+    //    if (Session["PurchaseItems"] != null)
+    //    {
+    //        reorderItems = (List<ReorderItem>)Session["ReorderItem"];
+    //    }
+    //    else
+    //    {
+    //        reorderItems = pCtrlr.GetReorderItemList();
+    //    }
+
+
+    //    List<ReorderItem> newReorderList = new List<ReorderItem>();
+    //    foreach (GridViewRow gvrow in gvPurchaseItems.Rows)
+    //    {
+    //        CheckBox chkbx = (CheckBox)gvrow.FindControl("DeleteChkBx");
+    //        chkbx.Checked = true;
+    //        if (chkbx.Checked)
+    //        {
+
+
+    //            int index = Convert.ToInt32(gvrow.RowIndex);
+    //            newReorderList.Add(reorderItems.ElementAt(index));
+    //        }
+    //    }
+    //    newReorderList = null;
+
+    //    Session["ReorderItem"] = newReorderList;
+    //    gvPurchaseItems.DataSource = newReorderList;
+    //    gvPurchaseItems.DataBind();
+    //    ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+    //    "<script language='javascript'>alert('" + "Item Deleted!" + "');</script>");
+
+    //}
+
+
     protected void SupplierList_SelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -302,27 +374,27 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         amount.Text = Convert.ToString(item.FormattedAmount);
     }
 
-    //protected void ReorderQtyValidation(object sender, ServerValidateEventArgs e)
-    //{
+    protected void ReorderQtyValidation(object sender, ServerValidateEventArgs e)
+    {
        
-    //    CustomValidator custval = new CustomValidator();
-    //    custval = (CustomValidator)sender;
-    //    GridViewRow row = custval.NamingContainer as GridViewRow;
-    //     TextBox qty = row.FindControl("ReorderQty") as TextBox;        
-    //        if (qty != null)
-    //        {
-    //            //GridViewRow row = textBox.NamingContainer as GridViewRow;
-    //            Label itemLbl = (Label)row.FindControl("ItemCode");
-    //            Item item = EFBroker_Item.GetActiveItembyItemCode(itemLbl.Text);
-    //            if (item.ReorderQty <= Convert.ToInt32(qty.Text))
-    //            {
-    //                e.IsValid = true;
-    //            }
-    //            else
-    //                e.IsValid = false;
-    //        }
+        CustomValidator custval = new CustomValidator();
+        custval = (CustomValidator)sender;
+        GridViewRow row = custval.NamingContainer as GridViewRow;
+         TextBox qty = row.FindControl("ReorderQty") as TextBox;        
+            if (qty != null)
+            {
+                //GridViewRow row = textBox.NamingContainer as GridViewRow;
+                Label itemLbl = (Label)row.FindControl("ItemCode");
+                Item item = EFBroker_Item.GetActiveItembyItemCode(itemLbl.Text);
+                if (item.ReorderQty <= Convert.ToInt32(qty.Text))
+                {
+                    e.IsValid = true;
+                }
+                else
+                    e.IsValid = false;
+            }
         
-    //}
+    }
         
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
@@ -345,7 +417,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     }
     protected void orderQtyTxtBx_TextChanged(object sender, EventArgs e)
     {
-        
+        Page.Validate();
         if (Page.IsValid)
         {
             TextBox qtytxt = sender as TextBox;            

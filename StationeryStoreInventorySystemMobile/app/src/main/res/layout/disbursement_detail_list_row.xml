@@ -6,14 +6,9 @@
 
     <TextView
     android:id="@+id/itemCodeHidden"
-    android:layout_width="1dp"
-    android:layout_height="1dp"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
     android:visibility="gone" />
-    <TextView
-        android:id="@+id/retrievedQtyHidden"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:visibility="gone" />
 
     <TableLayout
         android:layout_width="wrap_content"

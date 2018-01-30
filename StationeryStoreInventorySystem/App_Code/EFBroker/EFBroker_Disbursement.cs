@@ -93,7 +93,7 @@ public class EFBroker_Disbursement
         {
             Retrieval r = new Retrieval();
             r.RetrievedBy = empID;     //base on user session
-            r.RetrievedDate = DateTime.Today;
+            r.RetrievedDate = DateTime.Today;  /////////////////////////////////
             r.RetrievalStatus = "Pending";
             context.Retrievals.Add(r);
             context.SaveChanges();
@@ -140,18 +140,16 @@ public class EFBroker_Disbursement
         }
         return accessCode;
     }
-    public static void UpdateRetrievalStatus(int rId, string status)
+    public static void UpdateRetrievalStatus(int requisitionId, string status)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            Retrieval retrieval = context.Retrievals.Where(x => x.RetrievalID == rId).FirstOrDefault();
+            Retrieval retrieval = context.Retrievals.Where(x => x.RetrievalID == requisitionId).FirstOrDefault();
             retrieval.RetrievalStatus = status;
             context.SaveChanges();
         }
     }
-
-    //updated
-    public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty, List<string> disbRemark)
+    public static void UpdateDisbursementActualQty(int disbID, List<int> actualQty)
     {
         int i = 0;
         using (StationeryEntities context = new StationeryEntities())
@@ -160,10 +158,9 @@ public class EFBroker_Disbursement
             foreach (Disbursement_Item di in disbursement.Disbursement_Item)
             {
                 di.ActualQty = actualQty[i];
-                di.Remarks = disbRemark[i];
-                EFBroker_Disbursement.UpdateDisbursementItem(di);
                 i++;
             }
+            context.SaveChanges();
         }
     }
     public static void UpdateDisbursementStatus(int disbID)

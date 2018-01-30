@@ -45,34 +45,18 @@
                         android:text="Item Code"
                         android:textSize="18sp" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textView19"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView19"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Item Name"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView21"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Bin"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                        android:text="Item Name"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="240dp"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
@@ -107,22 +91,22 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="480dp"
+                android:layout_height="450dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/listItems"
                     android:layout_width="match_parent"
-                    android:layout_height="440dp"
+                    android:layout_height="420dp"
                     android:descendantFocusability="beforeDescendants" />
 
                 <TextView
                     android:id="@+id/tvError"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text=""
+                    android:text="err"
                     android:textColor="@android:color/holo_red_dark"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
 
             </LinearLayout>
 
@@ -131,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="finaliseClick"
-                android:text="Finalise Discrepancies"
+                android:text="Submit Discrepancies"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

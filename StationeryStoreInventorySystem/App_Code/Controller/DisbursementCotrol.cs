@@ -6,6 +6,8 @@ using System.Web;
 
 public class DisbursementCotrol
 {
+    int disbID;
+
     //GET DISBURSEMENT LIST TO DISPLAY
     public List<DisbursementListItems> gvDisbursementPopulate()
     {
@@ -28,7 +30,9 @@ public class DisbursementCotrol
     //GET DISBURSEMENT DETAIL OBJECT TO DISPLAY
     public DisbursementListItems DisbursementListItemsObj(int disbId)
     {
-        Disbursement disb = EFBroker_Disbursement.GetDisbursmentbyDisbID(disbId);
+        disbID = disbId;
+
+        Disbursement disb = EFBroker_Disbursement.GetDisbursmentbyDisbID(disbID);
 
         return CreateDisbursementListItem(disb);
     }
@@ -71,6 +75,8 @@ public class DisbursementCotrol
     //VERIFY ACCESS CODE
     public bool checkAccessCode(int disbId, string accessCode)
     {
+        disbID = disbId;
+
         if (EFBroker_Disbursement.GetAccessCodebyDisbID(disbId).Equals(accessCode))
         {
             return true;
@@ -82,11 +88,12 @@ public class DisbursementCotrol
     }
 
     //Get earliest date for regenerate requisition
-    public DateTime getRegenrateDate(int disbId)
+    public DateTime getRegenrateDate()
     {
+        int disbIDInt = Convert.ToInt32(disbID);
         List<DateTime?> dates = new List<DateTime?>();
         List<string> dateList = new List<string>();
-        dates = EFBroker_Requisition.GetDateTimeListbyDisbID(disbId);
+        dates = EFBroker_Requisition.GetDateTimeListbyDisbID(disbIDInt);
         foreach (DateTime d in dates)
         {
             if (d != null)
@@ -115,7 +122,14 @@ public class DisbursementCotrol
         }
         return earliestDate;
     }
-        
+
+
+    //get Department Representative Name by Department Name
+    public Employee getDepRep(string depName)
+    {
+        return EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
+    }
+
 
     //ADD REQUISITION ITEM
     public void addItemToRequisition(string code, int qty, int id)
@@ -128,39 +142,36 @@ public class DisbursementCotrol
     }
 
     //Get Current Disbursement
-    public Disbursement GetCurrentDisbursement(int disbId)
+    public Disbursement GetCurrentDisbursement()
     {
-        return EFBroker_Disbursement.GetDisbursmentbyDisbID(disbId);
+        int disbIDInt = Convert.ToInt32(disbID);
+        return EFBroker_Disbursement.GetDisbursmentbyDisbID(disbIDInt);
     }
 
 
     //update Disbursement final actual quantity
-    public void UpdateDisbursement(int disbId, List<int> actualQty, List<string> disbRemark)
+    public void UpdateDisbursementActualQty(List<int> actualQty)
     {
-        //Update actual disbursement quantity
-        EFBroker_Disbursement.UpdateDisbursementActualQty(disbId, actualQty, disbRemark);
-
-        //Update Disbursement statu to "Closed"
-        UpdateDisbursementStatus(disbId);
-
-        //Add Disbursement transaction to StockCard
-        AddStockCardTransaction(disbId);
+        int disbIDInt = Convert.ToInt32(disbID);
+        EFBroker_Disbursement.UpdateDisbursementActualQty(disbIDInt, actualQty);
     }
 
     //update Disbursement Status
-    public void UpdateDisbursementStatus(int disbId)
+    public void UpdateDisbursementStatus()
     {
-        EFBroker_Disbursement.UpdateDisbursementStatus(disbId);
-        List<Requisition> requisitionList = EFBroker_Requisition.GetRequisitionListByDisbursementID(disbId);
+        int disbIDInt = Convert.ToInt32(disbID);
+        EFBroker_Disbursement.UpdateDisbursementStatus(disbIDInt);
+        List<Requisition> requisitionList=EFBroker_Requisition.GetRequisitionListByDisbursementID(disbIDInt);
         requisitionList.ForEach(r => r.Status = "Closed");
         EFBroker_Requisition.UpdateRequisitionList(requisitionList);
     }
 
     //Add disbursement transaction to Stockcard 
-    public void AddStockCardTransaction(int disbId)
+    public void AddStockCardTransaction()
     {
         string transactionType = "Disbursement";
-        List<Disbursement_Item> d = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(disbId);
+        int transId = Convert.ToInt32(disbID);
+        List<Disbursement_Item> d = EFBroker_Disbursement.GetDisbursement_ItemsbyDisbID(transId);
 
         string itemCode;
         int Qty;
@@ -172,12 +183,13 @@ public class DisbursementCotrol
             Qty = (int)dI.ActualQty;
             balance = (int)dI.Item.BalanceQty - Qty;
 
+
             StockCard sc = new StockCard();
             sc.ItemCode = itemCode;
             sc.TransactionType = transactionType;
             sc.Qty = Qty;
             sc.Balance = balance;
-            sc.TransactionDetailID = disbId;
+            sc.TransactionDetailID = transId;
             EFBroker_StockCard.AddStockTransaction(sc);
         }
     }

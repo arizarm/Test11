@@ -42,6 +42,15 @@
                     </ItemTemplate>
                 </asp:TemplateField>                
 
+                   <asp:TemplateField HeaderText="Status">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    </EditItemTemplate>
+                   <ItemTemplate>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RetrievalStatus") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>      
+
                 <asp:TemplateField HeaderText="Detail">
                     <EditItemTemplate>
                         <asp:Button ID="Button1" runat="server" Text="Detail" />

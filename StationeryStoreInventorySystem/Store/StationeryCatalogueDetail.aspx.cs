@@ -114,10 +114,5 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         //args.IsValid = (EFBroker_Item.GetItembyItemCode(args.Value) == null);
         args.IsValid = Utility.ValidateNewItem(CustomValidator1, args.Value);
     }
-
-
-    protected void LinkButton1_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(LoginController.StationeryCatalogueURI);
-    }
+    
 }

@@ -61,7 +61,6 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-
         string searchWord = SearchBox.Text;
 
         gvReq.DataSource = RequisitionControl.DisplaySearch(searchWord);
@@ -99,9 +98,9 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         {
             int empId = (int)Session["empID"];//////////
             int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
-            Session["RetrievalID"] = retrievalId;/////////////////////////////////////////////////
+            Session["RetrievalID"] = retrievalId;
             reqCon.AddDisbursement(retrievalId, reqNo);
-            Response.Redirect(LoginController.RetrievalListDetailURI);
+            Response.Redirect("~/Store/RetrievalListDetail.aspx");
         }
     }
 
@@ -110,6 +109,6 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn
         string s = (row.FindControl("lblrequisitionNo") as Label).Text; //row.Cells[2]
         Session["RequisitionNo"] = s;
-        Response.Redirect(LoginController.RequisitionDetailURI);
+        Response.Redirect("~/Store/RequisitionDetail.aspx");
     }
 }

@@ -99,17 +99,6 @@ public partial class DepartmentListDRep : System.Web.UI.Page
             //lblPhone.Text = c.ToString();
             if (c != cid)
             {
-                
-                    List<String> clerkEmails = EmployeeController.getAllClerkMails();
-
-                    if (clerkEmails != null)
-                    {
-                        for (int i = 0; i < clerkEmails.Count; i++)
-                        {
-                            Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                        }
-                    }
-                
                 deptController.UpdateCollectionPoint(dcode, c);
                 Response.Redirect(LoginController.DepartmentDetailInfoURI +"? SuccessMsg=" + "Successfully Updated!!");
             }

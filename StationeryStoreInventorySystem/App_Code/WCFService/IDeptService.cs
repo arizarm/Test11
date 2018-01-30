@@ -89,6 +89,19 @@ public interface IDeptService
 
     //End Collection Point
 
+    [OperationContract]
+    [WebGet(UriTemplate = "/Employee/{empid}/", ResponseFormat = WebMessageFormat.Json)]
+    IsTemp CheckIsTempHead(string empid);
+
+}
+
+[DataContract]
+public class IsTemp
+{
+    bool isTempHead;
+
+    [DataMember]
+    public bool IsTempHead { get { return isTempHead; } set { isTempHead = value; } }
 }
 
 [DataContract]

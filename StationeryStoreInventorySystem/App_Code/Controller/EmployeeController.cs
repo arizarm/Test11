@@ -74,4 +74,9 @@ public static class EmployeeController
     {
         return EFBroker_DeptEmployee.GetHeadEmail(em);
     }
+
+    public static Employee GetEmployee(int id)
+    {
+        return EFBroker_Employee.GetEmployee(id);
+    }
 }

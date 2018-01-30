@@ -183,5 +183,13 @@ public class DeptService : IDeptService
     }
 
     //End Collection Function Part
-
+    public IsTemp CheckIsTempHead(string id)
+    {
+        Employee e = EmployeeController.GetEmployee(Convert.ToInt32(id));
+        bool isTemp;
+        isTemp = Utility.checkIsTempDepHead(e);
+        IsTemp it = new IsTemp();
+        it.IsTempHead = isTemp;
+        return it;
+    }
 }

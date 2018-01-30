@@ -72,7 +72,7 @@ public static class EmployeeController
 
     public static Employee GetDeptHeadTempHeadEmail(Employee em)
     {
-        return EFBroker_DeptEmployee.GetHeadEmail(em);
+        return EFBroker_Employee.GetHeadEmail(em);
     }
 
     public static Employee GetEmployee(int id)

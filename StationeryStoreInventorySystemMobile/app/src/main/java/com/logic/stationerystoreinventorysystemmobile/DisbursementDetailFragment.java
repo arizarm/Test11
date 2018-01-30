@@ -120,7 +120,14 @@ public class DisbursementDetailFragment extends Fragment {
                                     EditText edtRemark = vv.findViewById(R.id.editTxtRemark);
 
                                     //assign textbox values to local variable
-                                    actQty = Integer.parseInt(edtActQty.getText().toString());
+                                    try
+                                    {
+                                        actQty = Integer.parseInt(edtActQty.getText().toString());
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        status = "Actual Quantity cannot be empty!";
+                                    }
                                     reqQty = Integer.parseInt(txtReqQty.getText().toString());
                                     retrievedQty = Integer.parseInt(txtRetrievedQty.getText().toString());
                                     remark = edtRemark.getText().toString();

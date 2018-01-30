@@ -12,6 +12,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView.OnItemClickListener  {
     ListView list;
@@ -24,19 +25,23 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         list.setOnItemClickListener(this);
         ArrayList<CatalogueItem> ciList = DiscrepancyHolder.getMonthlyItems();
 
+        //If the static list of CatalogueItems in DiscrepancyHolder hasn't been initialised,
+        //initialise it by querying the database, otherwise, get it and use it to populate the listview
         if(ciList != null){
             if(ciList.size() == 0){
                 initialiseItemList();
-                ciList = DiscrepancyHolder.getMonthlyItems();
+            }
+            else{
+                Collections.sort(ciList, new CatalogueItemMonthlyComparator());
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
+                list.setAdapter(adapter);
             }
         }
         else{
             initialiseItemList();
-            ciList = DiscrepancyHolder.getMonthlyItems();
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvCorrect, R.id.tvActual});
-        list.setAdapter(adapter);
+
     }
 
     protected void finaliseClick(View v){
@@ -64,24 +69,34 @@ public class DiscrepancyMonthlyActivity extends Activity  implements AdapterView
         CatalogueItem ci = (CatalogueItem) parent.getAdapter().getItem(position);
         Intent i = new Intent(this, DiscrepancyMonthlyItemDetailsActivity.class);
         i.putExtra("itemCode", ci.get("itemCode"));
-        startActivity(i);
+//        startActivity(i);
+        startActivityForResult(i, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //When exiting from DiscrepancyMonthlyItemDetailsActivity, the list will be refreshed to reflect the new input
+        recreate();
     }
 
     private void initialiseItemList(){
-        new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
             ProgressDialog progress;
             @Override
             protected void onPreExecute() {
                 progress = ProgressDialog.show(DiscrepancyMonthlyActivity.this, "Loading", "Loading Items", true);
             }
             @Override
-            protected Void doInBackground(Void... input){
+            protected ArrayList<CatalogueItem> doInBackground(Void... input){
                 DiscrepancyHolder.initialiseMonthlyItems();
-                return null;
+                return DiscrepancyHolder.getMonthlyItems();
             }
 
             @Override
-            protected void onPostExecute(Void voids){
+            protected void onPostExecute(ArrayList<CatalogueItem> ciList){
+                Collections.sort(ciList, new CatalogueItemMonthlyComparator());
+                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), ciList, R.layout.monthly_discrepancy_row, new String[]{"itemCode", "description", "bin", "correctQty", "actualQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBin, R.id.tvCorrect, R.id.tvActual});
+                list.setAdapter(adapter);
                 progress.dismiss();
             }
         }.execute();

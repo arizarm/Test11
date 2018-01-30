@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class Discrepancy extends HashMap<String, String> implements Comparable<Discrepancy>{
 
-//    static String ip = "172.17.249.125";
-    static String ip = "172.23.202.59";
+    static String ip = "172.17.249.125";
+    //    static String ip = "172.23.202.59";
     static String host = "http://"+ ip + "/StationeryStoreInventorySystem/DiscrepancyService.svc/";
 
     //for submission to WCF
@@ -32,15 +32,11 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("adjustmentQty", getAdjustmentString(adjustmentQty));
     }
 
-<<<<<<< HEAD
     public void saveRemarks(String remarks){
         put("remarks", remarks);
     }
 
     public static boolean submitDiscrepancies(ArrayList<Discrepancy> dList){
-=======
-    public static void submitDiscrepancies(ArrayList<Discrepancy> dList){
->>>>>>> ff49bafc83d38a2417f4e01ae5c35ec979ed0e5e
         JSONArray a = new JSONArray(dList);
         String url = host + "SubmitDiscrepancies";
         String result = JSONParser.postStream(url, a.toString());

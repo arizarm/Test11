@@ -54,7 +54,7 @@
     </asp:Table>
     <div>
         <asp:Label ID="ReasonLabel" runat="server" Text="Reason"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        <asp:TextBox ID="TextBox2" runat="server" MaxLength="100"></asp:TextBox>
     </div>
 
     <asp:Button ID="ApproveButton" runat="server" Text="Approve" CssClass="button" OnClick="ApproveButton_Click" />

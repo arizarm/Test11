@@ -65,6 +65,23 @@ public class Employee extends java.util.HashMap<String,String> {
         return  emp;
     }
 
+    public static boolean CheckIsTempHead(String id)
+    {
+/*        JSONArray b = JSONParser.getJSONArrayFromUrl(hostURL+"Employee/"+id);
+        for(int i=0;i<b.length();i++){
+            b.getBoolean(0);
+        }*/
+
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"Employee/"+id);
+        try{
+            return b.getBoolean("IsTempHead");
+        }catch (Exception ex){
+            Log.e("Error", ex.toString());
+        }
+        return false;
+    }
+
+
 //    WCFEmployee e = new WCFEmployee();
 //    e.eid = eid;
 //    e.deptCode = deptCode;

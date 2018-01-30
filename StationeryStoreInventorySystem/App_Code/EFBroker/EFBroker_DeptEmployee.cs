@@ -264,6 +264,15 @@ public class EFBroker_DeptEmployee
         }
     }
 
+    public static Employee GetEmployeeEmailByEid(int eid)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Employees.Where(x => x.EmpID == eid).First();
+        }
+
+    }
+
     public static void UpdateActingDHead(string depcode, int empid, string sdate, string edate)
     {
         using (StationeryEntities smodel = new StationeryEntities())

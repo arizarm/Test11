@@ -12,7 +12,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
         if (!IsPostBack)
         {
             if (Session["emp"] != null)
@@ -92,17 +92,37 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             deptController.UpdateCollectionPoint(dcode, c);
 
             int empRepid = empDRep.EmpID;
+
             int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
+            string empRepEmail = empDRep.Email;
+            Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
+            String newempEmail = newDeptRep.Email;
             deptController.UpdateDeptRep(dcode, empid);
 
             if (c == cid && empid == empRepid)
             {
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+                Response.Redirect(LoginController.DepartmentDetailInfoURI);
             }
             else
             {
+                if (c != cid)
+                {
+                    List<String> clerkEmails = EmployeeController.getAllClerkMails();
 
-                Response.Redirect("~/Department/DepartmentDetailInfo.aspx?SuccessMsg=" + "Successfully Updated!!");
+                    if (clerkEmails != null)
+                    {
+                        for (int i = 0; i < clerkEmails.Count; i++)
+                        {
+                            Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+                        }
+                    }
+                }
+                if (empid != empRepid)
+                {
+                    Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+                    Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                }
+                Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
 
             }
 
@@ -116,7 +136,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
     protected void btnCancel_Click(object sender, EventArgs e)
     {
 
-        Response.Redirect("~/Department/DepartmentDetailInfo.aspx");
+        Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }
 
 

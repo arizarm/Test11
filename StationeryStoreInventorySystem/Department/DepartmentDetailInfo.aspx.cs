@@ -32,16 +32,16 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
 
                 }
             }
-                if (!IsPostBack)
-        {
-            string s = Request.QueryString["SuccessMsg"];
-            lblMessage.Text = s;
-            
+            if (!IsPostBack)
+            {
+                string s = Request.QueryString["SuccessMsg"];
+                lblMessage.Text = s;
 
-                if(empRole=="Employee" && tempHead == "N")
+
+                if (empRole == "Employee" && tempHead == "N")
                 {
                     btnUpdate.Visible = false;
-                    
+
                 }
 
                 if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
@@ -89,7 +89,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     string startdate = empActingDHead.StartDate.GetValueOrDefault().Date.ToShortDateString();
                     string enddate = empActingDHead.EndDate.GetValueOrDefault().ToShortDateString();
 
-                   
+
                     string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
                     //DateTime? endDate = empActingDHead.EndDate;
                     //DateTime today = DateTime.Now;
@@ -98,7 +98,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     //{
                     //    deptController.UpdateRevoke();
                     //    lblActingDHead.Text = null;
-                        
+
 
                     //}
 
@@ -112,11 +112,11 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                     lblCollectPoint.Text = empCollectionname;
                     lblSDate.Text = startdate;
                     lblEDate.Text = enddate;
-                    
+
                 }
 
             }//ispostback
-           
+
 
         }
         else

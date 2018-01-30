@@ -24,7 +24,7 @@
           <table style="width: 30%;">
  
         <tr>
-            <td class="auto-style1"><b>Date :</b></td>
+            <td class="auto-style1"><b>Date:</b></td>
             <td  >
                 <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static" ></asp:TextBox>
 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please select the date" ControlToValidate="txtSDate" Style="color: red"></asp:RequiredFieldValidator>

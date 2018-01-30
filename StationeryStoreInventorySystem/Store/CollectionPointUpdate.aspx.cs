@@ -24,10 +24,13 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
     {
         int retrievalId = (int)Session["RetrievalID"];
 
+        DateTime date = DateTime.Parse(txtSDate.Text);
+
+
         foreach (GridViewRow row in gvCollectionPoint.Rows)
         {
             string collectionPoint = (row.FindControl("labCollectionPoint") as Label).Text;
-            DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
+           // DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
             string time = (row.FindControl("time") as TextBox).Text;
             retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
         }

@@ -59,7 +59,7 @@ public partial class Login : System.Web.UI.Page
         }
         else
         {
-            Label4.Text = "Invalid User";
+            Label4.Text = "User ID and Password is not match";
         }
     }
 

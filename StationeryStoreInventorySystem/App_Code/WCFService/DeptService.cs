@@ -51,12 +51,20 @@ public class DeptService : IDeptService
 
     public WCFEmployee GetActingDHead(string dcode)
     {
-
-        Department d = deptController.GetDepartByDepCode(dcode);
-        Employee emp = deptController.GetEmployeeListForActingDHeadSelected(dcode);
-        return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
-         , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
-         , emp.EndDate.GetValueOrDefault().ToShortDateString());
+        int count = deptController.GetEmployeeListForActingDHeadSelectedCount(dcode);
+        if (count > 0)
+        {
+            Department d = deptController.GetDepartByDepCode(dcode);
+            Employee emp = deptController.GetEmployeeListForActingDHeadSelected(dcode);
+            return WCFEmployee.Make(emp.EmpID, d.DeptName, emp.EmpName, emp.Role, emp.Password
+             , emp.Email, emp.IsTempHead, emp.StartDate.GetValueOrDefault().ToShortDateString()
+             , emp.EndDate.GetValueOrDefault().ToShortDateString());
+        }
+        else
+        {
+            return WCFEmployee.Make(0, null, null, null, null, null, null, null, null);
+           
+        }
     }
 
     public List<WCFEmployee> ListForActingDHead(string dcode, string id)

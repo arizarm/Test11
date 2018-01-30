@@ -31,4 +31,25 @@ public class EFBroker_Employee
         }
         return e;
     }
+
+    public static Employee GetHeadEmail(Employee e)
+    {
+        StationeryEntities context = new StationeryEntities();
+        Employee emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
+
+        if (emp == null)
+        {
+            emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
+        }
+        else
+        {
+            if (Utility.checkIsTempDepHead(emp))
+            { }
+            else
+            {
+                emp = null;
+            }
+        }
+        return emp;
+    }
 }

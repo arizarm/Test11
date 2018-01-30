@@ -10,6 +10,19 @@ public class RetrievalService : IRetrievalService
 {
     RetrievalControl retCon = new RetrievalControl();
 
+    public void Update(string RetrievalID, string ItemCode, string ItemQty)
+    {
+        {
+            int retrievalId = Convert.ToInt32(RetrievalID);
+            string icode = ItemCode;
+            int retrievedQty = Convert.ToInt32(ItemQty);
+
+            Dictionary<String, int> retrievedData = new Dictionary<string, int>();
+            retrievedData.Add(icode, retrievedQty);
+            retCon.UpdateRetrieval(retrievalId, retrievedData);
+        }
+    }
+
     public List<WCFRetrieval> getAllRetrieval()
     {
         List<WCFRetrieval> wcfDisbList = new List<WCFRetrieval>();

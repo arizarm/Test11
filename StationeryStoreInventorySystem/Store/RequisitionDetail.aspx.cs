@@ -13,9 +13,9 @@ public partial class Store_RequisitionDetail : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["RequisitionNo"] != null)
+        if (Session["RequisitionNo"] != null)
         {
-            id = Convert.ToInt32(Request.QueryString["RequisitionNo"]);
+            id = Convert.ToInt32(Session["RequisitionNo"]);
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
 

@@ -10,6 +10,14 @@ using System.Text;
 [ServiceContract]
 public interface IRetrievalService
 {
+
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/RetrievalListDetailUpdate", Method = "POST",
+      BodyStyle = WebMessageBodyStyle.Wrapped,
+      RequestFormat = WebMessageFormat.Json,
+      ResponseFormat = WebMessageFormat.Json)]
+    void Update(string RetrievalID, string ItemCode, string ItemQty);
+
     [OperationContract]
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Retrieval", ResponseFormat = WebMessageFormat.Json)]
     List<WCFRetrieval> getAllRetrieval();
@@ -17,6 +25,36 @@ public interface IRetrievalService
     [OperationContract]
     [WebGet(UriTemplate = "/Retrieval/{id}", ResponseFormat = WebMessageFormat.Json)]
     List<WCFRetrievalDetail> getRetrievalDetail(string id);
+}
+
+
+[Serializable]
+[DataContract]
+public class WCFRetrievalListDetailUpdate
+{
+    private string retrievalId;
+    private string itemCode;
+    string retrievedQty;
+    //private Dictionary<String, int> retrievedData;
+
+    public static WCFRetrievalListDetailUpdate Make(string retrievalId, string itemCode, string retrievedQty)
+    {
+        WCFRetrievalListDetailUpdate update = new WCFRetrievalListDetailUpdate();
+        update.RetrievalId = retrievalId;
+        update.ItemCode = itemCode;
+        update.RetrievedQty = retrievedQty;
+        return update;
+    }
+
+    [DataMember]
+    public string RetrievalId { get { return retrievalId; } set { retrievalId = value; } }
+
+    [DataMember]
+    public string ItemCode { get { return itemCode; } set { itemCode = value; } }
+
+    [DataMember]
+    public string RetrievedQty { get { return retrievedQty; } set { retrievedQty = value; } }
+
 }
 
 [DataContract]

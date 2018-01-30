@@ -37,136 +37,127 @@ public class RetrievalControl
         return searchList;
     }
 
-    //Get Retrieval Detail By RetrievalID
-    public List<RetrievalListDetailItem> DisplayRetrievalListDetail(int rId)
+    public List<RetrievalListDetailItem> DisplayRetrievalListDetail(int requisitionId)
     {
-        List<Retrieval> retrievalList = new List<Retrieval>();
+        List<RetrievalListDetailItem> retrievalListDetailItemDisplayList = new List<RetrievalListDetailItem>();
 
-        List<string> itemCodeList = new List<string>();
+        //get retrievalStatus by requisitionId
+        string retrievalStatus = context.Retrievals.Where(x => x.RetrievalID == requisitionId).Select(x => x.RetrievalStatus).First().ToString();
 
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        // dictionary with itemcode + totalrequestedQty
+        Dictionary<string, int> itemcodeAndTotalRequestedQtyDictionary = new Dictionary<string, int>(); 
 
-        RetrievalListDetailItem r;
+        HashSet<String> uniqueItemcodeHashSet = new HashSet<string>();
 
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
+
+        // remove repeated itemcode in disbursementList
         foreach (Disbursement d in disbursementList)
         {
             foreach (Disbursement_Item dI in d.Disbursement_Item)
             {
-                string itemCode = dI.ItemCode;
-
-                if (itemCodeList.Count() != 0)
-                {
-                    bool add = true;
-
-                    foreach (string s in itemCodeList)
-                    {
-                        if (s == itemCode)
-                        {
-                            add = false;
-                            r = RetrievalListDetailItemList.Where(x => x.ItemCode.Equals(s)).First();
-                            r.TotalRequestedQty += EFBroker_Disbursement.GetRequestedQtybyDisbursementIDItemCode(dI.DisbursementID, s);
-                        }
-                    }
-                    if (add)
-                    {
-                        RetrievalListDetailItem ri1 = CreateRetrievalListDetailItemList(itemCode);
-                        itemCodeList.Add(itemCode);
-                        RetrievalListDetailItemList.Add(ri1);
-                    }
-                }
-                else
-                {
-                    RetrievalListDetailItem ri2 = CreateRetrievalListDetailItemList(itemCode);
-                    itemCodeList.Add(itemCode);
-                    RetrievalListDetailItemList.Add(ri2);
-                }
+                uniqueItemcodeHashSet.Add(dI.ItemCode);
             }
         }
-        return RetrievalListDetailItemList;
-    }
 
-    //Create new RetrievalListDetailItem
-    public RetrievalListDetailItem CreateRetrievalListDetailItemList(string itemCode)
-    {
-        RetrievalListDetailItem r;
-        Item item = EFBroker_Item.GetItembyItemCode(itemCode);
-        string bin = item.Bin;
-        string description = item.Description;
-        //what item are you getting>
-        int totalRequestedQty = (int)(context.Disbursement_Item.Where(x => x.ItemCode.ToString().Equals(itemCode)).Select(x => x.TotalRequestedQty).First());
-        int retrievedQty = (int)(context.Disbursement_Item.Where(x => x.ItemCode.ToString().Equals(itemCode)).Select(x => x.ActualQty).First());
-
-        r = new RetrievalListDetailItem(bin, description, totalRequestedQty, itemCode, retrievedQty);
-
-        return r;
-    }
-
-
-    //update actual qty for non-shortfall disbursement items when generate disbursement button clicked
-    public List<RetrievalShortfallItem> UpdateRetrieval(int rId, Dictionary<string, int> retrievedData)
-    {
-        //update retrieval status
-        EFBroker_Disbursement.UpdateRetrievalStatus(rId, "InProgress");
-
-        List<Disbursement> disbList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
-
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
-
-        foreach (KeyValuePair<string, int> kvp in retrievedData)
+        // accumulate totalRequestedQty if there is same itemCode in Disbursement, then 
+        foreach (string i in uniqueItemcodeHashSet)
         {
-            string iCode = kvp.Key;
-
-            foreach (Disbursement d in disbList)
+            string itemCode = i;
+            int totalRequestedQty = 0;
+            foreach (Disbursement d in disbursementList)
             {
                 foreach (Disbursement_Item dI in d.Disbursement_Item)
                 {
-                    if (dI.ItemCode.Equals(iCode))
+                    if (dI.ItemCode == itemCode)
+                    {
+                        totalRequestedQty += (int)dI.TotalRequestedQty;
+                    }
+                }
+            }
+            itemcodeAndTotalRequestedQtyDictionary.Add(itemCode, totalRequestedQty);
+        }
+
+        //create RetrievalListDetailItem to display in DisplayRetrievalListDetail base on retrievalStatus
+        foreach (KeyValuePair<string, int> kvp in itemcodeAndTotalRequestedQtyDictionary)
+        {
+            int retrievedQty = 0;
+            if (retrievalStatus == "Pending")
+            {
+                //default retrievedQty is same as totalRequestedQty
+                retrievedQty = kvp.Value;
+            }
+            if (retrievalStatus == "InProgress")
+            {
+                //retrievedQty is same as value which inputted in warehouse 
+                retrievedQty = (int)(context.Disbursement_Item.Include("Disbursement").Where(x => x.Disbursement.RetrievalID == requisitionId && x.ItemCode.Equals(kvp.Key)).Select(x => x.ActualQty).First());
+            }
+
+            Item item = EFBroker_Item.GetItembyItemCode(kvp.Key);
+            string bin = item.Bin;
+            string description = item.Description;
+
+            RetrievalListDetailItem retDetail = new RetrievalListDetailItem(bin, description, kvp.Value, kvp.Key, retrievedQty);
+            retrievalListDetailItemDisplayList.Add(retDetail);
+        }
+        return retrievalListDetailItemDisplayList;
+    }
+
+    //in android
+    //update actual qty for non-shortfall disbursement items when generate disbursement button clicked in RetrievalListDetail page at werehouse 
+    public List<RetrievalShortfallItem> UpdateRetrieval(int requisitionId, Dictionary<string, int> retrievedData)
+    {
+        //update retrieval status
+        EFBroker_Disbursement.UpdateRetrievalStatus(requisitionId, "InProgress");
+
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
+
+        foreach (KeyValuePair<string, int> kvp in retrievedData)
+        {
+            string itemCode = kvp.Key;
+
+            foreach (Disbursement d in disbursementList)
+            {
+                foreach (Disbursement_Item dI in d.Disbursement_Item)
+                {
+                    if (dI.ItemCode.Equals(itemCode))
                     {
                         dI.ActualQty = kvp.Value;
                         EFBroker_Disbursement.UpdateDisbursementItem(dI);
-                        ////to update item balance
-                        //Item item = EFBroker_Item.GetItembyItemCode(dI.ItemCode);
-                        //item.BalanceQty -= kvp.Value;//////////////////////////////////////////
-                        //EFBroker_Item.UpdateItem(item);
                     }
                 }
             }
         }
-
-        return CheckShortfall(rId, retrievedData);///// to call after testing
+        //call CheckShortfall method after button generate disbursement clicked in RetrievalListDetail page at werehouse 
+        return CheckShortfall(requisitionId, retrievedData);
     }
 
     //Generate short fall item list when Genereate Disbursement is clicked
-    public List<RetrievalShortfallItem> CheckShortfall(int rId, Dictionary<string, int> retrievedData)
+    public List<RetrievalShortfallItem> CheckShortfall(int requisitionId, Dictionary<string, int> retrievedData)
     {
-        RetrievalListDetailItemList = DisplayRetrievalListDetail(rId);
+        RetrievalListDetailItemList = DisplayRetrievalListDetail(requisitionId);
 
         List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
 
         foreach (KeyValuePair<string, int> kvp in retrievedData)
         {
-            string iCode = kvp.Key;
+            string itemCode = kvp.Key;
             int retrievedQty = kvp.Value;
 
-            Item item = EFBroker_Item.GetItembyItemCode(iCode);
-            item.BalanceQty -= retrievedQty;//////////////////////////////////////////
+            //Update Item Balance 
+            Item item = EFBroker_Item.GetItembyItemCode(itemCode);
+            item.BalanceQty -= retrievedQty;
             EFBroker_Item.UpdateItem(item);
 
             foreach (RetrievalListDetailItem retListD in RetrievalListDetailItemList)
             {
-                if (retListD.ItemCode == iCode)
+                if (retListD.ItemCode == itemCode)
                 {
                     if (retrievedQty < retListD.TotalRequestedQty)
                     {
                         RetrievalShortfallItem r = new RetrievalShortfallItem(retListD.Description, retrievedQty, retListD.ItemCode);
                         RetrievalShortfallItemList.Add(r);
                     }
-                    ////////////////////////
-                    //if (kvp.Value == retListD.TotalRequestedQty)  // if no shortfall
-                    //{
-                        
-                    //}
-                    ////////////////////////
                 }
             }
         }
@@ -174,28 +165,27 @@ public class RetrievalControl
     }
 
     //populate shortfall data for sub gridview
-    public List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSub(int rId, string shortfallItemCode)
+    public List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSubGridView(int requisitionId, string shortfallItemCode)
     {
-        List<RetrievalShortfallItemSub> RetrievalShortfallItemSubList = new List<RetrievalShortfallItemSub>();
+        List<RetrievalShortfallItemSub> RetrievalShortfallItemSubGridViewList = new List<RetrievalShortfallItemSub>();
 
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
 
         int i = 0;
-
         foreach (Disbursement d in disbursementList)
         {
             foreach (Requisition r in EFBroker_Requisition.GetRequisitionListByDisbursementID(d.DisbursementID))
             {
-                //if only one deptName
-                string deptName = d.Department.DeptName.ToString();
-                string deptCode = d.Department.DeptCode.ToString();
+                //if only one departmentName
+                string departmentName = d.Department.DeptName.ToString();
+                string departmentCode = d.Department.DeptCode.ToString();
                 try
                 {
                     int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty ?? 0;
 
-                    //actual Qty bind with avialable Qty
-                    RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, deptName, deptCode, requestedQty, 0, shortfallItemCode);
-                    RetrievalShortfallItemSubList.Add(rsfs);
+                    //actualQty(0) bind with avialableQty(retrievedQty)
+                    RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, departmentName, departmentCode, requestedQty, 0, shortfallItemCode);
+                    RetrievalShortfallItemSubGridViewList.Add(rsfs);
                     i++;
                 }
                 catch (Exception e)
@@ -205,16 +195,16 @@ public class RetrievalControl
             }
         }
 
-        return RetrievalShortfallItemSubList;
+        return RetrievalShortfallItemSubGridViewList;
     }
 
 
-
-    public void SaveActualQtyBreakdownByDepartment(int rId, List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
+    //??
+    public void SaveActualQtyBreakdownByDepartment(int requisitionId, List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
     {
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
 
-        resetActualQty(retrievalShortfallItemSubListOfList, disbursementList);
+        resetActualQtyToZero(retrievalShortfallItemSubListOfList, disbursementList);
 
         foreach (RetrievalShortfallItemSub rsub in retrievalShortfallItemSubListOfList)
         {
@@ -229,12 +219,6 @@ public class RetrievalControl
                             //find the correct Disbursement_Item to save
                             di.ActualQty += rsub.ActualQty;
                             EFBroker_Disbursement.UpdateDisbursementItem(di);
-                            //////to update item balance  in ActualQtyBreakdownByDepartment
-                            //Item item = EFBroker_Item.GetItembyItemCode(di.ItemCode);
-                            //item.BalanceQty -= rsub.ActualQty;//////////////////////////////////////////
-                            //EFBroker_Item.UpdateItem(item);
-                            ///////
-                            //EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
                 }
@@ -244,7 +228,7 @@ public class RetrievalControl
     }
 
     //Reset Actual Quantity to zero 
-    public void resetActualQty(List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList, List<Disbursement> disbursementList)
+    public void resetActualQtyToZero(List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList, List<Disbursement> disbursementList)
     {
         foreach (RetrievalShortfallItemSub shortfallList in retrievalShortfallItemSubListOfList)
         {
@@ -269,15 +253,17 @@ public class RetrievalControl
         CollectionPointItem c = new CollectionPointItem(collectionPoint, defaultCollectionTime);
         return c;
     }
-    public List<CollectionPointItem> DisplayCollectionPoint(int rId)
+
+    // filter out different Department which has same collect point 
+    public List<CollectionPointItem> DisplayCollectionPoint(int requisitionId)
     {
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
 
         List<CollectionPointItem> collectionPointItemList = new List<CollectionPointItem>();
 
         List<int> CollectionLocationIDList = new List<int>();
 
-        foreach (Disbursement d in disbursementList)///same collect point from different DeptCode
+        foreach (Disbursement d in disbursementList)
         {
             if (CollectionLocationIDList.Count != 0)
             {
@@ -306,19 +292,18 @@ public class RetrievalControl
         return collectionPointItemList;
     }
 
-
-
-    public void SaveCollectionTimeAndDateToDisbursement(int rId, string collectionPoint, DateTime date, string time)
+    public void SaveCollectionTimeAndDateToDisbursement(int requisitionId, string collectionPoint, DateTime date, string time)
     {
-        EFBroker_Disbursement.UpdateRetrievalStatus(rId, "Closed");
+        EFBroker_Disbursement.UpdateRetrievalStatus(requisitionId, "Closed");
 
-        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
 
         Random r = new Random();
 
         foreach (Disbursement d in disbursementList)
         {
-            if (d.Department.CollectionPoint.CollectionPoint1 == collectionPoint)
+            string depCode = d.Department.DeptCode;            
+            if (EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode).CollectionPoint1 == collectionPoint)////////////////The ObjectContext instance has been disposed and can no longer be used for operations that require a connection."}
             {
                 d.CollectionDate = date;
                 d.CollectionTime = time;
@@ -331,75 +316,68 @@ public class RetrievalControl
     }
 
 
-    public void AddDisbursement(int rId, List<int> requNo)//////////////////////////////////InProgress doesn't work
+    public void AddDisbursement(int requisitionId, List<int> requisitionNo)
     {
-        List<int> disbursementID = new List<int>();
+        List<int> disbursementIDList = new List<int>();
         Disbursement d = new Disbursement();
-        List<int> requestedBy = new List<int>(); //EmpID
-        List<string> deptCodeList = new List<string>();
+        List<int> requestedByList = new List<int>(); //EmpID
+        List<string> departmentCodeList = new List<string>();
 
-
-        foreach (int i in requNo)
+        foreach (int i in requisitionNo)
         {
-            requestedBy.Add((int)(EFBroker_Requisition.GetRequisitionByID(i).RequestedBy));
+            requestedByList.Add((int)(EFBroker_Requisition.GetRequisitionByID(i).RequestedBy));
         }
 
-        //foreach requestedBy get depcode
-        foreach (int i in requestedBy)
+        //foreach requestedByList get depcode
+        foreach (int i in requestedByList)
         {
-            //string dC = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
-            string dC = EFBroker_DeptEmployee.GetDepartByEmpID(i).DeptCode.ToString();
+            //string departmentCode = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
+            string departmentCode = EFBroker_DeptEmployee.GetDepartByEmpID(i).DeptCode.ToString();
 
-            if (deptCodeList.Count() != 0)
+            if (departmentCodeList.Count() != 0)
             {
                 bool add = true;
 
-                foreach (string s in deptCodeList)
+                foreach (string s in departmentCodeList)
                 {
-                    if (s == dC)
+                    if (s == departmentCode)
                     {
                         add = false;
                     }
                 }
-                if (add) deptCodeList.Add(dC);
+                if (add) departmentCodeList.Add(departmentCode);
             }
             else
             {
-                deptCodeList.Add(dC);
+                departmentCodeList.Add(departmentCode);
             }
         }
 
         //foreach depcode add disbursement + disbDetail
-        foreach (string i in deptCodeList)
+        foreach (string i in departmentCodeList)
         {
             //add Disbursement
-            d.RetrievalID = rId;
+            d.RetrievalID = requisitionId;
             d.DeptCode = i;
             d.Status = "Pending";
-            int disbID = EFBroker_Disbursement.AddNewDisbursment(d);
+            int disbursementId = EFBroker_Disbursement.AddNewDisbursment(d);
 
-            disbursementID.Add(disbID);//auto increasement disbursementID after SaveChanges
+            disbursementIDList.Add(disbursementId);//auto increasement disbursementIDList after SaveChanges
         }
-        foreach (int i in disbursementID)
+        foreach (int i in disbursementIDList)
         {
-//            string disbDep = context.Disbursements.Where(x => x.DisbursementID == i).Select(x => x.DeptCode).First();
-            string disbDep = EFBroker_Disbursement.GetDisbursmentbyDisbID(i).DeptCode;
+            string departmentCode = EFBroker_Disbursement.GetDisbursmentbyDisbID(i).DeptCode;
 
-            foreach (int no in requNo)
+            foreach (int no in requisitionNo)
             {
                 //update requisition table 
                 Requisition r = new Requisition();
                 r = EFBroker_Requisition.GetRequisitionByID(no);
 
- //             string dep = context.Employees.Where(x => x.EmpID == r.RequestedBy).Select(x => x.DeptCode).First();
-                string dep = EFBroker_DeptEmployee.GetDepartByEmpID(r.RequestedBy??0).DeptCode;
+                string dep = EFBroker_DeptEmployee.GetDepartByEmpID(r.RequestedBy ?? 0).DeptCode;////////////////////////////////////
 
-                if (dep == disbDep)
+                if (dep == departmentCode)
                 {
-                    //r.Status = "InProgress";
-                    //r.DisbursementID = i;
-                    //context.Entry(r).State = System.Data.Entity.EntityState.Modified;
-                    //context.SaveChanges();
                     r.Status = "InProgress";/////////////////////////////////////////////
                     r.DisbursementID = i;
                     EFBroker_Requisition.UpdateRequisition(r);
@@ -411,15 +389,12 @@ public class RetrievalControl
 
     public void AddDisbursemen_Item(int disbursementID)
     {
-        List<Requisition_Item> Requisition_ItemListOfList = new List<Requisition_Item>();
-
         List<int> requisitionIDList = new List<int>();
         requisitionIDList = EFBroker_Requisition.GetRequisitionIDListbyDisbID(disbursementID);
         foreach (int rL in requisitionIDList)
         {
             List<Requisition_Item> Requisition_ItemList = EFBroker_Requisition.GetRequisitionItemListbyReqID(rL);
 
-            //foreach (Requisition_Item r in Requisition_ItemListOfList)
             foreach (Requisition_Item r in Requisition_ItemList)
             {
                 if (Disbursement_ItemList.Count != 0)
@@ -432,6 +407,7 @@ public class RetrievalControl
                         {
                             add = false;
                             i.TotalRequestedQty += r.RequestedQty;
+                            EFBroker_Disbursement.UpdateDisbursementItem(i);
                         }
                     }
                     if (add)
@@ -443,7 +419,7 @@ public class RetrievalControl
                 }
                 else
                 {
-                    Disbursement_Item dItem2 =CreateDisbursementItemList(disbursementID, r);
+                    Disbursement_Item dItem2 = CreateDisbursementItemList(disbursementID, r);
                     EFBroker_Disbursement.AddNewDisbursementItem(dItem2);
                     Disbursement_ItemList.Add(dItem2);
                 }

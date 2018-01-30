@@ -88,8 +88,8 @@ public class EFBroker_Requisition
     public static List<Requisition> GetAllApprovedOrPriorityReq()
     {
         List<Requisition> rList;
-        rList = GetAllRequisitionsByStatus("Approved");
-        rList.AddRange(GetAllRequisitionsByStatus("Priority"));
+        rList = GetAllRequisitionsByStatus("Priority");
+        rList.AddRange(GetAllRequisitionsByStatus("Approved"));
         return rList;
     }
     public static List<Requisition> GetAllRequisitionsByStatus(string status)
@@ -97,7 +97,8 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.Status == status).ToList();
+            rlist = context.Requisitions.OrderBy(x=>x.RequestDate).Where(x => x.Status == status).ToList();
+           // rlist = context.Requisitions.Where(x => x.Status == status).ToList();
         }
         return rlist;
     }

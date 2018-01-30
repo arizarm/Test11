@@ -29,7 +29,7 @@ public partial class RetrievalDecision : System.Web.UI.Page
             foreach (GridViewRow r in gvMain.Rows)
             {
                 GridView gvSub = (GridView)r.FindControl("gvSub");
-                List<RetrievalShortfallItemSub> retrievalShortfallItemSubList = retCon.DisplayRetrievalShortfallSub(retrievalId, (r.FindControl("hdfItemCode") as HiddenField).Value);
+                List<RetrievalShortfallItemSub> retrievalShortfallItemSubList = retCon.DisplayRetrievalShortfallSubGridView(retrievalId, (r.FindControl("hdfItemCode") as HiddenField).Value);
 
                 foreach (RetrievalShortfallItemSub i in retrievalShortfallItemSubList)
                 {
@@ -57,7 +57,6 @@ public partial class RetrievalDecision : System.Web.UI.Page
                     rv.MaximumValue = temp.ToString();
                     string actualQty;////////////////
                     actualQty = (subR.FindControl("txtActualQuantity") as TextBox).Text;
-
                 }
                 //
 

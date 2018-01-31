@@ -85,34 +85,41 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         {
             if (adjustment != 0)
             {
-                int actualQuantity = (int)item.BalanceQty + adjustment;
-                string adjStr = "";
-
-                if (adjustment > 0)
+                if (item.BalanceQty + adjustment >= 0)
                 {
-                    adjStr = "+" + adjustment.ToString();
+                    int actualQuantity = (int)item.BalanceQty + adjustment;
+                    string adjStr = "";
+
+                    if (adjustment > 0)
+                    {
+                        adjStr = "+" + adjustment.ToString();
+                    }
+                    else
+                    {
+                        adjStr = adjustment.ToString();
+                    }
+
+                    if (alreadyInDiscrepancyList)
+                    {
+                        //discrepancies.Remove(toBeReplaced.Key);
+                        //discrepancyDisplay.Remove(toBeReplaced.Key);
+                        discrepancies[toBeReplaced.Key] = adjustment;
+                        discrepancyDisplay[toBeReplaced.Key] = adjStr;
+                    }
+                    else
+                    {
+                        discrepancies.Add(item, adjustment);
+                        discrepancyDisplay.Add(item, adjStr);
+                    }
+
+                    Session["discrepancyList"] = discrepancies;
+                    Session["discrepancyDisplay"] = discrepancyDisplay;
+                    Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
                 }
                 else
                 {
-                    adjStr = adjustment.ToString();
+                    Label1.Text = "Adjustment cannot reduce stock to less than 0";
                 }
-
-                if (alreadyInDiscrepancyList)
-                {
-                    //discrepancies.Remove(toBeReplaced.Key);
-                    //discrepancyDisplay.Remove(toBeReplaced.Key);
-                    discrepancies[toBeReplaced.Key] = adjustment;
-                    discrepancyDisplay[toBeReplaced.Key] = adjStr;
-                }
-                else
-                {
-                    discrepancies.Add(item, adjustment);
-                    discrepancyDisplay.Add(item, adjStr);
-                }
-                
-                Session["discrepancyList"] = discrepancies;
-                Session["discrepancyDisplay"] = discrepancyDisplay;
-                Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
             }
             else
             {

@@ -77,8 +77,9 @@ public partial class StockAdjustment : System.Web.UI.Page
             {
                 if (kvp.Key.ItemCode == d.ItemCode && kvp.Key.DiscrepencyID < d.DiscrepencyID)
                 {
-                    RadioButtonList rbl = e.Row.FindControl("RadioButtonList1") as RadioButtonList;
-                    rbl.Enabled = false;
+                    //RadioButtonList rbl = e.Row.FindControl("RadioButtonList1") as RadioButtonList;
+                    //rbl.Enabled = false;
+                    e.Row.Visible = false;
                 }
             }
         }

@@ -20,6 +20,9 @@ public class LoginActivity extends Activity {
     EditText email,password;
     Button loginBtn;
 
+    boolean loginCheck = false;
+    String message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +61,16 @@ public class LoginActivity extends Activity {
                         editor.commit();
 
                         if (emp.get("role").equals("DepartmentHead")) {
-                            Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
-                            startActivity(i);
-                            Toast.makeText(getApplicationContext(),
-                                    "Department Head Access Granted", Toast.LENGTH_SHORT).show();
-                        } else if (emp.get("isTemphead").equals("Y"))
-                            /*startDate.before(yestDate) && endDate.before(tmrDate))*/ {
+                            loginCheck = true;
+                            message = "Department Head Access Granted";
+                        }
+                        else if(emp.get("role").equals("Store Clerk") || emp.get("role").equals("Store Supervisor") || emp.get("role").equals("Store Manager"))
+                        {
+                            loginCheck = true;
+                            message = "Store Employee Access Granted";
+                        }
+                        else if (emp.get("isTemphead").equals("Y"))
+                        {
                             new AsyncTask<String, Void, Boolean>() {
                                 @Override
                                 protected Boolean doInBackground(String... params) {
@@ -72,30 +79,30 @@ public class LoginActivity extends Activity {
 
                                 @Override
                                 protected void onPostExecute(Boolean result) {
-                                    if (result) {
-                                        Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
-                                        startActivity(i);
-                                        Toast.makeText(getApplicationContext(),
-                                                "Acting Dept Head Access Granted", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(),
-                                                "Access Denied", Toast.LENGTH_SHORT).show();
-                                    }
+                                    if (result)
+                                    {
+                                        loginCheck = true;
+                                        message = "Acting Dept Head Access Granted";
+                                    }//
                                 }
                             }.execute(emp.get("eid"));
-
-                        /*if((today.equals(startCal) || today.after(startCal)) && (today.equals(endCal)||today.before(endCal))){
-                            Intent i = new Intent(getApplicationContext(), RequisitionListActivity.class);
-                            startActivity(i);
-                            Toast.makeText(getApplicationContext(),
-                                    "Acting Dept Head Access Granted", Toast.LENGTH_SHORT).show();
-                        }*/
-                        } else {
-                            Toast.makeText(getApplicationContext(),
-                                    "Access Denied", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+                        else
+                        {
+                            message = "Access Denied";
+                        }
+                    }
+                    else
+                    {
+                        message = "Wrong Credentials";
+                    }
+
+                    Toast.makeText(getApplicationContext(),message, Toast.LENGTH_SHORT).show();
+
+                    if(loginCheck)
+                    {
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
                     }
                 }
             }

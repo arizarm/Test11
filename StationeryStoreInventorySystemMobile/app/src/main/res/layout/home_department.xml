@@ -17,17 +17,18 @@
         android:src="@drawable/logo" />
 
     <Button
-        android:id="@+id/btnRequisitionForm"
+        android:id="@+id/btnUpdateColPoint"
         android:layout_width="401dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="176dp"
-        android:text="@string/requisition_form"
+        android:layout_marginTop="344dp"
+        android:text="Update Collection Point"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo" />
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        android:onClick="btnUpdateColPointClick"/>
 
     <Button
         android:id="@+id/btnRequisitionList"
@@ -40,23 +41,40 @@
         android:text="@string/requisition_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.364"
+        android:onClick="btnRequisitionListClick"/>
 
     <Button
-        android:id="@+id/btnUpdateDep"
+        android:id="@+id/btnUpdateRep"
         android:layout_width="550dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/update_dep"
+        android:text="Update Department Representative"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.563"
+        android:onClick="btnUpdateRepClick"/>
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="401dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="428dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        android:onClick="btnLogOutClick"/>
 
 </android.support.constraint.ConstraintLayout>

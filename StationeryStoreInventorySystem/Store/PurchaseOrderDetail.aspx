@@ -2,18 +2,12 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <title></title>
+    <title></title>  
     <style type="text/css">
         .auto-style1 {
             color: rgba(118,180,50,1);
             margin-left: 210px;
         }
-    </style>
-    <style type="text/css">
-        .table2style {
-            padding-left: 150px;
-        }
-
         .gridviewStyle {
             margin-left: 30px;
         }
@@ -37,9 +31,7 @@
             height: 10px;
             
         }
-        .gvHeaderColumn{
-            /*padding-left:20px;
-            margin-left:40px;*/
+        .gvHeaderColumn{           
             text-align:center;
         }
     </style>
@@ -90,7 +82,7 @@
     <br />
     <br />
     <br />
-    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False"  CssClass="mGrid"
+    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" Width="60%"
         EmptyDataText="No items haven been ordered for this order" OnRowEditing="gvPurchaseDetail_RowEditing"
         OnRowUpdating="gvPurchaseDetail_RowUpdating" OnRowCancelingEdit="gvPurchaseDetail_RowCancelingEdit">
         <Columns>
@@ -114,7 +106,7 @@
                     <asp:Label ID="orderQtyLbl" runat="server"  Width="170px" Text='<%# Bind("OrderQty") %>' ForeColor="Black"></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="orderQtyTxtBx" runat="server" Width="60px" Text='<%# Bind("OrderQty") %>' ForeColor="Black" OnTextChanged="orderQtyTxtBx_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="orderQtyTxtBx" runat="server" Width="60px" Text='<%# Bind("OrderQty") %>' MaxLength="4" ForeColor="Black" OnTextChanged="orderQtyTxtBx_TextChanged"></asp:TextBox>
                     <asp:RequiredFieldValidator runat="server" ErrorMessage="Cannot be blank" Display="Dynamic" ForeColor="Red" ControlToValidate="orderQtyTxtBx" ValidationGroup="PurchaseDetailGrp" />
                     <asp:RegularExpressionValidator runat="server" ErrorMessage="Invalid.Please enter only the digits" ForeColor="Red" ControlToValidate="orderQtyTxtBx" ValidationExpression="^[0-9]+$" ValidationGroup="PurchaseDetailGrp" />
                 </EditItemTemplate>
@@ -147,7 +139,14 @@
             </asp:TemplateField>
 
         </Columns>
-        
+         <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+            <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+            <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+            <SortedAscendingCellStyle BackColor="#F7F7F7" />
+            <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+            <SortedDescendingCellStyle BackColor="#E5E5E5" />
+            <SortedDescendingHeaderStyle BackColor="#242121" />
     </asp:GridView>
     <br />
     <h3 class="labelStyle">Total Amount:
@@ -177,13 +176,8 @@
     <asp:RequiredFieldValidator runat="server" ControlToValidate="DeliveryOrderIDTxtBx" ErrorMessage="Please enter DeliveryOrder No" Display="Dynamic" ValidationGroup="DeliveryOrderValidationGrp" ForeColor="Red" />
     <br />
     <br />
-    <asp:Button ID="CloseOrderBtn" runat="server" Text="Close Purchase Order" CssClass="button" OnClick="CloseOrderBtn_Click" ValidationGroup="DeliveryOrderValidationGrp" />
-
-
-
-
-
-
+    <asp:Button ID="CloseOrderBtn" runat="server" Text="Close Purchase Order" CssClass="button" OnClick="CloseOrderBtn_Click" ValidationGroup="DeliveryOrderValidationGrp" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <asp:Button ID="BackBtn" runat="server" Text="Back" CssClass="button" OnClick="BackBtn_Click"  />
 </asp:Content>
 
 

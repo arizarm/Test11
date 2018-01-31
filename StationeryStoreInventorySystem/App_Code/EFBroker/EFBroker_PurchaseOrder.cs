@@ -39,19 +39,10 @@ public class EFBroker_PurchaseOrder
         List<PurchaseOrder> rList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").ToList();
+            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").OrderByDescending(x=>x.OrderDate).OrderByDescending(x=>x.PurchaseOrderID).ToList();
         }
         return rList;
-    }
-    public static List<PurchaseOrder> GetPurchaseOrderListByUser(int empID)
-    {
-        List<PurchaseOrder> rList;
-        using (StationeryEntities context = new StationeryEntities())
-        {
-            rList = context.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x=>x.Employee.EmpID==empID).ToList();
-        }
-        return rList;
-    }
+    }  
 
     public static List<PurchaseOrder> GetPurchaseOrderListByStatus(string status)
     {
@@ -59,7 +50,7 @@ public class EFBroker_PurchaseOrder
         {
             List<PurchaseOrder> purchaseorderList = (from pOrder in entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder")
                                                      where pOrder.Status == status
-                                                     select pOrder).ToList();
+                                                     select pOrder).OrderByDescending(x=>x.OrderDate).OrderByDescending(x => x.PurchaseOrderID).ToList();
             return purchaseorderList;
         }
     }
@@ -67,7 +58,7 @@ public class EFBroker_PurchaseOrder
     {
         using (StationeryEntities entities = new StationeryEntities())
         {
-            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x => x.PurchaseOrderID == orderID).ToList();
+            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x => x.PurchaseOrderID == orderID).OrderByDescending(x=>x.OrderDate).OrderByDescending(x => x.PurchaseOrderID).ToList();
         }
     }
     public static List<Item_PurchaseOrder> GetPurchaseOrderItemList()
@@ -295,7 +286,7 @@ public class EFBroker_PurchaseOrder
         using (TransactionScope ts = new TransactionScope())
         {
             StationeryEntities dbInstance = new StationeryEntities();
-            List<DateTime?> allMonths = dbInstance.PurchaseOrders.Where(o=>o.Status.Equals("Closed")).OrderByDescending(c=>c.OrderDate).Select(o=>o.OrderDate).ToList();
+            List<DateTime?> allMonths = dbInstance.PurchaseOrders.Where(o => o.Status.Equals("Closed")).OrderByDescending(c => c.OrderDate).Select(o => o.OrderDate).ToList();
 
             ts.Complete();
             return allMonths;

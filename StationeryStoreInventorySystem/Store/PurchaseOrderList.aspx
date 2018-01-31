@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div>
         <h3>Purchase Orders</h3>
-           <asp:TextBox ID="SearchTxtBx" runat="server" Width="311px" placeholder="Search by Purchase Order" ></asp:TextBox>           
+           <asp:TextBox ID="SearchTxtBx" runat="server" Width="311px" placeholder="Search by Purchase Order"  MaxLength="5"></asp:TextBox>           
            <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click" ValidationGroup="SearchValidationGrp" CssClass="buttonformid"/>
            <asp:Button ID="DisplayAllBtn" runat="server" Text="Display All" OnClick="DisplayAllBtn_Click" CssClass="buttonformid"/>
             <br />
@@ -36,7 +36,7 @@
                     </EditItemTemplate>--%>
                     <ItemTemplate>
                          
-                        <asp:Label ID="orderDate" runat="server" Text='<%# Bind("OrderDate") %>' Font-Bold="true" Width="180px"></asp:Label>
+                        <asp:Label ID="orderDate" runat="server" Text='<%# Bind("OrderDate","{0:MM/dd/yyyy}") %>' Font-Bold="true" Width="180px"></asp:Label>
                     </ItemTemplate> 
                 </asp:TemplateField>
 

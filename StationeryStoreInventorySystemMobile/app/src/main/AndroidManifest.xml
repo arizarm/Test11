@@ -12,19 +12,70 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".RequisitionListActivity"></activity>
-        <activity android:name=".RequisitionDetailActivity" />
-
-
-        <activity android:name=".DisbursementDetailActivity"></activity>
-        <activity android:name=".DisbursementActivity"></activity>
-
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".DeptDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DisbursementActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DisbursementDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DiscrepancyMenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DiscrepancyAdhocActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DiscrepancyAdhocItemDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DiscrepancySummaryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DiscrepancyMonthlyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DiscrepancyMonthlyItemDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainDHeadActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RegenerateRequisitionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RequisitionDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RequisitionListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RetrievalListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RetrievalListDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".UpdateCollectionPointActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".UpdateDeptRepActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

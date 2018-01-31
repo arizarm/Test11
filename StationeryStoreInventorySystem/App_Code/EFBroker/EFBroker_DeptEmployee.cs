@@ -344,6 +344,14 @@ public class EFBroker_DeptEmployee
         {
             return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "Representative").Select(x=>x.Email).First();
         }
+    }
+
+    public static string GetDRepresentativeNameByDeptCode(string depCode)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "Representative").Select(x => x.EmpName).First();
+        }
 
     }
 }

@@ -1,33 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="PurchaseOrderForm.aspx.cs" Inherits="PurchaseOrderForm" %>
 
-
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <title></title>
+    
     <style type="text/css">
-        .auto-style1 {
-            color: rgba(118,180,50,1);
-            margin-left: 250px;
-        }
-    </style>
-    <style type="text/css">
-        .table2style {
-            padding-left: 150px;
-        }
-
-        .gridviewStyle {
-            margin-left: 30px;
-        }
-
-        .orderNoStyle {
-            padding-left: 405px;
-        }
-
-        .buttonstyle {
-            margin-left: 350px;
-        }
-
         .textboxStyle {
             text-align: center;
         }
@@ -35,9 +11,7 @@
             font-weight:bold;
            font-Size:medium;
         }
-        .gvHeaderColumn{
-            /*padding-left:20px;
-            margin-left:40px;*/
+        .gvHeaderColumn{            
             text-align:center;
         }
     </style>
@@ -70,8 +44,7 @@
     Please supply the following items by: &nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtDate" runat="server" Text=""></asp:TextBox>
     <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter a date" ControlToValidate="txtDate" ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red"/>
     <asp:CustomValidator runat="server" ControlToValidate="txtDate" ErrorMessage ="Date cannot be lesser than today." ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red" OnServerValidate="DateValidator"></asp:CustomValidator>
- 
-
+	<asp:CompareValidator id="dateValidator" runat="server" Type="Date" Operator="DataTypeCheck" ControlToValidate="txtDate" ForeColor="Red" ErrorMessage="Please enter a valid date."></asp:CompareValidator>
     <div>
 
         <br />
@@ -116,9 +89,9 @@
                     <ItemTemplate>
                         <asp:TextBox  runat="server" ID="ReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black"  CausesValidation="True"  CssClass="textboxStyle"  AutoPostBack="true"  OnTextChanged="orderQtyTxtBx_TextChanged"/>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter Quantity" ControlToValidate="ReorderQty" Display="Dynamic" ForeColor="Red"/>
-                        <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="ReorderQty" ValidationExpression="[0-9]+"   Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
-                        <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>
-                    </ItemTemplate>                   
+                        <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="ReorderQty" ValidationExpression="[0-9]+"   Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>                        
+						 <%-- <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>--%>
+					</ItemTemplate>                   
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Unit Of Measure" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
@@ -143,25 +116,7 @@
                     <ItemTemplate>
                         <asp:Label runat="server" ID="Amount" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>                    
-                </asp:TemplateField>
-               
-
-                <%--<asp:TemplateField HeaderText="Delete" ItemStyle-HorizontalAlign="Center">
-                    
-                    <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="DeleteChkBx" />
-                    </ItemTemplate>                    
-                </asp:TemplateField>--%>
-
-                <%--<asp:TemplateField HeaderText="Amount" ControlStyle-Width="100px">                   
-                    <ItemTemplate >
-                        <asp:Label runat="server" ID="Label12" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
-                    </ItemTemplate>
-                     <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" VerticalAlign="Middle" />
-                     <ItemStyle Font-Size="10pt" HorizontalAlign="Center" />
-                </asp:TemplateField> --%>
-               <%-- <asp:CommandField ShowDeleteButton="true" />--%>
-
+                </asp:TemplateField>               
             </Columns>
             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" />
@@ -183,9 +138,6 @@
     &nbsp;&nbsp;&nbsp;
    <asp:Button ID="Button4" runat="server" Text="Add Item" CssClass="button" OnClick="AddItem_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <%--<asp:Button ID="DeleteBtn" runat="server" Text="Delete Selected" CssClass="button" OnClick="DeleteSelectedItem_Click"   />
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="Button1" runat="server" Text="Delete All" CssClass="button" OnClick="DeleteAllItem_Click"  OnClientClick="return confirm('Are you sure you want to delete this item?');" />--%>
    <br />
     <br />
     <br />

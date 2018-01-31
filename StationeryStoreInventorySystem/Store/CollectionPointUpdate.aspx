@@ -55,7 +55,7 @@
                  </asp:TemplateField>--%>
 
 
-                 <asp:TemplateField HeaderText="Time">
+                 <asp:TemplateField HeaderText="Time (HHMM, 24 hour format)">
                      <EditItemTemplate>
                          <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                      </EditItemTemplate>

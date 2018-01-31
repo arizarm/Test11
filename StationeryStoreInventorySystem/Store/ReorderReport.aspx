@@ -28,7 +28,8 @@
     <br />
     <br />
     <asp:Button ID="GenerateBtn" runat="server" Text="Generate Report" CssClass="button" CausesValidation="true" OnClick="GenerateBtn_Click" ValidationGroup="DateValGrp" />
-    <asp:CustomValidator runat="server" Display="Dynamic" ErrorMessage="Start Date cannot be lesser than End Date" ValidationGroup="DateValGrp" ForeColor="Red" OnServerValidate="CompareDateValidator"></asp:CustomValidator>
+    <asp:CustomValidator runat="server" Display="Dynamic"  ValidationGroup="DateValGrp" ForeColor="Red" OnServerValidate="CompareDateValidator"></asp:CustomValidator>
+    <asp:Label Id="errorTxt" runat="server" Text=""></asp:Label>
     <Button type="button" id="printreport" class="btn btn-default pull-right" style="margin-right:140px"  onclick="printDiv()">Print Reorder Report</Button>
     
     <br />

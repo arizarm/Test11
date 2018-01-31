@@ -73,9 +73,11 @@
 
         <h4>Search by Item Code or Name</h4>
         <br />
-        <asp:TextBox ID="txtSearch" runat="server" Width="212px"></asp:TextBox>&nbsp;
+        <asp:TextBox ID="txtSearch" runat="server" Width="212px" ValidationGroup="Search"></asp:TextBox>&nbsp;
         <asp:Button ID="Button4" runat="server" Text="Search" OnClick="Button4_Click" />&nbsp;
         <asp:Button ID="Button5" runat="server" Text="Display All" OnClick="Button5_Click" />
+            <br />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="txtSearch" ValidationGroup="Search"></asp:RequiredFieldValidator>
 
 
         <% if (GridView1.Rows.Count > 0)

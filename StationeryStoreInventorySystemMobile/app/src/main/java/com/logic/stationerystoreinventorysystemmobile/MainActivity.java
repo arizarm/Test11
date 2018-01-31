@@ -70,5 +70,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    protected void btnLogOutClick(View v){
+        Util.LogOut(this);
+    }
 
 }

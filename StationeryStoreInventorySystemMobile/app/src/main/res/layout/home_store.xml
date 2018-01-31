@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.logic.stationerystoreinventorysystemmobile.MainActivity">
-
+    android:background="@android:color/background_light">
 
     <ImageView
         android:id="@+id/logo"
@@ -15,86 +11,64 @@
         android:layout_height="132dp"
         android:background="@android:color/background_light"
         android:src="@drawable/logo" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <Button
         android:id="@+id/btnDisbursement"
-        android:layout_width="401dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="228dp"
-        android:text="Disbursement List"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        android:onClick="btnDisbursementClick"/>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="btnDisbursementClick"
+        android:text="Disbursement List" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <Button
         android:id="@+id/btnRetrievalList"
-        android:layout_width="550dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/retrieval_list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.319"
-        android:onClick="btnRetrievalListClick"/>
-
-    <Button
-        android:id="@+id/btnDepDetail"
-        android:layout_width="550dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/update_dep"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.816"
-        android:onClick="btnDepDetailClick"/>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="btnRetrievalListClick"
+        android:text="@string/retrieval_list" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <Button
         android:id="@+id/btnDiscrepancy"
-        android:layout_width="413dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:onClick="generateDiscrepancyClick"
-        android:text="@string/discrepancy"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.62" />
+        android:text="@string/discrepancy" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
 
     <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="413dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:onClick="btnLogOutClick"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.957" />
+        android:id="@+id/btnDepDetail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="btnDepDetailClick"
+        android:text="@string/update_dep" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="btnLogOutClick"
+        android:text="Logout" />
+
+</LinearLayout>
+
+
+
+
+
+

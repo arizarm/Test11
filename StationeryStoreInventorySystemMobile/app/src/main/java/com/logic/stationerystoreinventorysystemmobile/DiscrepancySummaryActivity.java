@@ -3,6 +3,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -133,6 +134,8 @@ public class DiscrepancySummaryActivity extends Activity {
                                 DiscrepancyHolder.clearMonthlyItems();
                                 DiscrepancyHolder.resetItemToUpdate();
                                 DiscrepancyHolder.setAdhocMode();    //Reset to adhoc mode as default, monthly mode is strictly for monthly inventory check
+                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(i);
                             }
                             else{
                                 tvError.setText("Failed to send, please try again");

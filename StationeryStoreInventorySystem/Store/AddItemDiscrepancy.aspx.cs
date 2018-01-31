@@ -85,7 +85,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         {
             if (adjustment != 0)
             {
-                if (item.BalanceQty + adjustment > 0)
+                if (item.BalanceQty + adjustment >= 0)
                 {
                     int actualQuantity = (int)item.BalanceQty + adjustment;
                     string adjStr = "";

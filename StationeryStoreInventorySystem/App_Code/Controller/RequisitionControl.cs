@@ -129,7 +129,7 @@ public class RequisitionControl
         List<ReqisitionListItem> l = PopulateGridViewForDepartment(EFBroker_Requisition.SearchForCollectionList(deptCode));
         foreach(ReqisitionListItem i in l)
         {
-            searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.RequisitionNo.ToString().Contains(searchWord)).ToList();
+            searchList = l.Where(x => x.Date.ToLower().Contains(searchWord.ToLower()) || x.EmployeeName.ToLower().Contains(searchWord)).ToList();
         }
         return searchList;
     }

@@ -14,14 +14,26 @@ public class LoginController
         // TODO: Add constructor logic here
         //
     }
+
+    public static bool verifyLogin(string email, string password)
+    {
+        return EFBroker_Employee.verifyLogin(email, password);
+    }
+
+
+    public static Employee GetEmployeeByEmail(string email)
+    {
+        return EFBroker_Employee.GetEmployeeByEmail(email);
+
+    }
     public static Employee login(string email, string password)
     {
 
-        bool isValid = EmployeeController.verifyLogin(email, password);
+        bool isValid = EFBroker_Employee.verifyLogin(email, password);
 
         if (isValid)
         {
-            Employee emp = EmployeeController.GetEmployeeByEmail(email);
+            Employee emp = EFBroker_Employee.GetEmployeeByEmail(email);
             //Check is temp head or not 
             if (Utility.checkIsTempDepHead(emp) == true)
             {

@@ -11,18 +11,21 @@ public partial class Login : System.Web.UI.Page
     
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if(IsPostBack)
+        {
+            Label4.Text = "";
+        }
     }
 
     protected void Button1_Click(object sender, EventArgs e)
     {
         string email = TextBox1.Text;
         string password = Password1.Value;
-        bool isValid = EmployeeController.verifyLogin(email, password);
+        bool isValid = LoginController.verifyLogin(email, password);
 
         if (isValid)
         {
-            Employee emp = EmployeeController.GetEmployeeByEmail(email);
+            Employee emp = LoginController.GetEmployeeByEmail(email);
             //Check is temp head or not 
             if(Utility.checkIsTempDepHead(emp) == true)
             {

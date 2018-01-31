@@ -43,7 +43,8 @@
                 <asp:Label ID="Label3" runat="server"></asp:Label>
                 <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp
                <asp:CheckBox ID="Persist" runat="server" /> Remember me?
-                <asp:Label ID="Label4" runat="server"></asp:Label>
+                <br />
+                <asp:Label ID="Label4" runat="server" ForeColor="Red"></asp:Label>
             </div>       
     </form>
     </div>

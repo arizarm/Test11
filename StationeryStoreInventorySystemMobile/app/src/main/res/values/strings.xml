@@ -24,5 +24,6 @@
     <string name="deptInfo">Department Info.</string>
     <string name="fragment_title">Do you have any remark for this requisition? </string>
     <string name="spinner_title">Choose One </string>
+    <string name="logout">Logout</string>
 
 </resources>

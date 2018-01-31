@@ -49,7 +49,7 @@ public class RequisitionListService : IRequisitionListService
         Requisition r = new Requisition()
         {
             RequisitionID = Convert.ToInt32(requisition.RequisitionNo),
-            Status = "Rejected",
+            ApprovedBy = Convert.ToInt32(requisition.ApprovedBy),
             Remarks = requisition.Remarks,
         };
 

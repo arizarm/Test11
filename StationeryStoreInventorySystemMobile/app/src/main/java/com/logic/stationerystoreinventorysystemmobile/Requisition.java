@@ -33,7 +33,7 @@ public class Requisition extends HashMap<String,String>{
     public static void approveRequisition(Requisition r){
         JSONObject b = new JSONObject();
         try{
-            b.put("RequisitionID", r.get("RequisitionID"));
+            b.put("RequisitionNo", r.get("RequisitionID"));
             b.put("Remarks",r.get("Remarks"));
             b.put("ApprovedBy", r.get("ApprovedBy"));
         }catch(Exception e){
@@ -45,7 +45,7 @@ public class Requisition extends HashMap<String,String>{
     public static void rejectRequisition(Requisition r){
         JSONObject b = new JSONObject();
         try{
-            b.put("RequisitionID", r.get("RequisitionID"));
+            b.put("RequisitionNo", r.get("RequisitionID"));
             b.put("Remarks",r.get("Remarks"));
             b.put("ApprovedBy", r.get("ApprovedBy"));
         }catch(Exception e){

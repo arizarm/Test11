@@ -80,8 +80,8 @@ public class LoginController
     public static readonly string RetrievalShortfallURI = "~/RetrievalShortfall.aspx";
     public static readonly string PurchaseOrderListURI = "~/Store/PurchaseOrderList.aspx";
     public static readonly string PurchaseOrderDetailURI= "~/Store/PurchaseOrderDetail.aspx";
-    public static readonly string EmployeeRequisitionFormURI = "~/DepartmentEmployee/RequisitionFormEmp.aspx";
-    public static readonly string RepresentativeRequisitionFormURI = "~/DepartmentRepresentative/RequisitionFormDepRep.aspx";
+    public static readonly string EmployeeRequisitionFormURI = "~/DepartmentEmployee/RequisitionForm.aspx";
+    public static readonly string RepresentativeRequisitionFormURI = "~/DepartmentRepresentative/RequisitionForm.aspx";
     public static readonly string DepartmentDetailInfoURI = "~/Department/DepartmentDetailInfo.aspx";
     public static readonly string RequistionListDepartmentURI = "RequisitionListDepartment.aspx";
     public static readonly string DisbursementListURI = "~/Store/DisbursementList.aspx";
@@ -96,4 +96,6 @@ public class LoginController
     public static readonly string StationeryCatalogueURI = "~/StationeryCatalogue.aspx";
     public static readonly string ItemStockCardURI= "~/Store/ItemStockCard.aspx";
     public static readonly string ErrorPageURI = "~/ErrorPage.aspx";
+    public static readonly string StockAdjustmentURI = "~/StoreManagerSupervisor/StockAdjustment.aspx";
+    public static readonly string AddItemDiscrepancyURI = "~/Store/AddItemDiscrepancy.aspx";
 }

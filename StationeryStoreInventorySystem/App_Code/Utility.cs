@@ -41,9 +41,11 @@ public static class Utility
     public static bool checkIsTempDepHead(Employee e)
     {
         DateTime today = DateTime.Now;
+        DateTime endDate = (DateTime)e.EndDate;
+
         if (e.IsTempHead == "Y")
         {
-            if(today >= e.StartDate && today <= e.EndDate )
+            if(today >= e.StartDate && today <= endDate.AddDays(1) )
             {
                 return true;
             }

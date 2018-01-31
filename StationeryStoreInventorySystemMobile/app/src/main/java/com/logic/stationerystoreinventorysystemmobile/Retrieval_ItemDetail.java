@@ -26,6 +26,10 @@ public class Retrieval_ItemDetail extends java.util.HashMap<String,String> {
         put("RetrievedQty", retrievedQty);
     }
 
+    public void saveRetrievedQty(String retrievedQty){
+        put("RetrievedQty", retrievedQty);
+    }
+
     public static List<Retrieval_ItemDetail>getRetrieval_ItemDetail(String retrievalID) {
         List<Retrieval_ItemDetail> list = new ArrayList<Retrieval_ItemDetail>();
         JSONArray a = JSONParser.getJSONArrayFromUrl(host+"/Retrieval/"+retrievalID);

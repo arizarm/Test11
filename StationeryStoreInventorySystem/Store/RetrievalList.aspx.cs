@@ -14,7 +14,13 @@ public partial class RetrievalList : System.Web.UI.Page
         if (!IsPostBack)
         {
             List<Retrieval> retList = retCon.DisplayRetrievalList();
-            gvReq.DataSource = retList;
+            Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
+            foreach(Retrieval r in retList)
+            {
+                retDisplay.Add(r, EFBroker_DeptEmployee.GetEmployeebyEmpID((int)r.RetrievedBy).EmpName);
+            }
+            
+            gvReq.DataSource = retDisplay;
             gvReq.DataBind();
         }
     }

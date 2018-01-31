@@ -11,11 +11,26 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if(Request.UrlReferrer!=null) // if previous page is not null
         {
-            int retrievalId = (int)Session["RetrievalID"];
-            gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
-            gvCollectionPoint.DataBind();
+            // if previous page is CollectionPointUpdate or RetrievalListDetail or RetrievalShortfall
+            if (Request.UrlReferrer.ToString().Contains("CollectionPointUpdate") || Request.UrlReferrer.ToString().Contains("RetrievalListDetail") || Request.UrlReferrer.ToString().Contains("RetrievalShortfall"))
+            {
+                if (!IsPostBack) 
+                {
+                    int retrievalId = (int)Session["RetrievalID"];
+                    gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
+                    gvCollectionPoint.DataBind();
+                }
+            }
+            else
+            {
+                Response.Redirect(LoginController.RequisitionListClerkURI);
+            }
+        }
+        else
+        {
+            Response.Redirect(LoginController.RequisitionListClerkURI);
         }
     }
 

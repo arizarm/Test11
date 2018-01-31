@@ -10,6 +10,7 @@ public class RetrievalService : IRetrievalService
 {
     RetrievalControl retCon = new RetrievalControl();
 
+    //public void Update(WCFRetrievalListDetailUpdate RetrievalDetail)
     public void Update(string RetrievalID, string ItemCode, string ItemQty)
     {
         {
@@ -41,7 +42,7 @@ public class RetrievalService : IRetrievalService
         List<RetrievalListDetailItem> retbDetailList = retCon.DisplayRetrievalListDetail(Convert.ToInt32(id));
         foreach (RetrievalListDetailItem rD in retbDetailList)
         {
-            wcfRetDetailList.Add(WCFRetrievalDetail.Make(rD.Bin, rD.Description, rD.TotalRequestedQty, rD.ItemCode));
+            wcfRetDetailList.Add(WCFRetrievalDetail.Make(rD.Bin, rD.Description, rD.TotalRequestedQty, rD.ItemCode, rD.RetrievedQty));
         }
         return wcfRetDetailList;
     }

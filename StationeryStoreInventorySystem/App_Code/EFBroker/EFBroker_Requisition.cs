@@ -365,11 +365,11 @@ public class EFBroker_Requisition
         }
     }
 
-    public static int CountPending(string deptCode)
+    public static Requisition GetRequisitionByDisbID(int disbId)
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Pending")).Count();
+            return context.Requisitions.Where(x => x.DisbursementID == disbId).FirstOrDefault();
         }
     }
 }

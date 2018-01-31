@@ -22,7 +22,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
             {
                 Employee empActingDHead = deptController.GetEmployeeListForActingDHeadSelected(dcode);
                 DateTime? endDate = empActingDHead.EndDate;
-                DateTime today = DateTime.Now;
+                DateTime today = DateTime.Now.Date;
 
                 if (today > endDate)
                 {

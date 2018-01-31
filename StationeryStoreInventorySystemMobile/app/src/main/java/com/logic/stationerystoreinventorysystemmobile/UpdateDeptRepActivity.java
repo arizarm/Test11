@@ -1,10 +1,15 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,14 +27,30 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
     Spinner spinner;
     TextView txtcid;
     TextView name;
-    String bid = "BDTD";
+
     Map.Entry<String, String> items ;
     private LinkedHashMapAdapter<String, String> adapter;
+    String deptCode;
+    SharedPreferences pref;
+    @Override
 
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("deptCode", deptCode);
+    }
+
+    void restoreInstance(Bundle state) {
+        if (state != null) {
+            deptCode = state.getString("deptCode");
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        deptCode=pref.getString("deptCode","ISS");
         setContentView(R.layout.activity_update_deptrep);
         spinner = (Spinner) findViewById(R.id.spinnerCollectPoint);
         txtcid = (TextView) findViewById(R.id.txt1);
@@ -56,7 +77,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                 spinner.setOnItemSelectedListener(UpdateDeptRepActivity.this);
 
             }
-        }.execute(bid);
+        }.execute(deptCode);
 
         new AsyncTask<String, Void, String>() {
             @Override
@@ -73,7 +94,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                 spinner.setSelection(a);
 
             }
-        }.execute(bid);
+        }.execute(deptCode);
 
 
 
@@ -110,7 +131,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                 }
                 if (!isSame) {
                    // name.setVisibility(View.GONE);
-                    emp.put("deptcode", bid);
+                    emp.put("deptcode", deptCode);
                     emp.put("eid", cid);
                     emp.put("role","Representative");
 
@@ -143,7 +164,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                             spinner.setSelection(a);
 
                         }
-                    }.execute(bid);
+                    }.execute(deptCode);
 
                     Toast.makeText(UpdateDeptRepActivity.this, "Update Success!", Toast.LENGTH_LONG).show();
 
@@ -184,6 +205,40 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
 
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.item1:
+                Intent i1 = new Intent(this, RequisitionListActivity.class);
+                startActivity(i1);
+                return true;
+            case R.id.item2:
+                Intent i2 = new Intent(this, UpdateDeptRepActivity.class);
+                startActivity(i2);
+                return true;
+            case R.id.item3:
+                Intent i3 = new Intent(this, UpdateCollectionPointActivity.class);
+                startActivity(i3);
+                return true;
+            case R.id.item4:
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit();
+                Intent i4 = new Intent(this, LoginActivity.class);
+                startActivity(i4);
+                Toast.makeText(getApplicationContext(),
+                        "Logged out",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
 

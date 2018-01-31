@@ -272,7 +272,7 @@ public class RequisitionControl
     public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
-        List<String> clerkEmails = EmployeeController.getAllClerkMails();
+        List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
         if (clerkEmails != null)
         {

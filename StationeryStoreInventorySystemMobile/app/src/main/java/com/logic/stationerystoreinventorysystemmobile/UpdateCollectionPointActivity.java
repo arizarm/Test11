@@ -1,9 +1,14 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,11 +22,26 @@ import java.util.List;
 public class UpdateCollectionPointActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
-    String bid="BDTD";
+    String deptCode;
+    SharedPreferences pref;
     @Override
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("deptCode", deptCode);
+    }
+
+    void restoreInstance(Bundle state) {
+        if (state != null) {
+            deptCode = state.getString("deptCode");
+        }
+    }
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        deptCode=pref.getString("deptCode","ISS");
+
         setContentView(R.layout.activity_update_collectionpoint);
          final Spinner spinner = (Spinner) findViewById(R.id.spinnerCollectPoint);
         final TextView txtcid=(TextView)findViewById(R.id.txt1);
@@ -58,7 +78,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                 spinner.setSelection(a);
 
             }
-        }.execute(bid);
+        }.execute(deptCode);
 
 
         Button btnUpdate=(Button)findViewById(R.id.btnUpdateCollectPoint);
@@ -86,7 +106,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                 }
                 if (!isSame) {
                     // name.setVisibility(View.GONE);
-                    d.put("dCode",bid);
+                    d.put("dCode",deptCode);
                     d.put("collectId",k);
 
                     new AsyncTask<Department, Void, Void>() {
@@ -115,7 +135,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                             spinner.setSelection(a);
 
                         }
-                    }.execute(bid);
+                    }.execute(deptCode);
 
 
                     Toast.makeText(UpdateCollectionPointActivity.this, "Update Success!", Toast.LENGTH_LONG).show();
@@ -155,6 +175,41 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
 
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.item1:
+                Intent i1 = new Intent(this, RequisitionListActivity.class);
+                startActivity(i1);
+                return true;
+            case R.id.item2:
+                Intent i2 = new Intent(this, UpdateDeptRepActivity.class);
+                startActivity(i2);
+                return true;
+            case R.id.item3:
+                Intent i3 = new Intent(this, UpdateCollectionPointActivity.class);
+                startActivity(i3);
+                return true;
+            case R.id.item4:
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit();
+                Intent i4 = new Intent(this, LoginActivity.class);
+                startActivity(i4);
+                Toast.makeText(getApplicationContext(),
+                        "Logged out",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

@@ -21,9 +21,7 @@
     <div style="margin:0% 0% 0% 30%;">
         <form id="form1" runat="server" action="Login.aspx">
             <div class="header row">
-                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
                     <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo"/>
-                </asp:HyperLink>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -43,7 +41,8 @@
                 <asp:Label ID="Label3" runat="server"></asp:Label>
                 <asp:Button ID="Button1" runat="server" Text="Sign In" CssClass="button" OnClick="Button1_Click" />&nbsp
                <asp:CheckBox ID="Persist" runat="server" /> Remember me?
-                <asp:Label ID="Label4" runat="server"></asp:Label>
+                <br />
+                <asp:Label ID="Label4" runat="server" ForeColor="Red"></asp:Label>
             </div>       
     </form>
     </div>

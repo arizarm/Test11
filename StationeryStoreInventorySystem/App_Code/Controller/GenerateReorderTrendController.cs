@@ -50,4 +50,79 @@ public class GenerateReorderTrendController
         return dtList;
     }
 
+    public List<DateTime?> GetAllReorderMonths()
+    {
+        List<DateTime?> allMonths = EFBroker_PurchaseOrder.GetAllFinalisedReorderMonths();
+        return allMonths;
+    }
+
+    public List<string> GetUniqueRequisitionMonths()
+    {
+        List<DateTime?> allMonths = GetAllReorderMonths();
+
+        List<string> allMonthsInString = new List<string>();
+        List<string> uniqueMonths = new List<string>();
+
+        foreach (DateTime D in allMonths)
+        {
+            string month = D.ToString("MMMM");
+            string year = D.Year.ToString();
+            string entry = month + " " + year;
+
+            allMonthsInString.Add(entry);
+        }
+
+        uniqueMonths = allMonthsInString.Distinct().ToList();
+
+        return uniqueMonths;
+    }
+
+    //(1c) below will be in useCaseController
+    public List<string> GetRequisitionsUpTo2MonthsAgo()
+    {
+        List<DateTime?> allMonths = GetAllReorderMonths();
+
+        List<string> allMonthsInString = new List<string>();
+        List<string> uniqueMonths = new List<string>();
+
+        DateTime maxMonth = DateTime.Now.AddMonths(-2);
+
+        foreach (DateTime D in allMonths)
+        {
+            if (D > maxMonth)
+                continue;
+            else
+            {
+                string Month = D.ToString("MMMM");
+                string Year = D.Year.ToString();
+                string Entry = Month + " " + Year;
+
+                allMonthsInString.Add(Entry);
+            }
+        }
+
+        uniqueMonths = allMonthsInString.Distinct().ToList();
+
+        return uniqueMonths;
+    }
+
+    public List<string> Get3MonthsFromGivenMonth(string month)
+    {
+        List<string> listOfMth = new List<string>();
+
+        string[] givenDate = month.Split(' ');
+        //Format of date given is in 'Month Year'. Split to get each separately
+        DateTime DT = new DateTime(int.Parse(givenDate[1]), DateTime.ParseExact(givenDate[0], "MMMM", CultureInfo.CurrentCulture).Month, 1);
+        //Put it back together to get next 2 months data, then split again to get months in string
+        listOfMth.Add(month);
+        for (int i = 0; i < 2; i++)
+        {
+            DT = DT.AddMonths(1);
+            string Month = DT.ToString("MMMM");
+            string year = DT.Year.ToString();
+            string monthYear = Month + " " + year;
+            listOfMth.Add(monthYear);
+        }
+        return listOfMth;
+    }
 }

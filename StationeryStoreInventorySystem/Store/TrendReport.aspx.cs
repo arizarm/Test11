@@ -59,65 +59,133 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
     protected void DurationRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
     {
+        string type = Request.QueryString["type"];
         int selectedIndex = DurationRadioButtonList.SelectedIndex;
-        switch (selectedIndex)
+        if (type.Equals("RTR"))
         {
-            case 0:
-                FromLabel.Visible = false;
-                FromDropDownList.Visible = false;
-                DurationDropDownList.Visible = false;
-                DurationAddButton.Visible = false;
-                DurationGridView.Visible = false;
-                ViewState["durSel"] = 0;
-                break;
-            case 1:
-                FromLabel.Visible = true;
-                FromDropDownList.Visible = true;
-                DurationDropDownList.Visible = false;
-                DurationAddButton.Visible = false;
-                DurationGridView.Visible = false;
-                ViewState["durSel"] = 1;
-                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
-                List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
-                FromDropDownList.DataSource = allMonths;
-                FromDropDownList.DataBind();
-                break;
-            case 2:
-                FromLabel.Visible = false;
-                FromDropDownList.Visible = false;
-                DurationDropDownList.Visible = true;
-                DurationAddButton.Visible = true;
-                DurationGridView.Visible = true;
-                ViewState["durSel"] = 2;
-                GenerateRequisitionTrendController Grtc1 = new GenerateRequisitionTrendController();
-                List<string> FromMths = Grtc1.GetUniqueRequisitionMonths();
-                DurationDropDownList.DataSource = FromMths;
-                DurationDropDownList.DataBind();
-                break;
+            switch (selectedIndex)
+            {
+                case 0:
+                    FromLabel.Visible = false;
+                    FromDropDownList.Visible = false;
+                    DurationDropDownList.Visible = false;
+                    DurationAddButton.Visible = false;
+                    DurationGridView.Visible = false;
+                    ViewState["durSel"] = 0;
+                    break;
+                case 1:
+                    FromLabel.Visible = true;
+                    FromDropDownList.Visible = true;
+                    DurationDropDownList.Visible = false;
+                    DurationAddButton.Visible = false;
+                    DurationGridView.Visible = false;
+                    ViewState["durSel"] = 1;
+                    GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                    List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
+                    FromDropDownList.DataSource = allMonths;
+                    FromDropDownList.DataBind();
+                    break;
+                case 2:
+                    FromLabel.Visible = false;
+                    FromDropDownList.Visible = false;
+                    DurationDropDownList.Visible = true;
+                    DurationAddButton.Visible = true;
+                    DurationGridView.Visible = true;
+                    ViewState["durSel"] = 2;
+                    GenerateRequisitionTrendController Grtc1 = new GenerateRequisitionTrendController();
+                    List<string> FromMths = Grtc1.GetUniqueRequisitionMonths();
+                    DurationDropDownList.DataSource = FromMths;
+                    DurationDropDownList.DataBind();
+                    break;
+            }
+        }
+        else
+        {
+            switch (selectedIndex)
+            {
+                case 0:
+                    FromLabel.Visible = false;
+                    FromDropDownList.Visible = false;
+                    DurationDropDownList.Visible = false;
+                    DurationAddButton.Visible = false;
+                    DurationGridView.Visible = false;
+                    ViewState["durSel"] = 0;
+                    break;
+                case 1:
+                    FromLabel.Visible = true;
+                    FromDropDownList.Visible = true;
+                    DurationDropDownList.Visible = false;
+                    DurationAddButton.Visible = false;
+                    DurationGridView.Visible = false;
+                    ViewState["durSel"] = 1;
+                    GenerateReorderTrendController grtc = new GenerateReorderTrendController();
+                    List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
+                    FromDropDownList.DataSource = allMonths;
+                    FromDropDownList.DataBind();
+                    break;
+                case 2:
+                    FromLabel.Visible = false;
+                    FromDropDownList.Visible = false;
+                    DurationDropDownList.Visible = true;
+                    DurationAddButton.Visible = true;
+                    DurationGridView.Visible = true;
+                    ViewState["durSel"] = 2;
+                    GenerateReorderTrendController Grtc1 = new GenerateReorderTrendController();
+                    List<string> FromMths = Grtc1.GetUniqueRequisitionMonths();
+                    DurationDropDownList.DataSource = FromMths;
+                    DurationDropDownList.DataBind();
+                    break;
+            }
         }
     }
 
     protected void CategoryRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
     {
         int selectedIndex = CategoryRadioButtonList.SelectedIndex;
-        switch (selectedIndex)
+        string type = Request.QueryString["type"];
+        if (type.Equals("RTR"))
         {
-            case 0:
-                CategoryDropDownList.Visible = false;
-                CategoryAddButton.Visible = false;
-                CategoryGridView.Visible = false;
-                ViewState["catSel"] = 0;
-                break;
-            case 1:
-                CategoryDropDownList.Visible = true;
-                CategoryAddButton.Visible = true;
-                CategoryGridView.Visible = true;
-                ViewState["catSel"] = 1;
-                GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
-                List<string> CatNames = grtc.GetAllCategoryNames();
-                CategoryDropDownList.DataSource = CatNames;
-                CategoryDropDownList.DataBind();
-                break;
+            switch (selectedIndex)
+            {
+                case 0:
+                    CategoryDropDownList.Visible = false;
+                    CategoryAddButton.Visible = false;
+                    CategoryGridView.Visible = false;
+                    ViewState["catSel"] = 0;
+                    break;
+                case 1:
+                    CategoryDropDownList.Visible = true;
+                    CategoryAddButton.Visible = true;
+                    CategoryGridView.Visible = true;
+                    ViewState["catSel"] = 1;
+                    GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
+                    List<string> CatNames = grtc.GetAllCategoryNames();
+                    CategoryDropDownList.DataSource = CatNames;
+                    CategoryDropDownList.DataBind();
+                    break;
+            }
+        }
+        else
+        {
+            switch (selectedIndex)
+            {
+                case 0:
+                    CategoryDropDownList.Visible = false;
+                    CategoryAddButton.Visible = false;
+                    CategoryGridView.Visible = false;
+                    ViewState["catSel"] = 0;
+                    break;
+                case 1:
+                    CategoryDropDownList.Visible = true;
+                    CategoryAddButton.Visible = true;
+                    CategoryGridView.Visible = true;
+                    ViewState["catSel"] = 1;
+                    GenerateReorderTrendController grtc = new GenerateReorderTrendController();
+                    List<string> CatNames = grtc.GetAllCategoryNames();
+                    CategoryDropDownList.DataSource = CatNames;
+                    CategoryDropDownList.DataBind();
+                    break;
+            }
         }
     }
 

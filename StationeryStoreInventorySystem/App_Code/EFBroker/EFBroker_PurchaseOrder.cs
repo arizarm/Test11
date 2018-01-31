@@ -290,4 +290,15 @@ public class EFBroker_PurchaseOrder
         return lowStockItemList;
     }
 
+    public static List<DateTime?> GetAllFinalisedReorderMonths()
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities dbInstance = new StationeryEntities();
+            List<DateTime?> allMonths = dbInstance.PurchaseOrders.Where(o=>o.Status.Equals("Closed")).OrderByDescending(c=>c.OrderDate).Select(o=>o.OrderDate).ToList();
+
+            ts.Complete();
+            return allMonths;
+        }
+    }
 }

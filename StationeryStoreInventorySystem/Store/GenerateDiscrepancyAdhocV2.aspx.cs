@@ -39,7 +39,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             }
             else
             {
-                Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+                Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
             }
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();

@@ -103,7 +103,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;
             string itemCode = lbl.Text;
-            link.NavigateUrl = "~/Store/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+            link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
         }
     }
 
@@ -312,7 +312,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;
             string itemCode = lbl.Text;
-            link.NavigateUrl = "~/Store/AddItemDiscrepancy.aspx?itemCode=" + itemCode;
+            link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
         }
     }
 }

@@ -199,7 +199,7 @@ public class RetrievalControl
     }
 
 
-    //??
+    // need to reset ActualQty To Zero before += rsub.ActualQty;, because same item code from different department has same ActualQty now
     public void SaveActualQtyBreakdownByDepartment(int requisitionId, List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList)
     {
         List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
@@ -238,7 +238,7 @@ public class RetrievalControl
                 {
                     if (shortfallList.ItemCode == di.ItemCode)
                     {
-                        di.ActualQty = 0;
+                        di.ActualQty = 0;  
                     }
                 }
             }
@@ -314,7 +314,8 @@ public class RetrievalControl
 
                 //
                 string departmentRepresentativeEmail = EFBroker_DeptEmployee.GetDRepresentativeEmailByDeptCode(depCode);
-                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(), "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to "+ collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() +" at "+ d.CollectionTime +". Thank you.");
+                string departmentRepresentativeName = EFBroker_DeptEmployee.GetDRepresentativeNameByDeptCode(depCode);
+                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(),"Dear "+ departmentRepresentativeName +", "+ Environment.NewLine + Environment.NewLine  + "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to "+ collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() +" at "+ d.CollectionTime +". Thank you.");
                 //
             }
         }
@@ -379,7 +380,7 @@ public class RetrievalControl
                 Requisition r = new Requisition();
                 r = EFBroker_Requisition.GetRequisitionByID(no);
 
-                string dep = EFBroker_DeptEmployee.GetDepartByEmpID(r.RequestedBy ?? 0).DeptCode;////////////////////////////////////
+                string dep = EFBroker_DeptEmployee.GetDepartByEmpID(r.RequestedBy ?? 0).DeptCode;//if null, ==0
 
                 if (dep == departmentCode)
                 {
@@ -438,7 +439,7 @@ public class RetrievalControl
         disbursement_Item.DisbursementID = disbursementID;
         disbursement_Item.ItemCode = r.ItemCode;
         disbursement_Item.TotalRequestedQty = r.RequestedQty;
-        disbursement_Item.ActualQty = 0;///////////////////////////////////////////////////////
+        disbursement_Item.ActualQty = 0;///////////////////////////////////////////////////////in order to do += ActualQty
         return disbursement_Item;
     }
 

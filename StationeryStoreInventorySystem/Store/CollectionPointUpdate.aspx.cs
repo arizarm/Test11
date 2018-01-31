@@ -11,9 +11,9 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Request.UrlReferrer!=null) // if previous page is not null
+        if (Request.UrlReferrer != null) // if previous page is not null
         {
-            // if previous page is CollectionPointUpdate or RetrievalListDetail or RetrievalShortfall
+           // if previous page is CollectionPointUpdate or RetrievalListDetail or RetrievalShortfall
             if (Request.UrlReferrer.ToString().Contains("CollectionPointUpdate") || Request.UrlReferrer.ToString().Contains("RetrievalListDetail") || Request.UrlReferrer.ToString().Contains("RetrievalShortfall"))
             {
                 if (!IsPostBack) 

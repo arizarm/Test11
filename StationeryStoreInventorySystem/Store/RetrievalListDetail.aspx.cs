@@ -15,22 +15,29 @@ public partial class RetrievalForm : System.Web.UI.Page
         {
             if (!IsPostBack) //first time 
             {
-                int retrievalId = (int)Session["RetrievalID"];
-
-                List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
-
-                gvRe.DataSource = RetrievalListDetailItemList;
-                gvRe.DataBind();
-
-                //RangeValidator
-                foreach (GridViewRow subR in gvRe.Rows)
+                if (Session["RetrievalID"] != null)
                 {
-                    int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+                    int retrievalId = (int)Session["RetrievalID"];
 
-                    RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
-                    rv.MaximumValue = totalRequestedQty.ToString();
+                    List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
+
+                    gvRe.DataSource = RetrievalListDetailItemList;
+                    gvRe.DataBind();
+
+                    //RangeValidator
+                    foreach (GridViewRow subR in gvRe.Rows)
+                    {
+                        int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+
+                        RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
+                        rv.MaximumValue = totalRequestedQty.ToString();
+                    }
+                    //
                 }
-                //
+                else
+                {
+                    Response.Redirect(LoginController.RequisitionListClerkURI);
+                }
             }
         }
         else
@@ -70,7 +77,7 @@ public partial class RetrievalForm : System.Web.UI.Page
 
         RetrievalShortfallItemList = saveRetrievalQty();
 
-        if(retCon.CheckInvalidDisbursement(retrievalId))
+        if (retCon.CheckInvalidDisbursement(retrievalId))
         {
             if (RetrievalShortfallItemList.Count != 0)  //if there's shortfall
             {

@@ -129,22 +129,13 @@ public class EFBroker_DeptEmployee
         }
 
     }
-    public static string GetDeptRepByDeptCode(string depName)
+    public static Employee GetDeptRepByDeptCode(string depName)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
-            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First();
+            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
         }
     }
-
-    public static int GetDeptRepEmpIDByDeptCode(string depName)
-    {
-        using (StationeryEntities smodel = new StationeryEntities())
-        {
-            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpID).First();
-        }
-    }
-
     public static Employee GetEmployeebyEmpID(int empID)
     {
         Employee e;
@@ -343,6 +334,14 @@ public class EFBroker_DeptEmployee
         using (StationeryEntities smodel = new StationeryEntities())
         {
             return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "Representative").Select(x=>x.Email).First();
+        }
+    }
+
+    public static string GetDRepresentativeNameByDeptCode(string depCode)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "Representative").Select(x => x.EmpName).First();
         }
 
     }

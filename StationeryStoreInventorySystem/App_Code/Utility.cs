@@ -39,53 +39,25 @@ public static class Utility
         }
     }
     public static bool checkIsTempDepHead(Employee e)
-    {   
+    {
+        DateTime today = DateTime.Now;
         if (e.IsTempHead == "Y")
         {
-            if(e.StartDate != null && e.EndDate !=null)
+            if(today >= e.StartDate && today <= e.EndDate )
             {
-                DateTime endDate = (DateTime)e.EndDate;
-                DateTime today = DateTime.Now;
-                if (today >= e.StartDate && today <= endDate.AddDays(1))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
-            else
+           else
             {
                 return false;
             }
-          
         }
         else
         {
             return false;
         }
     }
-    public static bool ValidateNewItem(CustomValidator control, string itemCode)
-    {
-        Item item = EFBroker_Item.GetItembyItemCode(itemCode.ToUpper());
-        if (item == null)
-        {
-            return true;
-        }
-        else
-        {
-            if (item.ActiveStatus == "Y")
-            {
-                control.ErrorMessage = "ItemCode is in use by existing item";
-            }
-            else
-            {
-                control.ErrorMessage = "ItemCode is used for archived item";
-            }
-            return false;
-        }
-    }
+
     public static string FirstUpperCase(string s)
     {
         return s.First().ToString().ToUpper() + s.Substring(1).ToLower();

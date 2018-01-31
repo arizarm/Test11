@@ -14,65 +14,75 @@ public partial class RetrievalDecision : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        //
+        if (Request.UrlReferrer != null) // if previous page is not null
         {
-            retrievalId = (int)Session["RetrievalID"];
-
-            List<RetrievalShortfallItem> RetrievalShortfallItemList = (List<RetrievalShortfallItem>)Session["RetrievalShortfallItemList"];
-
-            gvMain.DataSource = RetrievalShortfallItemList;
-            gvMain.DataBind();
-
-            List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList = new List<RetrievalShortfallItemSub>();
-
-            int j = 0;
-            foreach (GridViewRow r in gvMain.Rows)
+            //
+            if (!IsPostBack)
             {
-                GridView gvSub = (GridView)r.FindControl("gvSub");
-                List<RetrievalShortfallItemSub> retrievalShortfallItemSubList = retCon.DisplayRetrievalShortfallSubGridView(retrievalId, (r.FindControl("hdfItemCode") as HiddenField).Value);
+                retrievalId = (int)Session["RetrievalID"];
 
-                foreach (RetrievalShortfallItemSub i in retrievalShortfallItemSubList)
+                List<RetrievalShortfallItem> RetrievalShortfallItemList = (List<RetrievalShortfallItem>)Session["RetrievalShortfallItemList"];
+
+                gvMain.DataSource = RetrievalShortfallItemList;
+                gvMain.DataBind();
+
+                List<RetrievalShortfallItemSub> retrievalShortfallItemSubListOfList = new List<RetrievalShortfallItemSub>();
+
+                int j = 0;
+                foreach (GridViewRow r in gvMain.Rows)
                 {
-                    retrievalShortfallItemSubListOfList.Add(i);
-                }
-                gvSub.DataSource = retrievalShortfallItemSubList;
-                gvSub.DataBind();
+                    GridView gvSub = (GridView)r.FindControl("gvSub");
+                    List<RetrievalShortfallItemSub> retrievalShortfallItemSubList = retCon.DisplayRetrievalShortfallSubGridView(retrievalId, (r.FindControl("hdfItemCode") as HiddenField).Value);
 
-                int availableQty = int.Parse((r.FindControl("availableQuantity") as Label).Text);
-
-                foreach (GridViewRow subR in gvSub.Rows)
-                {
-                    int requestedQty = int.Parse((subR.FindControl("requestedQty") as Label).Text);
-                    int temp;
-                    if (availableQty > requestedQty)
+                    foreach (RetrievalShortfallItemSub i in retrievalShortfallItemSubList)
                     {
-                        temp = requestedQty;
+                        retrievalShortfallItemSubListOfList.Add(i);
                     }
-                    else
-                    {
-                        temp = availableQty;
-                    }
+                    gvSub.DataSource = retrievalShortfallItemSubList;
+                    gvSub.DataBind();
 
-                    RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
-                    rv.MaximumValue = temp.ToString();
-                    string actualQty;////////////////
-                    actualQty = (subR.FindControl("txtActualQuantity") as TextBox).Text;
-                }
-                //
+                    int availableQty = int.Parse((r.FindControl("availableQuantity") as Label).Text);
 
-                if (gvSub.Rows.Count == 1)
-                {
                     foreach (GridViewRow subR in gvSub.Rows)
                     {
-                        (subR.FindControl("txtActualQuantity") as TextBox).Text = RetrievalShortfallItemList[j].Qty.ToString();
-                        (subR.FindControl("txtActualQuantity") as TextBox).ReadOnly = true;
-                    }
-                }
-                j++;
-            }
+                        int requestedQty = int.Parse((subR.FindControl("requestedQty") as Label).Text);
+                        int temp;
+                        if (availableQty > requestedQty)
+                        {
+                            temp = requestedQty;
+                        }
+                        else
+                        {
+                            temp = availableQty;
+                        }
 
-            ViewState["retrievalShortfallItemSubListOfList"] = retrievalShortfallItemSubListOfList;
+                        RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
+                        rv.MaximumValue = temp.ToString();
+                        string actualQty;////////////////
+                        actualQty = (subR.FindControl("txtActualQuantity") as TextBox).Text;
+                    }
+                    //
+
+                    if (gvSub.Rows.Count == 1)
+                    {
+                        foreach (GridViewRow subR in gvSub.Rows)
+                        {
+                            (subR.FindControl("txtActualQuantity") as TextBox).Text = RetrievalShortfallItemList[j].Qty.ToString();
+                            (subR.FindControl("txtActualQuantity") as TextBox).ReadOnly = true;
+                        }
+                    }
+                    j++;
+                }
+
+                ViewState["retrievalShortfallItemSubListOfList"] = retrievalShortfallItemSubListOfList;
+            }
         }
+        else
+        {
+            Response.Redirect(LoginController.RequisitionListClerkURI);
+        }
+
     }
 
     protected void BtnGenerateDisbursementList_Click(object sender, EventArgs e)

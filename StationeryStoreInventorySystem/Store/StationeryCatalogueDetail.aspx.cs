@@ -69,13 +69,19 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
             categoryName = Utility.FirstUpperCase(TextBoxCategory.Text);
             uom = Utility.FirstUpperCase(TextBoxUOM.Text);
             bin = TextBoxBin.Text;
-            Item item = ItemBusinessLogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
-            if (item != null)
+            if(ItemBusinessLogic.ValidateNewItemfields(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin))
             {
+                Item item = ItemBusinessLogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
                 iList.Add(item);
                 Session["itemlist"] = iList;
-                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text = "";
+                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text =LabelMessage.Text="";
+                LabelMessage.Visible = false;
                 Response.Redirect(Request.RawUrl);
+            }
+            else
+            {
+                LabelMessage.Text = "One or more fields is invalid, please check your fields";
+                LabelMessage.Visible = true;
             }
         }
         return;
@@ -112,7 +118,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
     {
         //args.IsValid = (EFBroker_Item.GetItembyItemCode(args.Value) == null);
-        args.IsValid = Utility.ValidateNewItem(CustomValidator1, args.Value);
+        args.IsValid = ValidatorUtil.ValidateNewItem(CustomValidator1, args.Value);
     }
 
 

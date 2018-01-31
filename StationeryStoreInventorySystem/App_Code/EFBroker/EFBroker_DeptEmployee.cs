@@ -336,4 +336,14 @@ public class EFBroker_DeptEmployee
         StationeryEntities context = new StationeryEntities();
         return context.CollectionPoints.Select(x => x.CollectionPoint1).ToList();
     }
+
+
+    public static string GetDRepresentativeEmailByDeptCode(string depCode)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.DeptCode == depCode && x.Role == "Representative").Select(x=>x.Email).First();
+        }
+
+    }
 }

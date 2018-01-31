@@ -11,24 +11,31 @@ public partial class RetrievalForm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack) //first time 
+        if (Request.UrlReferrer != null) // if previous page is not null
         {
-            int retrievalId = (int)Session["RetrievalID"];
-
-            List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
-
-            gvRe.DataSource = RetrievalListDetailItemList;
-            gvRe.DataBind();
-
-            //RangeValidator
-            foreach (GridViewRow subR in gvRe.Rows)
+            if (!IsPostBack) //first time 
             {
-                int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+                int retrievalId = (int)Session["RetrievalID"];
 
-                RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
-                rv.MaximumValue = totalRequestedQty.ToString();
+                List<RetrievalListDetailItem> RetrievalListDetailItemList = retCon.DisplayRetrievalListDetail(retrievalId);
+
+                gvRe.DataSource = RetrievalListDetailItemList;
+                gvRe.DataBind();
+
+                //RangeValidator
+                foreach (GridViewRow subR in gvRe.Rows)
+                {
+                    int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+
+                    RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
+                    rv.MaximumValue = totalRequestedQty.ToString();
+                }
+                //
             }
-            //
+        }
+        else
+        {
+            Response.Redirect(LoginController.RequisitionListClerkURI);
         }
     }
 
@@ -92,8 +99,9 @@ public partial class RetrievalForm : System.Web.UI.Page
         else
         {
             //create a error page!
-            string message = "Invalid retireval!";
-            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+            //string message = "Invalid retireval!";
+            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+            Response.Redirect("RetrievalListDetailErrorPage.aspx");
         }
     }
 }

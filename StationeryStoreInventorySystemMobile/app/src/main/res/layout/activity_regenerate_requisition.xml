@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="144dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Requisition Date : " />
+
+            <TextView
+                android:id="@+id/regenReqDate"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="@dimen/MyHeight" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Department Name : " />
+
+            <TextView
+                android:id="@+id/depName"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="@dimen/MyHeight" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/TitleStyle"
+                android:layout_width="@dimen/TitleWidth"
+                android:layout_height="@dimen/MyHeight"
+                android:text="Requested by : " />
+
+            <TextView
+                android:id="@+id/reqBy"
+                style="@style/TextStyle"
+                android:layout_width="@dimen/TextWidth"
+                android:layout_height="60dp" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal">
+        <ListView
+            android:id="@+id/lstRegenReq"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="Generate" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="Cancel" />
+    </LinearLayout>
+</LinearLayout>

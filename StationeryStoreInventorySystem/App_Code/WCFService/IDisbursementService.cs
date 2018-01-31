@@ -15,14 +15,32 @@ public interface IDisbursementService
     [System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement", ResponseFormat = WebMessageFormat.Json)]
     List<WCFDisbursement> getAllDisbursement();
 
-    //[OperationContract]
-    //[System.ServiceModel.Web.WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
-    //WCFDisbursement getDisbursement(string id);
-
     [OperationContract]
     [WebGet(UriTemplate = "/Disbursement/{id}", ResponseFormat = WebMessageFormat.Json)]
     List<WCFDisbursementDetail> getDisbursementDetail(string id);
 
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/AccessCodeValidate", Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+    string AccessCodeValidate(string disbId, string accessCode);
+
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/UpdateDisbursement", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+    void UpdateDisbursement(List<WCFUpdateDisbursement> qtyList);
+
+
+    [OperationContract]
+    [WebGet(UriTemplate = "/GetRegenerateDate/{id}", ResponseFormat = WebMessageFormat.Json)]
+    WCFRegenerateRequest GetRegenerateDate(string id);
+
+
+    [OperationContract]
+    [WebInvoke(UriTemplate = "/RegenerateRequest", Method = "POST",
+    RequestFormat = WebMessageFormat.Json,
+    ResponseFormat = WebMessageFormat.Json)]
+    void RegenerateRequisition(List<WCFRequestedItem> regenList);
 }
 
 [DataContract]
@@ -95,5 +113,89 @@ public class WCFDisbursementDetail
 
     [DataMember]
     public string Remarks { get { return remarks; } set { remarks = value; } }
+}
+
+
+
+[DataContract]
+public class WCFUpdateDisbursement
+{
+    private string disbId;
+    private string actualQty;
+    private string remark;
+
+    public static WCFUpdateDisbursement Make(string disbId, string actualQty, string remark)
+    {
+        WCFUpdateDisbursement d = new WCFUpdateDisbursement();
+        d.DisbId = disbId;
+        d.ActualQty = actualQty;
+        d.Remark = remark;
+        return d;
+    }
+
+    [DataMember]
+    public string DisbId { get { return disbId; } set { disbId = value; } }
+
+    [DataMember]
+    public string ActualQty { get { return actualQty; } set { actualQty = value; } }
+
+    [DataMember]
+    public string Remark { get { return remark; } set { remark = value; } }
+}
+
+[DataContract]
+public class WCFRegenerateRequest
+{
+    private string reqDate;
+    private string reqBy;
+    private string depName;
+
+    public static WCFRegenerateRequest Make(string reqDate, string reqBy, string depName)
+    {
+        WCFRegenerateRequest d = new WCFRegenerateRequest();
+        d.ReqBy = reqBy;
+        d.ReqDate = reqDate;
+        d.DepName = depName;
+        return d;
+    }
+
+    [DataMember]
+    public string ReqDate { get { return reqDate; } set { reqDate = value; } }
+
+    [DataMember]
+    public string ReqBy { get { return reqBy; } set { reqBy = value; } }
+
+    [DataMember]
+    public string DepName { get { return depName; } set { depName = value; } }
+
+}
+
+[DataContract]
+public class WCFRequestedItem
+{
+    private string code;
+    private string description;
+    private string shortfallQty;
+    private int disbId;
+
+    public static WCFRequestedItem Make(string code, string description, string shortfallQty, int disbId)
+    {
+        WCFRequestedItem item = new WCFRequestedItem();
+        item.Code = code;
+        item.Description = description;
+        item.ShortfallQty = shortfallQty;
+        item.DisbId = disbId;
+        return item;
+    }
+
+    [DataMember]
+    public string Code { get { return code; } set { code = value; } }
+    [DataMember]
+    public string Description { get { return description; } set { description = value; } }
+    [DataMember]
+    public string ShortfallQty { get { return shortfallQty; } set { shortfallQty = value; } }
+    [DataMember]
+    public int DisbId { get { return disbId; } set { disbId = value; } }
+
 }
 

@@ -3,6 +3,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,7 +35,10 @@ public class DisbursementDetailFragment extends Fragment {
     View view;
     String accessCode, remark, status, itemCode, itemDesc;
     int retrievedQty, actQty, reqQty, shortfallQty, discrepancyQty;
+    boolean actualQtyValidate =true;
 
+    //create list for shortfall item to regenerate requisition
+    List<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
 
     public DisbursementDetailFragment() {
         // Required empty public constructor
@@ -98,16 +102,18 @@ public class DisbursementDetailFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
+                        v.requestFocus();
+
                         new AsyncTask<Void, Void, String>() {
+                            ProgressDialog progress;
+                            @Override
+                            protected void onPreExecute() {
+                                progress = ProgressDialog.show(getActivity(), "Loading", "Processing disbursement...", true);
+                            }
                             @Override
                             protected String doInBackground(Void... params) {
-
-                                //create list for shortfall item to regenerate requisition
-                                List<RequisitionListItem> regenReqList = new ArrayList<RequisitionListItem>();
                                 //crate array list to hold items to be updated
                                 final ArrayList<DisbursementDetailListItems> toBeUpdated = new ArrayList<DisbursementDetailListItems>();
-                                //boolean to validate quantity
-                                boolean actualQtyValidate = true;
                                 //get data from list view
                                 for (int i = 0; i < lv.getCount(); i++) {
                                     //get view from list view to access controls inside list view
@@ -142,7 +148,7 @@ public class DisbursementDetailFragment extends Fragment {
                                         itemDesc = txtDesc.getText().toString();
                                         itemCode = txtItemCode.getText().toString();
                                         shortfallQty = reqQty - actQty;
-                                        RequisitionListItem reqItem = new RequisitionListItem(itemCode, itemDesc, String.valueOf(shortfallQty));
+                                        RegenerateRequisition reqItem = new RegenerateRequisition(itemCode, itemDesc, String.valueOf(shortfallQty),disbId);
                                         regenReqList.add(reqItem);
 
                                         Log.i("ShortfallItems", itemCode + itemDesc + String.valueOf(shortfallQty) );
@@ -184,19 +190,43 @@ public class DisbursementDetailFragment extends Fragment {
                                         //save current data to database if access code is correct
                                         DisbursementDetailListItems.UpdateDisbursement(toBeUpdated);
                                         status = "Acknowledgement successful!";
+                                        actualQtyValidate = true;
                                     } else {
                                         //return error if wrong access code
                                         status = "Wrong Access Code!";
+                                        actualQtyValidate = false;
                                     }
                                 }
+
+                                //if accesscode ok
+                                if(actualQtyValidate == true)
+                                {
+                                    if(regenReqList.size() != 0 )
+                                    {
+                                        RegenerateRequisitionActivity.setRegenReqList(regenReqList);
+                                        RegenerateRequisition r = RegenerateRequisition.GetRegenrateInfo(disbId);
+                                        RegenerateRequisitionActivity.setRegenerateRequisition(r);
+                                        Intent intent = new Intent(getActivity(), RegenerateRequisitionActivity.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(getActivity(), DisbursementActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
+
                                 return status;
                             }
 
                             @Override
                             protected void onPostExecute(String result) {
+
+                                progress.dismiss();
                                 Log.i("Result", result);
                                 //display toast message at the end of transaction
                                 customToast(result);
+
                             }
                         }.execute();
                     }

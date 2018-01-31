@@ -64,4 +64,20 @@ public class DisbursementDetailListItems extends HashMap<String,String>
         }
         return list;
     }
+
+
+
+//    public static String getRegenrateDate(String DisbId) {
+//
+//        String regenDate = null;
+//        JSONObject jCheckAccess = new JSONObject();
+//        try {
+//            jCheckAccess.put("DisbId", DisbId);
+//            regenDate = JSONParser.postStream(host+"/GetRegenerateDate", jCheckAccess.toString());
+//        } catch (Exception e) {
+//        }
+//        return regenDate;
+//    }
+
+
 }

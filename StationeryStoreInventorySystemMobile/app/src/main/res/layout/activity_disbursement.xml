@@ -5,15 +5,3 @@
     class="com.logic.stationerystoreinventorysystemmobile.DisbursementListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="horizontal" >-->
-
-
-    <!--<TableLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
-
-    <!--<TableRow--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">--><!--<TextView--><!--android:id="@+id/lblTitle"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:ellipsize="end"--><!--android:text="Active Disbursement by Department"--><!--android:textAppearance="?android:attr/textAppearanceLarge"/>--><!--</TableRow>-->
-
-    <!--<TableRow--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">--><!--<fragment--><!--class="com.logic.stationerystoreinventorysystemmobile.DisbursementListFragment"--><!--android:layout_width="0dp"--><!--android:layout_height="match_parent"--><!--android:layout_weight="2"--><!--android:id="@+id/list_frag"/>--><!--</TableRow>-->
-
-    <!--<TableRow--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">--><!--<FrameLayout--><!--android:layout_width="0dp"--><!--android:layout_weight="2"--><!--android:layout_height="match_parent"--><!--android:id="@+id/fragment_container"/>--><!--</TableRow>--><!--</TableLayout>--><!--</LinearLayout>-->

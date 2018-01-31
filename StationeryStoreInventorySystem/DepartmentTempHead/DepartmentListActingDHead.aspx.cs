@@ -135,11 +135,6 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
     }
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-
         Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }
-
-
-
-
 }

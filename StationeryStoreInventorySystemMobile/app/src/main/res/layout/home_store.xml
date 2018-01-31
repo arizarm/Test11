@@ -17,17 +17,18 @@
         android:src="@drawable/logo" />
 
     <Button
-        android:id="@+id/btnRequisitionList"
+        android:id="@+id/btnDisbursement"
         android:layout_width="401dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="176dp"
-        android:text="@string/requisition_list"
+        android:layout_marginTop="228dp"
+        android:text="Disbursement List"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo" />
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        android:onClick="btnDisbursementClick"/>
 
     <Button
         android:id="@+id/btnRetrievalList"
@@ -42,10 +43,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.319"
+        android:onClick="btnRetrievalListClick"/>
 
     <Button
-        android:id="@+id/btnUpdateDep"
+        android:id="@+id/btnDepDetail"
         android:layout_width="550dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -57,7 +59,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.816"
+        android:onClick="btnDepDetailClick"/>
 
     <Button
         android:id="@+id/btnDiscrepancy"
@@ -74,6 +77,24 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.937" />
+        app:layout_constraintVertical_bias="0.62" />
+
+
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="413dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:onClick="btnLogOutClick"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.957" />
 
 </android.support.constraint.ConstraintLayout>

@@ -129,13 +129,22 @@ public class EFBroker_DeptEmployee
         }
 
     }
-    public static Employee GetDeptRepByDeptCode(string depName)
+    public static string GetDeptRepByDeptCode(string depName)
     {
         using (StationeryEntities smodel = new StationeryEntities())
         {
-            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).First();
+            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpName).First();
         }
     }
+
+    public static int GetDeptRepEmpIDByDeptCode(string depName)
+    {
+        using (StationeryEntities smodel = new StationeryEntities())
+        {
+            return smodel.Employees.Where(x => x.Department.DeptName.Equals(depName) && x.Role.Equals("Representative")).Select(x => x.EmpID).First();
+        }
+    }
+
     public static Employee GetEmployeebyEmpID(int empID)
     {
         Employee e;

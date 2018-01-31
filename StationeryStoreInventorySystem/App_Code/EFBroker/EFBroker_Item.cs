@@ -99,7 +99,7 @@ public class EFBroker_Item
             catalogue =
             inventoryDB.Items
             .Include("Category")
-            .Where(db => db.ActiveStatus == "Y")
+            .Where(db => db.ActiveStatus == "Y" || db.ActiveStatus =="C")
             .ToList();
         }
         return catalogue;

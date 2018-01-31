@@ -48,6 +48,19 @@ public class EFBroker_Supplier
         }
     }
 
+    public static void MakeSupplierActive(string code)
+    {
+        using (TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities dbInstance = new StationeryEntities();
+            Supplier s = dbInstance.Suppliers.Where(x => x.SupplierCode == code).First();
+            s.ActiveStatus = "Y";
+            dbInstance.Entry(s).State = System.Data.Entity.EntityState.Modified;
+            dbInstance.SaveChanges();
+            ts.Complete();
+        }
+    }
+
     public static void DeleteSupplier(string supplierCode)
     {
         using (TransactionScope ts = new TransactionScope())

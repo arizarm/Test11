@@ -44,7 +44,16 @@ public partial class SupplierPriceList : System.Web.UI.Page
                 TextBox6.Text = s.SupplierAddress;
                 TextBox8.Text = s.SupplierEmail;
                 TextBox9.Text = s.ActiveStatus;
-
+                if (s.ActiveStatus == "Y")
+                {
+                    DeleteButton.CssClass = "rejectBtn";
+                    DeleteButton.Text = "Set To Inactive";
+                }
+                else
+                {
+                    DeleteButton.CssClass = "button";
+                    DeleteButton.Text = "Set To Active";
+                }
 
                 //Populate dropdownlists for Item and Category
                 DefaultDropDownListRestore();
@@ -77,8 +86,21 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void DeleteButton_Click(object sender, EventArgs e)
     {
-        slc.DeleteSupplier(code);
-        Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
+        Supplier s = slc.GetSupplierGivenSupplierCode(code);
+
+        if (s.ActiveStatus == "Y")
+        {
+            slc.DeleteSupplier(code);
+            Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
+        }
+        else
+        {
+            slc.MakeSupplierActive(code);
+            DeleteButton.CssClass = "rejectBtn";
+            DeleteButton.Text = "Set To Inactive";
+            Utility.DisplayAlertMessage(Message.ActiveSuccessful);
+            TextBox9.Text = "Y";
+        }
     }
 
     protected void AddNewItemButton_Click(object sender, EventArgs e)

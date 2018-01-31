@@ -84,6 +84,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
                     FromDropDownList.DataSource = allMonths;
                     FromDropDownList.DataBind();
+                    ViewState["fromMonth"] = FromDropDownList.SelectedValue;
                     break;
                 case 2:
                     FromLabel.Visible = false;
@@ -122,6 +123,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
                     FromDropDownList.DataSource = allMonths;
                     FromDropDownList.DataBind();
+                    ViewState["fromMonth"] = FromDropDownList.SelectedValue;
                     break;
                 case 2:
                     FromLabel.Visible = false;

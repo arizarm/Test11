@@ -12,7 +12,7 @@
                     <asp:Label ID="Label2" runat="server" Text="Supplier Code: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="TextBox1" runat="server" Width ="130%"></asp:TextBox>
+                    <asp:TextBox ID="TextBox1" runat="server" Width ="130%" Enabled="false"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Supplier Code is required!" ControlToValidate="TextBox1" ForeColor="Red"></asp:RequiredFieldValidator>
                     <br />
                 </asp:TableCell>
@@ -23,8 +23,8 @@
                     <asp:Label ID="Label4" runat="server" Text="Supplier Name: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="TextBox2" runat="server" Width ="130%"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Supplier Name is required!" ControlToValidate="TextBox2" ForeColor="Red"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="TextBox2" runat="server" Width ="130%" ValidationGroup="SupplierName"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ValidationGroup="SupplierName" ErrorMessage="Supplier Name is required!" ControlToValidate="TextBox2" ForeColor="Red"></asp:RequiredFieldValidator>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -90,7 +90,7 @@
 
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
-                    <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="button" OnClick="UpdateButton_Click"/>
+                    <asp:Button ID="UpdateButton" runat="server" Text="Update" CssClass="button" OnClick="UpdateButton_Click" Enabled="false" Visible="false"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <asp:Button ID="DeleteButton" runat="server" Text="Set To Inactive" CssClass="rejectBtn" OnClick="DeleteButton_Click" />
                 </asp:TableCell>
@@ -132,8 +132,9 @@
                 <asp:TableRow>
                     <asp:TableCell>Price: </asp:TableCell>
                     <asp:TableCell>
-                        <asp:TextBox ID="TextBox7" runat="server" ></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="NewItemPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TextBox7" ValidationExpression="(\d{0,4})([.]{0,1}\d{0,2})"/>
+                        <asp:TextBox ID="TextBox7" runat="server" ValidationGroup="AddNewItem" ></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Enter a value" ControlToValidate="TextBox7" ForeColor="Red" ValidationGroup="AddNewItem"/>
+                    <asp:RegularExpressionValidator ID="NewItemPriceRangeValidator" runat="server" ErrorMessage="Correct format: 12.00" ControlToValidate="TextBox7" ForeColor="Red" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ValidationGroup="AddNewItem"/>
                     </asp:TableCell></asp:TableRow><asp:TableRow />
                 <asp:TableRow>
                     <asp:TableCell>Supplier Priority for this item: </asp:TableCell><asp:TableCell>

@@ -13,11 +13,8 @@ import java.util.HashMap;
  */
 
 public class CatalogueItem extends HashMap<String, String> {
-    static String ip = "172.17.249.125";
-//    static String ip = "172.23.202.59";
-//    static String ip = "192.168.1.224";
 
-    static String host = "http://"+ ip + "/StationeryStoreInventorySystem/ItemService.svc/";
+    static String host = R.string.host_add + "ItemService.svc/";
 
     public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments, String bin){
         put("itemCode", itemCode);

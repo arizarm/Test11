@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -46,6 +47,31 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
     void restoreInstance(Bundle state) {
         if (state != null) {
             deptCode = state.getString("deptCode");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Intent i1 = new Intent(this, LoginActivity.class);
+                startActivity(i1);
+                return true;
+            case R.id.item2:
+                Intent i2 = new Intent(this, RequisitionListActivity.class);
+                startActivity(i2);
+                return true;
+            case R.id.item3:
+                SharedPreferences.Editor editor = pref.edit();
+                editor.clear();
+                editor.commit();
+                Intent i3 = new Intent(this, LoginActivity.class);
+                startActivity(i3);
+                Toast.makeText(getApplicationContext(),
+                        "Logged out",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

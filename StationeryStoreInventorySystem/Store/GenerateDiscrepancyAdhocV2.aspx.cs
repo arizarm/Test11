@@ -76,7 +76,6 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     {
                         if ((bool)Session["ItemToUpdate"])
                         {
-                            StationeryEntities context = new StationeryEntities();
                             Item i = EFBroker_Item.GetItembyItemCode(itemCode);
                             i.BalanceQty = (adj * -1) + i.BalanceQty;
                             EFBroker_Item.UpdateItem(i);

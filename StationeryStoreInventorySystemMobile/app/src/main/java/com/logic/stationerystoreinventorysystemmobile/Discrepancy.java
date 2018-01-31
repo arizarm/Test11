@@ -24,6 +24,16 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("Status",status);
     }
 
+    //for submission to WCF
+//    public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status, Boolean itemToUpdate){
+//        put("ItemCode", itemCode);
+//        put("RequestedBy",requestedBy.toString());
+//        put("AdjustmentQty",adjustmentQty.toString());
+//        put("Remarks",remarks);
+//        put("Status",status);
+//        put("ItemToUpdate", itemToUpdate.toString());
+//    }
+
     //for display in summary page
     public Discrepancy(String itemCode, String description, Integer balanceQty, Integer adjustmentQty){
         put("itemCode", itemCode);
@@ -36,9 +46,16 @@ public class Discrepancy extends HashMap<String, String> implements Comparable<D
         put("remarks", remarks);
     }
 
-    public static boolean submitDiscrepancies(ArrayList<Discrepancy> dList){
+    public static boolean submitDiscrepancies(ArrayList<Discrepancy> dList, boolean itemToUpdate){
         JSONArray a = new JSONArray(dList);
-        String url = host + "SubmitDiscrepancies";
+        String destination = "";
+        if(itemToUpdate){
+            destination = "SubmitDiscrepanciesWithItemUpdate";
+        }
+        else{
+            destination = "SubmitDiscrepancies";
+        }
+        String url = host + destination;
         String result = JSONParser.postStream(url, a.toString());
 
         //Check whether saving to database was successful, based on bool return from WCF

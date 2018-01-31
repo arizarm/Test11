@@ -20,16 +20,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dip"
-        android:text="@string/department_actinghead_Spinner" />
+        android:layout_marginTop="10dip"/>
+        <!--android:text="@string/department_actinghead_Spinner" -->
 
 
     <Spinner
         android:id="@+id/spinnerCollectPoint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/spinner_title"
-        />
+        android:layout_height="wrap_content"/>
+        <!--android:prompt="@string/spinner_title"-->
+
 
     <TextView
         android:id="@+id/txtDateFrom"

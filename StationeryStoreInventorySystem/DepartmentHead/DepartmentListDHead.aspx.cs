@@ -201,7 +201,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
                                 if (clerkEmails != null)
                                 {
@@ -245,7 +245,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
                                 if (clerkEmails != null)
                                 {
@@ -306,7 +306,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EmployeeController.getAllClerkMails();
+                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
                                 if (clerkEmails != null)
                                 {
@@ -347,7 +347,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                         if (c != cid)
                         {
-                            List<String> clerkEmails = EmployeeController.getAllClerkMails();
+                            List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
                             if (clerkEmails != null)
                             {

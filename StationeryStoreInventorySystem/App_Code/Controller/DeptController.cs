@@ -117,7 +117,7 @@ public class DeptController
     public void UpdateCollectionPoint(string deptcode, int cid)
     {
         EFBroker_DeptEmployee.UpdateCollectionPoint(deptcode, cid);
-        List<String> clerkEmails = EmployeeController.getAllClerkMails();
+        List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
         if (clerkEmails != null)
         {

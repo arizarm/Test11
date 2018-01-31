@@ -19,7 +19,6 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         Requisition r = RequisitionControl.getRequisition(id);
         int empid = Convert.ToInt32(r.RequestedBy);
-        //Label2.Text = EmployeeController.getEmployee(empid);
         Label3.Text = r.RequestDate.ToString();
         Label4.Text = r.Status.ToString();
 

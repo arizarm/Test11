@@ -116,9 +116,6 @@ public class EFBroker_Employee
         return EFBroker_DeptEmployee.GetDepartByDepCode(DepCode);
     }
 
-    public static Employee GetDeptHeadTempHeadEmail(Employee em)
-    {
-        return EFBroker_Employee.GetHeadEmail(em);
-    }
+
 
 }

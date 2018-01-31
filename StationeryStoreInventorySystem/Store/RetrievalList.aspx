@@ -19,7 +19,7 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("RetrievedDate") %>'></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Key.RetrievedDate") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -28,7 +28,7 @@
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="LabelRetrievalID" runat="server" Text='<%# Bind("RetrievalID") %>'></asp:Label>
+                        <asp:Label ID="LabelRetrievalID" runat="server" Text='<%# Bind("Key.RetrievalID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -38,7 +38,7 @@
                         <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("RetrievedBy") %>'></asp:Label>
+                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>                
 
@@ -47,7 +47,7 @@
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("RetrievalStatus") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Key.RetrievalStatus") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>      
 

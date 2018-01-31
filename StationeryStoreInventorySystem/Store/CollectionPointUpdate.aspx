@@ -26,8 +26,8 @@
         <tr>
             <td class="auto-style1"><b>Date:</b></td>
             <td  >
-                <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static" ></asp:TextBox>
-<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please select the date" ControlToValidate="txtSDate" Style="color: red"></asp:RequiredFieldValidator>
+                <asp:TextBox ID="txtSDate" runat="server"  ValidationGroup="1" ClientIDMode="Static" ></asp:TextBox>
+<asp:RequiredFieldValidator ID="RequiredFieldValidator1"  ValidationGroup="1" runat="server" ErrorMessage="Please select the date" ControlToValidate="txtSDate" Style="color: red"></asp:RequiredFieldValidator>
 </td>
         </tr>        
        

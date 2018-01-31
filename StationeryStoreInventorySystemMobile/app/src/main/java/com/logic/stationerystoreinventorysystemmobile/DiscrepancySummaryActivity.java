@@ -3,8 +3,10 @@ package com.logic.stationerystoreinventorysystemmobile;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -57,10 +59,10 @@ public class DiscrepancySummaryActivity extends Activity {
     }
 
     protected void submitClick(View v){
-//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String eid = pref.getString("eid", null);
-        v.requestFocus();
-        String eid = "1001";
+
+        v.requestFocus();   //Get focus to ensure last EditText's OnFocusChange is triggered
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String eid = pref.getString("eid", null);
         boolean complete = true;
         String status = DiscrepancyHolder.isMonthly() ? "Monthly":"Pending";
         final TextView tvError = findViewById(R.id.tvError);

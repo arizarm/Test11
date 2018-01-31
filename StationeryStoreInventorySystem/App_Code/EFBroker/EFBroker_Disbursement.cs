@@ -93,7 +93,7 @@ public class EFBroker_Disbursement
         {
             Retrieval r = new Retrieval();
             r.RetrievedBy = empID;     //base on user session
-            r.RetrievedDate = DateTime.Today;  /////////////////////////////////
+            r.RetrievedDate = DateTime.Now;  /////////////////////////////////
             r.RetrievalStatus = "Pending";
             context.Retrievals.Add(r);
             context.SaveChanges();

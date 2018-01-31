@@ -181,7 +181,7 @@ public class RetrievalControl
                 string departmentCode = d.Department.DeptCode.ToString();
                 try
                 {
-                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty ?? 0;
+                    int requestedQty = EFBroker_Requisition.FindReqItemsByReqIDItemID(r.RequisitionID, shortfallItemCode).RequestedQty ?? 0; //if RequestedQty is null, assign to 0
 
                     //actualQty(0) bind with avialableQty(retrievedQty)
                     RetrievalShortfallItemSub rsfs = new RetrievalShortfallItemSub((DateTime)r.RequestDate, departmentName, departmentCode, requestedQty, 0, shortfallItemCode);
@@ -435,5 +435,61 @@ public class RetrievalControl
         disbursement_Item.TotalRequestedQty = r.RequestedQty;
         disbursement_Item.ActualQty = 0;///////////////////////////////////////////////////////
         return disbursement_Item;
+    }
+
+    //discard invalid disbursement and set requisitioin status to PRORITY if all qty zero
+    public bool CheckInvalidDisbursement(int rId)
+    {
+        List<Disbursement> disbList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(rId);
+
+        Dictionary<Disbursement, bool> chkDisbStatus = new Dictionary<Disbursement, bool>();
+
+        bool valid = false;
+
+        foreach(Disbursement d in disbList)
+        {
+            foreach(Disbursement_Item di in d.Disbursement_Item)
+            {
+                if(di.ActualQty != 0)
+                {
+                    valid = true;
+                }
+            }
+            chkDisbStatus.Add(d, valid);
+        }
+
+        if (!valid)
+        {
+            List<Requisition> reqList = new List<Requisition>();
+
+            foreach (Disbursement d in disbList)
+            {
+                Requisition r = EFBroker_Requisition.GetRequisitionByDisbID(d.DisbursementID);
+                r.Status = "Priority";
+                r.DisbursementID = null;
+                EFBroker_Requisition.UpdateRequisition(r);
+
+                d.Status = "Invalid";
+                EFBroker_Disbursement.UpdateDisbursement(d);
+            }
+        }
+
+        valid = false;
+
+        foreach (KeyValuePair<Disbursement,bool> kvp in chkDisbStatus)
+        {
+            //if 1 of the disbursement is true => valid is true
+            if(kvp.Value)
+            {
+                valid = true;
+            }
+        }
+
+        if(!valid)  //   valid = false;
+        {
+            EFBroker_Disbursement.UpdateRetrievalStatus(rId, "Invalid");
+        }
+
+        return valid;
     }
 }

@@ -13,28 +13,41 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        if (RequisitionControl.DisplayAll().Count == 0)
         {
-            gvReq.DataSource = RequisitionControl.DisplayAll();
-            gvReq.DataBind();
+            GenerateBtn.Enabled = false;
+            SearchBtn.Enabled = false;
+            DisplayBtn.Enabled = false;
+            DropDownList1.Enabled = false;
+            SearchBox.Enabled = false;
+            CheckBoxValidation.Text = "There is no pending requisition!";
         }
-
-        if (DropDownList1.Text == "Priority")
+        else
         {
-            DropDownList1.Text = "Select Status";
+            if (!IsPostBack)
+            {
+                gvReq.DataSource = RequisitionControl.DisplayAll();
+                gvReq.DataBind();
+            }
 
-            gvReq.DataSource = null;
-            gvReq.DataSource = RequisitionControl.DisplayPriority();
-            gvReq.DataBind();
-        }
+            if (DropDownList1.Text == "Priority")
+            {
+                DropDownList1.Text = "Select Status";
 
-        if (DropDownList1.Text == "Approved")
-        {
-            DropDownList1.Text = "Select Status";
+                gvReq.DataSource = null;
+                gvReq.DataSource = RequisitionControl.DisplayPriority();
+                gvReq.DataBind();
+            }
 
-            gvReq.DataSource = null;
-            gvReq.DataSource = RequisitionControl.DisplayApproved();
-            gvReq.DataBind();
+            if (DropDownList1.Text == "Approved")
+            {
+                DropDownList1.Text = "Select Status";
+
+                gvReq.DataSource = null;
+                gvReq.DataSource = RequisitionControl.DisplayApproved();
+                gvReq.DataBind();
+            }
         }
     }
 
@@ -79,7 +92,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
     {
         bool check = false;
 
-        List<int> reqNo = new List<int>();
+        List<int> requisitionNo = new List<int>();
 
         foreach (GridViewRow row in gvReq.Rows)
         {
@@ -90,18 +103,18 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             else if (((CheckBox)row.FindControl("CheckBox")).Checked)
             {
                 check = true;
-                reqNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
+                requisitionNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
             }
         }
 
-        if (check)
-        {
-            int empId = (int)Session["empID"];//////////
-            int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
-            Session["RetrievalID"] = retrievalId;
-            reqCon.AddDisbursement(retrievalId, reqNo);
-            Response.Redirect("~/Store/RetrievalListDetail.aspx");
-        }
+            if (check)
+            {
+                int empId = (int)Session["empID"];//////////
+                int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
+                Session["RetrievalID"] = retrievalId;
+                reqCon.AddDisbursement(retrievalId, requisitionNo);
+                Response.Redirect("~/Store/RetrievalListDetail.aspx");
+            }
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)

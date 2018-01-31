@@ -55,34 +55,45 @@ public partial class RetrievalForm : System.Web.UI.Page
 
     protected void FinalizeDisbursmentList_Click(object sender, EventArgs e)
     {
+        int retrievalId = (int)Session["RetrievalID"];
+
         List<RetrievalShortfallItem> RetrievalShortfallItemList = new List<RetrievalShortfallItem>();
 
         Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();  //shortfall item + adjustment qty
 
         RetrievalShortfallItemList = saveRetrievalQty();
 
-        if (RetrievalShortfallItemList.Count != 0)  //if there's shortfall
+        if(retCon.CheckInvalidDisbursement(retrievalId))
         {
-            foreach (RetrievalShortfallItem r in RetrievalShortfallItemList)
+            if (RetrievalShortfallItemList.Count != 0)  //if there's shortfall
             {
-                Item i = EFBroker_Item.GetItembyItemCode(r.ItemCode);
-                int balance = (int)i.BalanceQty;
-                if (balance > r.Qty)
+                foreach (RetrievalShortfallItem r in RetrievalShortfallItemList)
                 {
-                    int discQty = r.Qty - balance;
-                    discToUpdate.Add(i, discQty);
+                    Item i = EFBroker_Item.GetItembyItemCode(r.ItemCode);
+                    int balance = (int)i.BalanceQty;
+                    if (balance > r.Qty)
+                    {
+                        int discQty = r.Qty - balance;
+                        discToUpdate.Add(i, discQty);
+                    }
                 }
-            }
 
-            Session["discrepancyList"] = discToUpdate;
-            Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
-            Response.Redirect("RetrievalShortfall.aspx");
+                Session["discrepancyList"] = discToUpdate;
+                Session["RetrievalShortfallItemList"] = RetrievalShortfallItemList;
+                Response.Redirect("RetrievalShortfall.aspx");
+            }
+            else //if there is no short fall go to collectionpoint
+            {
+                Session["discrepancyList"] = null;
+                Session["RetrievalShortfallItemList"] = null;
+                Response.Redirect("CollectionPointUpdate.aspx");
+            }
         }
-        else //if there is no short fall go to collectionpoint
+        else
         {
-            Session["discrepancyList"] = null;
-            Session["RetrievalShortfallItemList"] = null;
-            Response.Redirect("CollectionPointUpdate.aspx");
+            //create a error page!
+            string message = "Invalid retireval!";
+            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
         }
     }
 }

@@ -77,4 +77,6 @@ public class Message
     public const String ValidationError
     = "One or more fields are incorrect. Please try again";
 
+    public const String ActiveSuccessful
+    = "Supplier successfully set to Active";
 }

@@ -38,4 +38,9 @@ public class SupplierListController
     {
         EFBroker_Supplier.CreateSupplier(supplier);
     }
+
+    public void MakeSupplierActive(string code)
+    {
+        EFBroker_Supplier.MakeSupplierActive(code);
+    }
 }

@@ -34,10 +34,10 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(email.getText().toString() == null || password.getText().toString() ==null)
+                if(email.getText().toString().matches("") || password.getText().toString().matches(""))
                 {
                     Toast.makeText(getApplicationContext(),
-                            "Please fill User ID and Password", Toast.LENGTH_SHORT).show();
+                            "Please fill both User ID and Password", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Employee emp = Employee.VerifyEmployee(email.getText().toString(), password.getText().toString());

@@ -102,23 +102,27 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case R.id.item1:
-                Intent i1 = new Intent(this, LoginActivity.class);
+                Intent i1 = new Intent(this, RequisitionListActivity.class);
                 startActivity(i1);
                 return true;
             case R.id.item2:
-                Intent i2 = new Intent(this, RequisitionListActivity.class);
+                Intent i2 = new Intent(this, UpdateDeptRepActivity.class);
                 startActivity(i2);
                 return true;
             case R.id.item3:
+                Intent i3 = new Intent(this, UpdateCollectionPointActivity.class);
+                startActivity(i3);
+                return true;
+            case R.id.item4:
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.commit();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                startActivity(i3);
+                Intent i4 = new Intent(this, LoginActivity.class);
+                startActivity(i4);
                 Toast.makeText(getApplicationContext(),
                         "Logged out",Toast.LENGTH_SHORT).show();
                 return true;
@@ -126,7 +130,6 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 }
 

@@ -194,8 +194,8 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
                 Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
             }
-            
-            Response.Redirect("~/GenerateDiscrepancyV2.aspx");
+
+            LoginController.NavigateMain();
         }
     }
 }

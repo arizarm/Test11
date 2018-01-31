@@ -56,14 +56,19 @@ public class DiscrepancyMonthlyItemDetailsActivity extends Activity {
                 etActual = findViewById(R.id.etActual);
                 String actualQty = etActual.getText().toString();
                 if(Util.isInt(actualQty)){
-                    if(actualQty.equals(tvBalanceQty.getText().toString())){
-                        tvError.setText("Actual quantity is the same as current balance");
-                        break;
+                    if(Integer.parseInt(actualQty) >= 0){
+                        if(actualQty.equals(tvBalanceQty.getText().toString())){
+                            tvError.setText("Actual quantity is the same as current balance");
+                            break;
+                        }
+                        else{
+                            ci.monthlyActualInput(actualQty);
+                            complete = true;
+                            break;
+                        }
                     }
                     else{
-                        ci.monthlyActualInput(actualQty);
-                        complete = true;
-                        break;
+                        tvError.setText("Actual quantity cannot be negative");
                     }
                 }
                 else{

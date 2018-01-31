@@ -26,13 +26,13 @@ public class RetrievalControl
     //Display retrieval by search keyword
     public List<Retrieval> DisplaySearch(string searchWord)
     {
-        List<Retrieval> retrievalList = EFBroker_Disbursement.GetAllRetrievalList();
+        List<Retrieval> retrievalList = EFBroker_Disbursement.GetPendingAndProgressRetrievalList();
 
         List<Retrieval> searchList = new List<Retrieval>();
 
         foreach (Retrieval i in retrievalList)
         {
-            searchList = retrievalList.Where(x => x.RetrievedDate.Value.ToLongDateString().ToLower().Contains(searchWord.ToLower()) || x.RetrievalID.ToString().Contains(searchWord) || x.RetrievedBy.ToString().Contains(searchWord)).ToList();
+            searchList = retrievalList.Where(x => x.RetrievedDate.Value.ToLongDateString().ToLower().Contains(searchWord.ToLower()) || x.RetrievalID.ToString().Contains(searchWord) || x.Employee.EmpName.ToLower().Contains(searchWord.ToLower()) || x.RetrievalStatus.ToLower().Contains(searchWord.ToLower())).ToList();
         }
         return searchList;
     }

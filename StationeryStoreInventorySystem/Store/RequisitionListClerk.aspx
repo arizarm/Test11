@@ -12,7 +12,7 @@
            <asp:button ID="SearchBtn" runat="server" Text="Search"  ValidationGroup="1"  CssClass="button" OnClick="SearchBtn_Click"/>
            <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
        </div>
-     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="SearchBox" style="color:red"> Please enter search key word!</asp:RequiredFieldValidator>
+     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="" ControlToValidate="SearchBox" style="color:red"> </asp:RequiredFieldValidator>
 
     <div>
         <asp:DropDownList ID="DropDownList1" runat="server" CssClass="align-right" AutoPostBack="True">
@@ -23,7 +23,7 @@
     </div>
 
        <div>        
-         <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid"  AutoGenerateColumns="False" >
+         <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid"  AutoGenerateColumns="False" OnRowDataBound="gvReq_RowDataBound" >
             <Columns>
                
                 <asp:TemplateField >
@@ -65,7 +65,7 @@
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                     </EditItemTemplate>
                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("status") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("status") %>' Font-Bold="true" Width="140px" ></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>       
                 

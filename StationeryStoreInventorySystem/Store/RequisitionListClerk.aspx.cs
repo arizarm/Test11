@@ -107,14 +107,14 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
             }
         }
 
-            if (check)
-            {
-                int empId = (int)Session["empID"];//////////
-                int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
-                Session["RetrievalID"] = retrievalId;
-                reqCon.AddDisbursement(retrievalId, requisitionNo);
-                Response.Redirect("~/Store/RetrievalListDetail.aspx");
-            }
+        if (check)
+        {
+            int empId = (int)Session["empID"];//////////
+            int retrievalId = EFBroker_Disbursement.AddNewRetrieval(empId);
+            Session["RetrievalID"] = retrievalId;
+            reqCon.AddDisbursement(retrievalId, requisitionNo);
+            Response.Redirect("~/Store/RetrievalListDetail.aspx");
+        }
     }
 
     protected void gvDetailBtn_Click(object sender, EventArgs e)
@@ -123,5 +123,24 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         string s = (row.FindControl("lblrequisitionNo") as Label).Text; //row.Cells[2]
         Session["RequisitionNo"] = s;
         Response.Redirect("~/Store/RequisitionDetail.aspx");
+    }
+
+    protected void gvReq_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label statusLabel = (Label)e.Row.FindControl("Label1");
+
+            string status = statusLabel.Text;
+
+            if (status == "Approved")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (status == "Priority")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Red;
+            }
+        }
     }
 }

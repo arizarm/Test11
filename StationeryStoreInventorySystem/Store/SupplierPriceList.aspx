@@ -45,7 +45,7 @@
                 <asp:TableCell>
                     <asp:TextBox ID="SupplierPhoneNoTextBox" runat="server" TextMode="SingleLine" Width ="130%" OnTextChanged="SupplierPhoneNoTextBox_TextChanged"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Phone Number is required!" ControlToValidate="SupplierPhoneNoTextBox" ForeColor="Red"></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid Singapore phone number" ControlToValidate="SupplierPhoneNoTextBox" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" Enabled="false" ForeColor="Red"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="PhoneNoValidator" runat="server" ErrorMessage="Please enter a valid 8-digit phone number" ControlToValidate="SupplierPhoneNoTextBox" ValidationExpression="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" Enabled="false" ForeColor="Red"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -84,6 +84,7 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="TextBox9" runat="server" TextMode="SingleLine" Width ="130%"></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="ActiveStatusValidator" runat="server" ErrorMessage="Enter Y or N" ValidationExpression="[YN]" ControlToValidate="TextBox9"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 

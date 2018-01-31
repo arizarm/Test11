@@ -5,6 +5,6 @@
         android:orderInCategory="101"/>
     <item android:id="@+id/item2" android:title="@string/reqList"
         android:orderInCategory="102"/>
-    <item android:id="@+id/item3" android:title="@string/reqList"
+    <item android:id="@+id/item3" android:title="@string/logout"
     android:orderInCategory="103"/>
 </menu>

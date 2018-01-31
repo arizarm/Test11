@@ -126,4 +126,16 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     {
         Response.Redirect(LoginController.StationeryCatalogueURI);
     }
+
+    protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (EFBroker_Item.GetItembyDescription(args.Value) != null)
+        {
+            args.IsValid = false;
+        }
+        else
+        {
+            args.IsValid = true;
+        }
+    }
 }

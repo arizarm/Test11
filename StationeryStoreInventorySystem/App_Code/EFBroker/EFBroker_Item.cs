@@ -47,6 +47,14 @@ public class EFBroker_Item
             return result;
         }
     }
+    public static Item GetItembyDescription(string description)
+    {
+        using (StationeryEntities inventoryDB = new StationeryEntities())
+        {
+            Item result = inventoryDB.Items.Where(x => x.Description.Replace(" ","").ToLower().Equals(description.Replace(" ","").ToLower())).FirstOrDefault();
+            return result;
+        }
+    }
     public static Item GetActiveItembyItemCode(string itemCode)
     {
         using (StationeryEntities inventoryDB = new StationeryEntities())

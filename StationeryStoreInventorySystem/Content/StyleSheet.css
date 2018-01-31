@@ -294,3 +294,7 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+.errorfont{
+    color:rgba(255, 0, 0, 1.00);
+}

@@ -12,8 +12,8 @@
             <td>Item Number:</td>
             <td>
                 <asp:textbox id="TextBoxItemNo" MaxLength="10" runat="server"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:CustomValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" CssClass="errorfont" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" CssClass="errorfont" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:CustomValidator>
             </td>
         </tr>
                 <tr><td><br /></td><td><br /></td></tr>
@@ -23,7 +23,7 @@
                 <asp:dropdownlist id="DropDownListCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListCategory_SelectedIndexChanged">
                     </asp:dropdownlist>
                 <asp:textbox id="TextBoxCategory" runat="server" MaxLength="10" readonly="true"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"  ControlToValidate="TextBoxCategory" CssClass="errorfont" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
             </td>
         </tr>
                 <tr><td><br /></td><td><br /></td></tr>
@@ -31,7 +31,8 @@
             <td>Item Description : </td>
             <td>
                 <asp:textbox id="TextBoxDesc" runat="server" MaxLength="50"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" CssClass="errorfont" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="TextBoxDesc" CssClass="errorfont" ErrorMessage="Description currently used for current items" OnServerValidate="CustomValidator2_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
             </td>
         </tr>
                 <tr><td><br /></td><td><br /></td></tr>
@@ -41,7 +42,7 @@
                 <asp:dropdownlist id="DropDownListUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListUOM_SelectedIndexChanged">
                     </asp:dropdownlist>
                 <asp:textbox id="TextBoxUOM" runat="server" readonly="true" Visible="false" MaxLength="10"></asp:textbox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" CssClass="errorfont" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
             </td>
         </tr>
                 <tr><td><br /></td><td><br /></td></tr>

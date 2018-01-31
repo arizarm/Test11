@@ -35,15 +35,15 @@ public class ItemBusinessLogic
         Category cat = EFBroker_Category.GetCategorybyName(categoryName);
         if (cat != null)
         {
-            item.Category = cat;
+            item.CategoryID = cat.CategoryID;
             EFBroker_Item.AddItem(item);
         }
         else
         {
             EFBroker_Item.AddItemAndCategory(item, categoryName);
             cat = EFBroker_Category.GetCategorybyName(categoryName);
-            item.Category = cat;
         }
+        item.Category = cat;
         return item;
     }
     public static bool ValidateNewItemfields(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
@@ -70,6 +70,15 @@ public class ItemBusinessLogic
         {
             sucesss = false;
         }
+        else
+        {
+            Item i = EFBroker_Item.GetItembyDescription(description);
+            if ( i!= null && !itemCode.Equals(i.ItemCode))
+            {
+                sucesss = false;
+            }
+        }
+
         return sucesss;
     }
     public static void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)

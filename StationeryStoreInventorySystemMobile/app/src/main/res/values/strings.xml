@@ -7,7 +7,7 @@
     <string name="requisition_form">Generate Requisition Form</string>
     <string name="retrieval_list">Retrieval List</string>
     <string name="disbursement">Disbursement</string>
-    <string name="discrepancy">Generate Discrepancy</string>
+    <string name="discrepancy">Report Discrepancies</string>
     <string name="update_dep">Department Details</string>
     <string name="quantity">Quantity</string>
     <string name="reqDate">Requested Date: </string>

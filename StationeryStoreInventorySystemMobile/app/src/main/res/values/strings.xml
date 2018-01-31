@@ -24,6 +24,7 @@
     <string name="deptInfo">Department Info.</string>
     <string name="fragment_title">Do you have any remark for this requisition? </string>
     <string name="spinner_title">Choose One </string>
+    <string name="update_dr">Update Department Rep</string>
+    <string name="update_cp">Update Collection Point</string>
     <string name="logout">Logout</string>
-
 </resources>

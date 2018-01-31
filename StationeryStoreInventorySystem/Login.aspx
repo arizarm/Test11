@@ -21,9 +21,7 @@
     <div style="margin:0% 0% 0% 30%;">
         <form id="form1" runat="server" action="Login.aspx">
             <div class="header row">
-                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Main.aspx">
                     <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo"/>
-                </asp:HyperLink>
             </div>
             <div class="col-md-6">
                 <div class="form-group">

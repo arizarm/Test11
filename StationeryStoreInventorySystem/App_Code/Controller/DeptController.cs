@@ -88,7 +88,14 @@ public class DeptController
 
     public void UpdateDeptRep(string deptcode, int cid)
     {
+        Employee oldDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
+        String oldEmail = oldDeptRep.Email;
+        Utility.sendMail(oldEmail, "Change Department Rep", "Your Role have changed to Employee");
         EFBroker_DeptEmployee.UpdateDeptRep(deptcode, cid);
+        Employee newDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
+        String newEmail = newDeptRep.Email;
+        Utility.sendMail(newEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+
     }
 
     //Collection Point
@@ -110,5 +117,15 @@ public class DeptController
     public void UpdateCollectionPoint(string deptcode, int cid)
     {
         EFBroker_DeptEmployee.UpdateCollectionPoint(deptcode, cid);
+        List<String> clerkEmails = EmployeeController.getAllClerkMails();
+
+        if (clerkEmails != null)
+        {
+            for (int i = 0; i < clerkEmails.Count; i++)
+            {
+                Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
+
+            }
+        }
     }
 }

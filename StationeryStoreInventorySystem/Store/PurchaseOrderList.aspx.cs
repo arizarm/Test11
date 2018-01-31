@@ -123,10 +123,8 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         }
     }
 
-
     protected void btn_Delete_Click(object sender, EventArgs e)
     {
-
         Button delteBtn = (Button)sender;
         int pID = Int32.Parse(delteBtn.CommandArgument.ToString());
         pCtlr.DeletePurchaseOrder(pID);

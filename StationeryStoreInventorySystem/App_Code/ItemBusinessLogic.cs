@@ -103,10 +103,6 @@ public class ItemBusinessLogic
         EFBroker_Item.RemoveItem(itemCode);
         return;
     }
-    public static List<Item> GetItemList()
-    {
-        return EFBroker_Item.GetActiveItemList();
-    }
     public static List<Item> GetCatalogueList()
     {
         return EFBroker_Item.GetCatalogueList();
@@ -114,7 +110,18 @@ public class ItemBusinessLogic
     public static List<InventoryReportItem> GetInventoryReportItemList()
     {
         List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
-        List<Item> iList = GetItemList();
+        List<Item> iList = EFBroker_Item.GetActiveItemList();
+        foreach (Item i in iList)
+        {
+            InventoryReportItem rItem = new InventoryReportItem(i);
+            reportItemList.Add(rItem);
+        }
+        return reportItemList;
+    }
+    public static List<InventoryReportItem> GetSelectedInventoryReportItemList(string search)
+    {
+        List<InventoryReportItem> reportItemList = new List<InventoryReportItem>();
+        List<Item> iList = EFBroker_Item.SearchItemsByItemCodeOrDesc(search);
         foreach (Item i in iList)
         {
             InventoryReportItem rItem = new InventoryReportItem(i);

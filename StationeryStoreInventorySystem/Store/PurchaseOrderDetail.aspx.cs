@@ -13,150 +13,140 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
     static int orderid = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack)
+       if(!IsPostBack)
         {
             BindGrid();
-
-        }
+        }            
 
     }
     private void BindGrid()
     {
-        int orderID = Convert.ToInt32(Request.QueryString["OrderID"]);
-        pOrder = pCtrlr.GetPurchaseOrderByID(orderID);
-        orderid = pOrder.PurchaseOrderID;
-        supervisorName.Text = pOrder.Employee.EmpName;
-        SupplierName.Text = pOrder.Supplier.SupplierName;
-        OrderID.Text = Convert.ToString(pOrder.PurchaseOrderID);
-        orderStatus.Text = pOrder.Status;
-        if (pOrder.Status == "Pending")
+        int orderID;
+        if (Request.QueryString["OrderID"] == null)
         {
-            orderStatus.ForeColor = System.Drawing.Color.Blue;
-        }
-        else if(pOrder.Status =="Approved")
-        {
-            orderStatus.ForeColor = System.Drawing.Color.Green;
-        }
-        else if(pOrder.Status == "Rejected")
-        {
-            orderStatus.ForeColor = System.Drawing.Color.Red;
+            Response.Redirect(LoginController.PurchaseOrderListURI);
         }
         else
         {
-            orderStatus.ForeColor = System.Drawing.Color.Orange;
-        }
-       List<PurchaseOrderItemDetails>itemList = pCtrlr.GetPurchaseOrderItemsDetails(orderID);
-        gvPurchaseDetail.DataSource = itemList;
-        gvPurchaseDetail.DataBind();
-
-        decimal? totAmnt = 0;
-        foreach(PurchaseOrderItemDetails item in itemList)
-        {
-            totAmnt += item.Price * item.OrderQty;
-
-        }
-        TotalAmount.Text = String.Format("{0:C}", totAmnt);
-        if (pOrder.Status == "Closed" || pOrder.Status == "Rejected")
-        {
-            deliveryLbl.Visible = false;
-            DeliveryOrderIDTxtBx.Visible = false;
-            CloseOrderBtn.Visible = false;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = false;
-        }
-        else if (pOrder.Status == "Approved")
-        {
-            deliveryLbl.Visible = true;
-            DeliveryOrderIDTxtBx.Visible = true;
-            CloseOrderBtn.Visible = true;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = true;
-        }
-        else 
-        {
-            deliveryLbl.Visible = true;
-            DeliveryOrderIDTxtBx.Visible = true;
-            CloseOrderBtn.Visible = true;
-            RemarkLbl.Visible = false;
-            RemarkTxtBx.Visible = false;
-            ApproveBtn.Visible = false;
-            RejectBtn.Visible = false;
-            gvPurchaseDetail.Columns[5].Visible = true;
-        }
-        foreach (GridViewRow row in gvPurchaseDetail.Rows)
-        {
-            if (Session["emp"] != null)
+            orderID = Convert.ToInt32(Request.QueryString["OrderID"]);
+            pOrder = pCtrlr.GetPurchaseOrderByID(orderID);
+            orderid = pOrder.PurchaseOrderID;
+            supervisorName.Text = pOrder.Employee.EmpName;
+            SupplierName.Text = pOrder.Supplier.SupplierName;
+            OrderID.Text = Convert.ToString(pOrder.PurchaseOrderID);
+            orderStatus.Text = pOrder.Status;
+            if (pOrder.Status == "Pending")
             {
-                if (Session["empRole"].ToString() == "Store Clerk")
-                {
+                orderStatus.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if(pOrder.Status =="Approved")
+            {
+                orderStatus.ForeColor = System.Drawing.Color.Green;
+            }
+            else if(pOrder.Status == "Rejected")
+            {
+                orderStatus.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                orderStatus.ForeColor = System.Drawing.Color.Orange;
+            }
+           List<PurchaseOrderItemDetails>itemList = pCtrlr.GetPurchaseOrderItemsDetails(orderID);
+            gvPurchaseDetail.DataSource = itemList;
+            gvPurchaseDetail.DataBind();
 
-                    Employee emp = (Employee)Session["emp"];                    
-                    if (emp.EmpID == pOrder.RequestedBy)
-                    {
-                        
-                        if (pOrder.Status == "Closed" || pOrder.Status == "Rejected")
-                        {
-                            deliveryLbl.Visible = false;
-                            DeliveryOrderIDTxtBx.Visible = false;
-                            CloseOrderBtn.Visible = false;                           
-                            RejectBtn.Visible = false;
-                            gvPurchaseDetail.Columns[5].Visible = false;
-
-                        }
-                        else if (pOrder.Status == "Approved" || pOrder.Status == "Pending")
-                        {
-                            deliveryLbl.Visible = true;
-                            DeliveryOrderIDTxtBx.Visible = true;
-                            CloseOrderBtn.Visible = true;                           
-                            gvPurchaseDetail.Columns[5].Visible = true;
-                        }
-                        RemarkLbl.Visible = false;
-                        RemarkTxtBx.Visible = false;
-                        ApproveBtn.Visible = false;
-                        RejectBtn.Visible = false;
-                    }
-                    else
-                    {
-
-                        if (pOrder.Status == "Closed" || pOrder.Status == "Rejected" || pOrder.Status == "Approved" || pOrder.Status == "Pending")
-                        {
-                            deliveryLbl.Visible = false;
-                            DeliveryOrderIDTxtBx.Visible = false;
-                            CloseOrderBtn.Visible = false;
-                            RejectBtn.Visible = false;
-                            gvPurchaseDetail.Columns[5].Visible = false;
-
-                        }                       
-                        RemarkLbl.Visible = false;
-                        RemarkTxtBx.Visible = false;
-                        ApproveBtn.Visible = false;
-                        RejectBtn.Visible = false;
-
-                    }
-
-                }
-                else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
-                {
-                    gvPurchaseDetail.Columns[5].Visible = true;
-                    deliveryLbl.Visible = true;
-                    DeliveryOrderIDTxtBx.Visible = true;
-                    CloseOrderBtn.Visible = true;
-                    RemarkLbl.Visible = true;
-                    RemarkTxtBx.Visible = true;
-                    ApproveBtn.Visible = true;
-                    RejectBtn.Visible = true;
-                }
+            decimal? totAmnt = 0;
+            foreach(PurchaseOrderItemDetails item in itemList)
+            {
+                totAmnt += item.Price * item.OrderQty;
 
             }
+            TotalAmount.Text = String.Format("{0:C}", totAmnt);
+           foreach (GridViewRow row in gvPurchaseDetail.Rows)
+            {
+                if (Session["emp"] != null)
+                {
+                    if (Session["empRole"].ToString() == "Store Clerk")
+                    {
+
+                        Employee emp = (Employee)Session["emp"];                    
+                        if (emp.EmpID == pOrder.RequestedBy)
+                        {
+                        
+                            if (pOrder.Status == "Closed" || pOrder.Status == "Rejected")
+                            {
+                                deliveryLbl.Visible = false;
+                                DeliveryOrderIDTxtBx.Visible = false;
+                                CloseOrderBtn.Visible = false;                           
+                                RejectBtn.Visible = false;
+                                gvPurchaseDetail.Columns[5].Visible = false;
+
+                            }
+                            else if (pOrder.Status == "Approved")
+                            {
+                                deliveryLbl.Visible = true;
+                                DeliveryOrderIDTxtBx.Visible = true;
+                                CloseOrderBtn.Visible = true;                           
+                                gvPurchaseDetail.Columns[5].Visible = true;
+                            }
+                            else if (pOrder.Status == "Pending")
+                            {
+                                deliveryLbl.Visible = false;
+                                DeliveryOrderIDTxtBx.Visible = false;
+                                CloseOrderBtn.Visible = false;
+                                gvPurchaseDetail.Columns[5].Visible = true;
+                            }
+
+                        }
+                        else
+                        {
+
+                            if (pOrder.Status == "Closed" || pOrder.Status == "Rejected" || pOrder.Status == "Approved" || pOrder.Status == "Pending")
+                            {
+                                deliveryLbl.Visible = false;
+                                DeliveryOrderIDTxtBx.Visible = false;
+                                CloseOrderBtn.Visible = false;
+                                RejectBtn.Visible = false;
+                                gvPurchaseDetail.Columns[5].Visible = false;
+
+                            }                       
+
+                        }
+                        RemarkLbl.Visible = false;
+                        RemarkTxtBx.Visible = false;
+                        ApproveBtn.Visible = false;
+                        RejectBtn.Visible = false;
+
+                    }
+                    else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
+                    {
+                        if (pOrder.Status == "Closed" || pOrder.Status == "Rejected"|| pOrder.Status == "Approved")
+                        {
+                       
+                            RemarkLbl.Visible = false;
+                            RemarkTxtBx.Visible = false;
+                            ApproveBtn.Visible = false;
+                            RejectBtn.Visible = false;                        
+                        }                    
+                        else
+                        {                       
+                            RemarkLbl.Visible = true;
+                            RemarkTxtBx.Visible = true;
+                            ApproveBtn.Visible = true;
+                            RejectBtn.Visible = true;                       
+                        }
+                        gvPurchaseDetail.Columns[5].Visible = false;
+                        deliveryLbl.Visible = false;
+                        DeliveryOrderIDTxtBx.Visible = false;
+                        CloseOrderBtn.Visible = false;
+                    }
+
+                }
             
 
-        }                 
+            }
+
+          }               
        
     }
 
@@ -173,6 +163,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         pCtrlr.UpdatePurchaseOrder(purchaseOrder);
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
     "<script language='javascript'>alert('" + "Order Approved!" + "');</script>");
+        Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
     protected void RejectBtn_Click(object sender, EventArgs e)
@@ -188,6 +179,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         pCtrlr.UpdatePurchaseOrder(purchaseOrder);
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
         "<script language='javascript'>alert('" + "Order Rejected!" + "');</script>");
+        Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
     protected void CloseOrderBtn_Click(object sender, EventArgs e)
@@ -200,6 +192,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         Session["PurchaseItems"] = null;
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
     "<script language='javascript'>alert('" + "Order Closed!" + "');</script>");
+        Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
 
@@ -258,6 +251,11 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         gvPurchaseDetail.EditIndex = -1;
         //Bind data to the GridView control.
         BindGrid();
+    }
+
+    protected void BackBtn_Click(object sender, EventArgs e)
+    {
+        Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 }
 

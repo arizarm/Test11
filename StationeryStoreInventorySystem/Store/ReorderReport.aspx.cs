@@ -46,14 +46,27 @@ public partial class ReorderReport : System.Web.UI.Page
    
         DateTime sDate = DateTime.ParseExact(startDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
         DateTime eDate = DateTime.ParseExact(endDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
-      
-        if (sDate > eDate)
+        DateTime today = DateTime.Parse(DateTime.Today.Date.ToShortDateString());
+        if(sDate>today)
         {
             e.IsValid = false;
+            errorTxt.Text = "Start Date cannot be greater than today";
+            errorTxt.ForeColor = System.Drawing.Color.Red;
+            
         }
         else
         {
-            e.IsValid = true;
+            if (sDate > eDate)
+            {
+                e.IsValid = false;
+                errorTxt.Text = "Start Date cannot be greater than end Date";
+                errorTxt.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                e.IsValid = true;
+            }
         }
+        
     }
 }

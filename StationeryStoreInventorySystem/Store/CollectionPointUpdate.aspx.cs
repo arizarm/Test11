@@ -18,9 +18,16 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
             {
                 if (!IsPostBack) 
                 {
-                    int retrievalId = (int)Session["RetrievalID"];
-                    gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
-                    gvCollectionPoint.DataBind();
+                    if (Session["RetrievalID"] != null)
+                    {
+                        int retrievalId = (int)Session["RetrievalID"];
+                        gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
+                        gvCollectionPoint.DataBind();
+                    }else
+                    {
+                        Response.Redirect(LoginController.RequisitionListClerkURI);
+                    }
+                   
                 }
             }
             else

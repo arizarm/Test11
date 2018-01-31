@@ -311,6 +311,11 @@ public class RetrievalControl
                 d.AccessCode = value.ToString();
                 d.Status = "Ready";
                 EFBroker_Disbursement.UpdateDisbursement(d);
+
+                //
+                string departmentRepresentativeEmail = EFBroker_DeptEmployee.GetDRepresentativeEmailByDeptCode(depCode);
+                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(), "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to "+ collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() +" at "+ d.CollectionTime +". Thank you.");
+                //
             }
         }
     }

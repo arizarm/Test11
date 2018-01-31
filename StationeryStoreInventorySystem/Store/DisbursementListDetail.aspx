@@ -61,7 +61,8 @@
     <asp:TextBox ID="txtAccessCode" runat="server"></asp:TextBox>
     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" style="color:red">Access Code cannot be empty!</asp:RequiredFieldValidator>
     <br /> <br /> <br />
-    <input id="btnReset" type="reset" value="Reset Data" class= "button"/>
+    
+    <asp:Button ID="btnReset" runat="server" Text="Reset Data" CssClass="button" OnClick="btnReset_Click"/>
     <asp:Button ID="btnAck" runat="server" Text="Acknowledge" CssClass="button" OnClick="btnAck_Click"/>
 </asp:Content>
 

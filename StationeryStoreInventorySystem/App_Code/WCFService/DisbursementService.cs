@@ -22,14 +22,6 @@ public class DisbursementService : IDisbursementService
         return wcfDisbList;
     }
 
-    //public WCFDisbursement getDisbursement(string id)
-    //{
-    //    WCFDisbursement wcfDisb = new WCFDisbursement();
-    //    DisbursementListItems d = disbCon.DisbursementListItemsObj(Convert.ToInt32(id));
-    //    wcfDisb = WCFDisbursement.Make(d.DisbId, d.CollectionDate, d.CollectionTime, d.DepName, d.CollectionPoint);
-    //    return wcfDisb;
-    //}
-
     public List<WCFDisbursementDetail> getDisbursementDetail(string id)
     {
         List<WCFDisbursementDetail> wcfDisbDetailList = new List<WCFDisbursementDetail>();
@@ -39,5 +31,59 @@ public class DisbursementService : IDisbursementService
             wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode, dI.ItemDesc, dI.ReqQty, dI.ActualQty, dI.Remarks));
         }
         return wcfDisbDetailList;
+    }
+
+    public string AccessCodeValidate(string disbId, string accessCode)
+    {
+        return (disbCon.checkAccessCode(Convert.ToInt32(disbId), accessCode)).ToString();
+    }
+
+    public void UpdateDisbursement(List<WCFUpdateDisbursement> qtyList)
+    {
+        int disbId = 0;
+        List<int> actualQty = new List<int>();
+        List<string> remark = new List<string>();
+        foreach (WCFUpdateDisbursement u in qtyList)
+        {
+            actualQty.Add(Convert.ToInt32(u.ActualQty));
+            disbId = Convert.ToInt32(u.DisbId);
+            remark.Add(u.Remark);
+        }
+        disbCon.UpdateDisbursement(disbId, actualQty, remark);
+    }
+    
+
+    public WCFRegenerateRequest GetRegenerateDate(string disbId)
+    {
+        string reqDate = (disbCon.getRegenrateDate(Convert.ToInt32(disbId))).ToLongDateString();
+        string depName = EFBroker_Disbursement.GetDisbursmentbyDisbID(Convert.ToInt32(disbId)).Department.DeptName;
+        string reqBy = EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
+        
+        WCFRegenerateRequest r = new WCFRegenerateRequest();
+        r = WCFRegenerateRequest.Make(reqDate, reqBy, depName);
+        return r;
+    }
+
+    public void RegenerateRequisition(List<WCFRequestedItem> regenList)
+    {
+        int disbId = 0;
+
+        List<RequestedItem> requItemList = new List<RequestedItem>();
+
+        foreach(WCFRequestedItem r in regenList)
+        {
+            RequestedItem rItem = new RequestedItem(r.Code, r.Description, Convert.ToInt32(r.ShortfallQty), RequisitionControl.getUOM(r.Code));
+            disbId = r.DisbId;
+            requItemList.Add(rItem);
+        }
+
+        DateTime date = (disbCon.getRegenrateDate(disbId));
+        string depName = EFBroker_Disbursement.GetDisbursmentbyDisbID(Convert.ToInt32(disbId)).Department.DeptName;
+        string reqBy = EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
+        int empID = EFBroker_DeptEmployee.GetDeptRepEmpIDByDeptCode(depName);
+        string depCode = EFBroker_DeptEmployee.GetDepartByEmpID(empID).DeptCode;
+        string status = "Priority";
+
+        RequisitionControl.addNewRequisitionItem(requItemList, date, status, empID, depCode);
     }
 }

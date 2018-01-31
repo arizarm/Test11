@@ -41,8 +41,6 @@ public class AccessCodeCheck extends HashMap<String,String> implements Serializa
             result = JSONParser.postStream(host+"/AccessCodeValidate", jCheckAccess.toString());
         } catch (Exception e) {
         }
-
-        //String result = JSONParser.postStream(host+"/AccessCodeValidate", jCheckAccess.toString());//AccessCodeValidateResult
         if(result.contains("True"))
         {
             return  true;

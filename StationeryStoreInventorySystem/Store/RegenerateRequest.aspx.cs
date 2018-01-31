@@ -7,21 +7,19 @@ using System.Web.UI.WebControls;
 
 public partial class RegenerateRequest : System.Web.UI.Page
 {
-    static DateTime date;
-    static string depName;
-    static string requestedBy;
     static string status = "Priority";
 
-    static List<RequestedItem> shortfallItem;
-    List<RequestedItem> regenerateItem = new List<RequestedItem>();    
+    DisbursementCotrol disbCon = new DisbursementCotrol();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        DateTime date = (DateTime)Session["RegenerateDate"];
+        string depName = (string)Session["RegenerateDep"]; ;
+        string requestedBy = (string)Session["RequestedByName"];
+        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+
         if (!IsPostBack)
         {
-            date = (DateTime)Session["RegenerateDate"];
-            depName = (string)Session["RegenerateDep"];
-            shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];      
             gvRegenerate.DataSource = shortfallItem;
             gvRegenerate.DataBind();
         }
@@ -53,36 +51,41 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void btnReGenReq_Click(object sender, EventArgs e)
     {
-        foreach(GridViewRow r in gvRegenerate.Rows)
+
+        DateTime date = (DateTime)Session["RegenerateDate"];
+        string depName = (string)Session["RegenerateDep"]; ;
+        string requestedBy = (string)Session["RequestedBy"];
+        int empID = EFBroker_DeptEmployee.GetDeptRepEmpIDByDeptCode(depName);
+        string depCode = EFBroker_DeptEmployee.GetDepartByEmpID(empID).DeptCode;
+
+        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+
+        List<RequestedItem> regenerateItem = new List<RequestedItem>();
+
+        foreach (GridViewRow r in gvRegenerate.Rows)
         {
-            if( ( (CheckBox) r.FindControl("CheckBox")).Checked)
+            if (((CheckBox)r.FindControl("CheckBox")).Checked)
             {
                 int i = r.RowIndex;
                 regenerateItem.Add(shortfallItem[i]);
             }
         }
-        //RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, DisbursementCotrol.getEmpIdbyEmpName(requestedBy));
+
+        RequisitionControl.addNewRequisitionItem(regenerateItem, date, status,empID, depCode);
 
         redirectCheck();
-
-        //ModalPopupExtender1.Show();
     }
-
-    //protected void btnOkay_Click(object sender, EventArgs e)
-    //{
-
-    //}
 
     protected void redirectCheck()
     {
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
-            Session["ItemToUpdate"] = true;
-            Response.Redirect("~/GenerateDiscrepancyAdhocV2.aspx");
+            Session["ItemToUpdate"] = true;          
+            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
         }
         else
         {
-            Response.Redirect("~/Store/DisbursementList.aspx");
+            Response.Redirect(LoginController.DisbursementListURI);
         }
     }
 

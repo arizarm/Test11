@@ -12,7 +12,7 @@ public partial class DisbursementList : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack)
+        if (!IsPostBack)
         {
             List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems();
             gdvDisbList.DataSource = disbursementListItemsList;
@@ -20,7 +20,7 @@ public partial class DisbursementList : System.Web.UI.Page
             ViewState["sortDirection"] = "";
         }
     }
-    
+
 
     protected void btnDetail_Click(object sender, EventArgs e)
     {

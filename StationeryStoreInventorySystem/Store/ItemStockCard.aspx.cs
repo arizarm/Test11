@@ -91,12 +91,12 @@ public partial class ItemStockCard : System.Web.UI.Page
             }
             else    //if item is not found or no entries found in price list table
             {
-                Response.Redirect("~/Store/ItemStockCardList.aspx");
+                Response.Redirect(LoginController.ItemStockCardListURI);
             }
         }
         else   //if there is no itemCode in querystring
         {
-            Response.Redirect("~/Store/ItemStockCardList.aspx");
+            Response.Redirect(LoginController.ItemStockCardListURI);
         }
     }
 

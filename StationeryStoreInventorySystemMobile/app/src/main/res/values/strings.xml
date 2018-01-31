@@ -8,6 +8,8 @@
     <string name="retrieval_list">Retrieval List</string>
     <string name="disbursement">Disbursement</string>
     <string name="discrepancy">Report Discrepancies</string>
+    <string name="adhoc_discrepancy">Adhoc Discrepancy</string>
+    <string name="monthly_inventory">Monthly Inventory Check</string>
     <string name="update_dep">Department Details</string>
     <string name="quantity">Quantity</string>
     <string name="reqDate">Requested Date: </string>

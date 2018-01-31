@@ -34,7 +34,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         adjustment = adj.ToString();
                     }
                     KeyValuePair<Item, String> displayKvp = new KeyValuePair<Item, String>(kvp.Key, actualQuantity.ToString());
-                      fullDiscrepancies.Add(displayKvp, adjustment);
+                    fullDiscrepancies.Add(displayKvp, adjustment);
                 }
             }
             else
@@ -44,9 +44,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             GridView1.DataSource = fullDiscrepancies;
             GridView1.DataBind();
 
-            if(Session["monthly"] != null)
+            if (Session["monthly"] != null)
             {
-                if((bool) Session["monthly"] == false)
+                if ((bool)Session["monthly"] == false)
                 {
                     GridView1.Columns[4].Visible = false;
                 }
@@ -57,11 +57,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     }
 
     protected void Button2_Click(object sender, EventArgs e)
-    {  
+    {
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
         foreach (GridViewRow row in GridView1.Rows)
-        {        
+        {
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
             string stock = (row.FindControl("lblStock") as Label).Text;
             string actual = (row.FindControl("lblActual") as Label).Text;
@@ -85,9 +85,9 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
                     List<PriceList> itemPrices = new List<PriceList>();
 
-                    foreach(PriceList pl in plHistory)
+                    foreach (PriceList pl in plHistory)
                     {    //Get only currently active suppliers for an item
-                        if(pl.TenderYear == DateTime.Now.Year.ToString())
+                        if (pl.TenderYear == DateTime.Now.Year.ToString())
                         {
                             itemPrices.Add(pl);
                         }
@@ -104,7 +104,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
                     Discrepency d = new Discrepency();
                     d.ItemCode = itemCode;
-                    if(Session["empID"] != null)
+                    if (Session["empID"] != null)
                     {
                         int empID = (int)Session["empID"];
                         d.RequestedBy = empID;
@@ -116,7 +116,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                     d.AdjustmentQty = adj;
                     d.Remarks = remarks;
                     d.Date = DateTime.Now;
-                    if(Session["monthly"] != null)
+                    if (Session["monthly"] != null)
                     {
                         if ((bool)Session["monthly"] == true)
                         {
@@ -132,7 +132,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         d.Status = "Pending";
                     }
                     d.TotalDiscrepencyAmount = adj * averageUnitPrice;
-                    if(d.TotalDiscrepencyAmount < 250)
+                    if (d.TotalDiscrepencyAmount < 250)
                     {
                         d.ApprovedBy = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].EmpID;
                     }
@@ -163,12 +163,6 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         {
             EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
-            Session["discrepancyList"] = null;
-            Session["RetrievalShortfallItemList"] = null;
-            Session["RetrievalID"] = null;
-
-            Session["monthly"] = null;
-            Session["ItemToUpdate"] = null;
 
             bool informSupervisor = false;
             bool informManager = false;
@@ -184,16 +178,52 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 }
             }
 
+
             if (informSupervisor)
             {
                 string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
-                Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+                if (Session["monthly"] != null)
+                {
+                    if ((bool)Session["monthly"] == true)
+                    {
+                        Utility.sendMail(supervisorEmail, "Monthly Inventory Check Discrepancies Notification " + DateTime.Now.ToString(), "A monthly inventory check has been performed and new item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+                    }
+                    else
+                    {
+                        Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+                    }
+                }
+                else
+                {
+                    Utility.sendMail(supervisorEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies have been submitted. Please log in to the system to review them. Thank you.");
+                }
             }
             if (informManager)
             {
                 string managerEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Manager")[0].Email;
-                Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+                if (Session["monthly"] != null)
+                {
+                    if ((bool)Session["monthly"] == true)
+                    {
+                        Utility.sendMail(managerEmail, "Monthly Inventory Check Discrepancies Notification " + DateTime.Now.ToString(), "A monthly inventory check has been performed and new item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+                    }
+                    else
+                    {
+                        Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+                    }
+                }
+                else
+                {
+                    Utility.sendMail(managerEmail, "New Discrepancies Notification " + DateTime.Now.ToString(), "New item discrepancies (worth at least $250) have been submitted. Please log in to the system to review them. Thank you.");
+                }
             }
+
+            Session["discrepancyList"] = null;
+            Session["RetrievalShortfallItemList"] = null;
+            Session["RetrievalID"] = null;
+
+            Session["monthly"] = null;
+            Session["ItemToUpdate"] = null;
 
             LoginController.NavigateMain();
         }

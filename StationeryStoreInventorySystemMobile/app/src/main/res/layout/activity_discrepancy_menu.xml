@@ -17,7 +17,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
-            android:text="Generate Discrepancy"
+            android:text="@string/discrepancy"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:layout_below="@+id/textView22"
             android:layout_marginTop="105dp"
             android:onClick="adhocClick"
-            android:text="Adhoc Discrepancy" />
+            android:text="@string/adhoc_discrepancy" />
 
         <Button
             android:id="@+id/btnMonthly"
@@ -41,7 +41,7 @@
             android:layout_below="@+id/btnAdhoc"
             android:layout_marginTop="44dp"
             android:onClick="monthlyClick"
-            android:text="Monthly Inventory Check" />
+            android:text="@string/monthly_inventory" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

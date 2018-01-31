@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Drawing;
 
 public partial class StationeryCatalogue : System.Web.UI.Page
 {
@@ -125,6 +126,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         ddl2.DataSource = EFBroker_Item.GetDistinctUOMList();
         ddl2.SelectedValue = item.UnitOfMeasure;
         ddl2.DataBind();
+        row.BackColor = Color.Yellow;
         return;
     }
     protected void RemoveRow(int index)
@@ -143,14 +145,17 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             Label itemCode = (Label)row.FindControl("LabelICode");
             DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
             TextBox description = (TextBox)row.FindControl("TextboxDesc");
-            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
-            int level = Convert.ToInt32(reorderLevel.Text);
+            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");  
             TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
-            int qty = Convert.ToInt32(reorderQty.Text);
             TextBox bin = (TextBox)row.FindControl("TextBoxBin");
             DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
-            ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
-            cancelEdit(index);
+            if(ItemBusinessLogic.IsValidItemFields(itemCode.Text, categoryList.SelectedItem.Text, description.Text, reorderLevel.Text, reorderQty.Text, unitMeasure.SelectedValue, bin.Text))
+            {
+                int level = Convert.ToInt32(reorderLevel.Text);
+                int qty = Convert.ToInt32(reorderQty.Text);
+                ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
+                cancelEdit(index);
+            }
         }
     }
     protected void cancelEdit(int index)
@@ -161,6 +166,8 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         //customValidator1.IsValid = true;
         //RequiredFieldValidator requiredFieldValidator1 = (RequiredFieldValidator)row.FindControl("RequiredFieldValidator1");
         //requiredFieldValidator1.IsValid = true;
+        GridViewRow row = GridView1.Rows[index];
+        row.BackColor = Color.Transparent;
         GridView1.EditIndex = -1;
         GridView1.DataBind();
     }

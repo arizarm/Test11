@@ -23,49 +23,59 @@ public class ItemBusinessLogic
     public static Item AddItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
     {
         Item item = new Item();
-        int level, qty;
-        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+        categoryName = Utility.FirstUpperCase(categoryName);
+        item.ItemCode = itemCode;
+        item.Description = description;
+        item.ReorderLevel = Convert.ToInt32(reorderLevel);
+        item.ReorderQty = Convert.ToInt32(reorderQty);
+        item.UnitOfMeasure = UOM;
+        item.Bin = bin;
+        item.ActiveStatus = "C";
+        item.BalanceQty = 0;
+        Category cat = EFBroker_Category.GetCategorybyName(categoryName);
+        if (cat != null)
         {
-            return null;
-        }
-        else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
-        {
-            return null;
-        }
-        else if (EFBroker_Item.GetItembyItemCode(itemCode.ToUpper()) != null)
-        {
-            return null;
+            item.Category = cat;
+            EFBroker_Item.AddItem(item);
         }
         else
         {
-            categoryName = Utility.FirstUpperCase(categoryName);
-            item.ItemCode = itemCode;
-            item.Description = description;
-            item.ReorderLevel = level;
-            item.ReorderQty = qty;
-            item.UnitOfMeasure = UOM;
-            item.Bin = bin;
-            item.ActiveStatus = "C";
-            item.BalanceQty = 0;
-            Category cat = EFBroker_Category.GetCategorybyName(categoryName);
-            if (cat != null)
-            {
-                item.Category = cat;
-                EFBroker_Item.AddItem(item);
-            }
-            else
-            {
-                EFBroker_Item.AddItemAndCategory(item, categoryName);
-                cat = EFBroker_Category.GetCategorybyName(categoryName);
-                item.Category = cat;
-            }
+            EFBroker_Item.AddItemAndCategory(item, categoryName);
+            cat = EFBroker_Category.GetCategorybyName(categoryName);
+            item.Category = cat;
         }
         return item;
+    }
+    public static bool ValidateNewItemfields(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
+    {
+        if (IsValidItemFields(itemCode, categoryName, description, reorderLevel, reorderQty, UOM, bin) && EFBroker_Item.GetItembyItemCode(itemCode.ToUpper()) == null)
+        {
+            return true;
+        }
+        else return false;
+    }
+    public static bool IsValidItemFields(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM, string bin)
+    {
+        bool sucesss = true;
+        int level, qty;
+        if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
+        {
+            sucesss = false;
+        }
+        else if (!(int.TryParse(reorderLevel, out level) && int.TryParse(reorderQty, out qty)))
+        {
+            sucesss = false;
+        }
+        else if (ValidatorUtil.IsInvalidfieldLength(itemCode, 10) || ValidatorUtil.IsInvalidfieldLength(categoryName, 10) || ValidatorUtil.IsInvalidfieldLength(description, 50) || ValidatorUtil.IsInvalidfieldLength(UOM, 10) || ValidatorUtil.IsInvalidfieldLength(bin, 10))
+        {
+            sucesss = false;
+        }
+        return sucesss;
     }
     public static void UpdateItem(string itemCode, string categoryName, string description, int reorderLevel, int reorderQty, string unitOfMeasure, string bin)
     {
         Category category = EFBroker_Category.GetCategorybyName(categoryName);
-        Item i =EFBroker_Item.GetItembyItemCode(itemCode);
+        Item i = EFBroker_Item.GetItembyItemCode(itemCode);
         if (i != null)
         {
             i.Category = category;
@@ -112,11 +122,11 @@ public class ItemBusinessLogic
         }
         return reportItemList;
     }
-    public static  List<Category> GetCategoryList()
+    public static List<Category> GetCategoryList()
     {
         return EFBroker_Category.GetCategoryList();
     }
-    public static  Category GetCategorybyID(int categoryID)
+    public static Category GetCategorybyID(int categoryID)
     {
         return EFBroker_Category.GetCategorybyID(categoryID);
     }

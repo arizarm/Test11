@@ -49,7 +49,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Description">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxDesc" runat="server" Text='<%# Bind("description") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxDesc" runat="server" MaxLength="50" Text='<%# Bind("description") %>'></asp:TextBox>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="LabelDescription" runat="server" Visible="true" Text='<%# Bind("description") %>'></asp:Label>
@@ -58,9 +58,9 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Level">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxReLvl" runat="server" Text='<%# Bind("reorderLevel") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxReLvl" runat="server" MaxLength="10" Text='<%# Bind("reorderLevel") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Field cannot be left blank" ControlToValidate="TextBoxReLvl" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="100000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label4" runat="server" Text='<%# Bind("reorderLevel") %>'></asp:Label>
@@ -68,9 +68,9 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Qty">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxReQty" runat="server" Text='<%# Bind("reorderQty") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxReQty" runat="server" MaxLength="10" Text='<%# Bind("reorderQty") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Description cannot be left blank" ControlToValidate="TextBoxReQty" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                        <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="100000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+                        <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label5" runat="server" Text='<%# Bind("reorderQty") %>'></asp:Label>
@@ -86,7 +86,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Bin">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxBin" runat="server" Text='<%# Bind("bin") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxBin" runat="server" MaxLength="10" Text='<%# Bind("bin") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Bin number cannot be left blank" ControlToValidate="TextBoxBin" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                     </EditItemTemplate>
                     <ItemTemplate>

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,30 @@ public class Util {
                 Toast.LENGTH_LONG);
         TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
         toastMessage.setTextColor(Color.RED);
+        toast.show();
+    }
+
+    //custom toast error message box
+    public static void redsToast(String message, Context context) {
+
+        Toast toast = Toast.makeText(context, message,
+                Toast.LENGTH_LONG);
+        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+        toastMessage.setTextColor(Color.RED);
+        int offset = Math.round(150 * context.getResources().getDisplayMetrics().density);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,offset);
+        toast.show();
+    }
+
+    //custom toast message box
+    public static void greenToast(String message, Context context) {
+
+        Toast toast = Toast.makeText(context, message,
+                Toast.LENGTH_LONG);
+        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+        toastMessage.setTextColor(Color.GREEN);
+        int offset = Math.round(150 * context.getResources().getDisplayMetrics().density);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,offset);
         toast.show();
     }
 }

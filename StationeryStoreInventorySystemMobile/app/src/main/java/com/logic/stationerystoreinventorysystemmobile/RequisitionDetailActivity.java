@@ -2,6 +2,7 @@ package com.logic.stationerystoreinventorysystemmobile;
 
 /*import android.app.FragmentManager;*/
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -138,6 +139,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                                 Requisition.rejectRequisition(params[0]);
                                 return null;
                             }
+
                             @Override
                             protected void onPostExecute(Void result){
                                 Intent i = new Intent(RequisitionDetailActivity.this,RequisitionListActivity.class);
@@ -173,10 +175,20 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                         Requisition.approveRequisition(params[0]);
                         return null;
                     }
+
+                    ProgressDialog progress;
+                    @Override
+                    protected void onPreExecute() {
+                        progress = ProgressDialog.show(RequisitionDetailActivity.this, "Requisition Approved", "Sending mail to store clerks", true);
+                    }
+
+
                     @Override
                     protected void onPostExecute(Void result){
                         Intent i = new Intent(RequisitionDetailActivity.this,RequisitionListActivity.class);
-                        Toast.makeText(getApplicationContext(), "Requisition Approved", Toast.LENGTH_LONG).show();
+                        //Util.customToast();
+                        Util.greenToast("Requisition Approved",getApplicationContext());
+                        //Toast.makeText(getApplicationContext(), "Requisition Approved", Toast.LENGTH_LONG).show();
                         startActivity(i);
                     }
                 }.execute(r);

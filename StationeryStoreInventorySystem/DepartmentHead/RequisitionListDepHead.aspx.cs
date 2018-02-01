@@ -61,8 +61,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                string selectedStatus = DropDownList1.SelectedItem.ToString();
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(DropDownList1.SelectedItem.ToString(), emp.DeptCode);
+                string selectedStatus = DropDownList1.SelectedValue.ToString();
+                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(selectedStatus, emp.DeptCode);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayStatusSearch";
                 showEmptyLabel();

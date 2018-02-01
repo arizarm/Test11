@@ -3,12 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div class="updateDeptHead">
-        <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
-    </div>
+   <div class="updateDeptHead"><h2 class="mainPageHeader">Stationary Requisition Detail</h2></div>
+ <br />
     <br />
-    <br />
-    <asp:Button ID="Button3" runat="server" Text="Back To List" OnClick="Button3_Click" />
+    <asp:Button ID="Button3" runat="server" Text="Back To List" OnClick="Button3_Click" CssClass="alert-warning" />
     <br />
 <%--    <h2>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>
@@ -50,17 +48,18 @@
                     <asp:Label ID="Label6" runat="server"></asp:Label>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
                         ControlToValidate="TextBox1" ForeColor="Red"
-                        ErrorMessage="RequiredFieldValidator" Enabled="false">Enter quantity.</asp:RequiredFieldValidator>
+                        ErrorMessage="RequiredFieldValidator" Enabled="false" ValidationGroup="addValid">Enter quantity.</asp:RequiredFieldValidator>
                     <asp:RangeValidator ID="RangeValidator2" runat="server"
                         ErrorMessage="RangeValidator" ControlToValidate="TextBox1"
                         ForeColor="Red" Type="Integer"
-                        MaximumValue="1000" MinimumValue="1" Enabled="false">Invalid Quantity</asp:RangeValidator>
+                        MaximumValue="1000" MinimumValue="1" Enabled="false" ValidationGroup="addValid">Invalid Quantity</asp:RangeValidator>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow>
-                <asp:TableCell ColumnSpan="2">
-                    <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="btn-success" />
-                    <asp:Button ID="Button1" runat="server" OnClick="Close_Click" Text="Close" CssClass="btn-warning" />
+                <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
+                    <asp:Button ID="Button2" runat="server" OnClick="New_Click" Text="Save" CssClass="alert-success" ValidationGroup="addValid" />
+                    &nbsp;&nbsp;&nbsp;
+                    <asp:Button ID="Button1" runat="server" OnClick="Close_Click" Text="Close" CssClass="alert-warning" />
                 </asp:TableCell>
             </asp:TableRow>
         </asp:Table>
@@ -68,9 +67,8 @@
     <br />
     <br />
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
+                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red"  ValidationGroup="editValid" />
                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
-                        
                         <Columns>
                             <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                                 <ItemTemplate>
@@ -90,11 +88,11 @@
                                     <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("RequestedQty") %>' TextMode="Number" Width="60px"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
                                         ControlToValidate="qtyText" ForeColor="Red"
-                                        ErrorMessage="Enter quantity" Display="None" Enabled="True"></asp:RequiredFieldValidator>
+                                        ErrorMessage="Enter quantity" Display="None" Enabled="True" ValidationGroup="editValid"></asp:RequiredFieldValidator>
                                     <asp:RangeValidator ID="RangeValidator3" runat="server"
                                         ErrorMessage="Invalid Quantity" ControlToValidate="qtyText"
                                         ForeColor="Red" Type="Integer"
-                                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False"></asp:RangeValidator>
+                                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False" ValidationGroup="editValid"></asp:RangeValidator>
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
@@ -105,10 +103,10 @@
 
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" />
+                                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" ValidationGroup="editValid" />
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" />
+                                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" ValidationGroup="editValid" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>
@@ -123,8 +121,7 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
-                        
+                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px" >
                         <Columns>
                             <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                                 <ItemTemplate>

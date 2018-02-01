@@ -22,9 +22,6 @@
     </strong>
 
     <br />
-    <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
                         <%--CssClass="mGrid"--%>
@@ -50,9 +47,6 @@
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
     <div>
         <asp:Label ID="ReasonLabel" runat="server" Text="Reason"></asp:Label>
         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>

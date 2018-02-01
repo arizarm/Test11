@@ -34,23 +34,15 @@ public class EFBroker_Employee
 
     public static Employee GetHeadEmail(Employee e)
     {
+        Employee currentHead = new Employee();
         StationeryEntities context = new StationeryEntities();
-        Employee emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
+        currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
 
-        if (emp == null)
-        {
-            emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
+        if (!Utility.checkIsTempDepHead(currentHead))
+        { 
+            currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
         }
-        else
-        {
-            if (Utility.checkIsTempDepHead(emp))
-            { }
-            else
-            {
-                emp = null;
-            }
-        }
-        return emp;
+        return currentHead;
     }
     public static bool verifyLogin(string email, string password)
     {

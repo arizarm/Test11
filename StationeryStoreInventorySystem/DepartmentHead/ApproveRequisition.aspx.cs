@@ -13,8 +13,9 @@ public partial class ApproveRequisition : System.Web.UI.Page
     string des;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null)
+        if (Request.QueryString["id"] != null && Session["emp"] != null)
         {
+            Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
@@ -23,7 +24,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
             Label2.Text = r.Date;
             Label3.Text = r.Status;
 
-            if (r.Status.ToString() != "Pending")
+            if (r.Status.ToString() != "Pending" || EmployeeController.isDeptHaveTempHead(emp.DeptCode))
             {
                 ReasonLabel.Visible = false;
                 TextBox2.Visible = false;

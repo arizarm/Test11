@@ -116,6 +116,28 @@ public class EFBroker_Employee
         return EFBroker_DeptEmployee.GetDepartByDepCode(DepCode);
     }
 
-
+    public static bool isDeptHaveTempHead(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            List<Employee> deptEmpList = context.Employees.Where(x => x.DeptCode.Equals(deptCode) && x.IsTempHead == "Y").ToList<Employee>();
+            if(deptEmpList.Count >=1)
+            {
+                for (int i = 0; i < deptEmpList.Count; i++)
+                {
+                    Employee emp = (Employee)deptEmpList[i];
+                    if (Utility.checkIsTempDepHead(emp))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }    
+        }
+    }
 
 }

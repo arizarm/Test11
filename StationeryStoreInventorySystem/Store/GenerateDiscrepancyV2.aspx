@@ -141,7 +141,7 @@
                         
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="txtActual" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtActual" runat="server" Width="100%"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 

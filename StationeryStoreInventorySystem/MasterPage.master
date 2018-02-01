@@ -23,90 +23,90 @@
     <form id="form2" runat="server">
         <div class="wrapper">
             <div class="header row">
-                    <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />                  
-                <asp:Label ID="LoginUserName" runat="server" Text="Label" class ="loginUser"></asp:Label>                           
+                <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />
+                <asp:Label ID="LoginUserName" runat="server" Text="Label" class="loginUser"></asp:Label>
                 <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
             </div>
 
-            <div class="content row">
-                <!-- Menu For Department Head -->
-                <div class="left-col" id="DepHeadMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentHead/RequisitionListDepHead.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink3" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">DepartmentInfo</asp:HyperLink>
+            <div class="left-col">
+
+                <div id="DepMenu" runat="server" visible="false">
+                    <%-- Requisition Menu --%>
+                    <asp:Label ID="lblRequisition" runat="server" CssClass="CategoryHeader">Requisition</asp:Label>
+
+                    <asp:HyperLink ID="hLinkGenReqDepRep" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>                    
+                    <asp:HyperLink ID="hLinkGenReqEmp" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>
+
+                    <asp:HyperLink ID="hLinkRequisitionListDepHead" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentHead/RequisitionListDepHead.aspx">Requisition List</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionListDepTempHead" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentTempHead/RequisitionListDepTempHead.aspx">Requisition List</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionListDepRep" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionListDepRep.aspx">Requisition List</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionListDepEmp" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionListDepEmp.aspx">Requisition List</asp:HyperLink>
+
+                    <%-- Department Menu --%>
+                    <asp:Label ID="lblDepartment" runat="server" CssClass="CategoryHeader">Department</asp:Label>
+
+                    <asp:HyperLink ID="hLinkDepartmentDetailInfo" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">Department Information</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkCollectionListDepRep" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/CollectionListDepRep.aspx">Collection List</asp:HyperLink>
+
+                    <%-- Catalogue Menu --%>
+                    <asp:Label ID="lblCatalogue" runat="server" CssClass="CategoryHeader">Catalogue</asp:Label>
+                    <asp:HyperLink ID="hLinkStationeryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
+
                 </div>
 
-                <!-- Menu For Departement Temp Head -->
-                <div class="left-col" id="DepTempHeadMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink4" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentTempHead/RequisitionListDepTempHead.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink5" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink7" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">DepartmentInfo</asp:HyperLink>
-                </div>
+                <div id="storeMenu" runat="server" visible="false">
+                    <%-- Requisition Menu --%>
+                    <asp:Label ID="Label1" runat="server" CssClass="CategoryHeader">Requisition</asp:Label>
+                    <asp:HyperLink ID="hLinkRequListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/RequisitionListClerk.aspx">Requisition List</asp:HyperLink>
 
-                <!-- Menu For Department Representative -->
-                <div class="left-col" id="DepRepMenu" runat="server">
-                    <asp:HyperLink ID="HyperLink15" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>               
-                    <asp:HyperLink ID="HyperLink13" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/CollectionListDepRep.aspx">Collection List</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink8" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentRepresentative/RequisitionListDepRep.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink9" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink10" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/DepartmentDetailInfo.aspx">DepartmentInfo</asp:HyperLink>
+                    <%-- Retrieval Menu --%>
+                    <asp:Label ID="lblRetrieval" runat="server" CssClass="CategoryHeader">Retrieval</asp:Label>
+                    <asp:HyperLink ID="hLinkRetrievalForm" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/RetrievalList.aspx">Retrieval List</asp:HyperLink>
 
-             </div>
+                    <%-- Disbursement Menu --%>
+                    <asp:Label ID="lblDisbursement" runat="server" CssClass="CategoryHeader">Disbursement</asp:Label>
+                    <asp:HyperLink ID="hLinkDisbursementList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/DisbursementList.aspx">Disbursement List</asp:HyperLink>
 
-                <!-- Menu For Department Employee -->
-                <div class="left-col" id="DepMember" runat="server">
-                    <asp:HyperLink ID="HyperLink14" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionForm.aspx">Generate Requisition</asp:HyperLink>              
-                    <asp:HyperLink ID="HyperLink11" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentEmployee/RequisitionListDepEmp.aspx">Requisition List</asp:HyperLink>                  
-                    <asp:HyperLink ID="HyperLink12" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Catalogue</asp:HyperLink>
-                </div>
+                    <%-- Department Menu --%>
+                    <asp:Label ID="Label2" runat="server" CssClass="CategoryHeader">Department</asp:Label>
+                    <asp:HyperLink ID="hLinkDepartmentList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/DepartmentList.aspx">Department List</asp:HyperLink>
 
+                    <%-- Stock Menu --%>
+                    <asp:Label ID="lblStock" runat="server" CssClass="CategoryHeader">Stock</asp:Label>
 
-                <!-- Menu For Store Manager -->
-                <div class="left-col" id="StoreManMenu" runat="server">
-                     <asp:HyperLink ID="ReorderTrendManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
-                    <asp:HyperLink ID="RequisitionTrendManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
-                    <asp:HyperLink ID="SupplierListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>         
-                    <asp:HyperLink ID="PurchaseOrderListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>  
-                    <asp:HyperLink ID="ReorderReportManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink> 
-                    <asp:HyperLink ID="SupplierCreateManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
-					<asp:HyperLink ID="StockAdjustmentManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkStationaryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkAddCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">Add Catalogue Item</asp:HyperLink>
                     <asp:HyperLink ID="GenerateDiscrepancyManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
-                    <asp:HyperLink ID="ItemStockCardListManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
-			 </div>
+                    <asp:HyperLink ID="hLinkStockAdjustment" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>
 
-                <!-- Menu For Store Supervisor -->
-                <div class="left-col" id="StoreSuperMenu" runat="server">
-                    <asp:HyperLink ID="ReorderTrendSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
-                    <asp:HyperLink ID="RequisitionTrendSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
-                    <asp:HyperLink ID="SupplierListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>      
-                     <asp:HyperLink ID="PurchaseOrderListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>  
-                    <asp:HyperLink ID="ReorderReportSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink> 
-                    <asp:HyperLink ID="SupplierCreateSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>     
-                    <asp:HyperLink ID="StockAdjustmentSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>
-                    <asp:HyperLink ID="GenerateDiscrepancySupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
-                    <asp:HyperLink ID="ItemStockCardListSupervisor" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
+                    <%-- Purchase Order Menu --%>
+                    <asp:Label ID="lblPruchaseOrder" runat="server" CssClass="CategoryHeader">Purchase Order</asp:Label>
+
+                    <asp:HyperLink ID="hLinkGenPurchaseOrder" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreClerk/PurchaseOrderForm.aspx">Generate Purchase Order</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkPurchaseOrderList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>
+                                    
+                    <%-- Supplier Menu --%>
+                    <asp:Label ID="lblSupplier" runat="server" CssClass="CategoryHeader">Supplier</asp:Label>
+
+                    <asp:HyperLink ID="hLinkCreateSupplier" runat="server" Visible="false" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/SupplierCreate.aspx">Create Supplier</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkSupplierList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>
+
+
+                    <%-- Report Menu --%>
+                    <asp:Label ID="lblReport" runat="server" CssClass="CategoryHeader">Reports</asp:Label>
+
+                    <asp:HyperLink ID="hLinkReOrderTR" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkRequisitionTR" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkReorderReport" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkInventoryStatusReport" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/InventoryStatusReport.aspx">Inventory Status Report</asp:HyperLink>
+
                 </div>
+            </div>
 
-
-                <!-- Menu For Store Clerk -->
-                <div class="left-col" id="StoreClerkMenu" runat="server">
-                    <asp:HyperLink ID="ReorderTrendClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=ROR">ReOrder Trend Report</asp:HyperLink>           
-                    <asp:HyperLink ID="RequisitionTrendClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/TrendReport.aspx?type=RTR">Requisition Trend Report</asp:HyperLink>     
-                    <asp:HyperLink ID="SupplierListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/SupplierList.aspx">Supplier List</asp:HyperLink>   
-                    <asp:HyperLink ID="CatalogueListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
-                    <asp:HyperLink ID="CatalogDetailClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">Add New Catalogue Item</asp:HyperLink>
-                     <asp:HyperLink ID="PurchaseOrderFormClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreClerk/PurchaseOrderForm.aspx">Purchase Order Form</asp:HyperLink>  
-                    <asp:HyperLink ID="PurchaseOrderListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/PurchaseOrderList.aspx">Purchase Order List</asp:HyperLink>   
-                    <asp:HyperLink ID="ReorderReportClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ReorderReport.aspx">Reorder Report</asp:HyperLink>
-                    <asp:HyperLink ID="GenerateDiscrepancyClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
-                    <asp:HyperLink ID="ItemStockCardListClerk" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/ItemStockCardList.aspx">Stock Cards</asp:HyperLink>
-			   </div>
-
-                <div class="right-col">
-                    <div class="contentMain">
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                        </asp:ContentPlaceHolder>
-                    </div>
+            <div class="right-col">
+                <div class="contentMain">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
                 </div>
             </div>
         </div>

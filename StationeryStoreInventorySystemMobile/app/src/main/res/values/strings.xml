@@ -30,4 +30,12 @@
     <string name="update_dr">Update Department Rep</string>
     <string name="update_cp">Update Collection Point</string>
     <string name="logout">Logout</string>
+    <string name="deptCode">Department Code</string>
+    <string name="deptname">Department Name</string>
+    <string name="headname">Head Name</string>
+    <string name="collectpoint">Collection Point</string>
+    <string name="contactname">Contact Name</string>
+    <string name="phone">Telephone</string>
+    <string name="fax">Fax</string>
+    <string name="drep">Department Rep</string>
 </resources>

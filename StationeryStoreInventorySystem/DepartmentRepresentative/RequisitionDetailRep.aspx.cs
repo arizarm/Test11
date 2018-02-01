@@ -193,5 +193,10 @@ public partial class RequisitionDetails : System.Web.UI.Page
         Add.Visible = false;
         Panel1.Visible = false;
     }
+
+    protected void Button3_Click(object sender, EventArgs e)
+    {
+            Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
+    }
 }
 

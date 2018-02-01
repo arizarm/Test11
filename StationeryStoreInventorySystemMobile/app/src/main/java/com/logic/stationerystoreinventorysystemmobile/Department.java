@@ -8,24 +8,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Branda Ling on 22/1/2018.
- */
-
 public class Department extends  java.util.HashMap<String,String> {
-    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = Util.host +"DeptService.svc/";
 
     public Department(){
 
     }
-    public Department(String dCode,String collectId, String departmentName, String contactName, String phone, String fax, String dHead) {
-        put("dCode", dCode);
-        put("collectId", collectId);
+    public Department(  String departmentName, String contactName, String phone, String fax,String dHead, String deptRep,String collectId) {
+        //put("dCode", dCode);
+
         put("departmentName", departmentName);
         put("contactName", contactName);
         put("phone", phone);
         put("fax", fax);
         put("dHead",dHead);
+        put("deptRep",deptRep);
+        put("collectId", collectId);
     }
     public Department(String dCode, String departmentName){
         put("dCode", dCode);
@@ -53,10 +51,12 @@ public class Department extends  java.util.HashMap<String,String> {
     public static Department getDept(String dcode){
         JSONObject b=JSONParser.getJSONFromUrl(hostURL+"Dept/"+dcode);
         JSONObject e=JSONParser.getJSONFromUrl(hostURL+"Employee/DeptHead/"+dcode);
+
+        JSONObject re=JSONParser.getJSONFromUrl(hostURL+"Employee/DeptRep/"+dcode);
         try{
-            return new Department(b.getString("DeptCode"),
-                    b.getString("Collectid"), b.getString("Dname"),b.getString("Contactname"),
-                    b.getString("Telephone"),b.getString("Fax"),e.getString("Ename"));
+            return new Department(
+                    b.getString("Dname"),b.getString("Contactname"),
+                    b.getString("Telephone"),b.getString("Fax"),e.getString("Ename"),re.getString("Ename"),b.getString("Collectid"));
         }
         catch (Exception ex){
             Log.e("Department.list()","JSONArray error");

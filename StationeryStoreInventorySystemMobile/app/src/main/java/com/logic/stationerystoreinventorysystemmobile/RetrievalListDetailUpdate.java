@@ -9,15 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by samch on 28/1/2018.
- */
-
 public class RetrievalListDetailUpdate extends java.util.HashMap<String,String> {
 
-     final static String host = "http://172.17.255.213/StationeryStoreInventorySystem/RetrievalService.svc";//iss
-    //final static String host = "http://192.168.1.8/StationeryStoreInventorySystem/RetrievalService.svc";//home
-    //final static String host = "http://172.23.229.37/StationeryStoreInventorySystem/RetrievalService.svc";//pc
+     final static String host = Util.host +"/RetrievalService.svc";
 
     public RetrievalListDetailUpdate(String retrievalID,String itemCode,String itemQty ) {
         put("RetrievalID", retrievalID);

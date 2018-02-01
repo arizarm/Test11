@@ -15,7 +15,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Requisition Date : " />
+                android:text="@string/reqDate" />
 
             <TextView
                 android:id="@+id/regenReqDate"
@@ -32,7 +32,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Department Name : " />
+                android:text="@string/depName" />
 
             <TextView
                 android:id="@+id/depName"
@@ -49,7 +49,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Requested by : " />
+                android:text="@string/reqBy" />
 
             <TextView
                 android:id="@+id/reqBy"
@@ -78,12 +78,13 @@
             android:id="@+id/btnGenerate"
             android:layout_width="190dp"
             android:layout_height="match_parent"
-            android:text="Generate" />
+            android:text="btnGenerate" />
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="190dp"
             android:layout_height="match_parent"
-            android:text="Cancel" />
+            android:text="@string/btnCancel"
+            android:onClick="btnCancelClick"/>
     </LinearLayout>
 </LinearLayout>

@@ -22,7 +22,7 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
     String deptCode;
     SharedPreferences pref;
     SimpleAdapter sa;
-
+    int pendingCount;
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -55,8 +55,10 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
                 lv.setAdapter(sa = new SimpleAdapter
                         (RequisitionListActivity.this, result, R.layout.row, new String[]{"Date", "EmployeeName","RequisitionNo"},
                                 new int[]{R.id.dateTV, R.id.empTV,R.id.reqTV}));
+                pendingCount=result.size();
             }
         }.execute(deptCode);
+        setTitle("Total Pending: "+pendingCount);
     }
 
     @Override
@@ -118,13 +120,7 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
                 startActivity(i3);
                 return true;
             case R.id.item4:
-                SharedPreferences.Editor editor = pref.edit();
-                editor.clear();
-                editor.commit();
-                Intent i4 = new Intent(this, LoginActivity.class);
-                startActivity(i4);
-                Toast.makeText(getApplicationContext(),
-                        "Logged out",Toast.LENGTH_SHORT).show();
+                Util.LogOut(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

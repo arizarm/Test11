@@ -13,21 +13,27 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        DateTime date = (DateTime)Session["RegenerateDate"];
-        string depName = (string)Session["RegenerateDep"]; ;
-        string requestedBy = (string)Session["RequestedByName"];
-        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
-
-        if (!IsPostBack)
+        if (Session["RegrenerateItems"] == null)
         {
-            gvRegenerate.DataSource = shortfallItem;
-            gvRegenerate.DataBind();
+            Response.Redirect(LoginController.DisbursementListURI);
         }
+        else
+        {
+            DateTime date = (DateTime)Session["RegenerateDate"];
+            string depName = (string)Session["RegenerateDep"]; ;
+            string requestedBy = (string)Session["RequestedByName"];
+            List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
 
-        lblReqDate.Text = date.ToLongDateString();
-        lblDepartment.Text = depName;
-        lblReqBy.Text = requestedBy;
+            if (!IsPostBack)
+            {
+                gvRegenerate.DataSource = shortfallItem;
+                gvRegenerate.DataBind();
+            }
 
+            lblReqDate.Text = date.ToLongDateString();
+            lblDepartment.Text = depName;
+            lblReqBy.Text = requestedBy;
+        }     
     }
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)

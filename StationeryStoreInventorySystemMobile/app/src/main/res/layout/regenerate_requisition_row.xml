@@ -39,7 +39,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Shortfall Quantity : " />
+                android:text="@string/sfQty" />
 
             <TextView
                 android:id="@+id/shortfallQty"
@@ -47,22 +47,5 @@
                 android:layout_width="@dimen/TextWidth"
                 android:layout_height="@dimen/MyHeight" />
         </TableRow>
-
-        <!--<TableRow-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<TextView-->
-        <!--style="@style/TitleStyle"-->
-        <!--android:layout_width="@dimen/TitleWidth"-->
-        <!--android:layout_height="@dimen/MyHeight"-->
-        <!--android:text="Unit of Measure : " />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/uom"-->
-        <!--style="@style/TextStyle"-->
-        <!--android:layout_width="@dimen/TextWidth"-->
-        <!--android:layout_height="@dimen/MyHeight" />-->
-        <!--</TableRow>-->
     </TableLayout>
 </LinearLayout>

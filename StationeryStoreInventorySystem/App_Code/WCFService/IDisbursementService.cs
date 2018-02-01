@@ -84,17 +84,19 @@ public class WCFDisbursementDetail
 {
     private string itemCode;
     private string itemDesc;
-    private int reqQty;
-    private int actualQty;
     private string remarks;
+    private int reqQty;
+    private int retrievedQty;
+    private int actualQty;
 
-    public static WCFDisbursementDetail Make(string itemCode, string itemDesc, int reqQty, int actualQty, string remarks)
+    public static WCFDisbursementDetail Make(string itemCode, string itemDesc, string remarks, int reqQty, int retrievedQty, int actualQty)
     {
         WCFDisbursementDetail d = new WCFDisbursementDetail();
         d.ItemCode = itemCode;
         d.ItemDesc = itemDesc;
         d.ReqQty = reqQty;
         d.ActualQty = actualQty;
+        d.RetrievedQty = retrievedQty;
         d.Remarks = remarks;
         return d;
     }
@@ -112,6 +114,9 @@ public class WCFDisbursementDetail
     public int ActualQty { get { return actualQty; } set { actualQty = value; } }
 
     [DataMember]
+    public int RetrievedQty { get { return retrievedQty; } set { retrievedQty = value; } }
+
+    [DataMember]
     public string Remarks { get { return remarks; } set { remarks = value; } }
 }
 
@@ -122,14 +127,14 @@ public class WCFUpdateDisbursement
 {
     private string disbId;
     private string actualQty;
-    private string remark;
+    private string remarks;
 
-    public static WCFUpdateDisbursement Make(string disbId, string actualQty, string remark)
+    public static WCFUpdateDisbursement Make(string disbId, string actualQty, string remarks)
     {
         WCFUpdateDisbursement d = new WCFUpdateDisbursement();
         d.DisbId = disbId;
         d.ActualQty = actualQty;
-        d.Remark = remark;
+        d.Remarks = remarks;
         return d;
     }
 
@@ -140,7 +145,7 @@ public class WCFUpdateDisbursement
     public string ActualQty { get { return actualQty; } set { actualQty = value; } }
 
     [DataMember]
-    public string Remark { get { return remark; } set { remark = value; } }
+    public string Remarks { get { return remarks; } set { remarks = value; } }   
 }
 
 [DataContract]

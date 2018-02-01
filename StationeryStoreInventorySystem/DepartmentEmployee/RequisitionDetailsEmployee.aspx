@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="RequisitionListDepEmp.aspx"><-Back</a>
+    <asp:Button ID="Button3" runat="server" Text="Back To List" OnClick="Button3_Click" />
     <br />
 <%--    <h2>
         <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></h2>

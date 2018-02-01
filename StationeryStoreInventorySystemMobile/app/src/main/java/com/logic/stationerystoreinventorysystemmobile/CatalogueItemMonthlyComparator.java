@@ -4,10 +4,6 @@ import android.content.Intent;
 
 import java.util.Comparator;
 
-/**
- * Created by edwon on 29/1/2018.
- */
-
 public class CatalogueItemMonthlyComparator implements Comparator<CatalogueItem>{
 
     @Override

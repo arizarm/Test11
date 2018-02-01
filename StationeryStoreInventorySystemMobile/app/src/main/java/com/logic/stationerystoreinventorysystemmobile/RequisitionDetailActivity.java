@@ -92,6 +92,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         TextView reqBy = (TextView) findViewById(R.id.reqByData);
         TextView reqDate = (TextView) findViewById(R.id.reqDateData);
 
+        setTitle("Requisition No: "+rid);
         String requestor = i.getStringExtra("Requestor");
         String date = i.getStringExtra("Date");
 

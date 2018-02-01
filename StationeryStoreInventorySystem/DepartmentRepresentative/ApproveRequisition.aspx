@@ -6,7 +6,7 @@
     <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
     <br />
     <br />
-    <a href="CollectionListDepRep.aspx"><-Back</a>
+    <asp:Button ID="Button1" runat="server" Text="Back To List" OnClick="Button1_Click" />
     <br />
     <br />
 

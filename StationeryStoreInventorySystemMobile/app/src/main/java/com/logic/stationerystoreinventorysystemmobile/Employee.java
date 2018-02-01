@@ -27,7 +27,7 @@ public class Employee extends java.util.HashMap<String,String> {
         put("role",role);
     }
 
-    final static String hostURL = "http://172.17.255.216/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = Util.host + "DeptService.svc/";
 
     public Employee(int eid, String deptCode, String ename, String role, String password, String email, String isTemphead, String startDate, String endDate) {
         put("eid", Integer.toString(eid));

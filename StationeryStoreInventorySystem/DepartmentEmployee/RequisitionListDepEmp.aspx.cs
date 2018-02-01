@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
-
+    string searchWord = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -18,6 +18,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 //Dep Emp
                 GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displayAll";
             }
             else
             {
@@ -37,11 +38,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displayAll";
             }
             else
             {
                 GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displayStatusSearch";
             }
         }
         else
@@ -52,7 +55,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        string searchWord = SearchBox.Text;
+        searchWord = SearchBox.Text;
         if (SearchBox.Text == String.Empty)
         {
             ClientScript.RegisterStartupScript(Page.GetType(),
@@ -65,11 +68,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displaySearch";
             }
             else
             {
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displaySearchStatus";
             }
         }
     }
@@ -81,10 +86,34 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Employee emp = (Employee)Session["emp"];
             GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
             GridView1.DataBind();
+            ViewState["DataSource"] = "displayAll";
         }
         else
         {
             Utility.logout();
         }
+    }
+
+    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Employee emp = (Employee)Session["emp"];
+        GridView1.PageIndex = e.NewPageIndex;
+        if(((string)ViewState["DataSource"]).Equals("displayAll"))
+        {
+            GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+        }
+        else if (((string)ViewState["DataSource"]).Equals("displayStatusSearch"))
+        {
+            GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, DropDownList1.SelectedItem.ToString());
+        }
+        else if (((string)ViewState["DataSource"]).Equals("displaySearch"))
+        {
+            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
+        }
+        else
+        {
+            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
+        }
+        GridView1.DataBind();
     }
 }

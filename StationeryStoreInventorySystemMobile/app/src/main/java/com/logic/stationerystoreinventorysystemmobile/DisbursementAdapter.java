@@ -42,9 +42,9 @@ public class DisbursementAdapter extends ArrayAdapter<DisbursementDetailListItem
             final EditText editTxtActQty = v.findViewById(R.id.editTxtActQty);
             editTxtActQty.setText(d.get("ActualQty"));
             TextView retrievedQtyHidden = v.findViewById(R.id.retrievedQtyHidden);
-            retrievedQtyHidden.setText(d.get("ActualQty"));
+            retrievedQtyHidden.setText(d.get("RetrievedQty"));
             final EditText editTxtRemark = v.findViewById(R.id.editTxtRemark);
-            editTxtRemark.setText(d.get("Remark"));
+            editTxtRemark.setText(d.get("Remarks"));
 
             if (d.get("ActualQty") != null) {
                 editTxtActQty.setText(d.get("ActualQty"));
@@ -59,8 +59,8 @@ public class DisbursementAdapter extends ArrayAdapter<DisbursementDetailListItem
                 }
             });
 
-            if (d.get("Remark") != null) {
-                editTxtRemark.setText(d.get("Remark"));
+            if (d.get("Remarks") != null) {
+                editTxtRemark.setText(d.get("Remarks"));
             }
             editTxtRemark.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override

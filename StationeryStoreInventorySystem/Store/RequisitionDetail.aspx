@@ -4,8 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-     <h2 class="mainPageHeader">Approve / Reject Requisition Details</h2>
-    <br />
+     <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Requisition Details</h2>
+    </div>
     <br />
     <br />
     <br />
@@ -24,13 +25,8 @@
     <strong>
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     </strong>
-
-    <br />
-    <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell>
-                <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid">
+  
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -53,10 +49,7 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                </asp:Panel>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
+                
 
 </asp:Content>
 

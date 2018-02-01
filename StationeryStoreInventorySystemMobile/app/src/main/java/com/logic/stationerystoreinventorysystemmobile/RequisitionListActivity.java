@@ -13,7 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
     String deptCode;
     SharedPreferences pref;
     SimpleAdapter sa;
-    int pendingCount;
+    int pendingCount=0;
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -56,9 +59,15 @@ public class RequisitionListActivity extends AppCompatActivity implements Adapte
                         (RequisitionListActivity.this, result, R.layout.row, new String[]{"Date", "EmployeeName","RequisitionNo"},
                                 new int[]{R.id.dateTV, R.id.empTV,R.id.reqTV}));
                 pendingCount=result.size();
+                setTitle("Total Pending: "+Integer.toString(pendingCount));
+                if(result.size()==0)
+                {
+                    TextView txt = (TextView) findViewById(R.id.textView9);
+                    txt.setVisibility(View.VISIBLE);
+                }
             }
         }.execute(deptCode);
-        setTitle("Total Pending: "+pendingCount);
+
     }
 
     @Override

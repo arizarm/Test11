@@ -17,27 +17,30 @@
     </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2 class="mainPageHeader">Logic University Inventory Status</h2>
+    <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Logic University Inventory Status</h2>
+    </div>
+
 
 
     <%--<CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />--%>
     <div class=" row">
-        <div class="col-md-12 pull-right">
+        <div class="col-md-6">
+            <h3>Search By Item Code or Name</h3>
+        </div>
+        <div class="col-md-6 pull-right" >
             <button type="button" class="btn btn-default pull-right" onclick="printDiv()">Print Inventory Status</button>
         </div>
     </div>
-    <div>
-        <h4>Search By Item Code or Name</h4>
-        <asp:TextBox ID="SearchBox" runat="server" Width="311px" MaxLength ="50"></asp:TextBox>
+    <div class="row">
+        <asp:TextBox ID="SearchBox" runat="server" Width="300px" MaxLength="50"></asp:TextBox>
         &nbsp;
-           <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click" />
+           <asp:Button ID="SearchBtn" runat="server" Text="Search" CssClass="button" OnClick="SearchBtn_Click" />
         &nbsp;
-           <asp:Button ID="Display" runat="server" Text="Display All" OnClick="Display_Click" />
-        <br />
-        <br />
+           <asp:Button ID="Display" runat="server" Text="Display All" CssClass="button" OnClick="Display_Click" />
     </div>
     <div id="printable">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" RowStyle-Height=" 50px" HorizontalAlign="Center">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>

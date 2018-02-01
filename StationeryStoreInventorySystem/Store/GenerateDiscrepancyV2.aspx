@@ -4,12 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <div class="updateDeptHead"><h2>Report Discrepancies</h2></div>
+        <div class="updateDeptHead"><h2 class="mainPageHeader">Report Discrepancies</h2></div>
+
 
         <% if (GridView2.Rows.Count > 0)
            {%>
         
-        <h2>Discrepancy List</h2>
+        <h3>Discrepancy List</h3>
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="mGrid mGrid60percent">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
@@ -45,7 +46,6 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <br />
         <asp:Button ID="Button2" runat="server" Text="Finalise Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>
         &nbsp;&nbsp;&nbsp;
         <asp:Button ID="Button6" runat="server" Text="Clear List" CssClass="rejectBtn" OnClick="Button6_Click"/>
@@ -65,18 +65,17 @@
         <%} %>
 
         <asp:Panel ID="Panel1" runat="server" DefaultButton="Button4">
-
-        <h4>Search by Item Code or Name</h4>
         <br />
+        <h3>Search by Item Code or Name</h3>
         <asp:TextBox ID="txtSearch" runat="server" Width="212px" ValidationGroup="Search"></asp:TextBox>&nbsp;
-        <asp:Button ID="Button4" runat="server" Text="Search" OnClick="Button4_Click" ValidationGroup="Search"/>&nbsp;
-        <asp:Button ID="Button5" runat="server" Text="Display All" OnClick="Button5_Click" />
+        <asp:Button ID="Button4" runat="server" Text="Search" OnClick="Button4_Click" ValidationGroup="Search" CssClass="button"/>&nbsp;
+        <asp:Button ID="Button5" runat="server" Text="Display All" OnClick="Button5_Click" CssClass="button"/>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="txtSearch" ValidationGroup="Search"></asp:RequiredFieldValidator>
 
 
         <% if (GridView1.Rows.Count > 0)
            {%>
-        <h2>Item List</h2>
+        <h3>Item List</h3>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
             <Columns>
                 
@@ -112,7 +111,7 @@
 
 <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
 
-<ItemStyle HorizontalAlign="Center"></ItemStyle>
+<ItemStyle HorizontalAlign="Center" Width="160px"></ItemStyle>
                 </asp:TemplateField>
                
                 <asp:TemplateField HeaderText="Pending Adjustments"  ItemStyle-HorizontalAlign="Center">
@@ -142,7 +141,7 @@
                         
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="txtActual" runat="server" Width=""></asp:TextBox>
+                        <asp:TextBox ID="txtActual" runat="server"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 

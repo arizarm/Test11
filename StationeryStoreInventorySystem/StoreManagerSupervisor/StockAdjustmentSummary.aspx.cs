@@ -72,7 +72,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             }
         }
         Session["discrepancySummary"] = null;
-        Response.Redirect(LoginController.StockAdjustmentURI);
+        Utility.AlertMessageThenRedirect("Adjustments processed", "StockAdjustment.aspx");
     }
 
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)

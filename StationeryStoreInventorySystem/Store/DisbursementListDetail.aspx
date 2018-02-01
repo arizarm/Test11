@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <h2 class="mainPageHeader">Details Disbursement List</h2>
-    
+    <div class="updateDeptHead"><h2 class="mainPageHeader">Details Disbursement List</h2></div>
+        <br /><br />
     <table style="width: 30%;">
         <tr>
             <td><b>Date :<br /><br /></b></td>
@@ -25,7 +25,7 @@
         </tr>
     </table>                         
 
-    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid" AutoGenerateColumns ="false" Width="90%">
+    <asp:GridView ID="gvDisbDetail" runat="server" CssClass="mGrid mGrid60percent" AutoGenerateColumns ="false">
         <Columns>                
                 <asp:TemplateField HeaderText="Item Description">
                     <ItemTemplate>
@@ -42,9 +42,9 @@
                     <ItemTemplate>
                         <asp:TextBox ID="txtactualQty" runat="server" Text='<%# Bind("actualQty") %>'></asp:TextBox> 
                         <asp:Label ID="lblActualError" runat="server" ForeColor="Red" ></asp:Label>
-                        <asp:RangeValidator ID="RangeValidator1" ValidationGroup="1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtactualQty" MaximumValue='<%# Eval("reqQty") %>' MinimumValue="0" style="color:red"></asp:RangeValidator>
+                        <asp:RangeValidator Display="Dynamic" ID="RangeValidator1" ValidationGroup="1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtactualQty" MaximumValue='<%# Eval("reqQty") %>' MinimumValue="0" style="color:red"></asp:RangeValidator>
                    <br />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red" EnableViewState="True">Quantity cannot be empty!</asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtactualQty" style="color:red" EnableViewState="True">Quantity cannot be empty!</asp:RequiredFieldValidator>
                          </ItemTemplate>
                 </asp:TemplateField>
              <asp:TemplateField HeaderText="Remarks" SortExpression="Remarks">                                   
@@ -59,10 +59,10 @@
     <br /><br />
     <asp:Label ID="Label1" runat="server" Text="Enter Access Code : "></asp:Label>
     <asp:TextBox ID="txtAccessCode" runat="server"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" style="color:red">Access Code cannot be empty!</asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" style="color:red">Access Code cannot be empty!</asp:RequiredFieldValidator>
     <br /> <br /> <br />
     
     <asp:Button ID="btnReset" runat="server" Text="Reset Data" CssClass="button" OnClick="btnReset_Click"/>
-    <asp:Button ID="btnAck" runat="server" Text="Acknowledge" CssClass="button" OnClick="btnAck_Click"/>
+    <asp:Button ID="btnAck" runat="server" Text="Acknowledge" ValidationGroup="1" CssClass="button" OnClick="btnAck_Click"/>
 </asp:Content>
 

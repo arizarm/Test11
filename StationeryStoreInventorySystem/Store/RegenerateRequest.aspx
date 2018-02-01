@@ -3,12 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">   
-     <h2 class="mainPageHeader">Regenerate Requisition  </h2>
-   
-    <table style="width: 30%;">
-        <tr>
-            <td colspan ="2"> <h3>Shortfall Item List</h3></td>
-        </tr>
+     <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Regenerate Requisition</h2>
+    </div> 
+      <br /><br />
+    <table style="width: 30%;">        
         <tr>
             <td><b>Date :<br /><br /></b></td>
             <td><asp:Label ID="lblReqDate" runat="server"></asp:Label><br /><br /></td>
@@ -23,7 +22,7 @@
         </tr>
     </table>    
 
-    <asp:GridView ID="gvRegenerate" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
+    <asp:GridView ID="gvRegenerate" runat="server" AutoGenerateColumns="False" CssClass="mGrid mGrid60percent" >
             <Columns>                
                  <asp:TemplateField >
                     <HeaderTemplate>

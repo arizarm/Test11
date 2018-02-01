@@ -9,7 +9,7 @@
     <br />
     <p>Item Code: <asp:Label ID="lblItemCode" runat="server" Text="" Font-Size="Medium" ></asp:Label></p>
     <p>Item Name: <asp:Label ID="lblItemName" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
-    <p>Bin: <asp:Label ID="lblBin" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    <p>Bin: <asp:Label ID="lblBin" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
     <p>Unit of Measure: <asp:Label ID="lblUom" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
     <p>1st Supplier: <asp:Label ID="lblSupp1" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
     <p>2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label></p>

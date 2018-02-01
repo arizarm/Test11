@@ -47,7 +47,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Action">
                 <ItemTemplate>
-                    <asp:Label ID="lblAction" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
+                    <asp:Label ID="lblAction" runat="server" Text='<%# Bind("Value") %>' Font-Bold="true"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

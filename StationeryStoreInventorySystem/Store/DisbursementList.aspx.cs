@@ -15,9 +15,13 @@ public partial class DisbursementList : System.Web.UI.Page
         if (!IsPostBack)
         {
             List<DisbursementListItems> disbursementListItemsList = FillDisbursementListItems();
+            if(disbursementListItemsList.Count == 0)
+            {
+                lblNoPending.Visible = true;
+            }
             gdvDisbList.DataSource = disbursementListItemsList;
             gdvDisbList.DataBind();
-            ViewState["sortDirection"] = "";
+            ViewState["sortDirection"] = "";            
         }
     }
 

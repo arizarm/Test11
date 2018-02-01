@@ -219,14 +219,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             }
 
             Session["discrepancyList"] = null;
+            Session["discrepancyDisplay"] = null;
             Session["RetrievalShortfallItemList"] = null;
             Session["RetrievalID"] = null;
 
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
 
-            Utility.DisplayAlertMessage("Discrepancies successfully reported");
-            //LoginController.NavigateMain();
+            Utility.AlertMessageThenRedirect("Discrepancies successfully reported", "GenerateDiscrepancyV2.aspx");
         }
     }
 }

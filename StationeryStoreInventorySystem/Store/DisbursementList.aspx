@@ -4,10 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <h2 class="mainPageHeader">Pending Disbursement List</h2>
-
+     <div class="updateDeptHead"><h2 class="mainPageHeader">Pending Disbursement List</h2></div>
+        
     <br />
-    <asp:GridView ID="gdvDisbList" runat="server" CssClass="mGrid" AutoGenerateColumns="false" AllowSorting="true" Width="90%" OnSorting="gdvDisbList_Sorting">      
+
+    <asp:Label ID="lblNoPending" runat="server" Visible="false" ForeColor="Red" Font-Size="40px">There is no pending disbursement!</asp:Label>
+
+    <asp:GridView ID="gdvDisbList" runat="server" CssClass="mGrid" RowStyle-Height="50px" AutoGenerateColumns="false" AllowSorting="true" OnSorting="gdvDisbList_Sorting">      
          <Columns>                
                 <asp:TemplateField HeaderText="Disbursement No">
                     <ItemTemplate>
@@ -36,7 +39,7 @@
                 </asp:TemplateField>
               <asp:TemplateField HeaderText="View">                                   
                     <ItemTemplate>
-                        <asp:Button ID="btnDetail" runat="server" Text="Details" OnClick="btnDetail_Click" />
+                        <asp:Button ID="btnDetail" CssClass="alert-success" runat="server" Text="Details" OnClick="btnDetail_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
              </Columns>

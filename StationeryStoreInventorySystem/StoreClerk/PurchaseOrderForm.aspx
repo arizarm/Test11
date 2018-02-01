@@ -49,7 +49,7 @@
     <asp:CustomValidator runat="server" ControlToValidate="txtDate" ErrorMessage="Date cannot be lesser than today." ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red" OnServerValidate="DateValidator"></asp:CustomValidator>
         <br />
         <asp:GridView ID="gvPurchaseItems" runat="server" AutoGenerateColumns="False" CssClass="mGrid" DataKeyNames="ItemCode" RowStyle-Height="50px" 
-            OnRowDataBound="reoderItems_RowDataBound">
+            OnRowDataBound="reoderItems_RowDataBound" EmptyDataText="Nothing to order. All items has enough stock!">
             <Columns>
 
                 <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">

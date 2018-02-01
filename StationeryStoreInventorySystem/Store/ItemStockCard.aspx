@@ -7,13 +7,13 @@
     <div class="updateDeptHead"><h2 class="mainPageHeader">Stock Card</h2></div>
     <br />
     <br />
-    Item Code: <asp:Label ID="lblItemCode" runat="server" Text="" Font-Size="Medium" ></asp:Label><br />
-    Item Name: <asp:Label ID="lblItemName" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    Bin: <asp:Label ID="lblBin" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    Unit of Measure: <asp:Label ID="lblUom" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    1st Supplier: <asp:Label ID="lblSupp1" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
-    3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label>
+    <p>Item Code: <asp:Label ID="lblItemCode" runat="server" Text="" Font-Size="Medium" ></asp:Label></p>
+    <p>Item Name: <asp:Label ID="lblItemName" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
+    <p>Bin: <asp:Label ID="lblBin" runat="server" Text="" Font-Size="Medium"></asp:Label><br />
+    <p>Unit of Measure: <asp:Label ID="lblUom" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
+    <p>1st Supplier: <asp:Label ID="lblSupp1" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
+    <p>2nd Supplier: <asp:Label ID="lblSupp2" runat="server" Text="" Font-Size="Medium"></asp:Label></p>
+    <p>3rd Supplier: <asp:Label ID="lblSupp3" runat="server" Text="" Font-Size="Medium" ></asp:Label></p>
     <br />
     <br />
      <br />

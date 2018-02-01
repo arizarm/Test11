@@ -43,7 +43,7 @@ public class DeptActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         try {
             Department d=(Department)av.getAdapter().getItem(position);
-        Intent intent=new Intent(this, com.example.brandaling.myapplicationforad.DeptDetailActivity.class);
+        Intent intent=new Intent(this, DeptDetailActivity.class);
         intent.putExtra("dCode",d.get("dCode"));
         startActivity(intent);
         }catch (Exception e){

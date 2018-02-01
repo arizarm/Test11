@@ -116,7 +116,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
             }
             else if (emp.Role == "Representative")
             {
-                Response.Redirect(LoginController.RequisitionListTempDepRedURI);
+                Response.Redirect(LoginController.RequisitionListDepRepURI);
             }
         }
     }

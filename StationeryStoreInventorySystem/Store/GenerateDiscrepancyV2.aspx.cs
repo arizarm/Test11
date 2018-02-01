@@ -14,6 +14,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         if (!IsPostBack)
         {
             Session["itemError"] = null;
+            ShowAll();
         }
         else
         {
@@ -38,7 +39,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         //    }
         //}
 
-        ShowAll();
+        
         Label1.Text = "";
     }
 

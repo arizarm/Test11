@@ -45,7 +45,7 @@ public class RetrievalControl
         string retrievalStatus = context.Retrievals.Where(x => x.RetrievalID == requisitionId).Select(x => x.RetrievalStatus).First().ToString();
 
         // dictionary with itemcode + totalrequestedQty
-        Dictionary<string, int> itemcodeAndTotalRequestedQtyDictionary = new Dictionary<string, int>(); 
+        Dictionary<string, int> itemcodeAndTotalRequestedQtyDictionary = new Dictionary<string, int>();
 
         HashSet<String> uniqueItemcodeHashSet = new HashSet<string>();
 
@@ -164,6 +164,23 @@ public class RetrievalControl
         return RetrievalShortfallItemList;
     }
 
+    //udpate acuatal quantity if no shortfall
+    public void UpdateAllActaulQty(int requisitionId)
+    {
+        List<Disbursement> disbursementList = EFBroker_Disbursement.GetDisbursmentListbyRetrievalID(requisitionId);
+
+
+        foreach (Disbursement d in disbursementList)
+        {
+            foreach (Disbursement_Item dI in d.Disbursement_Item)
+            {
+                dI.ActualQty = dI.TotalRequestedQty;
+                EFBroker_Disbursement.UpdateDisbursementItem(dI);
+            }
+        }
+
+    }
+
     //populate shortfall data for sub gridview
     public List<RetrievalShortfallItemSub> DisplayRetrievalShortfallSubGridView(int requisitionId, string shortfallItemCode)
     {
@@ -238,8 +255,13 @@ public class RetrievalControl
                 {
                     if (shortfallList.ItemCode == di.ItemCode)
                     {
-                        di.ActualQty = 0;  
+                        di.ActualQty = 0;
                     }
+                    else
+                    {
+                        di.ActualQty = di.TotalRequestedQty;
+                    }
+                    EFBroker_Disbursement.UpdateDisbursementItem(di);
                 }
             }
         }
@@ -302,7 +324,7 @@ public class RetrievalControl
 
         foreach (Disbursement d in disbursementList)
         {
-            string depCode = d.Department.DeptCode;            
+            string depCode = d.Department.DeptCode;
             if (EFBroker_DeptEmployee.GetCollectionPointbyDeptCode(depCode).CollectionPoint1 == collectionPoint)////////////////The ObjectContext instance has been disposed and can no longer be used for operations that require a connection."}
             {
                 d.CollectionDate = date;
@@ -315,7 +337,7 @@ public class RetrievalControl
                 //
                 string departmentRepresentativeEmail = EFBroker_DeptEmployee.GetDRepresentativeEmailByDeptCode(depCode);
                 string departmentRepresentativeName = EFBroker_DeptEmployee.GetDRepresentativeNameByDeptCode(depCode);
-                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(),"Dear "+ departmentRepresentativeName +", "+ Environment.NewLine + Environment.NewLine  + "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to "+ collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() +" at "+ d.CollectionTime +". Thank you.");
+                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(), "Dear " + departmentRepresentativeName + ", " + Environment.NewLine + Environment.NewLine + "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to " + collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() + " at " + d.CollectionTime + ". Thank you.");
                 //
             }
         }
@@ -452,11 +474,11 @@ public class RetrievalControl
 
         bool valid = false;
 
-        foreach(Disbursement d in disbList)
+        foreach (Disbursement d in disbList)
         {
-            foreach(Disbursement_Item di in d.Disbursement_Item)
+            foreach (Disbursement_Item di in d.Disbursement_Item)
             {
-                if(di.ActualQty != 0)
+                if (di.ActualQty != 0)
                 {
                     valid = true;
                 }
@@ -482,16 +504,16 @@ public class RetrievalControl
 
         valid = false;
 
-        foreach (KeyValuePair<Disbursement,bool> kvp in chkDisbStatus)
+        foreach (KeyValuePair<Disbursement, bool> kvp in chkDisbStatus)
         {
             //if 1 of the disbursement is true => valid is true
-            if(kvp.Value)
+            if (kvp.Value)
             {
                 valid = true;
             }
         }
 
-        if(!valid)  //   valid = false;
+        if (!valid)  //   valid = false;
         {
             EFBroker_Disbursement.UpdateRetrievalStatus(rId, "Invalid");
         }

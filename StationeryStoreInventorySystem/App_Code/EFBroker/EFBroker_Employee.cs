@@ -37,11 +37,14 @@ public class EFBroker_Employee
         Employee currentHead = new Employee();
         StationeryEntities context = new StationeryEntities();
         currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
-
-        if (!Utility.checkIsTempDepHead(currentHead))
-        { 
-            currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
+        if (currentHead != null)
+        {
+            if (!Utility.checkIsTempDepHead(currentHead))
+            {
+                currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
+            }
         }
+       
         return currentHead;
     }
     public static bool verifyLogin(string email, string password)

@@ -34,23 +34,15 @@ public class EFBroker_Employee
 
     public static Employee GetHeadEmail(Employee e)
     {
+        Employee currentHead = new Employee();
         StationeryEntities context = new StationeryEntities();
-        Employee emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
+        currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.IsTempHead.Equals("Y")).FirstOrDefault();
 
-        if (emp == null)
-        {
-            emp = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
+        if (!Utility.checkIsTempDepHead(currentHead))
+        { 
+            currentHead = context.Employees.Where(em => em.DeptCode.Equals(e.DeptCode) && em.Role.Equals("DepartmentHead")).FirstOrDefault();
         }
-        else
-        {
-            if (Utility.checkIsTempDepHead(emp))
-            { }
-            else
-            {
-                emp = null;
-            }
-        }
-        return emp;
+        return currentHead;
     }
     public static bool verifyLogin(string email, string password)
     {
@@ -116,6 +108,28 @@ public class EFBroker_Employee
         return EFBroker_DeptEmployee.GetDepartByDepCode(DepCode);
     }
 
-
+    public static bool isDeptHaveTempHead(string deptCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            List<Employee> deptEmpList = context.Employees.Where(x => x.DeptCode.Equals(deptCode) && x.IsTempHead == "Y").ToList<Employee>();
+            if(deptEmpList.Count >=1)
+            {
+                for (int i = 0; i < deptEmpList.Count; i++)
+                {
+                    Employee emp = (Employee)deptEmpList[i];
+                    if (Utility.checkIsTempDepHead(emp))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }    
+        }
+    }
 
 }

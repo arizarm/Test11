@@ -143,7 +143,8 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                             @Override
                             protected void onPostExecute(Void result){
                                 Intent i = new Intent(RequisitionDetailActivity.this,RequisitionListActivity.class);
-                                Toast.makeText(getApplicationContext(), "Requisition Rejected", Toast.LENGTH_LONG).show();
+                                Util.redsToast("Requisition Rejected",getApplicationContext());
+                                //Toast.makeText(getApplicationContext(), "Requisition Rejected", Toast.LENGTH_LONG).show();
                                 startActivity(i);
                             }
                         }.execute(r);

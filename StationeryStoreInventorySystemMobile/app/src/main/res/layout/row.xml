@@ -16,6 +16,7 @@
 
     <TextView
         android:id="@+id/reqDate"
+        android:textAppearance="@style/TextStyle"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/reqTV"
@@ -36,6 +37,7 @@
 
     <TextView
         android:id="@+id/reqBy"
+        android:textAppearance="@style/TextStyle"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dateTV"

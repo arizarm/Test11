@@ -9,6 +9,7 @@
 
     <TextView
         android:id="@+id/reqByTV"
+        style="TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,6 +40,7 @@
 
     <TextView
         android:id="@+id/reqDateTV"
+        style="TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -78,7 +80,7 @@
         android:layout_marginTop="72dp"
         android:text="@string/title"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

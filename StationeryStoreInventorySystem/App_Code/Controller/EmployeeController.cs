@@ -24,4 +24,10 @@ public class EmployeeController
     {
         return EFBroker_Employee.getAllClerkMails();
     }
+
+
+    public static bool isDeptHaveTempHead(string deptCode)
+    {
+        return EFBroker_Employee.isDeptHaveTempHead(deptCode);
+    }
 }

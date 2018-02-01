@@ -35,7 +35,7 @@ public class DisbursementDetailFragment extends Fragment {
     View view;
     String accessCode, remark, status, itemCode, itemDesc;
     int retrievedQty, actQty, reqQty, shortfallQty, discrepancyQty;
-    boolean actualQtyValidate =true;
+    boolean actualQtyValidate = true;
 
     //create list for shortfall item to regenerate requisition
     List<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
@@ -72,27 +72,26 @@ public class DisbursementDetailFragment extends Fragment {
 
             new AsyncTask<Void, Void, List<DisbursementDetailListItems>>() {
                 ProgressDialog progress;
+
                 @Override
                 protected void onPreExecute() {
                     progress = ProgressDialog.show(getActivity(), "Loading", "Getting disbursement Detail", true);
                 }
+
                 @Override
                 protected List<DisbursementDetailListItems> doInBackground(Void... params) {
+                    //get disbursement detail from wcf using disbursement id
                     return DisbursementDetailListItems.getDisbursementDetailListItems(disbId);
                 }
 
                 @Override
                 protected void onPostExecute(List<DisbursementDetailListItems> result) {
-
-//                    lv.setAdapter(sa = new SimpleAdapter(getActivity(), result,
-//                            R.layout.disbursement_detail_list_row,
-//                            new String[]{"ItemCode", "ItemDesc", "ReqQty", "ActualQty", "ActualQty", "Remarks"},
-//                            new int[]{R.id.itemCodeHidden, R.id.txtIDesc, R.id.txtReqQty, R.id.editTxtActQty, R.id.retrievedQtyHidden, R.id.editTxtRemark}));
+                    //set result data to listview
                     DisbursementAdapter adapter = new DisbursementAdapter(getActivity(), R.layout.disbursement_detail_list_row, result);
                     lv.setAdapter(adapter);
                     progress.dismiss();
 
-               }
+                }
             }.execute();
 
             try {
@@ -106,52 +105,46 @@ public class DisbursementDetailFragment extends Fragment {
 
                         new AsyncTask<Void, Void, String>() {
                             ProgressDialog progress;
+
                             @Override
                             protected void onPreExecute() {
                                 progress = ProgressDialog.show(getActivity(), "Loading", "Processing disbursement...", true);
                             }
+
                             @Override
                             protected String doInBackground(Void... params) {
+                                actualQtyValidate = true;
+
                                 //crate array list to hold items to be updated
                                 final ArrayList<DisbursementDetailListItems> toBeUpdated = new ArrayList<DisbursementDetailListItems>();
                                 //get data from list view
                                 for (int i = 0; i < lv.getCount(); i++) {
-                                    //get view from list view to access controls inside list view
-                                    View vv = lv.getChildAt(i);
 
-                                    //get textbox values
-                                    EditText edtActQty = vv.findViewById(R.id.editTxtActQty);
-                                    TextView txtReqQty = vv.findViewById(R.id.txtReqQty);
-                                    TextView txtRetrievedQty = view.findViewById(R.id.retrievedQtyHidden);
-                                    EditText edtRemark = vv.findViewById(R.id.editTxtRemark);
+                                    //get disbursement object from list view
+                                    DisbursementDetailListItems disb = (DisbursementDetailListItems) lv.getAdapter().getItem(i);
 
-                                    //assign textbox values to local variable
-                                    try
-                                    {
-                                        actQty = Integer.parseInt(edtActQty.getText().toString());
-                                    }
-                                    catch (Exception e)
-                                    {
+                                    try {
+                                        actQty = Integer.parseInt(disb.get("ActualQty").toString());
+                                    } catch (Exception e) {
                                         status = "Actual Quantity cannot be empty!";
                                     }
-                                    reqQty = Integer.parseInt(txtReqQty.getText().toString());
-                                    retrievedQty = Integer.parseInt(txtRetrievedQty.getText().toString());
-                                    remark = edtRemark.getText().toString();
+
+                                    reqQty = Integer.parseInt(disb.get("ReqQty").toString());
+                                    retrievedQty = Integer.parseInt(disb.get("RetrievedQty").toString());
+                                    remark = disb.get("Remarks").toString();
 
                                     //check for shortfall item
                                     if (actQty < reqQty) {
 
                                         Log.i("ShortfallCheck", "Shortfall item exists");
 
-                                        TextView txtDesc = vv.findViewById(R.id.txtIDesc);
-                                        TextView txtItemCode = view.findViewById(R.id.itemCodeHidden);
-                                        itemDesc = txtDesc.getText().toString();
-                                        itemCode = txtItemCode.getText().toString();
+                                        itemDesc = disb.get("ItemDesc");
+                                        itemCode = disb.get("ItemCode");
                                         shortfallQty = reqQty - actQty;
-                                        RegenerateRequisition reqItem = new RegenerateRequisition(itemCode, itemDesc, String.valueOf(shortfallQty),disbId);
+                                        RegenerateRequisition reqItem = new RegenerateRequisition(itemCode, itemDesc, String.valueOf(shortfallQty), disbId);
                                         regenReqList.add(reqItem);
 
-                                        Log.i("ShortfallItems", itemCode + itemDesc + String.valueOf(shortfallQty) );
+                                        Log.i("ShortfallItems", itemCode + itemDesc + String.valueOf(shortfallQty));
 
                                         //check for discrepancy
                                         if (actQty < retrievedQty) {
@@ -160,8 +153,7 @@ public class DisbursementDetailFragment extends Fragment {
 
                                             Log.i("Discrepancy Item", itemCode + String.valueOf(discrepancyQty));
                                         }
-                                    }
-                                    else if (actQty > retrievedQty) {
+                                    } else if (actQty > retrievedQty) {
                                         //display error for invalid quantity
                                         actualQtyValidate = false;
                                     }
@@ -172,7 +164,6 @@ public class DisbursementDetailFragment extends Fragment {
                                 }
                                 if (actualQtyValidate == false) {
                                     status = "Actual Quantity cannot be more than requested quantity";
-                                    actualQtyValidate = true;
                                 } else {
                                     //get textbox values
                                     EditText edtAccessCode = view.findViewById(R.id.accessCode);
@@ -198,19 +189,15 @@ public class DisbursementDetailFragment extends Fragment {
                                     }
                                 }
 
-                                //if accesscode ok
-                                if(actualQtyValidate == true)
-                                {
-                                    if(regenReqList.size() != 0 )
-                                    {
+                                //if access code ok
+                                if (actualQtyValidate == true) {
+                                    if (regenReqList.size() != 0) {
                                         RegenerateRequisitionActivity.setRegenReqList(regenReqList);
                                         RegenerateRequisition r = RegenerateRequisition.GetRegenrateInfo(disbId);
                                         RegenerateRequisitionActivity.setRegenerateRequisition(r);
                                         Intent intent = new Intent(getActivity(), RegenerateRequisitionActivity.class);
                                         startActivity(intent);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         Intent intent = new Intent(getActivity(), DisbursementActivity.class);
                                         startActivity(intent);
                                     }
@@ -222,10 +209,10 @@ public class DisbursementDetailFragment extends Fragment {
                             @Override
                             protected void onPostExecute(String result) {
 
-                                progress.dismiss();
                                 Log.i("Result", result);
                                 //display toast message at the end of transaction
-                                customToast(result);
+                                Util.customToast(result,getActivity());
+                                progress.dismiss();
 
                             }
                         }.execute();
@@ -240,16 +227,5 @@ public class DisbursementDetailFragment extends Fragment {
     //to get disbursement object from other class
     public void setDisbursementListItems(HashMap<String, String> d) {
         this.d = d;
-    }
-
-    //custom toast message box
-    public void customToast(String message) {
-
-        Toast toast = Toast.makeText(getActivity(), message,
-                Toast.LENGTH_LONG);
-
-        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
-        toastMessage.setTextColor(Color.RED);
-        toast.show();
     }
 }

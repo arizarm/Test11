@@ -15,7 +15,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Disbursement Date" />
+                android:text="@string/disbDate" />
 
             <TextView
                 android:id="@+id/disbDate"
@@ -32,7 +32,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Disbursement Time " />
+                android:text="@string/disbTime" />
 
             <TextView
                 android:id="@+id/disbTime"
@@ -49,7 +49,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Department Name" />
+                android:text="@string/depName" />
 
             <TextView
                 android:id="@+id/depName"
@@ -66,7 +66,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Collection Point" />
+                android:text="@string/colPoint" />
 
             <TextView
                 android:id="@+id/disColPoint"
@@ -100,13 +100,14 @@
                 style="@style/TextStyle"
                 android:layout_width="189dp"
                 android:layout_height="50dp"
-                android:hint="Enter Access Code" />
+                android:inputType="number"
+                android:hint="@string/accessCode" />
 
             <Button
                 android:id="@+id/btnAck"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
-                android:text="Acknowledge"/>
+                android:text="@string/btnAck"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>

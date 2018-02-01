@@ -13,10 +13,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by edwon on 29/1/2018.
- */
-
 public class DiscrepancySummaryAdapter extends ArrayAdapter<Discrepancy> {
 
     private List<Discrepancy> items;

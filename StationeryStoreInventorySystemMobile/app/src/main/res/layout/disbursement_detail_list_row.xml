@@ -17,7 +17,7 @@
 
     <TableLayout
         android:layout_width="wrap_content"
-        android:layout_height="166dp">
+        android:layout_height="180dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -27,13 +27,13 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Item Description" />
+                android:text="@string/des" />
 
             <TextView
                 android:id="@+id/txtIDesc"
                 style="@style/TextStyle"
                 android:layout_width="@dimen/TextWidth"
-                android:layout_height="@dimen/MyHeight" />
+                android:layout_height="60dp" />
         </TableRow>
 
         <TableRow
@@ -44,7 +44,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Requested Qty" />
+                android:text="@string/reqQty"/>
 
             <TextView
                 android:id="@+id/txtReqQty"
@@ -61,7 +61,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Actual Qty" />
+                android:text="@string/actQty" />
 
             <EditText
                 android:id="@+id/editTxtActQty"
@@ -78,7 +78,7 @@
                 style="@style/TitleStyle"
                 android:layout_width="@dimen/TitleWidth"
                 android:layout_height="@dimen/MyHeight"
-                android:text="Remarks" />
+                android:text="@string/remark" />
 
             <EditText
                 android:id="@+id/editTxtRemark"

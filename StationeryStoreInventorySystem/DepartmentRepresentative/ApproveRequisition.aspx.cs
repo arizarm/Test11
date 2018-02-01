@@ -39,7 +39,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             showAllItems();
         }
-
     }
 
     protected void showAllItems()
@@ -104,9 +103,6 @@ public partial class ApproveRequisition : System.Web.UI.Page
                 Response.Redirect(LoginController.RequisitionListTempDepRedURI);
             }
         }
-
-
-
     }
     protected void Button1_Click(object sender, EventArgs e)
     {

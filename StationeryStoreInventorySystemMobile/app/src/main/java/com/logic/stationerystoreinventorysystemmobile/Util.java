@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -15,6 +17,9 @@ import java.util.Properties;
  * Created by Yimon Soe on 24/1/2018.
  */
 public class Util {
+
+    final static String host = "http://192.168.0.100/StationeryStoreInventorySystem/";
+
     public static String getProperty(String key,Context context) throws IOException {
         Properties properties = new Properties();;
         AssetManager assetManager = context.getAssets();
@@ -44,5 +49,15 @@ public class Util {
         context.startActivity(i);
         Toast.makeText(context,
                 "Logged out",Toast.LENGTH_SHORT).show();
+    }
+
+    //custom toast message box
+    public static void customToast(String message, Context context) {
+
+        Toast toast = Toast.makeText(context, message,
+                Toast.LENGTH_LONG);
+        TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
+        toastMessage.setTextColor(Color.RED);
+        toast.show();
     }
 }

@@ -16,24 +16,24 @@ import java.util.List;
 public class DisbursementDetailListItems extends HashMap<String,String>
 {
 
-    //final static String host="http://192.168.0.100/StationeryStoreInventorySystem/DisbursementService.svc";
-    final static String host="http://172.17.249.194/StationeryStoreInventorySystem/DisbursementService.svc";
+    final static String host = Util.host + "DisbursementService.svc/";
 
     public DisbursementDetailListItems(){}
 
-    public DisbursementDetailListItems(String ActualQty,String ItemCode, String ItemDesc,
-                                 String Remarks, String ReqQty){
-        put("ActualQty",ActualQty);
+    public DisbursementDetailListItems(String ItemCode, String ItemDesc,String Remarks,
+                                 String ReqQty, String RetrievedQty, String ActualQty){
         put("ItemCode",ItemCode);
         put("ItemDesc",ItemDesc);
         put("Remarks",Remarks);
         put("ReqQty",ReqQty);
+        put("RetrievedQty",RetrievedQty);
+        put("ActualQty",ActualQty);
     }
 
-    public DisbursementDetailListItems(String DisbId, String ActualQty, String Remark){
+    public DisbursementDetailListItems(String DisbId, String ActualQty, String Remarks){
         put("DisbId",DisbId);
         put("ActualQty",ActualQty);
-        put("Remark",Remark);
+        put("Remarks",Remarks);
     }
 
     public void saveActualQty(String actualQty){
@@ -41,7 +41,7 @@ public class DisbursementDetailListItems extends HashMap<String,String>
     }
 
     public void saveRemarks(String remarks){
-        put("Remark", remarks);
+        put("Remarks", remarks);
     }
 
     public static void UpdateDisbursement(ArrayList<DisbursementDetailListItems> dList){
@@ -56,28 +56,12 @@ public class DisbursementDetailListItems extends HashMap<String,String>
         try{
             for(int i=0;i<a.length();i++){
                 JSONObject b = a.getJSONObject(i);
-                list.add(new DisbursementDetailListItems(b.getString("ActualQty"),b.getString("ItemCode"),
-                        b.getString("ItemDesc"),b.getString("Remarks"),Integer.toString(b.getInt ("ReqQty"))));
+                list.add(new DisbursementDetailListItems(b.getString("ItemCode"),b.getString("ItemDesc"),b.getString("Remarks"),
+                        Integer.toString(b.getInt ("ReqQty")),Integer.toString(b.getInt ("RetrievedQty")),b.getString("ActualQty")));
             }
         }catch(Exception e){
             Log.e("getDisbDetailList", e.toString() );
         }
         return list;
     }
-
-
-
-//    public static String getRegenrateDate(String DisbId) {
-//
-//        String regenDate = null;
-//        JSONObject jCheckAccess = new JSONObject();
-//        try {
-//            jCheckAccess.put("DisbId", DisbId);
-//            regenDate = JSONParser.postStream(host+"/GetRegenerateDate", jCheckAccess.toString());
-//        } catch (Exception e) {
-//        }
-//        return regenDate;
-//    }
-
-
 }

@@ -8,12 +8,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Branda Ling on 22/1/2018.
- */
-
 public class Department extends  java.util.HashMap<String,String> {
-    final static String hostURL = "http://172.17.252.209/StationeryStoreInventorySystem/DeptService.svc/";
+    final static String hostURL = "http://172.17.250.259/StationeryStoreInventorySystem/DeptService.svc/";
 
     public Department(){
 

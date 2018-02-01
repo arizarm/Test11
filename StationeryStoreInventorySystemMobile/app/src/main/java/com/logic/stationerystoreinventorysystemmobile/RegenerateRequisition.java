@@ -14,9 +14,7 @@ import java.util.HashMap;
 
 public class RegenerateRequisition extends HashMap<String, String> {
 
-
-    //final static String host = "http://192.168.0.100/StationeryStoreInventorySystem/DisbursementService.svc";
-    final static String host="http://172.17.249.194/StationeryStoreInventorySystem/DisbursementService.svc";
+    final static String host = Util.host + "DisbursementService.svc/";
 
     public RegenerateRequisition() {
     }

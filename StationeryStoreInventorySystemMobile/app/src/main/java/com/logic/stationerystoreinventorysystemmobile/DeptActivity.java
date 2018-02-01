@@ -13,8 +13,6 @@ import android.widget.SimpleAdapter;
 
 import java.util.List;
 
-
-
 public class DeptActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     @SuppressLint("StaticFieldLeak")
     @Override

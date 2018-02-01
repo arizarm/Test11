@@ -12,11 +12,17 @@ public partial class DisbursementListDetail : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //populate grid view with disbursement details
-        if (!IsPostBack)
+        if(Session["SelectedDisb"] == null)
         {
-            populateGridView();
+            Response.Redirect(LoginController.DisbursementListURI);
         }
+        else
+        {//populate grid view with disbursement details
+            if (!IsPostBack)
+            {
+                populateGridView();
+            }
+        }        
     }
 
     protected void populateGridView()

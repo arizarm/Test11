@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by edwon on 24/1/2018.
- */
 
 public class DiscrepancyHolder {
     static HashMap<String, Integer> discrepancies = new HashMap<String, Integer>();

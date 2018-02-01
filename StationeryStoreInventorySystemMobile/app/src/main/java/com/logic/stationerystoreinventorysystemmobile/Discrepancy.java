@@ -5,10 +5,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by edwon on 27/1/2018.
- */
-
 public class Discrepancy extends HashMap<String, String> implements Comparable<Discrepancy>{
 
     static String host = R.string.host_add + "DiscrepancyService.svc/";

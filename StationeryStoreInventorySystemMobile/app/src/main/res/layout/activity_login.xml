@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
-        android:hint="Enter email (name@logicuniversity.com)"
-        android:inputType="textPersonName" />
+        android:hint="@string/txtEmail"
+        android:inputType="textEmailAddress" />
 
     <Space
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
-        android:hint="Enter password"
+        android:hint="@string/txtPassword"
         android:inputType="textPassword" />
 
     <Space
@@ -44,7 +44,7 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="Login" />
+        android:text="@string/btnLogin" />
 
 
 

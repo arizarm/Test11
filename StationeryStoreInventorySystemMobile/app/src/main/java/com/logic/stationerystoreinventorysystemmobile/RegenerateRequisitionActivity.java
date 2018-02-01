@@ -60,7 +60,6 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
                     CheckBox checkBox = v.findViewById(R.id.checkBox);
                     if(checkBox.isChecked())
                     {
-
                         RegenerateRequisition reqItem = (RegenerateRequisition) lv.getAdapter().getItem(i);
                         regenerateList.add(reqItem);
                     }
@@ -70,11 +69,11 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
                 if(regenerateList.size()!=0)
                 {
                     new AsyncTask<Void, Void, Void>() {
-//                        ProgressDialog progress;
-//                        @Override
-//                        protected void onPreExecute() {
-//                            progress = ProgressDialog.show(getApplicationContext(), "Loading", "Generating Requisition", true);
-//                        }
+                        ProgressDialog progress;
+                        @Override
+                        protected void onPreExecute() {
+                            progress = ProgressDialog.show(getApplicationContext(), "Loading", "Generating Requisition", true);
+                        }
                         @Override
                         protected Void doInBackground(Void... params) {
                             RegenerateRequisition.RegenerateRequisition(regenerateList);
@@ -89,16 +88,14 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
                             toast.show();
                             Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
                             startActivity(intent);
-                            //progress.dismiss();
+                            progress.dismiss();
                         }
                     }.execute();
                 }
                 else
                 {
                     message = "Please select item to request!";
-                    Toast toast = Toast.makeText(getApplicationContext(), message,
-                            Toast.LENGTH_LONG);
-                    toast.show();
+                    Util.customToast(message,getApplicationContext());
                 }
             }
         });
@@ -107,6 +104,12 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
     public static void setRegenReqList(List<RegenerateRequisition> r)
     {
         regenReqList = r;
+    }
+
+    public void btnCancelClick(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
+        startActivity(intent);
     }
 
     public static void setRegenerateRequisition(RegenerateRequisition r)

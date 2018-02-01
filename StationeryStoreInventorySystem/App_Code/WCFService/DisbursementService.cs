@@ -28,7 +28,7 @@ public class DisbursementService : IDisbursementService
         List<DisbursementDetailListItems> disbDetailList = disbCon.gvDisbursementDetailPopulate(Convert.ToInt32(id));
         foreach (DisbursementDetailListItems dI in disbDetailList)
         {
-            wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode, dI.ItemDesc, dI.ReqQty, dI.ActualQty, dI.Remarks));
+            wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode,dI.ItemCode,dI.Remarks,dI.ReqQty,dI.ActualQty,dI.ActualQty));
         }
         return wcfDisbDetailList;
     }
@@ -47,7 +47,7 @@ public class DisbursementService : IDisbursementService
         {
             actualQty.Add(Convert.ToInt32(u.ActualQty));
             disbId = Convert.ToInt32(u.DisbId);
-            remark.Add(u.Remark);
+            remark.Add(u.Remarks);
         }
         disbCon.UpdateDisbursement(disbId, actualQty, remark);
     }

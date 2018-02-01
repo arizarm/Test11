@@ -1,4 +1,4 @@
-package com.example.brandaling.myapplicationforad;
+package com.logic.stationerystoreinventorysystemmobile;
 
 import android.content.Intent;
 import android.os.AsyncTask;

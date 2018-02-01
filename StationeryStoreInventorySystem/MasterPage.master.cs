@@ -22,7 +22,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
             if (emp.Role == "DepartmentTempHead")
             {
-                DepMenu.Visible = true;
+                DepMenu.Visible = true; 
                 hLinkRequisitionListDepTempHead.Visible = true;
             }
 

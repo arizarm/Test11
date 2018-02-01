@@ -3,7 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
+    <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
+    </div>
     <br />
     <br />
     <asp:Button ID="Button3" runat="server" Text="Back To List" OnClick="Button3_Click" />
@@ -65,12 +67,10 @@
     </asp:Panel>
     <br />
     <br />
-    <asp:Table runat="server">
-          <asp:TableRow>
-            <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
                     <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Visible="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
+                        
                         <Columns>
                             <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                                 <ItemTemplate>
@@ -123,8 +123,8 @@
                         </Columns>
                     </asp:GridView>
 
-                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
-
+                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Visible="true" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
+                        
                         <Columns>
                             <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                                 <ItemTemplate>
@@ -149,11 +149,8 @@
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
+    <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
     <asp:Button ID="Update" runat="server" Text="Update Request" CssClass="button" OnClick="Update_Click" />
     <asp:Button ID="Save" runat="server" Text="Save Request" CssClass="button" OnClick="Save_Click" Visible="false" />
-    <asp:Button ID="Cancel" runat="server" Text="Cancel Request" CssClass="rejectBtn" OnClick="Cancel_Click" />
 </asp:Content>
 

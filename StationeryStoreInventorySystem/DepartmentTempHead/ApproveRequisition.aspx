@@ -3,13 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
+       <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Stationary Requisition Detail</h2>
+    </div>
     <br />
     <br />
-    <a href="RequisitionListDepTempHead.aspx"><-Back</a>
+    <asp:Button ID="Button1" runat="server" Text="Back To List" OnClick="Button1_Click" />
     <br />
     <br />
-
     Requested By:
     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <br />
@@ -19,13 +20,10 @@
     <strong>Status:
     <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
     </strong>
-
     <br />
-    <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell>
+
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -33,7 +31,7 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Amount" SortExpression="RequestedQty">
+                            <asp:TemplateField HeaderText="Amount" SortExpression="Requested Qty">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("RequestedQty") %>'></asp:Label>
                                 </ItemTemplate>
@@ -41,7 +39,7 @@
                                     <asp:TextBox ID="qty" runat="server" TextMode="Number" />
                                 </EditItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
+                            <asp:TemplateField HeaderText="UOM" SortExpression="Unit Of Measure">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("UnitOfMeasure") %>'></asp:Label>
                                 </ItemTemplate>
@@ -49,12 +47,10 @@
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
     <div>
-        <asp:Label ID="ReasonLabel" runat="server" Text="Reason"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server" MaxLength="100"></asp:TextBox>
+        <asp:Label ID="ReasonLabel" runat="server" Text="Reason: "></asp:Label>   
+       <textarea id="TextArea1" cols="20" rows="2"  runat="server"></textarea>
+   
     </div>
 
     <asp:Button ID="ApproveButton" runat="server" Text="Approve" CssClass="button" OnClick="ApproveButton_Click" />

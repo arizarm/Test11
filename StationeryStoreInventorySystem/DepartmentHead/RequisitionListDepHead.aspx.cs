@@ -21,6 +21,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayAll";
                 //Dep Representative
+                showEmptyLabel();
 
                 int count = RequisitionControl.CountPending(emp.DeptCode);
 
@@ -30,6 +31,19 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Utility.logout();
             }
+        }
+    }
+
+    public void showEmptyLabel()
+    {
+        if (GridView1.Rows.Count <= 0)
+        {
+            Label5.Visible = true;
+            Label5.Text = "No Requisition Found.";
+        }
+        else
+        {
+            Label5.Visible = false;
         }
     }
 
@@ -43,6 +57,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayAll";
+                showEmptyLabel();
             }
             else
             {
@@ -50,6 +65,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(DropDownList1.SelectedItem.ToString(), emp.DeptCode);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayStatusSearch";
+                showEmptyLabel();
             }
         }
         else
@@ -72,12 +88,16 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord.Trim(), emp.DeptCode);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearch";
+                ViewState["searchString"] = searchWord;
+                showEmptyLabel();
             }
             else
             {
                 GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord.Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearchStatus";
+                ViewState["searchString"] = searchWord;
+                showEmptyLabel();
             }
         }
     }
@@ -87,6 +107,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         Employee emp = (Employee)Session["emp"];
         GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
         GridView1.DataBind();
+        ViewState["DataSource"] = "displayAll";
+        showEmptyLabel();
     }
 
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -103,12 +125,38 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
         else if (((string)ViewState["DataSource"]).Equals("displaySearch"))
         {
-            GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord.Trim(), emp.DeptCode);
+            GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode);
         }
         else
         {
-            GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord.Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
+            GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
         }
         GridView1.DataBind();
+    }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label statusLabel = (Label)e.Row.FindControl("Label4");
+
+            string status = statusLabel.Text;
+            if (status == "Approved" || status == "approved" || status == "InProgress")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (status == "Priority")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Red;
+            }
+            else if (status == "Pending")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Blue;
+            }
+            else
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Black;
+            }
+        }
     }
 }

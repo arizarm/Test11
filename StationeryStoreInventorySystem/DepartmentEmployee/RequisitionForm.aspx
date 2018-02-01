@@ -8,8 +8,9 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2 class="mainPageHeader">Stationary Requisition Form  </h2>
-
+    <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Requisition Form</h2>
+    </div>
     <table>
         <tr>
             <td>
@@ -58,7 +59,7 @@
     <br />
     <br />
     <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid">
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
 
         <Columns>
             <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">

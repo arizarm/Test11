@@ -22,6 +22,22 @@ public partial class ApproveRequisition : System.Web.UI.Page
             Label1.Text = r.EmployeeName;
             Label2.Text = r.Date;
             Label3.Text = r.Status;
+            if (Label3.Text.Equals("Approved") || Label3.Text.Equals("approved") || Label3.Text.Equals("InProgress"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (Label3.Text.Equals("Pending"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if (Label3.Text.Equals("Priority"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                Label3.ForeColor = System.Drawing.Color.Black;
+            }
 
             if (r.Status.ToString() != "Pending")
             {

@@ -16,6 +16,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         if (Request.QueryString["id"] != null && Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
+
             id = Convert.ToInt32(Request.QueryString["id"]);
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
@@ -24,10 +25,27 @@ public partial class ApproveRequisition : System.Web.UI.Page
             Label2.Text = r.Date;
             Label3.Text = r.Status;
 
+            if (Label3.Text.Equals("Approved") || Label3.Text.Equals("approved") || Label3.Text.Equals("InProgress"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (Label3.Text.Equals("Pending"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if (Label3.Text.Equals("Priority"))
+            {
+                Label3.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                Label3.ForeColor = System.Drawing.Color.Black;
+            }
+
             if (r.Status.ToString() != "Pending" || EmployeeController.isDeptHaveTempHead(emp.DeptCode))
             {
                 ReasonLabel.Visible = false;
-                TextBox2.Visible = false;
+                TextArea1.Visible = false;
                 ApproveButton.Visible = false;
                 RejectButton.Visible = false;
             }
@@ -56,7 +74,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = TextBox2.Text;
+            string reason = TextArea1.Text;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -75,7 +93,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = TextBox2.Text;
+            string reason = TextArea1.Text;
             RequisitionControl.rejectRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);

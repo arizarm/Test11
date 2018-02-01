@@ -328,7 +328,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.Status == "Approved" || x.Status == "Priority" && x.DeptCode == deptCode).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.Status == "InProgress" && x.DeptCode == deptCode).ToList();
         }
     }
 

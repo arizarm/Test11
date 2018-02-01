@@ -19,11 +19,25 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayAll";
+                showEmptyLabel();
             }
             else
             {
                 Utility.logout();
             }
+        }
+    }
+
+    public void showEmptyLabel()
+    {
+        if (GridView1.Rows.Count <= 0)
+        {
+            Label5.Visible = true;
+            Label5.Text = "No Requisition Found.";
+        }
+        else
+        {
+            Label5.Visible = false;
         }
     }
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -39,12 +53,14 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayAll";
+                showEmptyLabel();
             }
             else
             {
                 GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displayStatusSearch";
+                showEmptyLabel();
             }
         }
         else
@@ -69,12 +85,14 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearch";
+                showEmptyLabel();
             }
             else
             {
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearchStatus";
+                showEmptyLabel();
             }
         }
     }
@@ -87,6 +105,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
             GridView1.DataBind();
             ViewState["DataSource"] = "displayAll";
+            showEmptyLabel();
         }
         else
         {
@@ -115,5 +134,32 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
         }
         GridView1.DataBind();
+    }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label statusLabel = (Label)e.Row.FindControl("Label4");
+
+            string status = statusLabel.Text;
+
+            if (status == "Approved" || status=="approved" || status=="InProgress")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (status == "Priority")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Red;
+            }
+            else if(status=="Pending")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Blue;
+            }
+            else
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Black;
+            }
+        }
     }
 }

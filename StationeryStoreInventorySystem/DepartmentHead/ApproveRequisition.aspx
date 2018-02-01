@@ -3,7 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <h2 class="mainPageHeader">Approve / Reject Requisition Details</h2>
+
+     <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Approve / Reject Requisition Details</h2>
+    </div>
     <br />
     <br />
     <asp:Button ID="backButton" runat="server" Text="Back To List" OnClick="backButton_Click" />
@@ -26,11 +29,8 @@
     </strong>
 
     <br />
-    <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell>
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid">
+                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -54,12 +54,9 @@
                         </Columns>
                     </asp:GridView>
                 </asp:Panel>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
     <div>
         <asp:Label ID="ReasonLabel" runat="server" Text="Reason"></asp:Label>
-        <asp:TextBox ID="TextBox2" runat="server" MaxLength="100"></asp:TextBox>
+        <textarea id="TextArea1" cols="20" rows="2"  runat="server"></textarea>
     </div>
 
     <asp:Button ID="ApproveButton" runat="server" Text="Approve" CssClass="button" OnClick="ApproveButton_Click" />

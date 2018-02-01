@@ -25,20 +25,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             if (!IsPostBack)
             {
                 GridView1.DataBind();
-                if (user.DeptCode != "STATS")
-                {
-                    LinkButton5.Visible = false;
-                    GridView1.Columns[0].Visible = false;
-                    GridView1.Columns[3].Visible = false;
-                    GridView1.Columns[4].Visible = false;
-                    GridView1.Columns[6].Visible = false;
-                    GridView1.Columns[7].Visible = false;
-                    GridView1.Columns[8].Visible = false;
-                }
-                else
-                {
-                    DisplayClickableURL();
-                }
+                DisplayClickableURL();
 
             }
         }
@@ -145,11 +132,11 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             Label itemCode = (Label)row.FindControl("LabelICode");
             DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
             TextBox description = (TextBox)row.FindControl("TextboxDesc");
-            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");  
+            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
             TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
             TextBox bin = (TextBox)row.FindControl("TextBoxBin");
             DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
-            if(ItemBusinessLogic.IsValidItemFields(itemCode.Text, categoryList.SelectedItem.Text, description.Text, reorderLevel.Text, reorderQty.Text, unitMeasure.SelectedValue, bin.Text))
+            if (ItemBusinessLogic.IsValidItemFields(itemCode.Text, categoryList.SelectedItem.Text, description.Text, reorderLevel.Text, reorderQty.Text, unitMeasure.SelectedValue, bin.Text))
             {
                 int level = Convert.ToInt32(reorderLevel.Text);
                 int qty = Convert.ToInt32(reorderQty.Text);

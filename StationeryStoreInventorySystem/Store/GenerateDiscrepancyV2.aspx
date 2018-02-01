@@ -76,7 +76,7 @@
         <% if (GridView1.Rows.Count > 0)
            {%>
         <h3>Item List</h3>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" >
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" EmptyDataText="No items matching your search found">
             <Columns>
                 
                 <asp:TemplateField HeaderText="Item Code">

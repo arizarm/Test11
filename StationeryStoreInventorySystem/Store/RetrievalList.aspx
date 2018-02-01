@@ -15,8 +15,9 @@
         <asp:Button ID="SearchBtn" runat="server" Text="Search" ValidationGroup="1" CssClass="button" OnClick="SearchBtn_Click" />
         <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />
     </div>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="" ControlToValidate="SearchBox" Style="color: red"> </asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" Display="Dynamic" runat="server" ErrorMessage="" ControlToValidate="SearchBox" Style="color: red"> </asp:RequiredFieldValidator>
     <div>
+        <asp:Label ID="CheckRetrievalListValidation" runat="server" Text="" ForeColor="Red" Font-Size="40px"></asp:Label>
         <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid" AutoGenerateColumns="False" OnRowDataBound="gvReq_RowDataBound">
             <Columns>
 
@@ -62,7 +63,7 @@
                         <asp:Button ID="Button1" runat="server" Text="Detail" />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="gvDetailBtn" runat="server" OnClick="gvDetailBtn_Click" Text="Detail" />
+                        <asp:Button ID="gvDetailBtn" runat="server" OnClick="gvDetailBtn_Click" Text="Detail" CssClass="alert-success" />
                     </ItemTemplate>
                 </asp:TemplateField>
 

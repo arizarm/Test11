@@ -102,7 +102,7 @@
 
     </div>
     <div>
-        <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Generate Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
+        <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Finalize Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
     </div>
 
 

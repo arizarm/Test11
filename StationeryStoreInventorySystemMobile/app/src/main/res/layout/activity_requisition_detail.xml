@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/reqByTV"
-        style="TextStyle"
+        style="@style/TitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -22,10 +22,12 @@
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintVertical_bias="0.17"
+        />
 
     <TextView
         android:id="@+id/reqByData"
+        style="@style/TitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -36,11 +38,13 @@
         app:layout_constraintBottom_toTopOf="@+id/btnApprove"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reqByTV"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="32dp"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/reqDateTV"
-        style="TextStyle"
+        style="@style/TitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -53,7 +57,9 @@
         app:layout_constraintHorizontal_bias="0.962"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/reqDateData"
@@ -62,7 +68,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:textSize="18sp"
+        style="@style/TextStyle"
         app:layout_constraintBottom_toTopOf="@+id/btnReject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.823"
@@ -86,7 +92,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.05"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp" />
 
     <Button
         android:id="@+id/btnApprove"
@@ -102,7 +110,9 @@
         app:layout_constraintHorizontal_bias="0.657"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reqDateData"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        style="@style/button_text"
+        android:background="@drawable/green_button"/>
 
     <Button
         android:id="@+id/btnReject"
@@ -112,7 +122,10 @@
         android:layout_marginEnd="8dp"
         android:text="@string/btnReject"
         app:layout_constraintBottom_toTopOf="@+id/detailListView"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="8dp"
+        style="@style/button_text"
+        android:background="@drawable/green_button"/>
 
     <ListView
         android:id="@+id/detailListView"

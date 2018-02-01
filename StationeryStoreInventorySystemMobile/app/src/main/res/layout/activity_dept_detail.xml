@@ -52,16 +52,13 @@
                 android:layout_width="149dp"
                 android:layout_height="40dp"
                 android:text="@string/deptname"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black" />
+                style="@style/TitleStyle" />
 
             <TextView
                 android:id="@+id/txtDeptName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle" />
         </TableRow>
 
 
@@ -74,16 +71,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/contactname"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtContactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle"/>
 
         </TableRow>
 
@@ -97,16 +91,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/phone"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle"/>
         </TableRow>
 
         <TableRow
@@ -118,16 +109,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/fax"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtFax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle" />
         </TableRow>
 
         <TableRow
@@ -139,16 +127,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/headname"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle" />
         </TableRow>
 
 
@@ -161,16 +146,13 @@
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:text="@string/drep"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtDeptRep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle" />
         </TableRow>
 
         <TableRow
@@ -182,16 +164,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/collectpoint"
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/black"/>
+                style="@style/TitleStyle"/>
 
             <TextView
                 android:id="@+id/txtCollectPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/background_dark" />
+                style="@style/TextStyle" />
         </TableRow>
 
 

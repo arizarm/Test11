@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:onClick="BtnSaveClick"
-        android:text="Save" />
+        android:text="Save"
+        style="@style/button_text"
+        android:background="@drawable/green_button" />
 
     <!--<Button-->
         <!--android:id="@+id/BtnRestoreClick"-->

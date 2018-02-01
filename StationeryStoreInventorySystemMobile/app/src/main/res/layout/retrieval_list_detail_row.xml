@@ -22,8 +22,7 @@
                 android:layout_width="167dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:text="Bin# "
-                android:textSize="16sp" />
+                android:text="Bin# "/>
 
             <TextView
                 android:id="@+id/text1"
@@ -44,7 +43,7 @@
                 android:layout_height="40dp"
                 android:ellipsize="end"
                 android:text="Item Description "
-                android:textSize="16sp" />
+              />
 
             <TextView
                 android:id="@+id/text2"
@@ -64,8 +63,7 @@
                 android:layout_width="193dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:text="Total Quantity Requested	"
-                android:textSize="16sp" />
+                android:text="Total Quantity Requested	" />
 
             <TextView
                 android:id="@+id/text3"
@@ -86,8 +84,7 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:text="Total Quantity Retrieved	"
-                android:textSize="16sp" />
+                android:text="Total Quantity Retrieved	"/>
 
             <EditText
                 android:id="@+id/EditText1"
@@ -95,8 +92,7 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:ellipsize="end"
-                android:inputType="number"
-                android:textSize="16sp" />
+                android:inputType="number"/>
 
         </TableRow>
 

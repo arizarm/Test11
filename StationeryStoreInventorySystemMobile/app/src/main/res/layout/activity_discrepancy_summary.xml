@@ -115,7 +115,9 @@
                 android:layout_height="match_parent"
                 android:onClick="submitClick"
                 android:text="Submit Discrepancies"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                style="@style/button_text"
+                android:background="@drawable/green_button"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -30,7 +30,9 @@
             android:layout_below="@+id/textView22"
             android:layout_marginTop="105dp"
             android:onClick="adhocClick"
-            android:text="@string/adhoc_discrepancy" />
+            android:text="@string/adhoc_discrepancy"
+            style="@style/button_text"
+            android:background="@drawable/green_button"/>
 
         <Button
             android:id="@+id/btnMonthly"
@@ -41,7 +43,9 @@
             android:layout_below="@+id/btnAdhoc"
             android:layout_marginTop="44dp"
             android:onClick="monthlyClick"
-            android:text="@string/monthly_inventory" />
+            android:text="@string/monthly_inventory"
+            style="@style/button_text"
+            android:background="@drawable/green_button" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

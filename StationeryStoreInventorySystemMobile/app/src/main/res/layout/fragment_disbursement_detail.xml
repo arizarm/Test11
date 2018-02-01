@@ -107,7 +107,9 @@
                 android:id="@+id/btnAck"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
-                android:text="@string/btnAck"/>
+                android:text="@string/btnAck"
+                style="@style/button_text"
+                android:background="@drawable/green_button"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>

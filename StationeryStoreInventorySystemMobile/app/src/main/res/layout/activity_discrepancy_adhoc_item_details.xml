@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Item Code:"
-                    style="@style/TextStyle" />
+                    style="@style/TitleStyle" />
 
                 <TextView
                     android:id="@+id/tvItemCode"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Item Name:"
-                    style="@style/TextStyle" />
+                    style="@style/TitleStyle" />
 
                 <TextView
                     android:id="@+id/tvItemName"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Quantity in Stock:"
-                    style="@style/TextStyle" />
+                    style="@style/TitleStyle" />
 
                 <TextView
                     android:id="@+id/tvBalance"
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Unit of Measure:"
-                    style="@style/TextStyle" />
+                    style="@style/TitleStyle" />
 
                 <TextView
                     android:id="@+id/tvUom"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Pending Adjustment:"
-                    style="@style/TextStyle" />
+                    style="@style/TitleStyle" />
 
                 <TextView
                     android:id="@+id/tvPendingAdj"
@@ -178,9 +178,12 @@
 
             <Button
                 android:id="@+id/btnAddItem"
+                style="@style/button_text"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="105dp"
+                android:background="@drawable/green_button"
                 android:onClick="addItemClick"
+
                 android:text="Add Item Discrepancy"
                 android:textSize="18sp" />
         </LinearLayout>

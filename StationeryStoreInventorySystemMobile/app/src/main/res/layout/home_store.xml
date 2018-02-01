@@ -16,6 +16,19 @@
         android:layout_height="20dp" />
 
     <Button
+        android:id="@+id/btnRetrievalList"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="btnRetrievalListClick"
+        android:text="@string/retrieval_list"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <Button
         android:id="@+id/btnDisbursement"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -25,20 +38,6 @@
         android:background="@drawable/home_button"
         />
 
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <Button
-        android:id="@+id/btnRetrievalList"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:onClick="btnRetrievalListClick"
-        android:text="@string/retrieval_list"
-        style="@style/button_text"
-        android:background="@drawable/home_button"
-        />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />

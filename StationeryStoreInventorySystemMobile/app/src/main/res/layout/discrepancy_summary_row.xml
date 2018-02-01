@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="tv1"
-                    android:textSize="18sp" />
+                    style="@style/TextStyle"/>
 
                 <TextView
                     android:id="@+id/tvItemName"
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="tv2"
-                    android:textSize="18sp" />
+                    style="@style/TextStyle" />
 
             </LinearLayout>
 
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="tv3"
-                    android:textSize="18sp" />
+                    style="@style/TextStyle" />
 
                 <TextView
                     android:id="@+id/tvAdj"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="tv4"
-                    android:textSize="18sp" />
+                    style="@style/TextStyle" />
 
             </LinearLayout>
 
@@ -71,7 +71,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Remarks"
-            android:inputType="text" />
+            android:inputType="text"
+            style="@style/TextStyle" />
 
     </LinearLayout>
 

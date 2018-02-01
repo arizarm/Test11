@@ -132,7 +132,9 @@
                 android:layout_height="match_parent"
                 android:onClick="finaliseClick"
                 android:text="Finalise Discrepancies"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                style="@style/button_text"
+                android:background="@drawable/green_button"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -19,16 +19,14 @@
                 android:layout_width="167dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:text="Retrieval Date "
-                android:textSize="16sp" />
+                android:text="Retrieval Date " />
 
             <TextView
                 android:id="@+id/text1"
                 style="@style/TextStyle"
                 android:layout_width="222dp"
                 android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:ellipsize="end" />
         </TableRow>
 
         <TableRow
@@ -41,15 +39,13 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:text="Retrieval No "
-                android:textSize="16sp" />
+                android:text="Retrieval No " />
             <TextView
                 android:id="@+id/text2"
                 style="@style/TextStyle"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:ellipsize="end" />
         </TableRow>
 
         <TableRow
@@ -62,15 +58,13 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:textSize="16sp"
                 android:text="Retrieved By "/>
             <TextView
                 android:id="@+id/text3"
                 style="@style/TextStyle"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:ellipsize="end" />
         </TableRow>
 
         //
@@ -84,18 +78,13 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:ellipsize="end"
-                android:textSize="16sp"
                 android:text="RetrievalStatus "/>
             <TextView
                 android:id="@+id/text4"
                 style="@style/TextStyle"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:ellipsize="end"
-                android:textSize="16sp" />
+                android:ellipsize="end" />
         </TableRow>
-        //
-
-
     </TableLayout>
 </LinearLayout>

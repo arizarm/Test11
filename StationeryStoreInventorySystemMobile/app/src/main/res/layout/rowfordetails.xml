@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:textAppearance="@style/TextStyle"
+        style="@style/TitleStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -29,16 +29,18 @@
 
  <TextView
      android:id="@+id/textView4"
+     style="@style/TextStyle"
      android:layout_width="23dp"
      android:layout_height="wrap_content"
      android:layout_alignBaseline="@+id/textView7"
      android:layout_alignEnd="@+id/textView8"
      android:textSize="20sp"
-     android:textStyle="bold" />
+     android:textStyle="bold"
+     android:layout_alignRight="@+id/textView8" />
 
  <TextView
      android:id="@+id/textView8"
-     android:textAppearance="@style/TextStyle"
+     style="@style/TitleStyle"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:layout_alignParentEnd="true"
@@ -51,6 +53,7 @@
 
     <TextView
         android:id="@+id/textView5"
+        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView8"

@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public class Util {
 
-    final static String host = "http://172.17.255.213/StationeryStoreInventorySystem/";
+    final static String host = "http://192.168.0.100/StationeryStoreInventorySystem/";
 
     public static String getProperty(String key,Context context) throws IOException {
         Properties properties = new Properties();;
@@ -51,9 +51,6 @@ public class Util {
         Toast.makeText(context,
                 "Logged out",Toast.LENGTH_SHORT).show();
     }
-
-    //custom toast message box
-
 
     //custom toast error message box
     public static void redsToast(String message, Context context) {

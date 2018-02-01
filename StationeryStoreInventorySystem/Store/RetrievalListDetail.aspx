@@ -31,16 +31,16 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Total Quantity Retrieved">
                 <ItemTemplate>
-                    <asp:TextBox ID="txtRetrieved" runat="server" Text='<%# Bind("retrievedQty") %>'></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="txtRetrieved" ValidationGroup="1" runat="server" Text='<%# Bind("retrievedQty") %>'></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
                   
-                      <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtRetrieved" MinimumValue="0" Style="color: red"></asp:RangeValidator>
+                      <asp:RangeValidator ID="RangeValidator1"  ValidationGroup="1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtRetrieved" MinimumValue="0" Style="color: red" Type="Integer"></asp:RangeValidator>
                 
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-
+    
     <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
             <asp:Button ID="FinalizeDisbursmentList" runat="server" Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" Style="height: 47px" />
 

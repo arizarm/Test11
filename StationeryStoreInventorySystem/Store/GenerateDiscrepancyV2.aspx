@@ -53,18 +53,18 @@
         <br />
         <asp:Button ID="Button2" runat="server" Text="Finalise Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>
         &nbsp;&nbsp;&nbsp;
-        <asp:Button ID="Button6" runat="server" Text="Clear List" CssClass="button" OnClick="Button6_Click"/>
+        <asp:Button ID="Button6" runat="server" Text="Clear List" CssClass="rejectBtn" OnClick="Button6_Click"/>
         <% } %>
 
         <%if (Label8.Text != "")
             { %>
         <br />
         <br />
-        <asp:Label ID="Label1" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <asp:Label ID="Label5" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <asp:Label ID="Label7" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <asp:Label ID="Label1" runat="server" Text="" CssClass="errorfont"></asp:Label>
+        <asp:Label ID="Label5" runat="server" Text="" CssClass="errorfont"></asp:Label>
+        <asp:Label ID="Label7" runat="server" Text="" CssClass="errorfont"></asp:Label>
         <br />
-        <asp:Label ID="Label8" runat="server" Text="" ForeColor="Red"></asp:Label>
+        <asp:Label ID="Label8" runat="server" Text="" CssClass="errorfont"></asp:Label>
         <br />
         <br />
         <%} %>

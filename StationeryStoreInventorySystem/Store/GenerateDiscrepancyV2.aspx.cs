@@ -161,10 +161,15 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = EFBroker_Item.GetItembyItemCode(itemCode);
                         string actual = actualQuantity.ToString();
-                        if (adj != 0)
+                        if (adj != 0 && actualQuantity >= 0)
                         {
                             discrepancyList.Add(item, adj);
                             discrepancyDisplay.Add(item, actual);
+                        }
+                        else
+                        {
+                            itemError = true;
+                            error = true;
                         }
                     }
                     else   //If a row is not checked but has a non integer actual quantity

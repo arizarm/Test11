@@ -25,11 +25,11 @@ public partial class RetrievalForm : System.Web.UI.Page
                     gvRe.DataBind();
 
                     //RangeValidator
-                    foreach (GridViewRow subR in gvRe.Rows)
+                    foreach (GridViewRow r in gvRe.Rows)
                     {
-                        int totalRequestedQty = int.Parse((subR.FindControl("labTotalRequestedQty") as Label).Text);
+                        int totalRequestedQty = Convert.ToInt32((r.FindControl("labTotalRequestedQty") as Label).Text);
 
-                        RangeValidator rv = subR.FindControl("RangeValidator1") as RangeValidator;
+                        RangeValidator rv = r.FindControl("RangeValidator1") as RangeValidator;
                         rv.MaximumValue = totalRequestedQty.ToString();
                     }
                     //

@@ -25,7 +25,7 @@
     <div>
         <h3>All Requisition list for Department Head</h3>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid">
+            DataKeyNames="RequisitionNo" CssClass="mGrid" AllowPaging="true" PageSize="10" OnPageIndexChanging="GridView1_PageIndexChanging">
             <Columns>
 
                 <asp:TemplateField HeaderText="RequestDate">

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 public partial class ReqisitionListEmployee : System.Web.UI.Page
 {
+    string searchWord = "";
     Employee emp = new Employee();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,6 +26,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                     Label5.Visible = false;
                     GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
                     GridView1.DataBind();
+                    ViewState["DataSource"] = "displayAll";
                 }
             }
             else
@@ -39,8 +41,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     {
         if (Session["emp"] != null)
         {
-
-            string searchWord = SearchBox.Text;
+            searchWord = SearchBox.Text;
             if (SearchBox.Text == String.Empty)
             {
                 ClientScript.RegisterStartupScript(Page.GetType(),
@@ -51,6 +52,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
                 GridView1.DataBind();
+                ViewState["DataSource"] = "displaySearch";
             }
         }
         else
@@ -67,6 +69,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Employee emp = (Employee)Session["emp"];
             GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
             GridView1.DataBind();
+            ViewState["DataSource"] = "displayAll";
         }
         else
 
@@ -76,4 +79,18 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
     }
 
 
+
+    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        Employee emp = (Employee)Session["emp"];
+        GridView1.PageIndex = e.NewPageIndex;
+        if(((string)ViewState["DataSource"]).Equals("displayAll"))
+        {
+            GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
+        }
+        else
+        {
+            GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
+        }
+    }
 }

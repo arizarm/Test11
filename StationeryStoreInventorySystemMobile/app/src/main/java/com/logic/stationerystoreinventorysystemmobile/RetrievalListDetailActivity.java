@@ -1,5 +1,6 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -33,21 +34,24 @@ public class RetrievalListDetailActivity extends AppCompatActivity {
         retrievalID = getIntent().getExtras().getString("RetrievalIDKey");
 
         new AsyncTask<String, Void, List<Retrieval_ItemDetail>>() {
+
+            ProgressDialog progress;
+            @Override
+            protected void onPreExecute() {
+                progress = ProgressDialog.show(RetrievalListDetailActivity.this, "Loading", "Getting Retrieval List", true);
+            }
+
             @Override
             protected List<Retrieval_ItemDetail> doInBackground(String... params) {
                 return Retrieval_ItemDetail.getRetrieval_ItemDetail(params[0]);
             }
-
             @Override
             protected void onPostExecute(List<Retrieval_ItemDetail> result) {
 
-//                    lv.setAdapter(new SimpleAdapter
-//                            (RetrievalListDetailActivity.this, result, R.layout.retrieval_list_detail_row,
-//                                    new String[]{"ItemCode", "Bin", "Description", "TotalRequestedQty","RetrievedQty"},
-//                                    new int[]{R.id.iCodeHidden, R.id.text1, R.id.text2, R.id.text3,R.id.EditText1}));
-
                 RetrievalListDetailAdapter adapter = new RetrievalListDetailAdapter(RetrievalListDetailActivity.this, R.layout.retrieval_list_detail_row, result);
                 lv.setAdapter(adapter);
+
+                progress.dismiss();
             }
         }.execute(retrievalID);
     }
@@ -73,7 +77,8 @@ public class RetrievalListDetailActivity extends AppCompatActivity {
             String totalRequestedQty = r.get("TotalRequestedQty");
             if (Integer.parseInt(retrievedQty) > Integer.parseInt(totalRequestedQty)) {
                 RetrievedQtyIsHigherThanTotalRequestedQty = true;
-                Toast.makeText(RetrievalListDetailActivity.this, "Retrieved Quantity can not be higher than Total Requested Quantity !!", Toast.LENGTH_LONG).show();
+                Util.redsToast("Retrieved Quantity can not be higher than Total Requested Quantity !!",this);
+                //Toast.makeText(RetrievalListDetailActivity.this, "Retrieved Quantity can not be higher than Total Requested Quantity !!", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public class Util {
 
-    final static String host = "http://172.17.250.219/StationeryStoreInventorySystem/";
+    final static String host = "http://172.17.255.213/StationeryStoreInventorySystem/";
 
     public static String getProperty(String key,Context context) throws IOException {
         Properties properties = new Properties();;
@@ -69,6 +69,7 @@ public class Util {
                 Toast.LENGTH_LONG);
         TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
         toastMessage.setTextColor(Color.RED);
+        toastMessage.setTextSize(20);
         int offset = Math.round(150 * context.getResources().getDisplayMetrics().density);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,offset);
         toast.show();
@@ -81,6 +82,7 @@ public class Util {
                 Toast.LENGTH_LONG);
         TextView toastMessage = (TextView) toast.getView().findViewById(android.R.id.message);
         toastMessage.setTextColor(Color.GREEN);
+        toastMessage.setTextSize(20);
         int offset = Math.round(150 * context.getResources().getDisplayMetrics().density);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,offset);
         toast.show();

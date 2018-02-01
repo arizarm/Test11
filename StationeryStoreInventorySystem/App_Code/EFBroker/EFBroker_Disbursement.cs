@@ -35,7 +35,7 @@ public class EFBroker_Disbursement
         List<Retrieval> rList = new List<Retrieval>();
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList= context.Retrievals.Include("Employee").Where(x => x.RetrievalStatus.Equals("Pending") || x.RetrievalStatus.Equals("InProgress")).ToList();////
+            rList= context.Retrievals.Include("Employee").OrderByDescending(x => x.RetrievalStatus).Where(x => x.RetrievalStatus.Equals("Pending") || x.RetrievalStatus.Equals("InProgress")).ToList();////
         }
         return rList;
     }

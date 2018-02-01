@@ -4,18 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <h2 class="mainPageHeader">Report Discrepancies</h2>
-        <%--<br />
-        Selection Type: 
-        <asp:RadioButtonList ID="RadioButtonList1" runat="server">
-            <asp:ListItem Selected="True">Monthly Inventory Check</asp:ListItem>
-            <asp:ListItem>Adhoc</asp:ListItem>
-        </asp:RadioButtonList> --%>
+        <div class="updateDeptHead"><h2>Report Discrepancies</h2></div>
+
         <% if (GridView2.Rows.Count > 0)
            {%>
         
         <h2>Discrepancy List</h2>
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
+        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" CssClass="mGrid mGrid60percent">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <EditItemTemplate>

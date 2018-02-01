@@ -98,6 +98,9 @@ public partial class RetrievalForm : System.Web.UI.Page
             }
             else //if there is no short fall go to collectionpoint
             {
+                //update all actual qty to be same as requested qty if no shortfall
+                retCon.UpdateAllActaulQty(retrievalId);
+
                 Session["discrepancyList"] = null;
                 Session["RetrievalShortfallItemList"] = null;
                 Response.Redirect("CollectionPointUpdate.aspx");
@@ -105,9 +108,6 @@ public partial class RetrievalForm : System.Web.UI.Page
         }
         else
         {
-            //create a error page!
-            //string message = "Invalid retireval!";
-            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
             Response.Redirect("RetrievalListDetailErrorPage.aspx");
         }
     }

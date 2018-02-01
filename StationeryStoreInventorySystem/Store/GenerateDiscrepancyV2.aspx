@@ -157,7 +157,7 @@
         <br />
         <asp:Button ID="Button1" runat="server" Text="Generate Discrepancy List" OnClick="Button1_Click" CssClass="button" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="Button3" runat="server" Text="Check All" OnClick="Button3_Click" CssClass="button"/>
+        <%-- <asp:Button ID="Button3" runat="server" Text="Check All" OnClick="Button3_Click" CssClass="button"/>--%>
         <%} %>
 
         </asp:Panel>

@@ -132,12 +132,15 @@
 
 
 .mainPageHeader {
-    color: rgba(118,180,50,1);
-    text-align: center;
+	color: white;
+	text-align: center;
+	height:60px;
+	margin:4px 7px 4px 7px;
 }
 
+
 .mGrid {
-    width: 100%;
+    width: 90%;
     background-color: #fff;
     margin: 5px 0 10px 0;
     border: solid 1px #525252;
@@ -157,6 +160,10 @@
         border-left: solid 1px #525252;
         font-size: .9em;
     }
+
+.mGrid60percent {
+    width :60%;
+}
 
 .rejectBtn {
     padding: 10px 26px;
@@ -238,10 +245,15 @@
 }
 
 .updateDeptHead {
-    background-color: rgba(100,150,40,1);
-    color: white;
-    text-align: center;
+	background-color: rgba(100,150,40,1);
+	color: white;
+	text-align: center;
+	top:50%;
+	width:98%;
+    padding: 1% 1%;
+	height:60px;
 }
+
 
 .modalBackground {
     background-color: Black;
@@ -284,17 +296,16 @@
     border-radius: 4px;
 }
 
-.deletebutton:hover:enabled {
-     background-color: white;
-     color: rgba(100,150,40,1);
+    .deletebutton:hover:enabled {
+        background-color: white;
+        color: rgba(100,150,40,1);
+    }
 
-}
+    .deletebutton:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
 
-.deletebutton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.errorfont{
-    color:rgba(255, 0, 0, 1.00);
+.errorfont {
+    color: rgba(255, 0, 0, 1.00);
 }

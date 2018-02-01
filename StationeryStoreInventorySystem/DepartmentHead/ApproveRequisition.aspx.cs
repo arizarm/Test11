@@ -74,7 +74,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = TextArea1.Text;
+            string reason = TextArea1.Value;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
@@ -93,7 +93,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["id"]);
-            string reason = TextArea1.Text;
+            string reason = TextArea1.Value;
             RequisitionControl.rejectRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);

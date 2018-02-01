@@ -3,9 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+      <div class="updateDeptHead"><h2 class="mainPageHeader">New Supplier</h2></div>
+ 
     <asp:Panel ID="Panel1" runat="server">
-        <asp:Label ID="Label1" runat="server" Text="Label" Style="font-weight: 700" ForeColor="#76b432"><h2>New Supplier</h2></asp:Label>
+        <%--<asp:Label ID="Label1" runat="server" Text="Label" Style="font-weight: 700" ForeColor="#76b432"><h2>New Supplier</h2></asp:Label>--%>
+        <br />
         <asp:Table ID="Table2" runat="server">
             <asp:TableRow>
                 <asp:TableCell>
@@ -64,7 +66,7 @@
                     <asp:Label ID="Label8" runat="server" Text="Address: "></asp:Label>
                 </asp:TableCell>
                 <asp:TableCell>
-                    <asp:TextBox ID="TextBox6" runat="server" TextMode="MultiLine" Height="86px" Width="186px"></asp:TextBox>
+                    <asp:TextBox ID="TextBox6" runat="server" TextMode="MultiLine" Height="90px" Width="70%"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBox6"  ForeColor="Red" ErrorMessage="Address is required!"></asp:RequiredFieldValidator>
                 </asp:TableCell>
             </asp:TableRow>

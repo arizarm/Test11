@@ -4,11 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
         <div class="updateDeptHead">
-        <br />
         <h2 class="mainPageHeader">SupplierList</h2>
     </div>
-    <asp:Button ID="AddSupplierButton" runat="server" Text="Add New Supplier" OnClick="AddSupplierButton_Click" Visible="false" Enabled="false"/>
-    <br /> <br />
+    <br />
+    <asp:Button ID="AddSupplierButton" runat="server" Text="Add New Supplier" OnClick="AddSupplierButton_Click" Visible="false" Enabled="false" CssClass="alert-success"/>
+    <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" RowStyle-Height="50px">
         <PagerStyle BackColor="#424242" ForeColor="White" HorizontalAlign="Center" />
             <HeaderStyle Height="50px" Font-Size="Large" />

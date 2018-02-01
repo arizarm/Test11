@@ -3,8 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div>
+    
+    <div class="row updateDeptHead">
         <h2 class="mainPageHeader">Pending Retrieval List</h2>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div>
         <asp:TextBox ID="SearchBox" ValidationGroup="1" runat="server" Width="311px"></asp:TextBox>
         <asp:Button ID="SearchBtn" runat="server" Text="Search" ValidationGroup="1" CssClass="button" OnClick="SearchBtn_Click" />
         <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />

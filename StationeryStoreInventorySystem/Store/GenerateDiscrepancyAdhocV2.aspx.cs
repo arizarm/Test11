@@ -225,7 +225,8 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
 
-            LoginController.NavigateMain();
+            Utility.DisplayAlertMessage("Discrepancies successfully reported");
+            //LoginController.NavigateMain();
         }
     }
 }

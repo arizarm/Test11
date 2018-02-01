@@ -3,15 +3,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2 class="mainPageHeader">Retrieval List
-    </h2>
-    <p class="mainPageHeader">&nbsp;</p>
-    <p class="mainPageHeader">&nbsp;</p>
-    <p class="mainPageHeader">&nbsp;</p>
-    <p class="mainPageHeader">&nbsp;</p>
+
+    <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Retrieval List Detail</h2>
+    </div>
+    <br />
+    <br />
+    <br />
 
 
-    <asp:GridView ID="gvRe" runat="server" AutoGenerateColumns="False">
+    <asp:GridView ID="gvRe" runat="server" AutoGenerateColumns="False" CssClass="mGrid " width="70%" RowStyle-Height="50px">
         <Columns>
             <asp:TemplateField HeaderText="Bin#">
                 <ItemTemplate>
@@ -32,17 +33,17 @@
             <asp:TemplateField HeaderText="Total Quantity Retrieved">
                 <ItemTemplate>
                     <asp:TextBox ID="txtRetrieved" ValidationGroup="1" runat="server" Text='<%# Bind("retrievedQty") %>'></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
-                  
-                      <asp:RangeValidator ID="RangeValidator1"  ValidationGroup="1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtRetrieved" MinimumValue="0" Style="color: red" Type="Integer"></asp:RangeValidator>
-                
+                    <asp:RequiredFieldValidator Display="Dynamic" ID="RequiredFieldValidator1" ValidationGroup="1" runat="server" ErrorMessage="Please enter the Qty" ForeColor="Red" ControlToValidate="txtRetrieved"></asp:RequiredFieldValidator>
+
+                    <asp:RangeValidator ID="RangeValidator1" Display="Dynamic" ValidationGroup="1" runat="server" ErrorMessage="Invalid Quantity!" ControlToValidate="txtRetrieved" MinimumValue="0" Style="color: red" Type="Integer"></asp:RangeValidator>
+
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-    
-    <asp:Button ID="Save" runat="server" Text="Save" CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="FinalizeDisbursmentList" runat="server" Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" Style="height: 47px" />
+
+    <asp:Button ID="Save" runat="server" Text="Save" ValidationGroup="1"  CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="FinalizeDisbursmentList" ValidationGroup="1"  runat="server" Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" Style="height: 47px" />
 
 </asp:Content>
 

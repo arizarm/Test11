@@ -23,8 +23,17 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     protected void OrderStatusDrpdwn_SelectedIndexChanged(object sender, EventArgs e)
     {
         string selectedStatus = OrderStatusDrpdwn.SelectedItem.Text;
-        gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderListByStatus(selectedStatus);
-        gvPurchaseOrder.DataBind();
+        if(selectedStatus =="--Select Status--")
+        {
+            gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
+            gvPurchaseOrder.DataBind();
+        }
+        else
+        {
+            gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderListByStatus(selectedStatus);
+            gvPurchaseOrder.DataBind();
+        }
+        
     }
 
     protected void DisplayAllBtn_Click(object sender, EventArgs e)
@@ -39,20 +48,25 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     protected void SearchBtn_Click(object sender, EventArgs e)
     {
-        int searchID = Convert.ToInt32(SearchTxtBx.Text);
-        List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrderByID(searchID);
-        if(porderList != null)
+        
+        if(!string.IsNullOrEmpty(SearchTxtBx.Text))
         {
-            gvPurchaseOrder.DataSource = pCtlr.SearchPurchaseOrderByID(searchID);
-            gvPurchaseOrder.DataBind();
+            string searchTxt =SearchTxtBx.Text;
+            List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrder(searchTxt);
+            if (porderList != null)
+            {
+                gvPurchaseOrder.DataSource = porderList;
+                gvPurchaseOrder.DataBind();
+            }
+            else
+            {
+                //gvPurchaseOrder.DataSource = pCtlr.SearchPurchaseOrderByID(searchID);
+                //gvPurchaseOrder.DataBind();
+                ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+                "<script language='javascript'>alert('" + "No records found!" + "');</script>");
+            }
         }
-        else
-        {
-            //gvPurchaseOrder.DataSource = pCtlr.SearchPurchaseOrderByID(searchID);
-            //gvPurchaseOrder.DataBind();
-            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-            "<script language='javascript'>alert('" + "No records found!" + "');</script>");
-        }
+       
         
     }
 

@@ -164,6 +164,14 @@
     width :60%;
 }
 
+.mGrid100percent {
+    width :100%;
+}
+
+div.percent90{
+    width :90%;
+}
+
 .rejectBtn {
     padding: 10px 26px;
     text-align: center;

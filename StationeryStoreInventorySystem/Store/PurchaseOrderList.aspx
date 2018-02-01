@@ -4,28 +4,30 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Purchase Order List</h2>
+    </div>
     <div>
-        <h3>Purchase Orders</h3>
-           <asp:TextBox ID="SearchTxtBx" runat="server" Width="311px" placeholder="Search by Purchase Order"  MaxLength="5"></asp:TextBox>           
+           <asp:TextBox ID="SearchTxtBx" runat="server" Width="311px" placeholder="Search by Purchase Order"  MaxLength="5"></asp:TextBox>   
+          <%--<asp:RegularExpressionValidator runat="server" ControlToValidate ="SearchTxtBx" ErrorMessage="Invalid PurchaseOrder No" ValidationGroup="SearchValidationGrp" ValidationExpression="^[0-9]*$" ForeColor="Red" Display="Dynamic" />--%>
+           <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="SearchTxtBx" ErrorMessage="Please enter the PurchaseOrder No" ForeColor="Red" ValidationGroup="SearchValidationGrp" Display="Dynamic" />--%>        
            <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click" ValidationGroup="SearchValidationGrp" CssClass="buttonformid"/>
            <asp:Button ID="DisplayAllBtn" runat="server" Text="Display All" OnClick="DisplayAllBtn_Click" CssClass="buttonformid"/>
-            <br />
-           <asp:RegularExpressionValidator runat="server" ControlToValidate ="SearchTxtBx" ErrorMessage="Invalid PurchaseOrder No" ValidationGroup="SearchValidationGrp" ValidationExpression="^[0-9]*$" ForeColor="Red" Display="Dynamic" />
-           <asp:RequiredFieldValidator runat="server" ControlToValidate="SearchTxtBx" ErrorMessage="Please enter the PurchaseOrder No" ForeColor="Red" ValidationGroup="SearchValidationGrp" Display="Dynamic" />
-          
-
+            &nbsp;&nbsp;&nbsp;
+         
+           Filter Status by :&nbsp;&nbsp;<asp:DropDownList ID="OrderStatusDrpdwn" runat="server" OnSelectedIndexChanged="OrderStatusDrpdwn_SelectedIndexChanged" AutoPostBack="true" >             
+                 <asp:ListItem Selected="True">--Select Status--</asp:ListItem>
+                <asp:ListItem>Pending</asp:ListItem>
+                <asp:ListItem>Approved</asp:ListItem>
+                <asp:ListItem>Rejected</asp:ListItem>
+                <asp:ListItem>Closed</asp:ListItem>
+            </asp:DropDownList>
+        
     </div>
+ 
     <div>
-        <asp:DropDownList ID="OrderStatusDrpdwn" runat="server" CssClass="pull-right" OnSelectedIndexChanged="OrderStatusDrpdwn_SelectedIndexChanged" AutoPostBack="true" Width="96px">             
-             <asp:ListItem Selected="True">Pending</asp:ListItem>
-            <asp:ListItem>Approved</asp:ListItem>
-            <asp:ListItem>Rejected</asp:ListItem>
-            <asp:ListItem>Closed</asp:ListItem>
-        </asp:DropDownList>
-    </div>
-    <div>
-        <asp:GridView ID="gvPurchaseOrder" runat="server" CssClass="mGrid" EmptyDataText="PurchaseOrder No not found"  
-            EmptyDataRowStyle-BackColor="Window" AutoGenerateColumns="False" PageSize="10"  AllowPaging="True" DataKeyNames="PurchaseOrderID"
+        <asp:GridView ID="gvPurchaseOrder" runat="server" CssClass="mGrid" EmptyDataText="No records found"  RowStyle-Height="50px" 
+            EmptyDataRowStyle-BackColor="Window" AutoGenerateColumns="False" PageSize="15"  AllowPaging="True" DataKeyNames="PurchaseOrderID"
             OnPageIndexChanging="gvPurchaseOrder_PageIndexChanging"  OnRowDataBound="gvPurchaseOrder_RowDataBound" 
         >
             <Columns>

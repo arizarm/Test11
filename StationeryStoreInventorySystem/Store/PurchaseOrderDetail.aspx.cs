@@ -207,6 +207,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
     protected void gvPurchaseDetail_RowEditing(object sender, GridViewEditEventArgs e)
     {
         gvPurchaseDetail.EditIndex = e.NewEditIndex;
+        gvPurchaseDetail.EditRowStyle.BackColor = System.Drawing.Color.Yellow;
         BindGrid();
     }
     protected void gvPurchaseDetail_RowUpdating(object sender, GridViewUpdateEventArgs e)

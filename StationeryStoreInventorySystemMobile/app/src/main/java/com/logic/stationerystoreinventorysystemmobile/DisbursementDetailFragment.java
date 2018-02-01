@@ -39,7 +39,7 @@ public class DisbursementDetailFragment extends Fragment {
     boolean redToast;
 
     //create list for shortfall item to regenerate requisition
-    List<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
+    ArrayList<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
 
     public DisbursementDetailFragment() {
         // Required empty public constructor

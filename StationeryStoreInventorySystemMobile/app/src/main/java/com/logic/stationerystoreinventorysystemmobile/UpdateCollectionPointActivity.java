@@ -100,7 +100,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                         error.setError("Error");
                         error.setTextColor(Color.RED);
                         error.setText(errormsg);
-                        Toast.makeText(getApplicationContext(),"Please choose another collection Point" , Toast.LENGTH_LONG).show();
+                        Util.redsToast("Please choose another collection Point",getApplicationContext());
                         isSame=true;
 
                 }
@@ -137,8 +137,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                         }
                     }.execute(deptCode);
 
-
-                    Toast.makeText(UpdateCollectionPointActivity.this, "Update Success!", Toast.LENGTH_LONG).show();
+                    Util.greenToast("Update Success!",getApplicationContext());
 
                 }
             }
@@ -170,7 +169,8 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
 //        TextView name=(TextView)findViewById(R.id.txtError);
 //       name.setVisibility(View.GONE);
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " +item, Toast.LENGTH_LONG).show();
+        Util.greenToast("Selected: " +item,this);
+
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

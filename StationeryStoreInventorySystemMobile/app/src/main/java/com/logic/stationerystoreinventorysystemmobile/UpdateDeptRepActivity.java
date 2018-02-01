@@ -125,7 +125,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                     error.setText(errormsg);
                     /*((TextView) spinner.getSelectedView()).setError("Your Error Text");
                     */
-                    Toast.makeText(getApplicationContext(), "Please choose another Employee", Toast.LENGTH_LONG).show();
+                    Util.redsToast("Please choose another Employee",getApplicationContext());
                     isSame = true;
 
                 }
@@ -166,7 +166,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                         }
                     }.execute(deptCode);
 
-                    Toast.makeText(UpdateDeptRepActivity.this, "Update Success!", Toast.LENGTH_LONG).show();
+                    Util.greenToast("Update Success!",getApplicationContext());
 
                 }
             }
@@ -200,7 +200,7 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
 
         items = (Map.Entry<String, String>) spinner.getSelectedItem();
 
-        Toast.makeText(parent.getContext(), "Selected: " + items.getValue(), Toast.LENGTH_LONG).show();
+        Util.greenToast("Selected: " + items.getValue(),this);
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

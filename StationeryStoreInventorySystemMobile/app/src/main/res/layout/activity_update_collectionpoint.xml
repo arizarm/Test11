@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dip"
-        android:text="Collection Point :" />
+        android:text="@string/cp"
+        style="@style/TitleStyle"/>
 
 
     <Spinner
@@ -29,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:prompt="@string/spinner_title"
+        style="@style/TextStyle"
         />
 
 
@@ -37,13 +39,17 @@
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <Button
         android:id="@+id/btnUpdateCollectPoint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Collection" />
+        android:text="Update Collection"
+        style="@style/button_text"
+        android:background="@drawable/green_button"
+        />
 
 
 

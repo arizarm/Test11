@@ -20,7 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="btnDisbursementClick"
-        android:text="Disbursement List" />
+        android:text="Disbursement List"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
 
     <Space
@@ -32,7 +35,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="btnRetrievalListClick"
-        android:text="@string/retrieval_list" />
+        android:text="@string/retrieval_list"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />
@@ -42,7 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="generateDiscrepancyClick"
-        android:text="@string/discrepancy" />
+        android:text="@string/discrepancy"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />
@@ -53,7 +62,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="btnDepDetailClick"
-        android:text="@string/update_dep" />
+        android:text="@string/update_dep"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20dp" />
@@ -63,7 +75,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="btnLogOutClick"
-        android:text="Logout" />
+        android:text="Logout"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
 </LinearLayout>
 

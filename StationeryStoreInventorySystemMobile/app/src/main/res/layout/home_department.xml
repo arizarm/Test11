@@ -20,7 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Update Collection Point"
-        android:onClick="btnUpdateColPointClick"/>
+        android:onClick="btnUpdateColPointClick"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
     <Space
         android:layout_width="match_parent"
@@ -31,7 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/requisition_list"
-        android:onClick="btnRequisitionListClick"/>
+        android:onClick="btnRequisitionListClick"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
     <Space
         android:layout_width="match_parent"
@@ -42,7 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Update Department Representative"
-        android:onClick="btnUpdateRepClick"/>
+        android:onClick="btnUpdateRepClick"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
     <Space
         android:layout_width="match_parent"
@@ -53,6 +62,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Logout"
-        android:onClick="btnLogOutClick"/>
+        android:onClick="btnLogOutClick"
+        style="@style/button_text"
+        android:background="@drawable/home_button"
+        />
 
 </LinearLayout>

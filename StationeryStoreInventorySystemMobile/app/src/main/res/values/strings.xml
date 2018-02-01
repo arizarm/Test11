@@ -53,4 +53,6 @@
     <string name="btnAck">Acknowledge</string>
     <string name="sfQty">Shortfall Quantity: </string>
     <string name="noReq">No Pending Requisitions</string>
+    <string name="deptrep">Department Representative :</string>
+    <string name="cp">Collection Point :</string>
 </resources>

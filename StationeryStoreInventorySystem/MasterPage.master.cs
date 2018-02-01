@@ -13,7 +13,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            LoginUserName.Text = emp.EmpName + " | " + emp.Role;
+            LoginUserName.Text = emp.EmpName + " | " + emp.DeptCode + " " + emp.Role;
             if (emp.Role == "DepartmentHead")
             {
                 DepMenu.Visible = true;

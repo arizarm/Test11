@@ -13,82 +13,52 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            LoginUserName.Text = emp.EmpName + " | " +emp.DeptCode +" "+ emp.Role;
+            LoginUserName.Text = emp.EmpName + " | " + emp.Role;
             if (emp.Role == "DepartmentHead")
             {
-                DepHeadMenu.Visible = true;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
+                DepMenu.Visible = true;
+                hLinkRequisitionListDepHead.Visible = true;
             }
 
             if (emp.Role == "DepartmentTempHead")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = true;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
+                DepMenu.Visible = true;
+                hLinkRequisitionListDepTempHead.Visible = true;
             }
 
             if (emp.Role == "Representative")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = true;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
+                DepMenu.Visible = true;
+                hLinkCollectionListDepRep.Visible = true;
+                hLinkRequisitionListDepRep.Visible = true;
+                hLinkGenReqDepRep.Visible = true;
             }
 
             if (emp.Role == "Employee")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = true;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
+                DepMenu.Visible = true;
+                hLinkRequisitionListDepEmp.Visible = true;
+                hLinkGenReqEmp.Visible = true;
             }
 
             if (emp.Role == "Store Manager")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = true;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = false;
+                storeMenu.Visible = true;
+                hLinkCreateSupplier.Visible = true;
+                hLinkStockAdjustment.Visible = true;
             }
 
             if (emp.Role == "Store Supervisor")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = true;
-                StoreClerkMenu.Visible = false;
+                storeMenu.Visible = true;
+                hLinkCreateSupplier.Visible = true;
+                hLinkStockAdjustment.Visible = true;
             }
 
             if (emp.Role == "Store Clerk")
             {
-                DepHeadMenu.Visible = false;
-                DepTempHeadMenu.Visible = false;
-                DepRepMenu.Visible = false;
-                DepMember.Visible = false;
-                StoreManMenu.Visible = false;
-                StoreSuperMenu.Visible = false;
-                StoreClerkMenu.Visible = true;
+                storeMenu.Visible = true;
+                hLinkGenPurchaseOrder.Visible = true;
             }
         }
         else

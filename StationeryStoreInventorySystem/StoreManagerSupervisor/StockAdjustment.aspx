@@ -67,7 +67,7 @@
     <br />
     <asp:Button ID="Button1" runat="server" Text="Process Monthly Discrepancies" CssClass="button" OnClick="Button1_Click"/>
     &nbsp&nbsp
-    <asp:Button ID="Clear1" runat="server" Text="Button" CssClass="rejectBtn"/>
+    <asp:Button ID="Clear1" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="Clear1_Click"/>
     <br />
     <br />
     <%} %>
@@ -133,7 +133,7 @@
     <br />
     <asp:Button ID="Button2" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="Button2_Click"/>
     &nbsp&nbsp
-    <asp:Button ID="Clear2" runat="server" Text="Clear " CssClass="rejectBtn"/>
+    <asp:Button ID="Clear2" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="Clear2_Click"/>
     <%} %>
     </asp:Content>
 

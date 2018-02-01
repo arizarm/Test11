@@ -123,5 +123,25 @@ public partial class StockAdjustment : System.Web.UI.Page
         Session["discrepancySummary"] = summary;
         Response.Redirect(LoginController.StockAdjustmentSummaryURI);
     }
+
+    protected void Clear1_Click(object sender, EventArgs e)
+    {
+        foreach(GridViewRow row in GridView1.Rows)
+        {
+            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            rbl.ClearSelection();
+        }
+    }
+
+    protected void Clear2_Click(object sender, EventArgs e)
+    {
+        foreach (GridViewRow row in GridView2.Rows)
+        {
+            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            rbl.ClearSelection();
+        }
+    }
+
+    
 }
 

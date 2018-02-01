@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -84,10 +85,10 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
             //To check whether the same item with same supplier has been added to gridview
            // if so, then prepopulate with second supplier for that newly added item
-            if(!dictnry.ContainsKey(gvrowItemCode))
+               if(!dictnry.ContainsKey(gvrowItemCode))
                 {
 
-                    dictnry.Add(gvrowItemCode, 1);
+                    dictnry.Add(gvrowItemCode, 0);
 
                 }
                 else
@@ -95,23 +96,15 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     int value = dictnry[gvrowItemCode];
                     dictnry[gvrowItemCode] = value + 1;
                 }
-
-            if (dictnry[gvrowItemCode] == 1)
-                supplierList.SelectedValue = itemPriceList[0].SupplierCode;
-            else if (dictnry[gvrowItemCode] == 2)
-                supplierList.SelectedValue = itemPriceList[1].SupplierCode;
-
-            if (itemPriceList.Count >=3)
+           
+            if(itemPriceList.Count > dictnry[gvrowItemCode])
             {
-               
-                if (dictnry[gvrowItemCode] == 3)
-                    supplierList.SelectedValue = itemPriceList[2].SupplierCode;
-               
+                supplierList.SelectedValue = itemPriceList[dictnry[gvrowItemCode]].SupplierCode;
             }
             else
             {
-                    supplierList.SelectedValue = itemPriceList[1].SupplierCode;
-               
+                ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+            "<script language='javascript'>alert('" + "Item already exist!" + "');</script>");
             }
             
             Label price = (Label)e.Row.FindControl("Price");
@@ -131,11 +124,15 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     {
         //To add an item that is not under reorderLevel and append it to the gvPurchaseItems List
         String itemCode = AddNewItemDropDown.SelectedItem.Value;
+        
+        int count = 1;
         if (Session["ReorderItem"] != null)
         {
+            List<ItemPrice> itemPriceList;
             ritems = (List<ReorderItem>)Session["ReorderItem"];
             if (ritems.Exists(x => x.ItemCode == itemCode))
             {
+                itemPriceList = pCtrlr.GetItemPriceList().Where(x => x.ItemCode == itemCode).ToList();
                 for (int i = 0; i < gvPurchaseItems.Rows.Count; i++)
                 {
                     GridViewRow gvRow = gvPurchaseItems.Rows[i];
@@ -145,11 +142,12 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     //To check if an item with same supplier is already added. if exist,then item with 2nd supplier will be added .
                     if (codeNo == itemCode)
                     {
-                        DropDownList splrControl = (DropDownList)gvRow.FindControl("SupplierList");
-                        ListItem item = splrControl.SelectedItem;
-                        exisitingItemsupplrName = item.Value;
-                       
-                        break;
+                        DropDownList splrControl = (DropDownList)gvRow.FindControl("SupplierList");                        
+                        //ListItem item = splrControl.SelectedItem;
+                        count++;
+                        //exisitingItemsupplrName = item.Value;
+
+                        //break;
                     }
                     else
                     {
@@ -157,14 +155,33 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     }
 
                 }
+                if (itemPriceList.Count >= count)
+                {
+
+                    ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
+                    gvPurchaseItems.DataSource = ritems;
+                    Session["ReorderItem"] = ritems;
+                    gvPurchaseItems.DataBind();
+                    ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+                    "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
+                }
+                else
+                {
+                    ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+                    "<script language='javascript'>alert('" + "Item already added with all existing suppliers!" + "');</script>");
+                }
 
             }
-            ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
-            gvPurchaseItems.DataSource = ritems;
-            Session["ReorderItem"] = ritems;
-            gvPurchaseItems.DataBind();
-            ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-            "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
+            else
+            {
+                ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
+                gvPurchaseItems.DataSource = ritems;
+                Session["ReorderItem"] = ritems;
+                gvPurchaseItems.DataBind();
+                ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+                "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
+            }
+            
         }
 
     }
@@ -181,6 +198,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
         supervisorNamesDropDown.SelectedIndex = 0;
         AddNewItemDropDown.SelectedIndex = 0;
+        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+            "<script language='javascript'>alert('" + "Reset done" + "');</script>");
     }
 
     protected void ProceedBtn_Click(object sender, EventArgs e)
@@ -209,7 +228,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     {
                         pOrder.OrderDate = DateTime.Now.Date;
                         pOrder.ApprovedBy = Convert.ToInt32(supervisorNamesDropDown.SelectedItem.Value);
-                        pOrder.ExpectedDate = DateTime.Parse(txtDate.Text);
+                        pOrder.ExpectedDate = DateTime.ParseExact(txtDate.Text, "d", CultureInfo.InvariantCulture);
                         pOrder.Status = "Pending";
 
                         pOrder.TotalAmount += decimal.Parse(amntlbl.Text, System.Globalization.NumberStyles.Currency);
@@ -262,9 +281,13 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     protected void DateValidator(object source, ServerValidateEventArgs args)
     {
+       
         string date = txtDate.Text;
-        string todayDate = Convert.ToString(DateTime.Today.Date);
-        if (Convert.ToDateTime(date) > Convert.ToDateTime(todayDate))
+        string todayDate = Convert.ToString(DateTime.Today.Date.ToString("d"));
+        //Console.WriteLine()
+        DateTime d1 = DateTime.ParseExact(date,"d",CultureInfo.InvariantCulture);
+        DateTime d2= DateTime.ParseExact(todayDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+        if (d1  > d2)
         {
             args.IsValid = true;
 

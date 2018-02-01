@@ -54,11 +54,14 @@ public class EFBroker_PurchaseOrder
             return purchaseorderList;
         }
     }
-    public static List<PurchaseOrder> GetPurchaseOrderListByOrderID(int orderID)
+    public static List<PurchaseOrder> SearchPurchaseOrder(string searchTxt)
     {
+        //int id = Convert.ToInt32(searchTxt);
         using (StationeryEntities entities = new StationeryEntities())
         {
-            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x => x.PurchaseOrderID == orderID).OrderByDescending(x=>x.OrderDate).OrderByDescending(x => x.PurchaseOrderID).ToList();
+            return entities.PurchaseOrders.Include("Supplier").Include("Employee").Include("Employee1").Include("Item_PurchaseOrder").Where(x=>
+            x.Employee1.EmpName.ToString().ToLower().Contains(searchTxt.ToLower())|| x.PurchaseOrderID.ToString().ToLower().Contains(searchTxt.ToLower())||  x.Supplier.SupplierName.ToString().ToLower().Contains(searchTxt.ToLower())
+            || x.Status.ToString().ToLower().Contains(searchTxt.ToLower())).OrderByDescending(x=>x.OrderDate).OrderByDescending(x => x.PurchaseOrderID).ToList();
         }
     }
     public static List<Item_PurchaseOrder> GetPurchaseOrderItemList()
@@ -84,7 +87,7 @@ public class EFBroker_PurchaseOrder
                                 ReorderLevel = item.ReorderLevel,
                                 UnitOfMeasure = item.UnitOfMeasure,
                                 Balance = item.BalanceQty
-                            }).ToList<ReorderItem>();
+                            }).Distinct().ToList<ReorderItem>();
             return itemList;
         }
 
@@ -111,10 +114,13 @@ public class EFBroker_PurchaseOrder
     }
     public static List<ItemPrice> GetItemPriceList()
     {
+        String currentyear = Convert.ToString(DateTime.Now.Date.Year);
+
         using (StationeryEntities entities = new StationeryEntities())
         {
             var itemPriceList = (from item in entities.Items
                                 join price in entities.PriceLists on item.ItemCode equals price.ItemCode
+                                where  price.TenderYear==currentyear
                                 orderby price.SupplierRank ascending
                                 select new ItemPrice
                                 {
@@ -130,11 +136,12 @@ public class EFBroker_PurchaseOrder
     }
     public static List<ItemPrice> GetItemPriceByItemCode(string itemCode)
     {
+        String currentyear = Convert.ToString(DateTime.Now.Date.Year);
         using (StationeryEntities entities = new StationeryEntities())
         {
             var itemPriceList = (from item in entities.Items
                                     join price in entities.PriceLists on item.ItemCode equals price.ItemCode
-                                    where item.ItemCode == itemCode
+                                    where item.ItemCode == itemCode && price.TenderYear == currentyear
                                     orderby price.SupplierRank ascending
                                     select new ItemPrice
                                     {
@@ -266,6 +273,7 @@ public class EFBroker_PurchaseOrder
         var lowStockItemList = (from i in entities.Item_PurchaseOrder
                                 where !(entities.Items.Any(x => x.ItemCode == i.ItemCode) && (i.PurchaseOrder.OrderDate >= startDate && endDate >= i.PurchaseOrder.OrderDate))
                                 join item in entities.Items on i.ItemCode equals item.ItemCode
+                                where item.ReorderLevel>=item.BalanceQty
                                 select new ShortfallItems
                                 {
                                     ItemCode = item.ItemCode,

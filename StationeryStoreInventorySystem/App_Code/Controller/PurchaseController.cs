@@ -100,9 +100,9 @@ public class PurchaseController
         return EFBroker_PurchaseOrder.GetPurchaseOrderListByStatus(status);
     }
 
-    public List<PurchaseOrder> SearchPurchaseOrderByID(int orderID)
+    public List<PurchaseOrder> SearchPurchaseOrder(string searchTxt)
     {
-        return EFBroker_PurchaseOrder.GetPurchaseOrderListByOrderID(orderID);
+        return EFBroker_PurchaseOrder.SearchPurchaseOrder(searchTxt);
     }
     public PurchaseOrder GetPurchaseOrderByID(int orderID)
     {

@@ -4,8 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <div style ="text-align: center">
-   <h2 class="mainPageHeader">Stock Card</h2></div>
+    <div class="updateDeptHead"><h2 class="mainPageHeader">Stock Card</h2></div>
     <br />
     <br />
     Item Code: <asp:Label ID="lblItemCode" runat="server" Text="" Font-Size="Medium" ></asp:Label><br />

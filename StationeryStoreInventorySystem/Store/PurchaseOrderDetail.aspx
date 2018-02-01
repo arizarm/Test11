@@ -41,13 +41,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <div>
-        <br />
-        <h2 class="auto-style1">Purchase Order   Detail</h2>
-
+   <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Purchase Order Detail</h2>
     </div>
+    <br />
+    <br />
     <table>
-         <tr>
+         <tr >
             <td class="orderInfoStyle">
                 <h3 class="labelStyle">Deliver To:
                                 <asp:Label ID="Label2" runat="server" Text=" Logic University" CssClass="labelStyle"></asp:Label></h3>
@@ -78,11 +78,10 @@
             </td>
         </tr>      
     </table>
+   
     <br />
     <br />
-    <br />
-    <br />
-    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" Width="60%"
+    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" Width="60%" RowStyle-Height="50px" 
         EmptyDataText="No items haven been ordered for this order" OnRowEditing="gvPurchaseDetail_RowEditing"
         OnRowUpdating="gvPurchaseDetail_RowUpdating" OnRowCancelingEdit="gvPurchaseDetail_RowCancelingEdit">
         <Columns>
@@ -164,7 +163,7 @@
     &nbsp; &nbsp; &nbsp; 
                  <asp:Button ID="RejectBtn" runat="server" Text="Reject" CssClass="rejectBtn" OnClick="RejectBtn_Click" ValidationGroup="ApproveValidationGrp" />
     <br />
-    <asp:RegularExpressionValidator runat="server" ValidationExpression="^[a-zA-Z'.-_]{1,100}$" ControlToValidate="RemarkTxtBx" ErrorMessage="Invalid input.Please enter alphabets only" ForeColor="Red" ValidationGroup="ApproveValidationGrp" Display="Dynamic"></asp:RegularExpressionValidator>
+    <asp:RegularExpressionValidator runat="server" ValidationExpression="^[a-zA-Z'.-_ ]{1,100}$" ControlToValidate="RemarkTxtBx" ErrorMessage="Invalid input.Please enter alphabets only" ForeColor="Red" ValidationGroup="ApproveValidationGrp" Display="Dynamic"></asp:RegularExpressionValidator>
 
     <br />
     <br />

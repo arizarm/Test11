@@ -13,9 +13,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="../Content/JavaScript.js"></script>
    
-    <h2 class="mainPageHeader">Reorder Report
-
-    </h2>
+    <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Reorder Report</h2>
+    </div>
+     <br />
+    <br />
     Start Date:
                 <asp:TextBox ID="startDate" runat="server" ClientIDMode="Static" ></asp:TextBox>
     <asp:RequiredFieldValidator runat="server" ControlToValidate="startDate" Display="Dynamic" ErrorMessage="Please enter the Start Date" ForeColor="Red" ValidationGroup="DateValGrp"></asp:RequiredFieldValidator>
@@ -39,46 +41,46 @@
     </h4>
     <br />
 
-    <asp:Label runat="server" Text="" ForeColor="Red" ID="txtLbl"></asp:Label>
+    <asp:Label runat="server" Text="" ID="txtLbl" Font-Bold="true"></asp:Label>
     <br />
     <br />
     <div id="printable">:
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvPurchasedreoderItem"  EmptyDataRowStyle-BackColor="Window">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvPurchasedreoderItem"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px" >
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
-                    <ControlStyle Font-Size="10pt" Height="65px"/>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Height="45px"   Width="100px"/>
-                    <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                    <ControlStyle Font-Size="10pt"/>
+                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"    Width="100px"/>
+                    <ItemStyle Font-Size="Smaller" HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="Description" DataField="Description" HeaderStyle-CssClass="gvHeaderColumn">
-                    <ControlStyle Font-Size="10pt" Width="135px" Height="65px"/>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" />
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                    <ControlStyle Font-Size="10pt" Width="135px" />
+                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" />
+                     <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
-            <asp:BoundField HeaderText="QuantityOnHand" DataField="Balance" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+            <asp:BoundField HeaderText="Availabe Quantity" DataField="Balance" HeaderStyle-CssClass="gvHeaderColumn">
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Width="150px"/>
+                   <ItemStyle Font-Size="Smaller" HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
-            <asp:BoundField HeaderText="ReorderLevel" DataField="ReorderLevel" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" Width="150px"/>
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
-            </asp:BoundField>
+            <asp:BoundField HeaderText="Reorder Level" DataField="ReorderLevel" HeaderStyle-CssClass="gvHeaderColumn">
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Width="150px"/>
+                     <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
+            </asp:BoundField> 
             <asp:BoundField HeaderText="ReorderQuantity" DataField="ReorderQuantity" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Width="150px"/>
+                   <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="PurchaseOrderNo" DataField="PurchaseOrderNo" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" Width="170px"/>
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                 <ControlStyle Font-Size="10pt" />
+               <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Width="170px"/>
+                <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="ExpectedDate" DataField="FormattedExpectedDate" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Width="150px"/>
+                   <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
         </Columns>
 
@@ -97,45 +99,45 @@
     <br />
     <br />
     <br />
-    <asp:Label runat="server" Text="" ForeColor="Red" ID="txtLbl2"></asp:Label>
+    <asp:Label runat="server" Text=""  ID="txtLbl2" Font-Bold="true"></asp:Label>
     <br />
     <br />
     <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems"  EmptyDataRowStyle-BackColor="Window">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
-               <ControlStyle Font-Size="10pt" Height="65px"/>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  Height="45px" Width="100px"  />
-                    <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+               <ControlStyle Font-Size="10pt" />
+                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="100px"  />
+                    <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="Description" DataField="Description" HeaderStyle-CssClass="gvHeaderColumn">
-                <ControlStyle Font-Size="10pt" Width="135px" Height="65px"/>
-                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px" />
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                <ControlStyle Font-Size="10pt" Width="135px" />
+                    <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  />
+                     <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="QuantityOnHand" DataField="Balance" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px"  Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="150px"/>
+                   <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="ReorderLevel" DataField="ReorderLevel" HeaderStyle-CssClass="gvHeaderColumn">
-              <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px"  Width="150px"/>
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+              <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="150px"/>
+                     <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="ReorderQuantity" DataField="ReorderQuantity" HeaderStyle-CssClass="gvHeaderColumn">
-                <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px"  Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="150px"/>
+                   <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="PurchaseOrderNo" DataField="NullablePurchaseOrderNo" HeaderStyle-CssClass="gvHeaderColumn">
-                <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px"  Width="170px"/>
-                     <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="170px"/>
+                     <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
             <asp:BoundField HeaderText="ExpectedDate" DataField="FormattedExpectedDate" HeaderStyle-CssClass="gvHeaderColumn">
-                 <ControlStyle Font-Size="10pt" Height="65px"/>
-                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False" Height="45px"  Width="150px"/>
-                   <ItemStyle Font-Size="Smaller" Height="45px" HorizontalAlign="Center" Wrap="False" />
+                 <ControlStyle Font-Size="10pt" />
+                <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="150px"/>
+                   <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
         </Columns>
 

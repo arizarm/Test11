@@ -19,12 +19,15 @@
            $("#startDate").datepicker({
                changeMonth: true,
                changeYear: true,
-           });
+              
+           }).val();
            $("#endDate").datepicker({
                changeMonth: true,
                changeYear: true,
-           });
-       });
+               
+           }).val();
+	    });
+	   
        function printDiv() {
            var divName = "printable";
            var printContents = document.getElementById(divName).innerHTML;

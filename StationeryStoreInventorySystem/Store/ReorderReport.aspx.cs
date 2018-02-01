@@ -44,10 +44,10 @@ public partial class ReorderReport : System.Web.UI.Page
     {
 
    
-        DateTime sDate = DateTime.ParseExact(startDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
-        DateTime eDate = DateTime.ParseExact(endDate.Text, "M/d/yyyy", CultureInfo.InvariantCulture);
-        DateTime today = DateTime.Parse(DateTime.Today.Date.ToShortDateString());
-        if(sDate>today)
+        DateTime sDate = DateTime.ParseExact(startDate.Text, "M/dd/yyyy", CultureInfo.InvariantCulture);
+        DateTime eDate = DateTime.ParseExact(endDate.Text, "M/dd/yyyy", CultureInfo.InvariantCulture);
+        DateTime today = DateTime.Parse(DateTime.Today.Date.ToString("M/dd/yyyy"));
+        if (sDate>today)
         {
             e.IsValid = false;
             errorTxt.Text = "Start Date cannot be greater than today";

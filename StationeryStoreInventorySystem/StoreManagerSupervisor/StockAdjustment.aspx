@@ -4,11 +4,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
-    <h1 class="mainPageHeader">Stock Adjustment Approval</h1>
+    <div class="updateDeptHead"><h2 class="mainPageHeader">Stock Adjustment Approval</h2></div>
     <br />
     <%if (GridView1.Rows.Count > 0)
         { %>
-    <h4>Monthly Inventory Check Discrepancies</h4>
+    <h3>Monthly Inventory Check Discrepancies</h3>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
@@ -71,7 +71,7 @@
     <%} %>
     <%if (GridView2.Rows.Count > 0)
         { %>
-    <h4>Discrepancies Pending Approval</h4>
+    <h3>Discrepancies Pending Approval</h3>
     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">

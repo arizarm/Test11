@@ -74,4 +74,22 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
         Session["discrepancySummary"] = null;
         Response.Redirect(LoginController.StockAdjustmentURI);
     }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblAction = e.Row.FindControl("lblAction") as Label;
+            string action = lblAction.Text;
+
+            if (action == "Approved")
+            {
+                lblAction.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (action == "Rejected")
+            {
+                lblAction.ForeColor = System.Drawing.Color.Red;
+            }
+        }
+    }
 }

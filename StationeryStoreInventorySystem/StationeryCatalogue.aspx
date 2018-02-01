@@ -18,21 +18,23 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
+    <div class="row updateDeptHead">
+        <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
+    </div>
     <div class="row">
         <div class="col-md-6 pull-left">
-            <asp:LinkButton ID="LinkButton5" runat="server" CssClass="pull-left" OnClick="LinkButton5_Click">&lt &lt Create New Item &gt &gt</asp:LinkButton>
+            <asp:linkbutton id="LinkButton5" runat="server" cssclass="pull-left" onclick="LinkButton5_Click">&lt &lt Create New Item &gt &gt</asp:linkbutton>
         </div>
-        
+
         <div class="col-md-6 pull-right">
-            <asp:Button ID="PrintViewButton" runat="server" Text="View Printable Version" class="btn btn-default pull-right" OnClick="PrintViewButton_Click" />
+            <asp:button id="PrintViewButton" runat="server" text="View Printable Version" class="btn btn-default pull-right" onclick="PrintViewButton_Click" />
             <button type="button" id="PrintButton" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true" visible="false">Print Catalogue</button>
         </div>
     </div>
 
     <br />
     <div id="printable">
-        <asp:GridView ID="GridView1" runat="server" CssClass="mGrid" AutoGenerateColumns="False" OnRowCommand="GridView1_RowCommand" Width="90%" HorizontalAlign="Center">
+        <asp:gridview id="GridView1" runat="server" cssclass="mGrid" RowStyle-height="50px" autogeneratecolumns="False" onrowcommand="GridView1_RowCommand" horizontalalign="Center">
             <Columns>
                 <asp:TemplateField HeaderText="Item Number">
                     <ItemTemplate>
@@ -50,6 +52,7 @@
                 <asp:TemplateField HeaderText="Description">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBoxDesc" runat="server" MaxLength="50" Text='<%# Bind("description") %>'></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" CssClass="errorfont" ErrorMessage="Field cannot be left blank" ControlToValidate="TextBoxDesc" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="LabelDescription" runat="server" Visible="true" Text='<%# Bind("description") %>'></asp:Label>
@@ -58,7 +61,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Level">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxReLvl" runat="server" MaxLength="10" Text='<%# Bind("reorderLevel") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxReLvl" runat="server" MaxLength="10" width = "100%" Text='<%# Bind("reorderLevel") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" CssClass="errorfont" ErrorMessage="Field cannot be left blank" ControlToValidate="TextBoxReLvl" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                         <asp:RangeValidator ID="RangeValidator1" runat="server" CssClass="errorfont" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                     </EditItemTemplate>
@@ -68,7 +71,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Reorder Qty">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxReQty" runat="server" MaxLength="10" Text='<%# Bind("reorderQty") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxReQty" runat="server" MaxLength="10" width = "100%" Text='<%# Bind("reorderQty") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" CssClass="errorfont" ErrorMessage="Description cannot be left blank" ControlToValidate="TextBoxReQty" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" CssClass="errorfont" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                     </EditItemTemplate>
@@ -86,7 +89,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Bin">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBoxBin" runat="server" MaxLength="10" Text='<%# Bind("bin") %>'></asp:TextBox>
+                        <asp:TextBox ID="TextBoxBin" runat="server" MaxLength="10" width = "100%" Text='<%# Bind("bin") %>'></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" CssClass="errorfont" ErrorMessage="Bin number cannot be left blank" ControlToValidate="TextBoxBin" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                     </EditItemTemplate>
                     <ItemTemplate>
@@ -95,14 +98,16 @@
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
                     <EditItemTemplate>
-                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ValidationGroup="validateItemGroup"></asp:LinkButton>
-                        <asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="CancelEdit" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                        <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="UpdateRow" Text="Update" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ValidationGroup="validateItemGroup"></asp:LinkButton>
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False" CommandName="EditRow" Text="Edit" CssClass="button" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField ShowHeader="False" ItemStyle-BorderColor="Transparent" ControlStyle-BorderColor="Transparent" HeaderStyle-BorderColor="Transparent" FooterStyle-BorderColor="Transparent">
+                    <EditItemTemplate>
+                        <asp:LinkButton ID="LinkButton7" runat="server" CausesValidation="False" CommandName="CancelEdit" CssClass="rejectBtn" Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"></asp:LinkButton>
+                    </EditItemTemplate>
                     <ItemTemplate>
                         <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False" CommandName="RemoveRow" Text="Remove" CssClass="rejectBtn" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" OnClientClick="return confirm('Confirm Delete?');"></asp:LinkButton>
                     </ItemTemplate>
@@ -110,7 +115,7 @@
 
 
             </Columns>
-        </asp:GridView>
+        </asp:gridview>
     </div>
 </asp:Content>
 

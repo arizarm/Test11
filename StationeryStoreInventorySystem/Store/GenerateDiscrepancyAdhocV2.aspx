@@ -4,10 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div>
-        <h2 class="mainPageHeader">Discrepancies Summary</h2>
-      
-               
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+        <div class="updateDeptHead"><h2 class="mainPageHeader">Discrepancies Summary</h2></div>
+        <br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>

@@ -23,6 +23,22 @@ public partial class RequisitionDetails : System.Web.UI.Page
             int empid = Convert.ToInt32(r.RequestedBy);
             Label3.Text = r.RequestDate.ToString();
             Label4.Text = r.Status.ToString();
+            if(Label4.Text.Equals("Approved") || Label4.Text.Equals("approved") || Label4.Text.Equals("InProgress"))
+            {
+                Label4.ForeColor =System.Drawing.Color.Green;
+            }
+            else if(Label4.Text.Equals("Pending"))
+            {
+                Label4.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if (Label4.Text.Equals("Priority"))
+            {
+                Label4.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                Label4.ForeColor = System.Drawing.Color.Black;
+            }
 
             if (!IsPostBack)
             {
@@ -81,6 +97,7 @@ public partial class RequisitionDetails : System.Web.UI.Page
     protected void Add_Click(object sender, EventArgs e)
     {
         Panel1.Visible = true;
+        Add.Visible = false;
     }
 
     protected void New_Click(object sender, EventArgs e)

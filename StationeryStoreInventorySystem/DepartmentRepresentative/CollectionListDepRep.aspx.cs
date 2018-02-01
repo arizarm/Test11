@@ -17,23 +17,30 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 emp = (Employee)Session["emp"];
                 //Approved requisition
-                if (RequisitionControl.getCollectionList(emp.DeptCode).Count == 0)
-                {
-                    Label5.Text = "There is no collection data";
-                }
-                else
-                {
+
                     Label5.Visible = false;
                     GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
                     GridView1.DataBind();
                     ViewState["DataSource"] = "displayAll";
-                }
+                showEmptyLabel();
             }
             else
-
             {
                 Utility.logout();
             }
+        }
+    }
+
+    public void showEmptyLabel()
+    {
+        if (GridView1.Rows.Count <= 0)
+        {
+            Label2.Visible = true;
+            Label2.Text = "No Requisition Found.";
+        }
+        else
+        {
+            Label2.Visible = false;
         }
     }
 
@@ -53,6 +60,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearch";
+                showEmptyLabel();
             }
         }
         else
@@ -61,7 +69,6 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Utility.logout();
         }
     }
-
     protected void DisplayBtn_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
@@ -70,16 +77,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
             GridView1.DataBind();
             ViewState["DataSource"] = "displayAll";
+            showEmptyLabel();
         }
         else
-
         {
             Utility.logout();
         }
     }
-
-
-
     protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
@@ -91,6 +95,29 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         else
         {
             GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
+        }
+        GridView1.DataBind();
+    }
+
+    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label statusLabel = (Label)e.Row.FindControl("Label4");
+
+            string status = statusLabel.Text;
+            if (status == "Approved" || status == "approved" || status == "InProgress")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (status == "Priority")
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                statusLabel.ForeColor = System.Drawing.Color.Black;
+            }
         }
     }
 }

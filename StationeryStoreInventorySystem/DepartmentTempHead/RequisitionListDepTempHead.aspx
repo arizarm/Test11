@@ -3,31 +3,40 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="updateDeptHead">
+        <h2 class="mainPageHeader">Requisition List</h2>
+    </div>
 
     <div>
-        <h2 class="mainPageHeader">Requisition List</h2>
-      <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
-           <asp:button ID="SearchBtn" runat="server" Text="Search"  CssClass="button" OnClick="SearchBtn_Click"/>
-           <asp:button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click"/>
+        <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
+        <asp:Button ID="SearchBtn" runat="server" Text="Search" CssClass="button" OnClick="SearchBtn_Click" />
+        <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />
     </div>
-      <div>
+    <div>
         <asp:Label ID="Label2" runat="server" Text="To View Requisition by Status : "></asp:Label>
         <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
-            <asp:ListItem Selected="True" >Select Status</asp:ListItem>
+            <asp:ListItem Selected="True">Select Status</asp:ListItem>
             <asp:ListItem Value="Pending">Pending</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
+            <asp:ListItem Value="InProgress">In Progress</asp:ListItem>
             <asp:ListItem Value="Rejected">Rejected</asp:ListItem>
             <asp:ListItem Value="Closed">Closed</asp:ListItem>
         </asp:DropDownList>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <h2><strong><asp:Label ID="pendingCount" runat="server" Text="Label" Font-Underline="true"></asp:Label></strong></h2>
     </div>
+    <h2><strong>
+        <asp:Label ID="pendingCount" runat="server" Text="Label" Font-Underline="true"></asp:Label></strong></h2>
+
+    <asp:Label ID="Label5" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="#999999" Text="Label" Visible="False"></asp:Label>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid" AllowPaging="true" PageSize="10" OnPageIndexChanging="GridView1_PageIndexChanging">
+            DataKeyNames="RequisitionNo" CssClass="mGrid mGrid60percent" AllowPaging="true" PageSize="15" OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDataBound="GridView1_RowDataBound" RowStyle-Height="50px">
+            <PagerStyle BackColor="#424242" ForeColor="White" HorizontalAlign="Center" />
+            <%--<AlternatingRowStyle BackColor="White" />--%>
+            <HeaderStyle Height="50px" Font-Size="Large" />
+            <%--<RowStyle BackColor="#e6e6e6" ForeColor="Black" />--%>
             <Columns>
 
-                <asp:TemplateField HeaderText="RequestDate">
+                <asp:TemplateField HeaderText="Request Date">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
@@ -37,7 +46,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="RequestedBy">
+                <asp:TemplateField HeaderText="Requested By">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
                     </EditItemTemplate>
@@ -57,11 +66,11 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:HyperLinkField HeaderText="View Details" DataNavigateUrlFields="RequisitionNo"
-                    DataNavigateUrlFormatString="ApproveRequisition.aspx?requisitionNo={0}" Text="View Details" />
+                <asp:HyperLinkField HeaderText="Detail" DataNavigateUrlFields="RequisitionNo"
+                    DataNavigateUrlFormatString="ApproveRequisition.aspx?requisitionNo={0}" Text="Detail" />
             </Columns>
 
-        </asp:GridView>      
+        </asp:GridView>
     </div>
 </asp:Content>
 

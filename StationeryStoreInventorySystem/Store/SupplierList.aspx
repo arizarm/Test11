@@ -3,11 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:Label ID="Label1" runat="server" Text="Supplier List" CssClass="mainPageHeader" Font-Bold="true" Font-Size="X-Large"/>
-    <br /><br /> 
+        <div class="updateDeptHead">
+        <br />
+        <h2 class="mainPageHeader">SupplierList</h2>
+    </div>
     <asp:Button ID="AddSupplierButton" runat="server" Text="Add New Supplier" OnClick="AddSupplierButton_Click" Visible="false" Enabled="false"/>
     <br /> <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Width="90%">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" RowStyle-Height="50px">
+        <PagerStyle BackColor="#424242" ForeColor="White" HorizontalAlign="Center" />
+            <HeaderStyle Height="50px" Font-Size="Large" />
         <Columns>
             <asp:BoundField DataField="SupplierCode" HeaderText="Supplier Code" ItemStyle-Width="7.5%">
 <ItemStyle Width="7.5%"></ItemStyle>
@@ -22,10 +26,10 @@
             <asp:BoundField DataField="SupplierFax" HeaderText="Supplier Fax" ItemStyle-Width="7.5%" >
 <ItemStyle Width="7.5%"></ItemStyle>
             </asp:BoundField>
-            <asp:BoundField DataField="SupplierAddress" HeaderText="Supplier Address" ItemStyle-Width="7.5%" >
-<ItemStyle Width="7.5%"></ItemStyle>
+            <asp:BoundField DataField="SupplierAddress" HeaderText="Supplier Address" ItemStyle-Width="18%" >
+<ItemStyle Width="18%"></ItemStyle>
             </asp:BoundField>
-            <asp:BoundField DataField="SupplierEmail" HeaderText="Supplier Email" ItemStyle-Width="7.5%" >
+            <asp:BoundField DataField="SupplierEmail" HeaderText="Supplier Email" ItemStyle-Width="18%" >
 <ItemStyle Width="7.5%"></ItemStyle>
             </asp:BoundField>
             <asp:BoundField DataField="ActiveStatus" HeaderText="Active Status" ItemStyle-Width="7.5%" >

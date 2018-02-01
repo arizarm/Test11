@@ -43,7 +43,7 @@
     </asp:GridView>
 
     <asp:Button ID="Save" runat="server" Text="Save" ValidationGroup="1"  CssClass="button" OnClick="Save_Click" />&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="FinalizeDisbursmentList" ValidationGroup="1"  runat="server" Text="Finalize Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" Style="height: 47px" />
+            <asp:Button ID="FinalizeDisbursmentList" ValidationGroup="1"  runat="server" Text="Generate Disbursment List" CssClass="button" OnClick="FinalizeDisbursmentList_Click" Style="height: 47px" />
 
 </asp:Content>
 

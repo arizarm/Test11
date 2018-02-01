@@ -11,22 +11,34 @@ public partial class RetrievalList : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        //
+        if (retCon.DisplayRetrievalList().Count == 0)
         {
-            // transfer from RetrievedBy(employee ID) to employee name
-            List<Retrieval> retList = retCon.DisplayRetrievalList();
-            Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
-            foreach (Retrieval r in retList)
-            {
-                
-                retDisplay.Add(r, EFBroker_DeptEmployee.GetEmployeebyEmpID((int)r.RetrievedBy).EmpName);
-            }
-
-            gvReq.DataSource = retDisplay;
-            gvReq.DataBind();
-
+            SearchBtn.Visible = false;
+            DisplayBtn.Visible = false;
+            SearchBox.Visible = false;
+            CheckRetrievalListValidation.Text = "There is no pending Retrieval!";
         }
+        else
+        {
+            //
+            if (!IsPostBack)
+            {
+                // transfer from RetrievedBy(employee ID) to employee name
+                List<Retrieval> retList = retCon.DisplayRetrievalList();
+                Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
+                foreach (Retrieval r in retList)
+                {
 
+                    retDisplay.Add(r, EFBroker_DeptEmployee.GetEmployeebyEmpID((int)r.RetrievedBy).EmpName);
+                }
+
+                gvReq.DataSource = retDisplay;
+                gvReq.DataBind();
+
+            }
+        }
     }
 
     protected void SearchBtn_Click(object sender, EventArgs e)

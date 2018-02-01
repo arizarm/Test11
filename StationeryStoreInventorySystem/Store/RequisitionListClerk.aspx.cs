@@ -16,11 +16,11 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
         if (RequisitionControl.DisplayAll().Count == 0)
         {
-            GenerateBtn.Enabled = false;
-            SearchBtn.Enabled = false;
-            DisplayBtn.Enabled = false;
-            DropDownList1.Enabled = false;
-            SearchBox.Enabled = false;
+            GenerateBtn.Visible = false;
+            SearchBtn.Visible = false;
+            DisplayBtn.Visible = false;
+            DropDownList1.Visible = false;
+            SearchBox.Visible = false;
             CheckBoxValidation.Text = "There is no pending requisition!";
         }
         else

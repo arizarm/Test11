@@ -29,7 +29,7 @@
                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent">
                         <%--CssClass="mGrid"--%>
                         <Columns>
-                            <asp:TemplateField HeaderText="Item" SortExpression="Description">
+                            <asp:TemplateField HeaderText="Item Description" SortExpression="Description">
                                 <ItemTemplate>
                                     <asp:Label ID="Label2" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
                                 </ItemTemplate>

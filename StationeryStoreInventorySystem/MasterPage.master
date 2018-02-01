@@ -74,7 +74,7 @@
                     <%-- Stock Menu --%>
                     <asp:Label ID="lblStock" runat="server" CssClass="CategoryHeader">Stock</asp:Label>
 
-                    <asp:HyperLink ID="hLinkStationaryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkStationaryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
                     <asp:HyperLink ID="hLinkAddCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/StationeryCatalogueDetail.aspx">Add Catalogue Item</asp:HyperLink>
                     <asp:HyperLink ID="GenerateDiscrepancyManager" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/GenerateDiscrepancyV2.aspx">Report Discrepancies</asp:HyperLink>
                     <asp:HyperLink ID="hLinkStockAdjustment" Visible="false" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StoreManagerSupervisor/StockAdjustment.aspx">Issue Adjustments</asp:HyperLink>

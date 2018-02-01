@@ -24,7 +24,7 @@
         <Columns>
             <asp:TemplateField HeaderText="Transaction Date">
                 <ItemTemplate>
-                    <asp:Label ID="lblDate" runat="server" Text='<%# Bind("TransDate") %>'></asp:Label>
+                    <asp:Label ID="lblDate" runat="server" Text='<%# Bind("TransDate","{0:dddd, dd MMMM yyyy}") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Transaction Details">

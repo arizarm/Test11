@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionPoint extends  java.util.HashMap<String,String> {
-    final static String hostURL = Util.host +"/DeptService.svc/";
+    final static String hostURL = Util.host +"DeptService.svc/";
 
     public CollectionPoint(){};
     public CollectionPoint(String collectId, String collectpointName, String defaulttime) {

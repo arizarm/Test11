@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void btnDepDetailClick(View v){
-//        Intent i = new Intent(this, DiscrepancyMenuActivity.class);
-//        startActivity(i);
+        Intent i = new Intent(this, DeptActivity.class);
+        startActivity(i);
     }
 
     protected void btnUpdateColPointClick(View v){

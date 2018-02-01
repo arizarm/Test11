@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RequisitionListItem extends HashMap<String,String>{
-    final static String host=Util.host +"/RequisitionListService.svc";
+    final static String host=Util.host +"RequisitionListService.svc";
 
 
     public RequisitionListItem(String date, String requisitionNo, String department, String status, String employeeName/*, String remarks*/){

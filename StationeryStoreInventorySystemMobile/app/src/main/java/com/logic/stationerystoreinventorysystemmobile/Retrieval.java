@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Retrieval extends java.util.HashMap<String,String> {
 
-    final static String host = Util.host +"/RetrievalService.svc";
+    final static String host = Util.host +"RetrievalService.svc";
 
     public Retrieval(String retrievedDate, String retrievalID, String retrievedBy, String retrievalStatus) {
         put("RetrievedDate", retrievedDate);

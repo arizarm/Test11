@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 
 public class Requisition extends HashMap<String,String>{
-    final static String host =Util.host +"/RequisitionListService.svc";
+    final static String host =Util.host +"RequisitionListService.svc";
     String requisitionNo;
     String approvedBy;
     String remarks;

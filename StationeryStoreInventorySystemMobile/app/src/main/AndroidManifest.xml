@@ -70,6 +70,9 @@
             android:name=".UpdateDeptRepActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".DeptActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>

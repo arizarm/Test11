@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Retrieval_ItemDetail extends java.util.HashMap<String,String> {
 
-     final static String host = Util.host +"/RetrievalService.svc";
+     final static String host = Util.host +"RetrievalService.svc";
 
     public Retrieval_ItemDetail(String itemCode,String bin, String description, String totalRequestedQty,String retrievedQty) {//, String actualQty
         put("ItemCode", itemCode);

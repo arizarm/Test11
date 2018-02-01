@@ -6,7 +6,6 @@
 
     <asp:Panel ID="Panel1" runat="server">
         <div class="updateDeptHead">
-            <br />
             <h2 class="mainPageHeader">Supplier Profile</h2>
         </div>
         <%--<asp:Label ID="Label1" runat="server" Text="Label" Style="font-weight: 700" ForeColor="#76b432"><h2>Supplier Profile</h2></asp:Label>--%>
@@ -115,10 +114,8 @@
     <br />
 
     <asp:Panel ID="Panel2" runat="server" Width="444px" Height="857px">
-        <strong><asp:Label ID="Label3" runat="server" Text="Label" ForeColor="#76b432"><strong><h2>Supply Tender Quotation Form</h2></strong></asp:Label></strong>
+        <strong><asp:Label ID="Label3" runat="server" Text="Label" ForeColor="#76b432" Font-Underline="true" Font-Bold="true"><strong><h2>Supply Tender Quotation Form</h2></strong></asp:Label></strong>
         <asp:Button ID="AddNewItemButton" runat="server" Text="+ Add New" Font-Underline="True" OnClick="AddNewItemButton_Click" CssClass="alert-success"/>
-
-        <br />
 
         <br />
 
@@ -167,12 +164,12 @@
                 </asp:TableRow>
                 <asp:TableRow>
                     <asp:TableCell ColumnSpan="2" HorizontalAlign="Right">
-                        <asp:Button ID="AddItemButton" runat="server" Text="Add" OnClick="AddItemButton_Click" />
+                        <asp:Button ID="AddItemButton" runat="server" Text="Add" OnClick="AddItemButton_Click" CssClass="alert-success"/>
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
         </asp:Panel>
-        <br />
+
         <asp:Label ID="ItemDisplayDesc" runat="server" Text="*Items displayed are only for current year" Font-Italic="true" Font-Size="Small"></asp:Label>
         <asp:GridView ID="TenderPriceDropDownList" runat="server" BorderStyle="Double" AllowPaging="true" PageSize="10" AutoGenerateColumns="False" Width="120%" DataKeyNames="ItemCode" OnPageIndexChanging="TenderPriceDropDownList_PageIndexChanging" 
             OnRowEditing="TenderPriceDropDownList_RowEditing" OnRowCancelingEdit="TenderPriceDropDownList_RowCancelingEdit" OnRowUpdating="TenderPriceDropDownList_RowUpdating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">

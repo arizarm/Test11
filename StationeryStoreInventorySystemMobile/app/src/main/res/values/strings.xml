@@ -48,6 +48,7 @@
     <string name="remark">Remark</string>
     <string name="disbDate">Disbursement Date: </string>
     <string name="disbTime">Disbursement Time: </string>
+    <string name="disbList">Disbursement List</string>
     <string name="colPoint">Collection Point: </string>
     <string name="accessCode">Enter Access Code</string>
     <string name="btnAck">Acknowledge</string>

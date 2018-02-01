@@ -64,12 +64,12 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+    <%--
     <br />
     <asp:Button ID="Button1" runat="server" Text="Process Monthly Discrepancies" CssClass="button" OnClick="Button1_Click"/>
     &nbsp&nbsp
     <asp:Button ID="Clear1" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="Clear1_Click"/>
-    <br />
-    <br />
+        --%>
     <%} %>
     <%if (GridView2.Rows.Count > 0)
         { %>

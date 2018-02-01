@@ -14,54 +14,54 @@ public partial class StockAdjustment : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-        monthly = EFBroker_Discrepancy.GetMonthlyDiscrepancyList();
-        List<Discrepency> pending = EFBroker_Discrepancy.GetPendingDiscrepancyList();
+            monthly = EFBroker_Discrepancy.GetMonthlyDiscrepancyList();
+            List<Discrepency> pending = EFBroker_Discrepancy.GetPendingDiscrepancyList();
 
-        Dictionary<Discrepency, Item> monthlySource = new Dictionary<Discrepency, Item>();
-        Dictionary<Discrepency, Item> pendingSource = new Dictionary<Discrepency, Item>();
+            Dictionary<Discrepency, Item> monthlySource = new Dictionary<Discrepency, Item>();
+            Dictionary<Discrepency, Item> pendingSource = new Dictionary<Discrepency, Item>();
 
-        foreach (Discrepency d in monthly)
-        {
-            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
-            decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
-            if (Session["empRole"] != null)
+            foreach (Discrepency d in monthly)
             {
-                string role = (string)Session["empRole"];
-                if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
+                decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
+                if (Session["empRole"] != null)
                 {
-                    monthlySource.Add(d, i);
-                }
-                else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
-                {
-                    monthlySource.Add(d, i);
+                    string role = (string)Session["empRole"];
+                    if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                    {
+                        monthlySource.Add(d, i);
+                    }
+                    else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                    {
+                        monthlySource.Add(d, i);
+                    }
                 }
             }
-        }
-        GridView1.DataSource = monthlySource;
-        GridView1.DataBind();
+            GridView1.DataSource = monthlySource;
+            GridView1.DataBind();
 
-        foreach (Discrepency d in pending)
-        {
-            Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
-            decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
-            if (Session["empRole"] != null)
+            foreach (Discrepency d in pending)
             {
-                if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                Item i = EFBroker_Item.GetItembyItemCode(d.ItemCode);
+                decimal discrepancyAmount = Math.Abs((decimal)d.TotalDiscrepencyAmount);
+                if (Session["empRole"] != null)
                 {
-                    pendingSource.Add(d, i);
+                    if (Session["empRole"].ToString() == "Store Manager" && discrepancyAmount >= 250)
+                    {
+                        pendingSource.Add(d, i);
+                    }
+                    else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                    {
+                        pendingSource.Add(d, i);
+                    }
                 }
-                else if (Session["empRole"].ToString() == "Store Supervisor" && discrepancyAmount < 250)
+                else
                 {
-                    pendingSource.Add(d, i);
+                    Utility.logout();
                 }
             }
-            else
-            {
-                Utility.logout();
-            }
-        }
-        GridView2.DataSource = pendingSource;
-        GridView2.DataBind();
+            GridView2.DataSource = pendingSource;
+            GridView2.DataBind();
 
         }
     }
@@ -69,9 +69,9 @@ public partial class StockAdjustment : System.Web.UI.Page
     protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //Disallow processing of regular pending discrepancies that came before
-        //a monthly inventory check discrepancy
+        //a monthly inventory check discrepancy by hiding them
         if (e.Row.RowType == DataControlRowType.DataRow)
-        {    
+        {
             KeyValuePair<Discrepency, Item> kvp = (KeyValuePair<Discrepency, Item>)e.Row.DataItem;
 
             foreach (Discrepency d in monthly)
@@ -84,26 +84,22 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        GridView gdv = GridView1;
-        ProcessApprovalAndRejections(gdv);
-    }
-
     protected void Button2_Click(object sender, EventArgs e)
     {
-        GridView gdv = GridView2;
-        ProcessApprovalAndRejections(gdv);
+        Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
+        ProcessApprovalAndRejections(GridView1, summary);
+        ProcessApprovalAndRejections(GridView2, summary);
+        Session["discrepancySummary"] = summary;
+        Response.Redirect(LoginController.StockAdjustmentSummaryURI);
     }
 
-    private void ProcessApprovalAndRejections(GridView gdv)
+    private void ProcessApprovalAndRejections(GridView gdv, Dictionary<KeyValuePair<Discrepency, Item>, String> summary)
     {
-        Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
         foreach (GridViewRow row in gdv.Rows)
         {
             RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
 
-            if(rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
+            if (rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
             {
                 string itemCode = (row.FindControl("lblItemCode") as Label).Text;
                 int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
@@ -120,28 +116,20 @@ public partial class StockAdjustment : System.Web.UI.Page
                 }
             }
         }
-        Session["discrepancySummary"] = summary;
-        Response.Redirect(LoginController.StockAdjustmentSummaryURI);
-    }
-
-    protected void Clear1_Click(object sender, EventArgs e)
-    {
-        foreach(GridViewRow row in GridView1.Rows)
-        {
-            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
-            rbl.ClearSelection();
-        }
     }
 
     protected void Clear2_Click(object sender, EventArgs e)
     {
+        foreach (GridViewRow row in GridView1.Rows)
+        {
+            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            rbl.ClearSelection();
+        }
         foreach (GridViewRow row in GridView2.Rows)
         {
             RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
             rbl.ClearSelection();
         }
     }
-
-    
 }
 

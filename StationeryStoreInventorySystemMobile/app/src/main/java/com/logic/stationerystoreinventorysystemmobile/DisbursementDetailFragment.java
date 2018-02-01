@@ -36,6 +36,7 @@ public class DisbursementDetailFragment extends Fragment {
     String accessCode, remark, status, itemCode, itemDesc;
     int retrievedQty, actQty, reqQty, shortfallQty, discrepancyQty;
     boolean actualQtyValidate = true;
+    boolean redToast;
 
     //create list for shortfall item to regenerate requisition
     List<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
@@ -127,6 +128,7 @@ public class DisbursementDetailFragment extends Fragment {
                                         actQty = Integer.parseInt(disb.get("ActualQty").toString());
                                     } catch (Exception e) {
                                         status = "Actual Quantity cannot be empty!";
+                                        redToast = true;
                                     }
 
                                     reqQty = Integer.parseInt(disb.get("ReqQty").toString());
@@ -164,6 +166,7 @@ public class DisbursementDetailFragment extends Fragment {
                                 }
                                 if (actualQtyValidate == false) {
                                     status = "Actual Quantity cannot be more than requested quantity";
+                                    redToast = true;
                                 } else {
                                     //get textbox values
                                     EditText edtAccessCode = view.findViewById(R.id.accessCode);
@@ -181,10 +184,12 @@ public class DisbursementDetailFragment extends Fragment {
                                         //save current data to database if access code is correct
                                         DisbursementDetailListItems.UpdateDisbursement(toBeUpdated);
                                         status = "Acknowledgement successful!";
+                                        redToast = false;
                                         actualQtyValidate = true;
                                     } else {
                                         //return error if wrong access code
                                         status = "Wrong Access Code!";
+                                        redToast = true;
                                         actualQtyValidate = false;
                                     }
                                 }
@@ -211,7 +216,15 @@ public class DisbursementDetailFragment extends Fragment {
 
                                 Log.i("Result", result);
                                 //display toast message at the end of transaction
-                                Util.customToast(result,getActivity());
+                                if(redToast)
+                                {
+                                    Util.redsToast(result,getActivity());
+                                }
+                                else
+                                {
+                                    Util.greenToast(result,getActivity());
+                                }
+
                                 progress.dismiss();
 
                             }

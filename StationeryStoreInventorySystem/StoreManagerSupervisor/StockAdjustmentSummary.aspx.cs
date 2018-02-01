@@ -31,48 +31,56 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
 
     protected void Button2_Click(object sender, EventArgs e)
     {
-        foreach (GridViewRow row in GridView1.Rows)
+        try
         {
-            int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
-            string action = (row.FindControl("lblAction") as Label).Text;
-
-            Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById(discID);
-            if (d.Status == "Monthly")
+            foreach (GridViewRow row in GridView1.Rows)
             {
-                if (action == "Approved")
-                {
-                    List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(d.ItemCode);
+                int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
+                string action = (row.FindControl("lblAction") as Label).Text;
 
-                    foreach (Discrepency d2 in dList)
+                Discrepency d = EFBroker_Discrepancy.GetDiscrepancyById(discID);
+                if (d.Status == "Monthly")
+                {
+                    if (action == "Approved")
                     {
-                        if (d2.DiscrepencyID < d.DiscrepencyID)
-                        {   //Negating discrepancies reported before the monthly discrepancy after it is approved
-                            EFBroker_Discrepancy.ProcessDiscrepancy(d2.DiscrepencyID, "Resolved");
+                        List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(d.ItemCode);
+
+                        foreach (Discrepency d2 in dList)
+                        {
+                            if (d2.DiscrepencyID < d.DiscrepencyID)
+                            {   //Negating discrepancies reported before the monthly discrepancy after it is approved
+                                EFBroker_Discrepancy.ProcessDiscrepancy(d2.DiscrepencyID, "Resolved");
+                            }
                         }
                     }
+
                 }
 
+                EFBroker_Discrepancy.ProcessDiscrepancy(discID, action);
+
+                if (action == "Approved")
+                {    //only update stock card and item tables if discrepancy is approved
+                    StockCard sc = new StockCard();
+
+                    StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();
+
+                    sc.ItemCode = d.ItemCode;
+                    sc.TransactionType = "Adjustment";
+                    sc.Qty = d.AdjustmentQty;
+                    sc.Balance = lastEntry.Balance + d.AdjustmentQty;
+                    sc.TransactionDetailID = d.DiscrepencyID;
+
+                    EFBroker_StockCard.ResolveDiscrepancy(sc, sc.ItemCode, (int)sc.Balance);
+                }
             }
-
-            EFBroker_Discrepancy.ProcessDiscrepancy(discID, action);
-
-            if(action == "Approved")
-            {    //only update stock card and item tables if discrepancy is approved
-                StockCard sc = new StockCard();
-
-                StockCard lastEntry = EFBroker_StockCard.GetStockCardsByItemCode(d.ItemCode).Last();
-
-                sc.ItemCode = d.ItemCode;
-                sc.TransactionType = "Adjustment";
-                sc.Qty = d.AdjustmentQty;
-                sc.Balance = lastEntry.Balance + d.AdjustmentQty;
-                sc.TransactionDetailID = d.DiscrepencyID;
-
-                EFBroker_StockCard.ResolveDiscrepancy(sc, sc.ItemCode, (int)sc.Balance);
-            }
+            Session["discrepancySummary"] = null;
+            Utility.AlertMessageThenRedirect("Adjustments processed", "StockAdjustment.aspx");
         }
-        Session["discrepancySummary"] = null;
-        Utility.AlertMessageThenRedirect("Adjustments processed", "StockAdjustment.aspx");
+        catch (Exception ex)
+        {
+            Session["discrepancySummary"] = null;
+            Utility.AlertMessageThenRedirect("Failed to process adjustments, please try again", "StockAdjustment.aspx");
+        }
     }
 
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)

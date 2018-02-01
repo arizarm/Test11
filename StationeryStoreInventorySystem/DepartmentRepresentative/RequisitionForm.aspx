@@ -44,25 +44,25 @@
                 <asp:Label ID="Label2" runat="server"></asp:Label>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
                     ControlToValidate="TextBox4" ForeColor="Red"
-                    ErrorMessage="RequiredFieldValidator">Enter quantity.</asp:RequiredFieldValidator>
+                    ErrorMessage="RequiredFieldValidator" ValidationGroup="addValid">Enter quantity.</asp:RequiredFieldValidator>
                 <asp:RangeValidator ID="RangeValidator1" runat="server"
                     ErrorMessage="RangeValidator" ControlToValidate="TextBox4"
                     ForeColor="Red" Type="Integer"
-                    MaximumValue="1000" MinimumValue="1">Invalid Quantity</asp:RangeValidator>
+                    MaximumValue="1000" MinimumValue="1" ValidationGroup="addValid">Invalid Quantity</asp:RangeValidator>
             </td>
         </tr>
 
     </table>
 
 
-    <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="button" />
+    <asp:Button ID="Add" runat="server" Text="Add" OnClick="Add_Click" CssClass="button" ValidationGroup="addValid" />
     <br />
     <br />
-    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-    <asp:GridView ID="GridView2" RowStyle-Height="50px" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" >
+    <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" ValidationGroup="editValid" />
+    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" DataKeyNames="Code" OnRowEditing="RowEdit" OnRowCancelingEdit="RowCancelingEdit" OnRowUpdating="ReqRow_Updating" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
 
         <Columns>
-            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="false">
+            <asp:TemplateField HeaderText="Code" SortExpression="Code" Visible="False">
                 <ItemTemplate>
                     <asp:Label ID="code" runat="server" Text='<%# Bind("Code") %>'></asp:Label>
                 </ItemTemplate>
@@ -80,11 +80,11 @@
                     <asp:TextBox ID="qtyText" runat="server" Text='<%# Bind("Quantity") %>' TextMode="Number" Width="60px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
                         ControlToValidate="qtyText" ForeColor="Red"
-                        ErrorMessage="Enter quantity" Display="None" Enabled="True"></asp:RequiredFieldValidator>
+                        ErrorMessage="Enter quantity" Display="None" Enabled="True" ValidationGroup="editValid"></asp:RequiredFieldValidator>
                     <asp:RangeValidator ID="RangeValidator3" runat="server"
                         ErrorMessage="Invalid Quantity" ControlToValidate="qtyText"
                         ForeColor="Red" Type="Integer"
-                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False"></asp:RangeValidator>
+                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False" ValidationGroup="editValid"></asp:RangeValidator>
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">
@@ -95,10 +95,10 @@
 
             <asp:TemplateField>
                 <ItemTemplate>
-                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" />
+                    <asp:Button ID="ItemEdit" runat="server" Text="  Edit  " CssClass="alert-success" CommandName="Edit" ValidationGroup="editValid" />
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" />
+                    <asp:Button ID="EditItemSave" runat="server" Text=" Save " CommandName="Update" CssClass="alert-success" ValidationGroup="editValid" />
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField>

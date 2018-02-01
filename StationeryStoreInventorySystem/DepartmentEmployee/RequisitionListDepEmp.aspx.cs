@@ -85,6 +85,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearch";
+                ViewState["searchWord"] = searchWord;
                 showEmptyLabel();
             }
             else
@@ -92,6 +93,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
                 GridView1.DataBind();
                 ViewState["DataSource"] = "displaySearchStatus";
+                ViewState["searchWord"] = searchWord;
                 showEmptyLabel();
             }
         }
@@ -127,11 +129,11 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
         else if (((string)ViewState["DataSource"]).Equals("displaySearch"))
         {
-            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
+            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID);
         }
         else
         {
-            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
+            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
         }
         GridView1.DataBind();
     }
@@ -141,7 +143,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label statusLabel = (Label)e.Row.FindControl("Label4");
-
+            statusLabel.Font.Bold = true;
             string status = statusLabel.Text;
 
             if (status == "Approved" || status=="approved" || status=="InProgress")

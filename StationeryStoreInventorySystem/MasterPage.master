@@ -69,7 +69,7 @@
 
                     <%-- Department Menu --%>
                     <asp:Label ID="Label2" runat="server" CssClass="CategoryHeader">Department</asp:Label>
-                    <asp:HyperLink ID="hLinkDepartmentList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/DepartmentList.aspx">Department List</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkDepartmentList" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Store/DepartmentList.aspx">Department List</asp:HyperLink>
 
                     <%-- Stock Menu --%>
                     <asp:Label ID="lblStock" runat="server" CssClass="CategoryHeader">Stock</asp:Label>

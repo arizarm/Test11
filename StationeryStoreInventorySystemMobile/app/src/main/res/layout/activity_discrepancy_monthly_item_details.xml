@@ -21,14 +21,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Item Code:"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/tvItemCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <Space
@@ -46,14 +46,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Item Name:"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/tvItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <Space
@@ -72,14 +72,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Quantity in Stock:"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/tvBalance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <Space
@@ -98,14 +98,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Unit of Measure:"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/tvUom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <Space
@@ -125,14 +125,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Pending Adjustment:"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
 
             <TextView
                 android:id="@+id/tvPendingAdj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <LinearLayout
@@ -144,12 +144,12 @@
             <EditText
                 android:id="@+id/etActual"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Key in Actual Quantity (if incorrect)"
                 android:inputType="number"
-                android:textSize="22sp" />
+                style="@style/TextStyle" />
         </LinearLayout>
 
         <TextView

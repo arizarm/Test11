@@ -9,12 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by April Wang on 22/1/2018.
- */
-
 public class RequisitionListItem extends HashMap<String,String>{
-    final static String host="http://172.17.254.6/StationeryStoreInventorySystem/RequisitionListService.svc";
+    final static String host=Util.host +"/RequisitionListService.svc";
 
 
     public RequisitionListItem(String date, String requisitionNo, String department, String status, String employeeName/*, String remarks*/){

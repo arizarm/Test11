@@ -7,11 +7,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by Mo Mo on 30/1/2018.
- */
-
 public class RegenerateRequisition extends HashMap<String, String> {
 
     final static String host = Util.host + "DisbursementService.svc/";

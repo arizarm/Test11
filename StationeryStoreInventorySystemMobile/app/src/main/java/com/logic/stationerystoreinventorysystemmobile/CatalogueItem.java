@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class CatalogueItem extends HashMap<String, String> {
 
-    static String host = R.string.host_add + "ItemService.svc/";
+    static String host = Util.host + "ItemService.svc/";
 
     public CatalogueItem(String itemCode, String description, String unitOfMeasure, Integer balanceQty, String adjustments, String bin){
         put("itemCode", itemCode);

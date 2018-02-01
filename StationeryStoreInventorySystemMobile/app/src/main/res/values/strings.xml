@@ -1,5 +1,4 @@
 <resources>
-    <string name="host_add">http://172.17.250.259/StationeryStoreInventorySystem/</string>
     <string name="app_name">Logic University Stationery Store</string>
     <string name="login_email">Enter email address</string>
     <string name="login_pass">Enter password</string>
@@ -38,4 +37,19 @@
     <string name="phone">Telephone</string>
     <string name="fax">Fax</string>
     <string name="drep">Department Rep</string>
+    <string name="txtEmail">Enter email (name@logicuniversity.com)</string>
+    <string name="txtPassword">Enter password</string>
+    <string name="btnLogin">Login</string>
+    <string name="depName">Department Name: </string>
+    <string name="btnGenerate">Generate</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="reqQty">Requested Quantity</string>
+    <string name="actQty">Actual Quantity</string>
+    <string name="remark">Remark</string>
+    <string name="disbDate">Disbursement Date: </string>
+    <string name="disbTime">Disbursement Time: </string>
+    <string name="colPoint">Collection Point: </string>
+    <string name="accessCode">Enter Access Code</string>
+    <string name="btnAck">Acknowledge</string>
+    <string name="sfQty">Shortfall Quantity: </string>
 </resources>

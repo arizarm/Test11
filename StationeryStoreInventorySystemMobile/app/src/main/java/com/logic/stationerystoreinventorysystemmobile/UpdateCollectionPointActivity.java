@@ -199,13 +199,7 @@ public class UpdateCollectionPointActivity extends AppCompatActivity implements 
                 startActivity(i3);
                 return true;
             case R.id.item4:
-                SharedPreferences.Editor editor = pref.edit();
-                editor.clear();
-                editor.commit();
-                Intent i4 = new Intent(this, LoginActivity.class);
-                startActivity(i4);
-                Toast.makeText(getApplicationContext(),
-                        "Logged out",Toast.LENGTH_SHORT).show();
+                Util.LogOut(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

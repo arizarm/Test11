@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Discrepancy extends HashMap<String, String> implements Comparable<Discrepancy>{
 
-    static String host = R.string.host_add + "DiscrepancyService.svc/";
+    static String host = Util.host + "DiscrepancyService.svc/";
 
     //for submission to WCF
     public Discrepancy(String itemCode, Integer requestedBy, Integer adjustmentQty, String remarks, String status){

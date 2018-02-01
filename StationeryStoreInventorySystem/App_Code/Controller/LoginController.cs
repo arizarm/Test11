@@ -85,7 +85,7 @@ public class LoginController
     public static readonly string RequisitionListDepEmpURI = "~/DepartmentEmployee/RequisitionListDepEmp.aspx";
     public static readonly string RequisitionListDepHeadURI = "~/DepartmentHead/RequisitionListDepHead.aspx";
     public static readonly string RequisitionListTempDepHeadURI = "~/DepartmentTempHead/RequisitionListDepTempHead.aspx";
-    public static readonly string RequisitionListTempDepRedURI = "~/DepartmentRepresentative/RequisitionListDepRep.aspx";
+    public static readonly string RequisitionListDepRepURI = "~/DepartmentRepresentative/RequisitionListDepRep.aspx";
     public static readonly string RequisitionListClerkURI = "~/Store/RequisitionListClerk.aspx";
     public static readonly string RequisitionDetailURI = "RequisitionDetails.aspx";
     public static readonly string RetrievalListDetailURI = "~/Store/RetrievalListDetail.aspx";

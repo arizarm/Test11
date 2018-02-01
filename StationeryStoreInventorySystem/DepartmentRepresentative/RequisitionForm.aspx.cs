@@ -107,15 +107,20 @@ public partial class RequisitionForm : System.Web.UI.Page
                 RequisitionControl.addNewRequisitionItem(rItem, DateTime.Now, "Pending", RequestedBy, DeptCode);
 
                 DeptController dc = new DeptController();
-                Employee empHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
+                Employee tempHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
                 Employee deptHead = dc.GetDHeadByDeptCode(emp.DeptCode);
 
-                string mail = empHead.Email;
-                string receiver = mail;
-                string subject = "New Requisition";
-                string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
-                Utility.sendMail(receiver, subject, body);
-                if (empHead != deptHead)
+                if(tempHead != null)
+                {
+                    string mail = tempHead.Email;
+                    string receiver = mail;
+                    string subject = "New Requisition";
+                    string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+                    Utility.sendMail(receiver, subject, body);
+                }
+
+               
+                if (deptHead != null)
                 {
                     string mail1 = deptHead.Email;
                     string receiver1 = mail1;
@@ -123,7 +128,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                     string body1 = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
                     Utility.sendMail(receiver1, subject1, body1);
                 }
-                Response.Redirect(LoginController.RequisitionListTempDepRedURI);
+                Response.Redirect(LoginController.RequisitionListDepRepURI);
             }
             //Response.Write("<script language='javascript'>alert('Requisition Submitted');</script>");
             //Server.Transfer("RequisitionListDepartment.aspx", true);            

@@ -26,7 +26,7 @@ public class EFBroker_Requisition
         string depCode;
         using (StationeryEntities context = new StationeryEntities())
         {
-            depCode = context.Requisitions.Where(r => r.RequisitionID == requisitionID).Select(r => r.DeptCode).FirstOrDefault();
+            depCode = context.Requisitions.OrderByDescending(x => x.RequestDate).Where(r => r.RequisitionID == requisitionID).Select(r => r.DeptCode).FirstOrDefault();
         }
         return depCode;
     }
@@ -98,7 +98,6 @@ public class EFBroker_Requisition
         using (StationeryEntities context = new StationeryEntities())
         {
             rlist = context.Requisitions.OrderBy(x=>x.RequestDate).Where(x => x.Status == status).ToList();
-           // rlist = context.Requisitions.Where(x => x.Status == status).ToList();
         }
         return rlist;
     }
@@ -107,7 +106,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.Status == status && x.RequestedBy == empID).ToList();
+            rlist = context.Requisitions.OrderBy(x => x.RequestDate).Where(x => x.Status == status && x.RequestedBy == empID).ToList();
         }
         return rlist;
     }
@@ -116,7 +115,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.Status.Equals(status) && x.DeptCode.Equals(depCode)).ToList();
+            rlist = context.Requisitions.OrderBy(x => x.RequestDate).Where(x => x.Status.Equals(status) && x.DeptCode.Equals(depCode)).ToList();
         }
         return rlist;
     }
@@ -126,7 +125,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.DisbursementID == disbursementID).ToList();
+            rlist = context.Requisitions.OrderBy(x => x.RequestDate).Where(x => x.DisbursementID == disbursementID).ToList();
         }
         return rlist;
     }
@@ -136,7 +135,7 @@ public class EFBroker_Requisition
         List<Requisition> rlist;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rlist = context.Requisitions.Where(x => x.DeptCode.Equals(deptCode)).ToList();
+            rlist = context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DeptCode.Equals(deptCode)).ToList();
         }
         return rlist;
     }
@@ -155,7 +154,7 @@ public class EFBroker_Requisition
         List<Requisition> rList;
         using (StationeryEntities context = new StationeryEntities())
         {
-            rList = context.Requisitions.Where(x => x.RequestedBy == empID).OrderByDescending(c => c.RequestDate).ToList();
+            rList = context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.RequestedBy == empID).OrderByDescending(c => c.RequestDate).ToList();
         }
         return rList;
     }
@@ -329,7 +328,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.Status == "Approved" || x.Status == "Priority" && x.DeptCode == deptCode).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.Status == "Approved" || x.Status == "Priority" && x.DeptCode == deptCode).ToList();
         }
     }
 
@@ -337,7 +336,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals("Approved") || x.Status.Equals("Priority")).ToList();
         }
     }
 
@@ -345,7 +344,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode)).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DeptCode.Equals(deptCode)).ToList();
         }
     }
 
@@ -353,7 +352,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals(status)).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DeptCode.Equals(deptCode) && x.Status.Equals(status)).ToList();
         }
     }
 
@@ -361,7 +360,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy == (empID)).ToList();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DeptCode.Equals(deptCode) && x.RequestedBy == (empID)).ToList();
         }
     }
 
@@ -369,7 +368,7 @@ public class EFBroker_Requisition
     {
         using (StationeryEntities context = new StationeryEntities())
         {
-            return context.Requisitions.Where(x => x.DisbursementID == disbId).FirstOrDefault();
+            return context.Requisitions.OrderByDescending(x => x.RequestDate).Where(x => x.DisbursementID == disbId).FirstOrDefault();
         }
     }
 

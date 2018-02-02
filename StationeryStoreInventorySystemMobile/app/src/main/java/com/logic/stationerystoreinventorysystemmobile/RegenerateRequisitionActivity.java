@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RegenerateRequisitionActivity extends AppCompatActivity {
 
-    private static List<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
+    private static ArrayList<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();
 
     ArrayList<RegenerateRequisition> regenerateList = new ArrayList<RegenerateRequisition>();
 
@@ -55,17 +55,17 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for (int i = 0; i < lv.getCount(); i++) {
-                    v = lv.getChildAt(i);
-                    CheckBox checkBox = v.findViewById(R.id.checkBox);
-                    if (checkBox.isChecked()) {
-                        RegenerateRequisition reqItem = (RegenerateRequisition) lv.getAdapter().getItem(i);
-                        regenerateList.add(reqItem);
-                    }
-                }
+//                for (int i = 0; i < lv.getCount(); i++) {
+//                    v = lv.getChildAt(i);
+//                    CheckBox checkBox = v.findViewById(R.id.checkBox);
+//                    if (checkBox.isChecked()) {
+//                        RegenerateRequisition reqItem = (RegenerateRequisition) lv.getAdapter().getItem(i);
+//                        regenerateList.add(reqItem);
+//                    }
+//                }
 
-                String message;
-                if (regenerateList.size() != 0) {
+//                String message;
+//                if (regenerateList.size() != 0) {
                     new AsyncTask<Void, Void, Void>() {
                         ProgressDialog progress;
 
@@ -76,7 +76,7 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
 
                         @Override
                         protected Void doInBackground(Void... params) {
-                            RegenerateRequisition.RegenerateRequisition(regenerateList);
+                            RegenerateRequisition.RegenerateRequisition(regenReqList);
                             return null;
                         }
 
@@ -89,15 +89,15 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
                             progress.dismiss();
                         }
                     }.execute();
-                } else {
-                    message = "Please select item to request!";
-                    Util.redsToast(message, RegenerateRequisitionActivity.this);
-                }
+//                } else {
+//                    message = "Please select item to request!";
+//                    Util.redsToast(message, RegenerateRequisitionActivity.this);
+//                }
             }
         });
     }
 
-    public static void setRegenReqList(List<RegenerateRequisition> r) {
+    public static void setRegenReqList(ArrayList<RegenerateRequisition> r) {
         regenReqList = r;
     }
 

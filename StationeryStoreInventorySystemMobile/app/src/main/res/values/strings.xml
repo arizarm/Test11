@@ -56,4 +56,5 @@
     <string name="deptrep">Department Representative:</string>
     <string name="cp">Collection Point:</string>    
     <string name="disbList">Disbursement List</string>
+    <string name="lstItem">Item List</string>
 </resources>

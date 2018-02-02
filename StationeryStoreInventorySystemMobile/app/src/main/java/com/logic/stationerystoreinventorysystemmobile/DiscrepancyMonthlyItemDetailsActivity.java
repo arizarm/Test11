@@ -1,6 +1,7 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +29,12 @@ public class DiscrepancyMonthlyItemDetailsActivity extends AppCompatActivity {
         iList = DiscrepancyHolder.getMonthlyItems();
         String itemCode = getIntent().getStringExtra("itemCode");
         new AsyncTask<String, Void, CatalogueItem>(){
+            ProgressDialog progress;
 
+            @Override
+            protected void onPreExecute() {
+                progress = ProgressDialog.show(DiscrepancyMonthlyItemDetailsActivity.this, "Search", "Searching through items", true);
+            }
             @Override
             protected CatalogueItem doInBackground(String... itemCode){
                 return CatalogueItem.getItem(itemCode[0]);
@@ -47,6 +53,7 @@ public class DiscrepancyMonthlyItemDetailsActivity extends AppCompatActivity {
                 tvBalanceQty.setText(ci.get("balanceQty"));
                 tvUom.setText(ci.get("unitOfMeasure"));
                 tvPendingAdj.setText(ci.get("adjustments"));
+                progress.dismiss();
             }
         }.execute(itemCode);
     }

@@ -18,11 +18,11 @@
 
             <TextView
                 android:id="@+id/textView12"
+                style="@style/TitleStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monthly Inventory Check"
                 android:textAlignment="center"
-                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -39,11 +39,12 @@
 
                     <TextView
                         android:id="@+id/textView20"
+                        style="@style/TextStyle"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Item Code"
-                        android:textSize="18sp" />
+                        android:textAlignment="center" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -54,19 +55,19 @@
 
                         <TextView
                             android:id="@+id/textView19"
+                            style="@style/TextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Item Name"
-                            android:textSize="18sp" />
+                            android:text="Item Name" />
 
                         <TextView
                             android:id="@+id/textView21"
+                            style="@style/TextStyle"
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Bin"
-                            android:textSize="18sp" />
+                            android:text="Bin" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -80,61 +81,61 @@
 
                     <TextView
                         android:id="@+id/textView17"
+                        style="@style/TextStyle"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Correct Qty?"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:textAlignment="center" />
 
                     <TextView
                         android:id="@+id/textView15"
+                        style="@style/TextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Actual Qty"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:textAlignment="center" />
 
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="540dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="480dp"
+                android:layout_height="450dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/listItems"
                     android:layout_width="match_parent"
-                    android:layout_height="440dp"
+                    android:layout_height="410dp"
                     android:descendantFocusability="beforeDescendants" />
 
                 <TextView
                     android:id="@+id/tvError"
+                    style="@style/TextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text=""
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="18sp" />
+                    android:textColor="@android:color/holo_red_dark" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnFinalise"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="finaliseClick"
-                android:text="Finalise Discrepancies"
-                android:textSize="20sp"
                 style="@style/button_text"
-                android:background="@drawable/green_button"/>
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@drawable/green_button"
+                android:onClick="finaliseClick"
+                android:text="Finalise Discrepancies" />
         </LinearLayout>
     </LinearLayout>
 

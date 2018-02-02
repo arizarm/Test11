@@ -128,11 +128,7 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
                         public void onPostExecute(Void voids) {
                             progress.dismiss();
                             if(submissionSuccessful){
-                                Toast t = Toast.makeText(getApplicationContext(), "Discrepancies reported", Toast.LENGTH_LONG);
-                                Context c = getApplicationContext();
-                                int offset = Math.round(150 * c.getResources().getDisplayMetrics().density);
-                                t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
-                                t.show();
+                                Util.greenToast("Discrepancies reported", getApplicationContext());
                                 DiscrepancyHolder.clearDiscrepancies();
                                 DiscrepancyHolder.clearMonthlyItems();
                                 DiscrepancyHolder.resetItemToUpdate();
@@ -148,7 +144,7 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
                 }
                 catch(Exception e){
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Discrepancy reporting failed, please try again", Toast.LENGTH_LONG).show();
+                    Util.redsToast("Discrepancy reporting failed, please try again", getApplicationContext());
                 }
             }
         }

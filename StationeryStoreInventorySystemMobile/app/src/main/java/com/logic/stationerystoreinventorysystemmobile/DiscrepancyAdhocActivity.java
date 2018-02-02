@@ -56,9 +56,7 @@ public class DiscrepancyAdhocActivity extends AppCompatActivity implements Adapt
                 SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), iList, R.layout.adhoc_discrepancy_row, new String[]{"itemCode", "description"}, new int[]{R.id.tvItemCode,R.id.tvItemName});
                 list.setAdapter(adapter);
                 if(iList.isEmpty()){
-                    Toast t = Toast.makeText(getApplicationContext(), noSearchReturn, Toast.LENGTH_LONG);
-                    t.setGravity(Gravity.CENTER, 0, 0);
-                    t.show();
+                    Util.redsToast(noSearchReturn, getApplicationContext());
                 }
                 progress.dismiss();
             }

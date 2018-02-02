@@ -1,6 +1,7 @@
 package com.logic.stationerystoreinventorysystemmobile;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -30,7 +31,12 @@ public class DiscrepancyAdhocItemDetailsActivity extends AppCompatActivity {
         String itemCode = getIntent().getStringExtra("itemCode");
 
         new AsyncTask<String, Void, CatalogueItem>(){
+            ProgressDialog progress;
 
+            @Override
+            protected void onPreExecute() {
+                progress = ProgressDialog.show(DiscrepancyAdhocItemDetailsActivity.this, "Search", "Searching through items", true);
+            }
             @Override
             protected CatalogueItem doInBackground(String... itemCode){
                 return CatalogueItem.getItem(itemCode[0]);
@@ -49,6 +55,7 @@ public class DiscrepancyAdhocItemDetailsActivity extends AppCompatActivity {
                 tvBalanceQty.setText(ci.get("balanceQty"));
                 tvUom.setText(ci.get("unitOfMeasure"));
                 tvPendingAdj.setText(ci.get("adjustments"));
+                progress.dismiss();
             }
         }.execute(itemCode);
     }
@@ -66,13 +73,7 @@ public class DiscrepancyAdhocItemDetailsActivity extends AppCompatActivity {
             if(adjustment != 0){
                 if(balanceQty + adjustment >= 0){
                     DiscrepancyHolder.addDiscrepancy(itemCode, adjustment);   //Adding a discrepancy to a static hashmap held in DiscrepancyHolder class
-                    Toast t = Toast.makeText(this, "Item added", Toast.LENGTH_LONG);
-                    Context c = getApplicationContext();
-                    int offset = Math.round(150 * c.getResources().getDisplayMetrics().density);
-                    //Setting the toast at a point below the center point, so that it doesn't overlap with the loading dialog in the
-                    t.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, offset);
-                    t.show();
-                    hideKeyboard();
+                    Util.greenToast("Item added", this);
                     finish();
                 }
                 else{
@@ -88,10 +89,10 @@ public class DiscrepancyAdhocItemDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void hideKeyboard(){
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
+//    private void hideKeyboard(){
+//        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -17,11 +17,11 @@
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="230dp"
+                style="@style/TitleStyle"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Item Code:"
-                style="@style/TitleStyle" />
+                android:text="Item Code:" />
 
             <TextView
                 android:id="@+id/tvItemCode"
@@ -42,11 +42,11 @@
 
             <TextView
                 android:id="@+id/textView13"
-                android:layout_width="240dp"
+                style="@style/TitleStyle"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Item Name:"
-                style="@style/TitleStyle" />
+                android:text="Item Name:" />
 
             <TextView
                 android:id="@+id/tvItemName"
@@ -68,11 +68,11 @@
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="360dp"
+                style="@style/TitleStyle"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Quantity in Stock:"
-                style="@style/TitleStyle" />
+                android:text="Quantity in Stock:" />
 
             <TextView
                 android:id="@+id/tvBalance"
@@ -94,11 +94,11 @@
 
             <TextView
                 android:id="@+id/textView16"
-                android:layout_width="340dp"
+                style="@style/TitleStyle"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Unit of Measure:"
-                style="@style/TitleStyle" />
+                android:text="Unit of Measure:" />
 
             <TextView
                 android:id="@+id/tvUom"
@@ -121,11 +121,11 @@
 
             <TextView
                 android:id="@+id/textView14"
-                android:layout_width="430dp"
+                style="@style/TitleStyle"
+                android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pending Adjustment:"
-                style="@style/TitleStyle" />
+                android:text="Pending Adjustment:" />
 
             <TextView
                 android:id="@+id/tvPendingAdj"
@@ -158,16 +158,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="18sp" />
+            style="@style/TextStyle" />
 
         <Button
             android:id="@+id/btnInputActual"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:onClick="inputActualClick"
-            android:text="Input Actual Quantity"
             style="@style/button_text"
-            android:background="@drawable/green_button"/>
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/green_button"
+            android:onClick="inputActualClick"
+            android:text="Input Actual Quantity" />
 
         <Space
             android:layout_width="match_parent"
@@ -175,12 +175,12 @@
 
         <Button
             android:id="@+id/btnCorrect"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:onClick="markCorrectClick"
-            android:text="Mark as Correct Quantity"
             style="@style/button_text"
-            android:background="@drawable/green_button"/>
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@drawable/green_button"
+            android:onClick="markCorrectClick"
+            android:text="Mark as Correct Quantity" />
 
 
     </LinearLayout>

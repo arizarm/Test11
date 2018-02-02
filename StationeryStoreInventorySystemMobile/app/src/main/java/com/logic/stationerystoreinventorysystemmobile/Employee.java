@@ -89,7 +89,6 @@ public class Employee extends java.util.HashMap<String,String> {
         for(int i=0;i<b.length();i++){
             b.getBoolean(0);
         }*/
-
         JSONObject b = JSONParser.getJSONFromUrl(hostURL+"Employee/"+id);
         try{
             return b.getBoolean("IsTempHead");
@@ -97,6 +96,18 @@ public class Employee extends java.util.HashMap<String,String> {
             Log.e("Error", ex.toString());
         }
         return false;
+    }
+
+
+    public static boolean CheckHasTempHead(String id){
+
+        JSONObject b = JSONParser.getJSONFromUrl(hostURL+"Employee/check/"+id);
+            try{
+            return b.getBoolean("HasTemp");
+        }catch (Exception ex){
+            Log.e("Error", ex.toString());
+        }
+            return false;
     }
 
     public static LinkedHashMap<String, String> listEmployee(String dcode) {

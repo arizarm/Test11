@@ -195,4 +195,12 @@ public class DeptService : IDeptService
         it.IsTempHead = isTemp;
         return it;
     }
+
+    public CheckHasTemp CheckHasTempHead(string deptCode)
+    {
+        bool checkHasTemp = EFBroker_Employee.isDeptHaveTempHead(deptCode);
+        CheckHasTemp cht = new CheckHasTemp();
+        cht.HasTemp = checkHasTemp;
+        return cht;
+    }
 }

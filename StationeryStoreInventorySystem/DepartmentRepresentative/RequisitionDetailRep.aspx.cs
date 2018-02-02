@@ -14,94 +14,100 @@ public partial class RequisitionDetails : System.Web.UI.Page
     string code;
     protected void Page_Load(object sender, EventArgs e)
     {
-        id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-        //int id = 24;
+        if (RequisitionControl.getRequisition(int.Parse((string)Request.QueryString["requisitionNo"])) != null)
+        {
+            id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
+            //int id = 24;
 
-        Requisition r = RequisitionControl.getRequisition(id);
-        int empid = Convert.ToInt32(r.RequestedBy);
-        Label3.Text = r.RequestDate.ToString();
-        Label4.Text = r.Status.ToString();
-        if (Label4.Text.Equals("Approved") || Label4.Text.Equals("approved") || Label4.Text.Equals("InProgress"))
-        {
-            Label4.ForeColor = System.Drawing.Color.Green;
-        }
-        else if (Label4.Text.Equals("Pending"))
-        {
-            Label4.ForeColor = System.Drawing.Color.Blue;
-        }
-        else if (Label4.Text.Equals("Priority"))
-        {
-            Label4.ForeColor = System.Drawing.Color.Red;
-        }
-        else
-        {
-            Label4.ForeColor = System.Drawing.Color.Black;
-        }
-
-        if (!IsPostBack)
-        {
-
-            showAllItems();
-            if (r.Status != "Pending")
+            Requisition r = RequisitionControl.getRequisition(id);
+            int empid = Convert.ToInt32(r.RequestedBy);
+            lblDate.Text = r.RequestDate.ToString();
+            lblStatus.Text = r.Status.ToString();
+            if (lblStatus.Text.Equals("Approved") || lblStatus.Text.Equals("approved") || lblStatus.Text.Equals("InProgress"))
             {
-                Cancel.Visible = false;
-                Add.Visible = false;
-                Update.Visible = false;
-
-                if (!String.IsNullOrWhiteSpace(r.Remarks))
-                    Label8.Text = r.Remarks.ToString();
+                lblStatus.ForeColor = System.Drawing.Color.Green;
+            }
+            else if (lblStatus.Text.Equals("Pending"))
+            {
+                lblStatus.ForeColor = System.Drawing.Color.Blue;
+            }
+            else if (lblStatus.Text.Equals("Priority"))
+            {
+                lblStatus.ForeColor = System.Drawing.Color.Red;
+            }
+            else
+            {
+                lblStatus.ForeColor = System.Drawing.Color.Black;
             }
 
-            DropDownList2.DataSource = RequisitionControl.getItem();
-            DropDownList2.DataTextField = "Description";
-            DropDownList2.DataValueField = "ItemCode";
-            DropDownList2.DataBind();
-        }
+            if (!IsPostBack)
+            {
 
-        code = DropDownList2.SelectedValue.ToString();
-        Label6.Text = RequisitionControl.getUOM(code);
+                showAllItems();
+                if (r.Status != "Pending")
+                {
+                    btnCancel.Visible = false;
+                    btnAdd.Visible = false;
+                    btnUpdate.Visible = false;
+
+                    if (!String.IsNullOrWhiteSpace(r.Remarks))
+                        lblRemarks.Text = r.Remarks.ToString();
+                }
+
+                ddlItem.DataSource = RequisitionControl.getItem();
+                ddlItem.DataTextField = "Description";
+                ddlItem.DataValueField = "ItemCode";
+                ddlItem.DataBind();
+            }
+
+            code = ddlItem.SelectedValue.ToString();
+            lblUom.Text = RequisitionControl.getUOM(code);
+        }
+        else
+            Response.Redirect(LoginController.RequisitionListDepEmpURI);
     }
 
     protected void showAllItems()
     {
-        GridView1.DataSource = RequisitionControl.getList(id);
+        gvItemList.DataSource = RequisitionControl.getList(id);
         //GridView1.DataSource = q.ToList();
-        GridView1.DataBind();
+        gvItemList.DataBind();
 
-        GridView2.DataSource = RequisitionControl.getList(id);
+        gvItemListView.DataSource = RequisitionControl.getList(id);
         //GridView2.DataSource = q.ToList();
-        GridView2.DataBind();
+        gvItemListView.DataBind();
     }
 
-    protected void Cancel_Click(object sender, EventArgs e)
+    protected void BtnCancel_Click(object sender, EventArgs e)
     {
         try
         {
             id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
             RequisitionControl.cancelRejectRequisition(id);
 
-            Response.Redirect(LoginController.RequistionListDepartmentURI);
+            Response.Redirect(LoginController.RequisitionListDepEmpURI);
             //Response.Write("<script language='javascript'>alert('Requisition has been cancelled');</script>");
         }
         catch (Exception)
         {
-            Utility.DisplayAlertMessage("Error!Retry.");
+            Utility.DisplayAlertMessage("Error! Retry.");
         }
     }
 
-    protected void Add_Click(object sender, EventArgs e)
+    protected void BtnAdd_Click(object sender, EventArgs e)
     {
-        Panel1.Visible = true;
-        Add.Visible = false;
+        pnlAddNew.Visible = true;
+        btnAdd.Visible = false;
+        btnHide.Visible = true;
     }
 
-    protected void New_Click(object sender, EventArgs e)
+    protected void BtnNew_Click(object sender, EventArgs e)
     {
         id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-        //Item des = RequisitionControl.getItem(code);
-        int qty = Convert.ToInt32(TextBox1.Text);
+        //string des = RequisitionControl.getDescription(code);
+        int qty = Convert.ToInt32(txtQty.Text);
 
-        if (GridView1.Rows.Count <= 0)
+        if (gvItemList.Rows.Count <= 0)
         {
             RequisitionControl.addItemToRequisition(code, qty, id);
         }
@@ -110,12 +116,12 @@ public partial class RequisitionDetails : System.Web.UI.Page
         {
             bool isEqual = false;
             string truCode = "";
-            foreach (GridViewRow row in GridView1.Rows)
+            foreach (GridViewRow row in gvItemList.Rows)
             {
-                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("itemDes");
+                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("lblItemDes");
                 string item = labelDes.Text;
 
-                System.Web.UI.WebControls.Label labelCode = (System.Web.UI.WebControls.Label)row.FindControl("code");
+                System.Web.UI.WebControls.Label labelCode = (System.Web.UI.WebControls.Label)row.FindControl("lblCode");
                 string iCode = labelCode.Text;
 
                 if (code.Equals(iCode))
@@ -126,14 +132,14 @@ public partial class RequisitionDetails : System.Web.UI.Page
             }
             if (isEqual)
             {
-                RequiredFieldValidator2.Enabled = true;
-                RangeValidator2.Enabled = true;
+                rfvQty.Enabled = true;
+                rvQty.Enabled = true;
                 RequisitionControl.editRequisitionItemQty(id, truCode, qty);
             }
             else
             {
-                RequiredFieldValidator2.Enabled = true;
-                RangeValidator2.Enabled = true;
+                rfvQty.Enabled = true;
+                rvQty.Enabled = true;
                 RequisitionControl.addItemToRequisition(code, qty, id);
             }
         }
@@ -141,18 +147,18 @@ public partial class RequisitionDetails : System.Web.UI.Page
         showAllItems();
     }
 
-    protected void Close_Click(object sender, EventArgs e)
+    protected void BtnHide_Click(object sender, EventArgs e)
     {
-        Panel1.Visible = false;
-        Add.Visible = true;
-        Close.Visible = false;
+        pnlAddNew.Visible = false;
+        btnAdd.Visible = true;
+        btnHide.Visible = false;
     }
 
-    protected void Delete_Click(object sender, EventArgs e)
+    protected void BtnDelete_Click(object sender, EventArgs e)
     {
         //LoadData();
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
-        string itemDes = GridView1.DataKeys[row.RowIndex].Value.ToString();
+        string itemDes = gvItemList.DataKeys[row.RowIndex].Value.ToString();
 
 
         Requisition_Item rItem = RequisitionControl.findByReqIDItemCode(id, itemDes);
@@ -165,11 +171,11 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
     protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
     {
-        ValidationSummary1.Enabled = true;
-        System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView1.Rows[e.RowIndex].FindControl("qtyText");
+        vsQty.Enabled = true;
+        System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)gvItemList.Rows[e.RowIndex].FindControl("txtQuantity");
         int newQty = Convert.ToInt32(qtyText.Text);
 
-        System.Web.UI.WebControls.Label codeLabel = (System.Web.UI.WebControls.Label)GridView1.Rows[e.RowIndex].FindControl("code");
+        System.Web.UI.WebControls.Label codeLabel = (System.Web.UI.WebControls.Label)gvItemList.Rows[e.RowIndex].FindControl("lblCode");
         string itemDesc = codeLabel.Text;
 
         Requisition_Item item = RequisitionControl.findByReqIDItemCode(id, itemDesc);
@@ -178,40 +184,39 @@ public partial class RequisitionDetails : System.Web.UI.Page
 
         RequisitionControl.updateRequisitionItem(rId, iCode, newQty);
 
-        GridView1.EditIndex = -1;
+        gvItemList.EditIndex = -1;
         showAllItems();
     }
 
     protected void RowEdit(object sender, GridViewEditEventArgs e)
     {
-        GridView1.EditIndex = e.NewEditIndex;
+        gvItemList.EditIndex = e.NewEditIndex;
         showAllItems();
     }
 
     protected void RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView1.EditIndex = -1;
+        gvItemList.EditIndex = -1;
         showAllItems();
     }
-    protected void Update_Click(object sender, EventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
-        Add.Visible = true;
-        GridView1.Visible = true;
-        GridView2.Visible = false;
-        Update.Visible = false;
-        Save.Visible = true;
+        btnAdd.Visible = true;
+        gvItemList.Visible = true;
+        gvItemListView.Visible = false;
+        btnUpdate.Visible = false;
+        btnSave.Visible = true;
     }
-    protected void Save_Click(object sender, EventArgs e)
+    protected void BtnSave_Click(object sender, EventArgs e)
     {
-        Save.Visible = false;
-        Update.Visible = true;
-        GridView2.Visible = true;
-        GridView1.Visible = false;
-        Add.Visible = false;
-        Panel1.Visible = false;
+        btnSave.Visible = false;
+        btnUpdate.Visible = true;
+        gvItemListView.Visible = true;
+        gvItemList.Visible = false;
+        btnAdd.Visible = false;
+        pnlAddNew.Visible = false;
     }
-
-    protected void Button3_Click(object sender, EventArgs e)
+    protected void BtnBack_Click(object sender, EventArgs e)
     {
             Response.Redirect("~/DepartmentRepresentative/RequisitionListDepRep.aspx");
     }

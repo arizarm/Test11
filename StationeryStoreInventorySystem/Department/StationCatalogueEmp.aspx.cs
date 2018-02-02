@@ -15,7 +15,7 @@ public partial class Department_StationCatalogueEmp : System.Web.UI.Page
         {
             try
             {
-                GridView1.DataSource = EFBroker_Item.GetCatalogueList();
+                gvForStationCatalogue.DataSource = EFBroker_Item.GetCatalogueList();
             }
             catch (Exception sql)
             {
@@ -23,7 +23,7 @@ public partial class Department_StationCatalogueEmp : System.Web.UI.Page
             }
             if (!IsPostBack)
             {
-                GridView1.DataBind();
+                gvForStationCatalogue.DataBind();
 
             }
         }
@@ -33,23 +33,23 @@ public partial class Department_StationCatalogueEmp : System.Web.UI.Page
         }
     }
 
-    protected void PrintViewButton_Click(object sender, EventArgs e)
+    protected void BtnViewPrint_Click(object sender, EventArgs e)
     {
-        if (PrintViewButton.Text == "View Printable Version")
+        if (btnViewPrint.Text == "View Printable Version")
         {
-            PrintViewButton.Text = "Back";
-            PrintButton.Visible = true;
+            btnViewPrint.Text = "Back";
+            btnForPrint.Visible = true;
         }
         else
         {
-            PrintViewButton.Text = "View Printable Version";
-            PrintButton.Visible = false;
+            btnViewPrint.Text = "View Printable Version";
+            btnForPrint.Visible = false;
 
         }
     }
 
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvForStationCatalogue_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

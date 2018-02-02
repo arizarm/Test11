@@ -8,22 +8,22 @@
     </div>
     <br />
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Back To List" OnClick="Button1_Click" CssClass="alert-success" />
+    <asp:Button ID="btnBack" runat="server" Text="Back To List" OnClick="BtnBack_Click" CssClass="alert-success" />
     <br />
     <br />
     Requested By:
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lblReqname" runat="server"></asp:Label>
     <br />
     Requested Date:
-    <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lblReqDate" runat="server"></asp:Label>
     <br />
     <strong>Status:
-    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lblStatus" runat="server"></asp:Label>
     </strong>
     <br />
 
                 <asp:Panel ID="Panel3" runat="server">
-                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
+                    <asp:GridView ID="gvRequisitionDetailList" runat="server" AutoGenerateColumns="false" CssClass="mGrid mGrid60percent" RowStyle-Height="50px">
                         <%--CssClass="mGrid"--%>
                         <Columns>
                             <asp:TemplateField HeaderText="Item" SortExpression="Description">
@@ -49,12 +49,12 @@
                 </asp:Panel>
     <div>
         <asp:Label ID="ReasonLabel" runat="server" Text="Reason: "></asp:Label>   
-       <textarea id="TextArea1" cols="20" rows="2"  runat="server"></textarea>
+       <textarea id="txtReason" cols="20" rows="2"  runat="server"></textarea>
    
     </div>
 
-    <asp:Button ID="ApproveButton" runat="server" Text="Approve" CssClass="button" OnClick="ApproveButton_Click" />
-    <asp:Button ID="RejectButton" runat="server" Text="Reject" CssClass="rejectBtn" OnClick="RejectButton_Click"  />
+    <asp:Button ID="btnApprove" runat="server" Text="Approve" CssClass="button" OnClick="BtnApprove_Click" />
+    <asp:Button ID="btnReject" runat="server" Text="Reject" CssClass="rejectBtn" OnClick="BtnReject_Click"  />
     <asp:Label ID="approveSuccess" runat="server"></asp:Label>
 </asp:Content>
 

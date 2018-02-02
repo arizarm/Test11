@@ -20,37 +20,35 @@ public partial class RequisitionForm : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Label1.Text = DateTime.Now.ToLongDateString();
+        lblDate.Text = DateTime.Now.ToLongDateString();
         emp = (Employee)Session["emp"];
         if (!IsPostBack)
         {
             int id = Convert.ToInt32(RequisitionControl.getLastReq()) + 1;
             //Label3.Text = "Form: "+emp.DeptCode+"/" + id;
-            Label3.Text = "Form: " + emp.DeptCode+"/ " + id;
+            lblFormTitle.Text = "Form: " + emp.DeptCode + "/ " + id;
 
             ViewState["list"] = rItem;
-            DropDownList1.DataSource = RequisitionControl.getItem();
-            DropDownList1.DataTextField = "Description";
-            DropDownList1.DataValueField = "ItemCode";
-            DropDownList1.DataBind();
+            ddlItem.DataSource = RequisitionControl.getItem();
+            ddlItem.DataTextField = "Description";
+            ddlItem.DataValueField = "ItemCode";
+            ddlItem.DataBind();
         }
         rItem = (List<RequestedItem>)ViewState["list"];
-        des = DropDownList1.SelectedItem.ToString();
-        code = DropDownList1.SelectedValue.ToString();
-        Label2.Text = RequisitionControl.getUOM(code);
-        //Label4.Text = RequisitionControl.getCode(des);
-        Label4.Visible = false;
+        des = ddlItem.SelectedItem.ToString();
+        code = ddlItem.SelectedValue.ToString();
+        lblUom.Text = RequisitionControl.getUOM(code);
     }
 
-    protected void Add_Click(object sender, EventArgs e)
+    protected void BtnAdd_Click(object sender, EventArgs e)
     {
         //reqItem = new ArrayList();
-        des = DropDownList1.SelectedItem.ToString();
-        int qty = Convert.ToInt32(TextBox4.Text);
+        des = ddlItem.SelectedItem.ToString();
+        int qty = Convert.ToInt32(txtQuantity.Text);
 
-        if (GridView2.Rows.Count <= 0)
+        if (gvItemList.Rows.Count <= 0)
         {
-            ri = new RequestedItem(code, des, qty, Label2.Text);
+            ri = new RequestedItem(code, des, qty, lblUom.Text);
             rItem = (List<RequestedItem>)ViewState["list"];
             rItem.Add(ri);
             //reqItem.Add(ri);
@@ -60,9 +58,9 @@ public partial class RequisitionForm : System.Web.UI.Page
         else
         {
             bool isEqual = false;
-            foreach (GridViewRow row in GridView2.Rows)
+            foreach (GridViewRow row in gvItemList.Rows)
             {
-                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("code");
+                System.Web.UI.WebControls.Label labelDes = (System.Web.UI.WebControls.Label)row.FindControl("lblCode");
                 string item = labelDes.Text;
 
                 if (code.Equals(item))
@@ -76,29 +74,29 @@ public partial class RequisitionForm : System.Web.UI.Page
             }
             else
             {
-                ri = new RequestedItem(code, des, qty, Label2.Text);
+                ri = new RequestedItem(code, des, qty, lblUom.Text);
                 rItem = (List<RequestedItem>)ViewState["list"];
                 rItem.Add(ri);
                 ViewState["list"] = rItem;
             }
         }
-        bindGrid();
+        BindGrid();
     }
 
-    public void bindGrid()
+    public void BindGrid()
     {
-        GridView2.DataSource = rItem;
-        GridView2.DataBind();
+        gvItemList.DataSource = rItem;
+        gvItemList.DataBind();
     }
 
-    protected void Submit_Click(object sender, EventArgs e)
+    protected void BtnSubmit_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
             emp = (Employee)Session["emp"];
             int RequestedBy = emp.EmpID;
             string DeptCode = emp.DeptCode;
-            if (GridView2.Rows.Count <= 0)
+            if (gvItemList.Rows.Count <= 0)
             {
                 Response.Write("<script>alert('You have not requested any item yet!');</script>");
             }
@@ -110,7 +108,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                 Employee tempHead = EmployeeController.GetDeptHeadTempHeadEmail(emp);
                 Employee deptHead = dc.GetDHeadByDeptCode(emp.DeptCode);
 
-                if(tempHead != null)
+                if (tempHead != null)
                 {
                     string mail = tempHead.Email;
                     string receiver = mail;
@@ -119,7 +117,7 @@ public partial class RequisitionForm : System.Web.UI.Page
                     Utility.sendMail(receiver, subject, body);
                 }
 
-               
+
                 if (deptHead != null)
                 {
                     string mail1 = deptHead.Email;
@@ -139,10 +137,10 @@ public partial class RequisitionForm : System.Web.UI.Page
         }
     }
 
-    protected void Delete_Click(object sender, EventArgs e)
+    protected void BtnDelete_Click(object sender, EventArgs e)
     {
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
-        string itemDes = GridView2.DataKeys[row.RowIndex].Value.ToString();
+        string itemDes = gvItemList.DataKeys[row.RowIndex].Value.ToString();
 
         RequestedItem i = rItem.Find(r => r.Code.Equals(itemDes));
 
@@ -150,16 +148,16 @@ public partial class RequisitionForm : System.Web.UI.Page
         rItem.Remove(i);
         ViewState["list"] = rItem;
 
-        bindGrid();
+        BindGrid();
     }
 
     protected void ReqRow_Updating(object sender, GridViewUpdateEventArgs e)
     {
-        ValidationSummary1.Enabled = true;
-        System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)GridView2.Rows[e.RowIndex].FindControl("qtyText");
+        vsQuantity.Enabled = true;
+        System.Web.UI.WebControls.TextBox qtyText = (System.Web.UI.WebControls.TextBox)gvItemList.Rows[e.RowIndex].FindControl("txtQty");
         int newQty = Convert.ToInt32(qtyText.Text);
 
-        System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)GridView2.Rows[e.RowIndex].FindControl("code");
+        System.Web.UI.WebControls.Label itemDescLabel = (System.Web.UI.WebControls.Label)gvItemList.Rows[e.RowIndex].FindControl("lblCode");
         string code = itemDescLabel.Text;
 
         RequestedItem i = rItem.Find(r => r.Code.Equals(code));
@@ -169,19 +167,19 @@ public partial class RequisitionForm : System.Web.UI.Page
         rItem[e.RowIndex].Quantity = i.Quantity;
         ViewState["list"] = rItem;
 
-        GridView2.EditIndex = -1;
-        bindGrid();
+        gvItemList.EditIndex = -1;
+        BindGrid();
     }
 
     protected void RowEdit(object sender, GridViewEditEventArgs e)
     {
-        GridView2.EditIndex = e.NewEditIndex;
-        bindGrid();
+        gvItemList.EditIndex = e.NewEditIndex;
+        BindGrid();
     }
 
     protected void RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView2.EditIndex = -1;
-        bindGrid();
+        gvItemList.EditIndex = -1;
+        BindGrid();
     }
 }

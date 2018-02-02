@@ -99,22 +99,22 @@
         <tr>
             <td class="auto-style12">Department Representative :</td>
             <td class="contentMenu">
-                <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True">
+                <asp:DropDownList ID="ddlDRep" runat="server" class="auto-styledd" AutoPostBack="True">
                 </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td class="auto-style12">Collection Point :</td>
             <td class="contentMenu">
-                <asp:DropDownList ID="DropDownListCollectionPoint" runat="server" class="auto-styledd">
+                <asp:DropDownList ID="ddlCollectionPoint" runat="server" class="auto-styledd">
                 </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td></td>
             <td class="auto-style2">
-                <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click" />
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="rejectBtn" OnClick="btnCancel_Click" />
+                <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="button" OnClick="BtnUpdate_Click" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="rejectBtn" OnClick="BtnCancel_Click" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            
             </td>

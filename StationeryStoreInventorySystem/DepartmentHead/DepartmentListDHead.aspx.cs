@@ -48,8 +48,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 cmpToday.ValueToCompare = DateTime.Now.ToShortDateString();
                 //CompareValidator1.ValueToCompare = DateTime.Now.ToShortDateString();
 
-                RequiredFieldValidator1.Enabled = true;
-                RequiredFieldValidator2.Enabled = true;
+                reqForSDate.Enabled = true;
+                reqForEDate.Enabled = true;
                 cmpToday.Enabled = true;
                 cmpStartAndEndDates.Enabled = true;
 
@@ -61,12 +61,12 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) <= 0)
                 {
 
-                    DropDownListActingDHead.DataSource = deptController.GetEmployeeListForActingDHead(dcode, empRid);
-                    DropDownListActingDHead.DataTextField = "EmpName";
-                    DropDownListActingDHead.DataValueField = "EmpID";
-                    DropDownListActingDHead.DataBind();
-                    DropDownListActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
-                    DropDownListActingDHead.SelectedIndex = 0;
+                    ddlActingDHead.DataSource = deptController.GetEmployeeListForActingDHead(dcode, empRid);
+                    ddlActingDHead.DataTextField = "EmpName";
+                    ddlActingDHead.DataValueField = "EmpID";
+                    ddlActingDHead.DataBind();
+                    ddlActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
+                    ddlActingDHead.SelectedIndex = 0;
                     //if (DropDownListActingDHead.SelectedValue == "0")
                     //{
                     txtSDate.Enabled = false;
@@ -74,19 +74,19 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     txtSDate.Visible = true;
                     txtEDate.Visible = true;
                     btnEditDate.Visible = false;
-                    RequiredFieldValidator1.Enabled = false;
-                    RequiredFieldValidator2.Enabled = false;
+                    reqForSDate.Enabled = false;
+                    reqForEDate.Enabled = false;
 
                     // }
 
 
                     int empid = 0;
                     string empDRepname = empDRep.EmpName;
-                    DropDownListDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
-                    DropDownListDRep.DataTextField = "EmpName";
-                    DropDownListDRep.DataValueField = "EmpID";
-                    DropDownListDRep.DataBind();
-                    DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
+                    ddlDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
+                    ddlDRep.DataTextField = "EmpName";
+                    ddlDRep.DataValueField = "EmpID";
+                    ddlDRep.DataBind();
+                    ddlDRep.Items.FindByText(empDRepname).Selected = true;
                 }
                 else
                 {
@@ -118,30 +118,30 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                     //}
 
-                    DropDownListActingDHead.DataSource = deptController.GetEmployeeListForActingDHead(dcode, empRid);
-                    DropDownListActingDHead.DataTextField = "EmpName";
-                    DropDownListActingDHead.DataValueField = "EmpID";
-                    DropDownListActingDHead.DataBind();
-                    DropDownListActingDHead.Items.FindByText(empActingDHeadname).Selected = true;
-                    DropDownListActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
+                    ddlActingDHead.DataSource = deptController.GetEmployeeListForActingDHead(dcode, empRid);
+                    ddlActingDHead.DataTextField = "EmpName";
+                    ddlActingDHead.DataValueField = "EmpID";
+                    ddlActingDHead.DataBind();
+                    ddlActingDHead.Items.FindByText(empActingDHeadname).Selected = true;
+                    ddlActingDHead.Items.Insert(0, new ListItem("--Revoke authority--", "0"));
 
                     //UpdateDeptRp
                     int empid = empActingDHead.EmpID;
                     string empDRepname = empDRep.EmpName;
-                    DropDownListDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
-                    DropDownListDRep.DataTextField = "EmpName";
-                    DropDownListDRep.DataValueField = "EmpID";
-                    DropDownListDRep.DataBind();
-                    DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
+                    ddlDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
+                    ddlDRep.DataTextField = "EmpName";
+                    ddlDRep.DataValueField = "EmpID";
+                    ddlDRep.DataBind();
+                    ddlDRep.Items.FindByText(empDRepname).Selected = true;
                 }
 
                 //UpdateCollectionPoint
                 string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = deptController.GetCollectionPointList();
-                DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
-                DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
-                DropDownListCollectionPoint.DataBind();
-                DropDownListCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
+                ddlCollectionPoint.DataSource = deptController.GetCollectionPointList();
+                ddlCollectionPoint.DataTextField = "CollectionPoint1";
+                ddlCollectionPoint.DataValueField = "CollectionLocationID";
+                ddlCollectionPoint.DataBind();
+                ddlCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
             }//ispostback
             else
             {
@@ -151,7 +151,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
         }
     }
 
-    protected void btnUpdate_Click(object sender, EventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
 
         if (Session["emp"] != null)
@@ -163,24 +163,24 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             if (dcode != null)
             {
                 int cid = deptController.GetCollectionidbyDeptCode(dcode);
-                int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
+                int c = Convert.ToInt16(ddlCollectionPoint.SelectedValue);
                
 
                 Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
                 int empRepid = empDRep.EmpID;
                 string empRepEmail = empDRep.Email;
-                int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
+                int empid = Convert.ToInt16(ddlDRep.SelectedValue);
                 Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
                 String newempEmail = newDeptRep.Email;
                
 
 
-                if (Convert.ToInt32(DropDownListActingDHead.SelectedValue) == 0)
+                if (Convert.ToInt32(ddlActingDHead.SelectedValue) == 0)
                 {
 
                     if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
-                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        int Aempid = Convert.ToInt16(ddlActingDHead.SelectedValue);
                         Employee oldDeptTemp = deptController.GetEmployeeListForActingDHeadSelected(dcode);
                         string oldDeptTempEmail = oldDeptTemp.Email;
 
@@ -220,7 +220,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     }
                     else
                     {
-                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        int Aempid = Convert.ToInt16(ddlActingDHead.SelectedValue);
                         //Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
                         //String newDeptTempEmail = newDeptTemp.Email;
                         string sdate = txtSDate.Text;
@@ -256,9 +256,9 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 {
                     if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
                     {
-                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
-                        RequiredFieldValidator1.Enabled = true;
-                        RequiredFieldValidator2.Enabled = true;
+                        int Aempid = Convert.ToInt16(ddlActingDHead.SelectedValue);
+                        reqForSDate.Enabled = true;
+                        reqForEDate.Enabled = true;
                         cmpToday.Enabled = true;
                         cmpStartAndEndDates.Enabled = true;
 
@@ -307,22 +307,17 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                     }
                     else
                     {
-                        int Aempid = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+                        int Aempid = Convert.ToInt16(ddlActingDHead.SelectedValue);
                         Employee newDeptTemp = deptController.GetEmployeeEmailByEid(Aempid);
                         String newDeptTempEmail = newDeptTemp.Email;
-                        RequiredFieldValidator1.Enabled = true;
-                        RequiredFieldValidator2.Enabled = true;
+                        reqForSDate.Enabled = true;
+                        reqForEDate.Enabled = true;
                         cmpToday.Enabled = true;
                         cmpStartAndEndDates.Enabled = true;
 
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
-                        if (c == cid && empid == empRepid)
-                        {
-                            Response.Redirect(LoginController.DepartmentDetailInfoURI);
-                        }
-                        else
-                        {
+                       
 
                             if (c != cid)
                             {
@@ -336,7 +331,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                             deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
                             Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
-                        }
+                        
                     }
                 }
             }
@@ -353,7 +348,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
 
 
-    protected void DropDownListActingDHead_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DdlActingDHead_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
@@ -366,17 +361,17 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
             string empDRepname = empDRep.EmpName;
 
-            int a = Convert.ToInt16(DropDownListActingDHead.SelectedValue);
+            int a = Convert.ToInt16(ddlActingDHead.SelectedValue);
 
-            DropDownListDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, a);
-            DropDownListDRep.DataBind();
-            DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
+            ddlDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, a);
+            ddlDRep.DataBind();
+            ddlDRep.Items.FindByText(empDRepname).Selected = true;
             if (deptController.GetEmployeeListForActingDHeadSelectedCount(dcode) > 0)
             {
                 if (a == 0)
                 {
-                    RequiredFieldValidator1.Enabled = false;
-                    RequiredFieldValidator2.Enabled = false;
+                    reqForSDate.Enabled = false;
+                    reqForEDate.Enabled = false;
                     cmpToday.Enabled = false;
                     cmpStartAndEndDates.Enabled = false;
                     //txtSDate.Text = "";
@@ -391,8 +386,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 }
                 else
                 {
-                    RequiredFieldValidator1.Enabled = true;
-                    RequiredFieldValidator2.Enabled = true;
+                    reqForSDate.Enabled = true;
+                    reqForEDate.Enabled = true;
                     cmpToday.Enabled = true;
                     cmpStartAndEndDates.Enabled = true;
                     txtSDate.Enabled = true;
@@ -408,8 +403,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             {
                 if (a == 0)
                 {
-                    RequiredFieldValidator1.Enabled = false;
-                    RequiredFieldValidator2.Enabled = false;
+                    reqForSDate.Enabled = false;
+                    reqForEDate.Enabled = false;
                     cmpToday.Enabled = false;
                     cmpStartAndEndDates.Enabled = false;
                     txtSDate.Text = "";
@@ -424,8 +419,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 }
                 else
                 {
-                    RequiredFieldValidator1.Enabled = true;
-                    RequiredFieldValidator2.Enabled = true;
+                    reqForSDate.Enabled = true;
+                    reqForEDate.Enabled = true;
                     cmpToday.Enabled = true;
                     cmpStartAndEndDates.Enabled = true;
                     txtSDate.Enabled = true;

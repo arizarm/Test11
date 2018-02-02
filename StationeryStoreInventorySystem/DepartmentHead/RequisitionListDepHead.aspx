@@ -8,13 +8,13 @@
     </div>
 
     <div>
-        <asp:TextBox ID="SearchBox" runat="server" Width="311px"></asp:TextBox>
-        <asp:Button ID="SearchBtn" runat="server" Text="Search" CssClass="button" OnClick="SearchBtn_Click" />
-        <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />
+        <asp:TextBox ID="txtSearch" runat="server" Width="311px"></asp:TextBox>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="button" OnClick="BtnSearch_Click" />
+        <asp:Button ID="btnDisplayAll" runat="server" Text="Display All" CssClass="button" OnClick="BtnDisplayAll_Click" />
     </div>
     <div>
         <asp:Label ID="Label2" runat="server" Text="To View Requisition by Status : "></asp:Label>
-        <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" AutoPostBack="True">
+        <asp:DropDownList ID="ddlStatus" runat="server" OnSelectedIndexChanged="DdlStatus_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Selected="True">Select Status</asp:ListItem>
             <asp:ListItem Value="Pending">Pending</asp:ListItem>
             <asp:ListItem Value="Approved">Approved</asp:ListItem>
@@ -24,13 +24,13 @@
         </asp:DropDownList>
     </div>
     <h2><strong>
-            <asp:Label ID="pendingCount" runat="server" Text="Label" Font-Underline="true"></asp:Label></strong></h2>
-     <asp:Label ID="Label5" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="#999999" Text="Label" Visible="False"></asp:Label>
+            <asp:Label ID="lblPendingCount" runat="server" Font-Underline="True"></asp:Label></strong></h2>
+     <asp:Label ID="lblNoList" runat="server" Font-Bold="True" Font-Size="XX-Large" ForeColor="#999999" Visible="False"></asp:Label>
 
     <div>
         <h3>All Requisition list for Department Head</h3>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
-            DataKeyNames="RequisitionNo" CssClass="mGrid mGrid60percent" AllowPaging="true" PageSize="10" OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDataBound="GridView1_RowDataBound" RowStyle-Height="50px">
+        <asp:GridView ID="gvRequisitionForm" runat="server" AutoGenerateColumns="False"
+            DataKeyNames="RequisitionNo" CssClass="mGrid mGrid60percent" AllowPaging="true" PageSize="10" OnPageIndexChanging="GvRequisitionForm_PageIndexChanging" OnRowDataBound="GvRequisitionForm_RowDataBound" RowStyle-Height="50px">
             <HeaderStyle Height="50px" Font-Size="Large" />
             <PagerStyle BackColor="#424242" ForeColor="White" HorizontalAlign="Center" />
             <Columns>

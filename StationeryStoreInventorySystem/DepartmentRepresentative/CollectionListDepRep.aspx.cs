@@ -17,10 +17,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 emp = (Employee)Session["emp"];
                 //Approved requisition
-
-                    Label5.Visible = false;
-                    GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
-                    GridView1.DataBind();
+                gvCollectionList.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
+                gvCollectionList.DataBind();
                     ViewState["DataSource"] = "displayAll";
                 showEmptyLabel();
             }
@@ -33,23 +31,24 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     public void showEmptyLabel()
     {
-        if (GridView1.Rows.Count <= 0)
+        if (gvCollectionList.Rows.Count <= 0)
         {
-            Label2.Visible = true;
-            Label2.Text = "No Requisition Found.";
+            lblError.Visible = true;
+            lblError.Text = "No Requisition Found.";
         }
         else
         {
-            Label2.Visible = false;
+            lblError.Visible = false;
         }
     }
 
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
+        Employee emp = (Employee)Session["emp"];
         if (Session["emp"] != null)
         {
-            searchWord = SearchBox.Text;
-            if (SearchBox.Text == String.Empty)
+            searchWord = txtSearch.Text;
+            if (txtSearch.Text == String.Empty)
             {
                 ClientScript.RegisterStartupScript(Page.GetType(),
                 "MessageBox",
@@ -57,9 +56,10 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
-                GridView1.DataBind();
+                gvCollectionList.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
+                gvCollectionList.DataBind();
                 ViewState["DataSource"] = "displaySearch";
+                ViewState["searchWord"] = searchWord;
                 showEmptyLabel();
             }
         }
@@ -69,13 +69,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Utility.logout();
         }
     }
-    protected void DisplayBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplayAll_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
-            GridView1.DataBind();
+            gvCollectionList.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
+            gvCollectionList.DataBind();
             ViewState["DataSource"] = "displayAll";
             showEmptyLabel();
         }
@@ -84,27 +84,27 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Utility.logout();
         }
     }
-    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void GVCollectionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        GridView1.PageIndex = e.NewPageIndex;
+        gvCollectionList.PageIndex = e.NewPageIndex;
         if(((string)ViewState["DataSource"]).Equals("displayAll"))
         {
-            GridView1.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
+            gvCollectionList.DataSource = RequisitionControl.getCollectionList(emp.DeptCode);
         }
         else
         {
-            GridView1.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, searchWord.Trim());
+            gvCollectionList.DataSource = RequisitionControl.DisplayCollectionListSearch(emp.DeptCode, ((string)ViewState["searchWord"]).Trim());
         }
-        GridView1.DataBind();
+        gvCollectionList.DataBind();
     }
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GVCollectionList_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            Label statusLabel = (Label)e.Row.FindControl("Label4");
-
+            Label statusLabel = (Label)e.Row.FindControl("lblStatus");
+            statusLabel.Font.Bold = true;
             string status = statusLabel.Text;
             if (status == "Approved" || status == "approved" || status == "InProgress")
             {

@@ -13,15 +13,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     PurchaseOrderComparer pComparer = new PurchaseOrderComparer();
 
     PurchaseController pCtrlr = new PurchaseController();
-
-    String itemCode;
     List<ReorderItem> ritems;
-    List<PurchaseOrder> pOrderList = null;
-    static String exisitingItemsupplrName = null;
-    int newItemcount = 0;
-    int itemcount = 1;
-    List<Dictionary<string, int>> itemSuplrdict = new List<Dictionary<string, int>>();
-     Dictionary<string, int> dictnry = new Dictionary<string, int>();
+    Dictionary<string, int> dictnry = new Dictionary<string, int>();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -34,16 +27,16 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     private void LoadData()
     {
         //To populate Items dropDown List
-        AddNewItemDropDown.DataSource =EFBroker_Item.GetActiveItemWithPrice();
-        AddNewItemDropDown.DataTextField = "Description";
-        AddNewItemDropDown.DataValueField = "ItemCode";
-        AddNewItemDropDown.DataBind();
+        ddlAddNewItem.DataSource =EFBroker_Item.GetActiveItemWithPrice();
+        ddlAddNewItem.DataTextField = "Description";
+        ddlAddNewItem.DataValueField = "ItemCode";
+        ddlAddNewItem.DataBind();
 
         //To populate Supervisor Name dropdown List
-        supervisorNamesDropDown.DataSource = pCtrlr.GetSupervisorList();
-        supervisorNamesDropDown.DataTextField = "EmpName";
-        supervisorNamesDropDown.DataValueField = "EmpID";
-        supervisorNamesDropDown.DataBind();
+        ddlsupervisorNames.DataSource = pCtrlr.GetSupervisorList();
+        ddlsupervisorNames.DataTextField = "EmpName";
+        ddlsupervisorNames.DataValueField = "EmpID";
+        ddlsupervisorNames.DataBind();
 
 
         if (Session["ReorderItem"] != null)
@@ -72,8 +65,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //To add supplierList to items that are below the reorderLevel
-            DropDownList supplierList = (DropDownList)e.Row.FindControl("SupplierList");
-            Label itemCodeLbl = (Label)e.Row.FindControl("ItemCode");
+            DropDownList supplierList = (DropDownList)e.Row.FindControl("ddlSupplierList");
+            Label itemCodeLbl = (Label)e.Row.FindControl("lblItemCode");
             String gvrowItemCode = itemCodeLbl.Text;
             List<ItemPrice> itemPriceList = pCtrlr.GetItemPriceList().Where(x => x.ItemCode == (string)DataBinder.Eval(e.Row.DataItem, "ItemCode")).ToList();
             // List<SupplierInfo> splrList = pCtrlr.GetSupplierListByItemCode(gvrowItemCode);
@@ -107,9 +100,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             "<script language='javascript'>alert('" + "Item already exist!" + "');</script>");
             }
             
-            Label price = (Label)e.Row.FindControl("Price");
+            Label price = (Label)e.Row.FindControl("lblPrice");
             price.Text = Convert.ToString(itemPriceList.Where(x => x.SupplierCode == supplierList.SelectedValue).Select(x => x.FormattedPrice).First());
-            Label amount = (Label)e.Row.FindControl("Amount");
+            Label amount = (Label)e.Row.FindControl("lblAmount");
             amount.Text = Convert.ToString(itemPriceList.Where(x => x.SupplierCode == supplierList.SelectedValue).Select(x => x.FormattedAmount).First());
 
         }
@@ -120,10 +113,10 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     }
 
-    protected void AddItem_Click(object sender, EventArgs e)
+    protected void BtnAddItem_Click(object sender, EventArgs e)
     {
         //To add an item that is not under reorderLevel and append it to the gvPurchaseItems List
-        String itemCode = AddNewItemDropDown.SelectedItem.Value;
+        String itemCode = ddlAddNewItem.SelectedItem.Value;
         
         int count = 1;
         if (Session["ReorderItem"] != null)
@@ -137,12 +130,12 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 {
                     GridViewRow gvRow = gvPurchaseItems.Rows[i];
 
-                    Label codeLbl = (Label)gvRow.FindControl("ItemCode");
+                    Label codeLbl = (Label)gvRow.FindControl("lblItemCode");
                     string codeNo = codeLbl.Text;
                     //To check if an item with same supplier is already added. if exist,then item with 2nd supplier will be added .
                     if (codeNo == itemCode)
                     {
-                        DropDownList splrControl = (DropDownList)gvRow.FindControl("SupplierList");                        
+                        DropDownList splrControl = (DropDownList)gvRow.FindControl("ddlSupplierList");                        
                         //ListItem item = splrControl.SelectedItem;
                         count++;
                         //exisitingItemsupplrName = item.Value;
@@ -187,7 +180,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
     }
 
 
-    protected void Reset_Click(object sender, EventArgs e)
+    protected void BtnReset_Click(object sender, EventArgs e)
     {
 
         //Update reorderItemList ie. gvPurchaseItems
@@ -196,13 +189,13 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         gvPurchaseItems.DataSource = ritems;
         gvPurchaseItems.DataBind();
 
-        supervisorNamesDropDown.SelectedIndex = 0;
-        AddNewItemDropDown.SelectedIndex = 0;
+        ddlsupervisorNames.SelectedIndex = 0;
+        ddlAddNewItem.SelectedIndex = 0;
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
             "<script language='javascript'>alert('" + "Reset done" + "');</script>");
     }
 
-    protected void ProceedBtn_Click(object sender, EventArgs e)
+    protected void BtnProceed_Click(object sender, EventArgs e)
 
     {
         if (Page.IsValid)
@@ -216,18 +209,16 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 PurchaseOrder pOrder = new PurchaseOrder();
 
                 GridViewRow gvRow = gvPurchaseItems.Rows[i];
-                if(((CheckBox)gvRow.FindControl("CheckBox")).Checked)
+                if(((CheckBox)gvRow.FindControl("CbxItem")).Checked)
                 {
-                    DropDownList splrControl = (DropDownList)gvRow.FindControl("SupplierList");
-                    ListItem suplierInfo = splrControl.SelectedItem;
-                    string[] str = suplierInfo.Text.ToString().Split('/');
-
+                    DropDownList splrControl = (DropDownList)gvRow.FindControl("ddlSupplierList");
+                    ListItem suplierInfo = splrControl.SelectedItem;               
                     pOrder.SupplierCode = suplierInfo.Value;
-                    Label amntlbl = (Label)gvRow.FindControl("Amount");
+                    Label amntlbl = (Label)gvRow.FindControl("lblAmount");
                     if (!purchaseItemList.ContainsKey(pOrder))
                     {
                         pOrder.OrderDate = DateTime.Now.Date;
-                        pOrder.ApprovedBy = Convert.ToInt32(supervisorNamesDropDown.SelectedItem.Value);
+                        pOrder.ApprovedBy = Convert.ToInt32(ddlsupervisorNames.SelectedItem.Value);
                         pOrder.ExpectedDate = DateTime.ParseExact(txtDate.Text, "d", CultureInfo.InvariantCulture);
                         pOrder.Status = "Pending";
 
@@ -237,12 +228,12 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                     }
 
                     Item_PurchaseOrder pItems = new Item_PurchaseOrder();
-                    Label itemlbl = (Label)gvRow.FindControl("ItemCode");
+                    Label itemlbl = (Label)gvRow.FindControl("lblItemCode");
                     pItems.ItemCode = itemlbl.Text;
                     pItems.PurchaseOrderID = pOrder.PurchaseOrderID;
-                    TextBox qtyTxtBx = (TextBox)gvRow.FindControl("ReorderQty");
+                    TextBox qtyTxtBx = (TextBox)gvRow.FindControl("txtReorderQty");
                     pItems.OrderQty = Convert.ToInt32(qtyTxtBx.Text);
-                    Label priceLbl = (Label)gvRow.FindControl("Price");
+                    Label priceLbl = (Label)gvRow.FindControl("lblPrice");
                     pItems.ItemCode = itemlbl.Text;
                     pItems.Amount = pItems.OrderQty * decimal.Parse(priceLbl.Text, System.Globalization.NumberStyles.Currency);
 
@@ -287,7 +278,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         //Console.WriteLine()
         DateTime d1 = DateTime.ParseExact(date,"d",CultureInfo.InvariantCulture);
         DateTime d2= DateTime.ParseExact(todayDate, "d/M/yyyy", CultureInfo.InvariantCulture);
-        if (d1  > d2)
+        if (d1  >= d2)
         {
             args.IsValid = true;
 
@@ -313,10 +304,10 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         //ListItem suplierInfo = splrControl.SelectedItem;
         Console.WriteLine(selected);
         ItemPrice item = pCtrlr.GetItemPriceList().Where(x => x.SupplierCode == selected).First();
-        TextBox qty = (TextBox)row.FindControl("ReorderQty");       
-        Label price = (Label)row.FindControl("Price");
+        TextBox qty = (TextBox)row.FindControl("txtReorderQty");       
+        Label price = (Label)row.FindControl("lblPrice");
         price.Text = Convert.ToString(item.FormattedPrice);
-        Label amount = (Label)row.FindControl("Amount");
+        Label amount = (Label)row.FindControl("lblAmount");
         item.Amount = Convert.ToDecimal(item.Price * Convert.ToInt32(qty.Text));
         amount.Text = item.FormattedAmount;
   
@@ -347,19 +338,19 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
     {
-        if (((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CheckAll")).Checked)
+        if (((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
         {
             foreach (GridViewRow row in gvPurchaseItems.Rows)
             {
-                ((CheckBox)row.FindControl("CheckBox")).Checked = true;
+                ((CheckBox)row.FindControl("CbxItem")).Checked = true;
             }
         }
 
-        if (!((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CheckAll")).Checked)
+        if (!((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
         {
             foreach (GridViewRow row in gvPurchaseItems.Rows)
             {
-                ((CheckBox)row.FindControl("CheckBox")).Checked = false;
+                ((CheckBox)row.FindControl("CbxItem")).Checked = false;
             }
         }
     }
@@ -370,12 +361,12 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         //{
             TextBox qtytxt = sender as TextBox;            
             GridViewRow row = qtytxt.NamingContainer as GridViewRow;
-            DropDownList drpdLsit = (DropDownList)row.FindControl("SupplierList");
+            DropDownList drpdLsit = (DropDownList)row.FindControl("ddlSupplierList");
             string selected = (string)drpdLsit.SelectedItem.Value;
             ItemPrice item = pCtrlr.GetItemPriceList().Where(x => x.SupplierCode == selected).First();
-            Label price = (Label)row.FindControl("Price");            
+            Label price = (Label)row.FindControl("lblPrice");            
             price.Text = Convert.ToString(item.FormattedPrice);
-            Label amount = (Label)row.FindControl("Amount");
+            Label amount = (Label)row.FindControl("lblAmount");
             item.Amount= Convert.ToDecimal(item.Price * Convert.ToInt32(qtytxt.Text));
             amount.Text = item.FormattedAmount;
 

@@ -11,7 +11,11 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        BindData();
+        if(!IsPostBack)
+        {
+            BindData();
+        }
+        
     }
 
     private void BindData()
@@ -22,7 +26,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     }
     protected void OrderStatusDrpdwn_SelectedIndexChanged(object sender, EventArgs e)
     {
-        string selectedStatus = OrderStatusDrpdwn.SelectedItem.Text;
+        string selectedStatus = ddlOrderStatus.SelectedItem.Text;
         if(selectedStatus =="--Select Status--")
         {
             gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
@@ -36,7 +40,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         
     }
 
-    protected void DisplayAllBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplayAll_Click(object sender, EventArgs e)
     {
         BindData();
     }
@@ -46,12 +50,12 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         BindData();
     }
 
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
         
-        if(!string.IsNullOrEmpty(SearchTxtBx.Text))
+        if(!string.IsNullOrEmpty(txtSearch.Text))
         {
-            string searchTxt =SearchTxtBx.Text;
+            string searchTxt = txtSearch.Text;
             List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrder(searchTxt);
             if (porderList != null)
             {
@@ -70,10 +74,10 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         
     }
 
-    protected void purchaseDetailLinkBtn_Click(object sender, EventArgs e)
+    protected void LbtnPurchaseOrderID_Click(object sender, EventArgs e)
     {
-        LinkButton btn = (LinkButton)(sender);
-        string orderID = btn.CommandArgument;
+        LinkButton lbtn = (LinkButton)(sender);
+        string orderID = lbtn.CommandArgument;
         Response.Redirect("~/Store/PurchaseOrderDetail.aspx?OrderID=" + orderID);
     }
 
@@ -83,8 +87,8 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             PurchaseOrder pOrder = pCtlr.GetPurchaseOrderList().Where(x => x.PurchaseOrderID == (int)DataBinder.Eval(e.Row.DataItem, "PurchaseOrderID")).First();
-            Label statusLbl = (Label)e.Row.FindControl("OrderStatus");
-            Button delBtn = (Button)e.Row.FindControl("btn_Delete");
+            Label statusLbl = (Label)e.Row.FindControl("lblOrderStatus");
+            Button delBtn = (Button)e.Row.FindControl("BtnDelete");
             string status = statusLbl.Text;
             if (status == "Pending")
             {
@@ -106,7 +110,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
             }
             else if (status == "Closed")
             {
-                statusLbl.ForeColor = System.Drawing.Color.Orange;
+                statusLbl.ForeColor = System.Drawing.Color.Black;
                 delBtn.Visible = true;
                 delBtn.Enabled = false;
             }
@@ -116,7 +120,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
                 if (Session["empRole"].ToString() == "Store Clerk")
                 {
                     Employee emp = (Employee)Session["emp"];                    
-                    Label reqby = (Label)e.Row.FindControl("ReqstdBy");
+                    Label reqby = (Label)e.Row.FindControl("lblReqstdBy");
                     if(emp.EmpID == pOrder.RequestedBy)
                     {
                         delBtn.Visible = true;
@@ -137,7 +141,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         }
     }
 
-    protected void btn_Delete_Click(object sender, EventArgs e)
+    protected void BtnDelete_Click(object sender, EventArgs e)
     {
         Button delteBtn = (Button)sender;
         int pID = Int32.Parse(delteBtn.CommandArgument.ToString());

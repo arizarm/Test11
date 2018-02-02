@@ -31,25 +31,25 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
             orderID = Convert.ToInt32(Request.QueryString["OrderID"]);
             pOrder = pCtrlr.GetPurchaseOrderByID(orderID);
             orderid = pOrder.PurchaseOrderID;
-            supervisorName.Text = pOrder.Employee.EmpName;
-            SupplierName.Text = pOrder.Supplier.SupplierName;
-            OrderID.Text = Convert.ToString(pOrder.PurchaseOrderID);
-            orderStatus.Text = pOrder.Status;
+            lblsupervisorName.Text = pOrder.Employee.EmpName;
+            lblSupplierName.Text = pOrder.Supplier.SupplierName;
+            lblOrderID.Text = Convert.ToString(pOrder.PurchaseOrderID);
+            lblorderStatus.Text = pOrder.Status;
             if (pOrder.Status == "Pending")
             {
-                orderStatus.ForeColor = System.Drawing.Color.Blue;
+                lblorderStatus.ForeColor = System.Drawing.Color.Blue;
             }
             else if(pOrder.Status =="Approved")
             {
-                orderStatus.ForeColor = System.Drawing.Color.Green;
+                lblorderStatus.ForeColor = System.Drawing.Color.Green;
             }
             else if(pOrder.Status == "Rejected")
             {
-                orderStatus.ForeColor = System.Drawing.Color.Red;
+                lblorderStatus.ForeColor = System.Drawing.Color.Red;
             }
             else
             {
-                orderStatus.ForeColor = System.Drawing.Color.Orange;
+                lblorderStatus.ForeColor = System.Drawing.Color.Black;
             }
            List<PurchaseOrderItemDetails>itemList = pCtrlr.GetPurchaseOrderItemsDetails(orderID);
             gvPurchaseDetail.DataSource = itemList;
@@ -61,7 +61,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                 totAmnt += item.Price * item.OrderQty;
 
             }
-            TotalAmount.Text = String.Format("{0:C}", totAmnt);
+            lblTotalAmount.Text = String.Format("{0:C}", totAmnt);
            foreach (GridViewRow row in gvPurchaseDetail.Rows)
             {
                 if (Session["emp"] != null)
@@ -75,25 +75,25 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                         
                             if (pOrder.Status == "Closed" || pOrder.Status == "Rejected")
                             {
-                                deliveryLbl.Visible = false;
-                                DeliveryOrderIDTxtBx.Visible = false;
-                                CloseOrderBtn.Visible = false;                           
-                                RejectBtn.Visible = false;
+                                lbldelivery.Visible = false;
+                                txtDeliveryOrderID.Visible = false;
+                                BtnCloseOrder.Visible = false;
+                                BtnReject.Visible = false;
                                 gvPurchaseDetail.Columns[5].Visible = false;
 
                             }
                             else if (pOrder.Status == "Approved")
                             {
-                                deliveryLbl.Visible = true;
-                                DeliveryOrderIDTxtBx.Visible = true;
-                                CloseOrderBtn.Visible = true;                           
+                                lbldelivery.Visible = true;
+                                txtDeliveryOrderID.Visible = true;
+                                BtnCloseOrder.Visible = true;                           
                                 gvPurchaseDetail.Columns[5].Visible = true;
                             }
                             else if (pOrder.Status == "Pending")
                             {
-                                deliveryLbl.Visible = false;
-                                DeliveryOrderIDTxtBx.Visible = false;
-                                CloseOrderBtn.Visible = false;
+                                lbldelivery.Visible = false;
+                                txtDeliveryOrderID.Visible = false;
+                                BtnCloseOrder.Visible = false;
                                 gvPurchaseDetail.Columns[5].Visible = true;
                             }
 
@@ -103,42 +103,42 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
 
                             if (pOrder.Status == "Closed" || pOrder.Status == "Rejected" || pOrder.Status == "Approved" || pOrder.Status == "Pending")
                             {
-                                deliveryLbl.Visible = false;
-                                DeliveryOrderIDTxtBx.Visible = false;
-                                CloseOrderBtn.Visible = false;
-                                RejectBtn.Visible = false;
+                                lbldelivery.Visible = false;
+                                txtDeliveryOrderID.Visible = false;
+                                BtnCloseOrder.Visible = false;
+                                BtnReject.Visible = false;
                                 gvPurchaseDetail.Columns[5].Visible = false;
 
                             }                       
 
                         }
-                        RemarkLbl.Visible = false;
-                        RemarkTxtBx.Visible = false;
-                        ApproveBtn.Visible = false;
-                        RejectBtn.Visible = false;
+                        lblRemark.Visible = false;
+                        txtRemark.Visible = false;
+                        BtnApprove.Visible = false;
+                        BtnReject.Visible = false;
 
                     }
                     else if (Session["empRole"].ToString() == "Store Supervisor" || Session["empRole"].ToString() == "Store Manager")
                     {
                         if (pOrder.Status == "Closed" || pOrder.Status == "Rejected"|| pOrder.Status == "Approved")
                         {
-                       
-                            RemarkLbl.Visible = false;
-                            RemarkTxtBx.Visible = false;
-                            ApproveBtn.Visible = false;
-                            RejectBtn.Visible = false;                        
+
+                            lblRemark.Visible = false;
+                            txtRemark.Visible = false;
+                            BtnApprove.Visible = false;
+                            BtnReject.Visible = false;                        
                         }                    
                         else
-                        {                       
-                            RemarkLbl.Visible = true;
-                            RemarkTxtBx.Visible = true;
-                            ApproveBtn.Visible = true;
-                            RejectBtn.Visible = true;                       
+                        {
+                            lblRemark.Visible = true;
+                            txtRemark.Visible = true;
+                            BtnApprove.Visible = true;
+                            BtnReject.Visible = true;                       
                         }
                         gvPurchaseDetail.Columns[5].Visible = false;
-                        deliveryLbl.Visible = false;
-                        DeliveryOrderIDTxtBx.Visible = false;
-                        CloseOrderBtn.Visible = false;
+                        lbldelivery.Visible = false;
+                        txtDeliveryOrderID.Visible = false;
+                        BtnCloseOrder.Visible = false;
                     }
 
                 }
@@ -151,11 +151,11 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
     }
 
    
-    protected void ApproveBtn_Click(object sender, EventArgs e)
+    protected void BtnApprove_Click(object sender, EventArgs e)
     {
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.Remarks = RemarkTxtBx.Text;
+        purchaseOrder.Remarks = txtRemark.Text;
         purchaseOrder.PurchaseOrderID = orderid;
         purchaseOrder.ApprovedBy = (int)Session["empID"];
         purchaseOrder.ApprovedByDate = DateTime.Now.Date;
@@ -166,13 +166,13 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
-    protected void RejectBtn_Click(object sender, EventArgs e)
+    protected void BtnReject_Click(object sender, EventArgs e)
     {
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.Remarks = RemarkTxtBx.Text;
+        purchaseOrder.Remarks = txtRemark.Text;
         purchaseOrder.PurchaseOrderID = orderid;
-        purchaseOrder.Remarks = RemarkTxtBx.Text;
+        purchaseOrder.Remarks = txtRemark.Text;
         purchaseOrder.ApprovedBy = (int)Session["empID"];
         purchaseOrder.ApprovedByDate = DateTime.Now.Date;
         purchaseOrder.Status = "Rejected";
@@ -182,10 +182,10 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
-    protected void CloseOrderBtn_Click(object sender, EventArgs e)
+    protected void BtnCloseOrder_Click(object sender, EventArgs e)
     {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.DONumber = DeliveryOrderIDTxtBx.Text;
+        purchaseOrder.DONumber = txtDeliveryOrderID.Text;
         purchaseOrder.Status = "Closed";
         purchaseOrder.PurchaseOrderID = orderid;
         pCtrlr.ClosePurchaseOrder(purchaseOrder);
@@ -218,20 +218,20 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         int qty;
         int index = gvPurchaseDetail.EditIndex;
         GridViewRow row = gvPurchaseDetail.Rows[index];
-        TextBox qtyTxt = row.FindControl("orderQtyTxtBx") as TextBox;
+        TextBox qtyTxt = row.FindControl("txtorderQty") as TextBox;
         
         bool ok = int.TryParse(qtyTxt.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out qty);
 
-        Label priceLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("Price");
+        Label priceLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblPrice");
         ok = decimal.TryParse(priceLbl.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out price);
 
-        Label amountLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("Amount");
+        Label amountLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblAmount");
         ok = decimal.TryParse(amountLbl.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out amount);
 
-        Label itemLbl =(Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("ItemCode");
+        Label itemLbl =(Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblItemCode");
         amount = qty * price;
         amountLbl.Text = String.Format("{0:C}", amount);
 
@@ -254,7 +254,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         BindGrid();
     }
 
-    protected void BackBtn_Click(object sender, EventArgs e)
+    protected void BtnBack_Click(object sender, EventArgs e)
     {
         Response.Redirect(LoginController.PurchaseOrderListURI);
     }

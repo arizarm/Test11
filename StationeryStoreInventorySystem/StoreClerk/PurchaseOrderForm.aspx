@@ -41,7 +41,7 @@
     <br />
     <br />
     <div>
-        <asp:Label ID="Label5" runat="server" Text="Deliver to : Logic University Stationery Store" CssClass="labelStyle"></asp:Label>
+        <asp:Label ID="lblDeliver" runat="server" Text="Deliver to : Logic University Stationery Store" CssClass="labelStyle"></asp:Label>
     </div>
     <br />
     Please supply the following items by: &nbsp;&nbsp;&nbsp;<asp:TextBox ID="txtDate" runat="server" Text=""></asp:TextBox>
@@ -54,66 +54,66 @@
 
                 <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <HeaderTemplate>
-                        <asp:CheckBox runat="server" ID="CheckAll" Width="60px" OnCheckedChanged="CheckAll_CheckedChanged" AutoPostBack="true" />
+                        <asp:CheckBox runat="server" ID="CbxCheckAll" Width="60px" OnCheckedChanged="CheckAll_CheckedChanged" AutoPostBack="true" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="CheckBox" />
+                        <asp:CheckBox runat="server" ID="CbxItem" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="ItemCode" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="ItemCode" runat="server" Text='<%# Bind("ItemCode") %>' ForeColor="Black"></asp:Label>
+                        <asp:Label ID="lblItemCode" runat="server" Text='<%# Bind("ItemCode") %>' ForeColor="Black"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Description" ItemStyle-HorizontalAlign="Left" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label ID="Label9" runat="server" Text='<%# Bind("Description") %>' ForeColor="Black"></asp:Label>
+                        <asp:Label ID="lblDesc" runat="server" Text='<%# Bind("Description") %>' ForeColor="Black"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Reorder Level" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label ID="Label10" runat="server" Text='<%# Bind("ReorderLevel") %>' ForeColor="Black"></asp:Label>
+                        <asp:Label ID="lblRLevel" runat="server" Text='<%# Bind("ReorderLevel") %>' ForeColor="Black"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Available Quantity" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label ID="Label11" runat="server" Text='<%# Bind("Balance") %>' ForeColor="Black"></asp:Label>
+                        <asp:Label ID="lblBal" runat="server" Text='<%# Bind("Balance") %>' ForeColor="Black"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Re-order Quantity" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:TextBox runat="server" ID="ReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black" CausesValidation="True" CssClass="textboxStyle" AutoPostBack="true" OnTextChanged="orderQtyTxtBx_TextChanged" />
-                        <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter Quantity" ControlToValidate="ReorderQty" Display="Dynamic" ForeColor="Red" />
-                        <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="ReorderQty" ValidationExpression="[0-9]+" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
+                        <asp:TextBox runat="server" ID="txtReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black" CausesValidation="True" CssClass="textboxStyle" AutoPostBack="true" OnTextChanged="orderQtyTxtBx_TextChanged" />
+                        <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter Quantity" ControlToValidate="txtReorderQty" Display="Dynamic" ForeColor="Red" />
+                        <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="txtReorderQty" ValidationExpression="[0-9]+" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
                         <%-- <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>--%>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Unit Of Measure" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label runat="server" ID="Label12" Text='<%# Bind("UnitOfMeasure") %>' Height="38px" Width="100px" ForeColor="Black" />
+                        <asp:Label runat="server" ID="lblUOM" Text='<%# Bind("UnitOfMeasure") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Supplier" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:DropDownList ID="SupplierList" runat="server" Width="250px" ForeColor="Black" OnSelectedIndexChanged="SupplierList_SelectedIndexChanged" AutoPostBack="true">
+                        <asp:DropDownList ID="ddlSupplierList" runat="server" Width="250px" ForeColor="Black" OnSelectedIndexChanged="SupplierList_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Price" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label runat="server" ID="Price" Text='<%# Bind("Price") %>' Height="38px" Width="100px" ForeColor="Black" />
+                        <asp:Label runat="server" ID="lblPrice" Text='<%# Bind("Price") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Amount" ControlStyle-Width="100px" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:Label runat="server" ID="Amount" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
+                        <asp:Label runat="server" ID="lblAmount" Text='<%# Bind("Amount") %>' Height="38px" Width="100px" ForeColor="Black" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -130,25 +130,25 @@
         <br />
 
     Item Description&nbsp;&nbsp;
-    <asp:DropDownList ID="AddNewItemDropDown" runat="server" Height="25px" Width="201px">
+    <asp:DropDownList ID="ddlAddNewItem" runat="server" Height="25px" Width="201px">
     </asp:DropDownList>
     &nbsp;&nbsp;&nbsp;
-   <asp:Button ID="Button4" runat="server" Text="Add Item" CssClass="button" OnClick="AddItem_Click" />
+   <asp:Button ID="BtnAddItem" runat="server" Text="Add Item" CssClass="button" OnClick="BtnAddItem_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <br />
     <br />
     <br />
-    <asp:Label ID="Label16" runat="server" Text="Approver" Font-Size="Medium"></asp:Label>
+    <asp:Label ID="lblApprover" runat="server" Text="Approver" Font-Size="Medium"></asp:Label>
     &nbsp;&nbsp;&nbsp;&nbsp;       
-    <asp:DropDownList ID="supervisorNamesDropDown" runat="server" Height="25px" Width="201px">
+    <asp:DropDownList ID="ddlsupervisorNames" runat="server" Height="25px" Width="201px">
     </asp:DropDownList>
     <br />
     <br />
     <br />
-    <asp:Button ID="Reset" runat="server" Text="Reset" CssClass="rejectBtn" OnClick="Reset_Click" />
+    <asp:Button ID="BtnReset" runat="server" Text="Reset" CssClass="rejectBtn" OnClick="BtnReset_Click" />
     &nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-    <asp:Button ID="ProceedBtn" runat="server" Text="Buy" CssClass="button" OnClick="ProceedBtn_Click" ValidationGroup="PurchaseOrderValidationGrp" />
+    <asp:Button ID="BtnProceed" runat="server" Text="Buy" CssClass="button" OnClick="BtnProceed_Click" ValidationGroup="PurchaseOrderValidationGrp" />
     &nbsp;&nbsp;
 </asp:Content>
 

@@ -8,14 +8,14 @@
         <h2 class="mainPageHeader">Purchase Order List</h2>
     </div>
     <div>
-           <asp:TextBox ID="SearchTxtBx" runat="server" Width="311px" placeholder="Search by Purchase Order"  MaxLength="5"></asp:TextBox>   
+           <asp:TextBox ID="txtSearch" runat="server" Width="311px" MaxLength="10"></asp:TextBox>   
           <%--<asp:RegularExpressionValidator runat="server" ControlToValidate ="SearchTxtBx" ErrorMessage="Invalid PurchaseOrder No" ValidationGroup="SearchValidationGrp" ValidationExpression="^[0-9]*$" ForeColor="Red" Display="Dynamic" />--%>
            <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="SearchTxtBx" ErrorMessage="Please enter the PurchaseOrder No" ForeColor="Red" ValidationGroup="SearchValidationGrp" Display="Dynamic" />--%>        
-           <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click" ValidationGroup="SearchValidationGrp" CssClass="buttonformid"/>
-           <asp:Button ID="DisplayAllBtn" runat="server" Text="Display All" OnClick="DisplayAllBtn_Click" CssClass="buttonformid"/>
+           <asp:Button ID="BtnSearch" runat="server" Text="Search" OnClick="BtnSearch_Click" ValidationGroup="SearchValidationGrp" CssClass="buttonformid"/>
+           <asp:Button ID="BtnDisplayAll" runat="server" Text="Display All" OnClick="BtnDisplayAll_Click" CssClass="buttonformid"/>
             &nbsp;&nbsp;&nbsp;
          
-           Filter Status by :&nbsp;&nbsp;<asp:DropDownList ID="OrderStatusDrpdwn" runat="server" OnSelectedIndexChanged="OrderStatusDrpdwn_SelectedIndexChanged" AutoPostBack="true" >             
+           Filter Status by :&nbsp;&nbsp;<asp:DropDownList ID="ddlOrderStatus" runat="server" OnSelectedIndexChanged="OrderStatusDrpdwn_SelectedIndexChanged" AutoPostBack="true" >             
                  <asp:ListItem Selected="True">--Select Status--</asp:ListItem>
                 <asp:ListItem>Pending</asp:ListItem>
                 <asp:ListItem>Approved</asp:ListItem>
@@ -38,7 +38,7 @@
                     </EditItemTemplate>--%>
                     <ItemTemplate>
                          
-                        <asp:Label ID="orderDate" runat="server" Text='<%# Bind("OrderDate","{0:MM/dd/yyyy}") %>' Font-Bold="true" Width="180px"></asp:Label>
+                        <asp:Label ID="lblorderDate" runat="server" Text='<%# Bind("OrderDate","{0:MM/dd/yyyy}") %>' Font-Bold="true" Width="180px"></asp:Label>
                     </ItemTemplate> 
                 </asp:TemplateField>
 
@@ -47,7 +47,7 @@
                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate>
-                        <asp:LinkButton ID="purchaseDetailLinkBtn" runat="server" Text='<%# Eval("PurchaseOrderID") %>' CommandArgument='<%# Eval("PurchaseOrderID") %>' Width="100px" OnClick="purchaseDetailLinkBtn_Click" Font-Bold="true"></asp:LinkButton>
+                        <asp:LinkButton ID="LbtnPurchaseOrderID" runat="server" Text='<%# Eval("PurchaseOrderID") %>' CommandArgument='<%# Eval("PurchaseOrderID") %>' Width="100px" OnClick="LbtnPurchaseOrderID_Click" Font-Bold="true"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -57,7 +57,7 @@
                         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate>
-                        <asp:Label ID="ReqstdBy" runat="server" Text='<%# Bind("Employee1.EmpName") %>' Font-Bold="true" Width="120px"></asp:Label>
+                        <asp:Label ID="lblReqstdBy" runat="server" Text='<%# Bind("Employee1.EmpName") %>' Font-Bold="true" Width="120px"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -67,7 +67,7 @@
                         <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate>
-                        <asp:Label ID="SupplierCode" runat="server" Text='<%# Bind("Supplier.SupplierName") %>' Font-Bold="true" Width="250px" ></asp:Label>
+                        <asp:Label ID="lblSupplierCode" runat="server" Text='<%# Bind("Supplier.SupplierName") %>' Font-Bold="true" Width="250px" ></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -77,7 +77,7 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate>
-                        <asp:Label ID="OrderStatus" runat="server" Text='<%# Bind("Status") %>' Font-Bold="true" Width="140px" ></asp:Label>
+                        <asp:Label ID="lblOrderStatus" runat="server" Text='<%# Bind("Status") %>' Font-Bold="true" Width="140px" ></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Delete" >
@@ -85,7 +85,7 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate >
-                        <asp:Button ID="btn_Delete" runat="server" Text="Delete" CommandName="Delete"  OnClick="btn_Delete_Click" CssClass="deletebutton" CommandArgument='<%#Eval("PurchaseOrderID")%>' />
+                        <asp:Button ID="BtnDelete" runat="server" Text="Delete" CommandName="Delete"  OnClick="BtnDelete_Click" CssClass="deletebutton" CommandArgument='<%#Eval("PurchaseOrderID")%>' />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

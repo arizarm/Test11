@@ -19,11 +19,13 @@
            $("#startDate").datepicker({
                changeMonth: true,
                changeYear: true,
+               dateFormat: 'yy-mm-dd',
               
            }).val();
            $("#endDate").datepicker({
                changeMonth: true,
                changeYear: true,
+               dateFormat: 'yy-mm-dd',
                
            }).val();
 	    });

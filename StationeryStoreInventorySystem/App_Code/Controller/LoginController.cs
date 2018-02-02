@@ -90,6 +90,7 @@ public class LoginController
     public static readonly string RequisitionDetailURI = "RequisitionDetails.aspx";
     public static readonly string RetrievalListDetailURI = "~/Store/RetrievalListDetail.aspx";
     public static readonly string RetrievalShortfallURI = "~/RetrievalShortfall.aspx";
+    public static readonly string PurchaseOrderFormURI = "~/StoreClerk/PurchaseOrderForm.aspx";
     public static readonly string PurchaseOrderListURI = "~/Store/PurchaseOrderList.aspx";
     public static readonly string PurchaseOrderDetailURI= "~/Store/PurchaseOrderDetail.aspx";
     public static readonly string EmployeeRequisitionFormURI = "~/DepartmentEmployee/RequisitionForm.aspx";

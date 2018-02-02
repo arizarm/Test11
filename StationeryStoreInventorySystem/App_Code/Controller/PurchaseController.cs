@@ -82,7 +82,8 @@ public class PurchaseController
         try
         {
             EFBroker_PurchaseOrder.AddPurchaseOrder(orderItems);
-            Utility.sendMail("williams@logicuniversity.com", "Purchase order", "Please find the order for items and approve to proceed");
+            string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
+            Utility.sendMail(supervisorEmail, "Purchase order", "There  is a new purchase order created. Please review");
         }
         catch (Exception e)
         {

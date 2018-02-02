@@ -29,19 +29,19 @@
     <br />
     <br />
     <br />
-    <asp:Button ID="GenerateBtn" runat="server" Text="Generate Report" CssClass="button" CausesValidation="true" OnClick="GenerateBtn_Click" ValidationGroup="DateValGrp" />
+    <asp:Button ID="BtnGenerate" runat="server" Text="Generate Report" CssClass="button" CausesValidation="true" OnClick="BtnGenerate_Click" ValidationGroup="DateValGrp" />
     <asp:CustomValidator runat="server" Display="Dynamic"  ValidationGroup="DateValGrp" ForeColor="Red" OnServerValidate="CompareDateValidator"></asp:CustomValidator>
-    <asp:Label Id="errorTxt" runat="server" Text=""></asp:Label>
-    <Button type="button" id="printreport" class="btn btn-default pull-right" style="margin-right:140px"  onclick="printDiv()">Print Reorder Report</Button>
+    <asp:Label Id="lblerror" runat="server" Text=""></asp:Label>
+    <button id="printreport" class="btn btn-default pull-right" style="margin-right:140px"  onclick="printDiv()">Print Reorder Report</button>
     
     <br />
     <h4>Reorder Report between
-        <asp:Label ID="sdate" runat="server" Text=""></asp:Label>
-        -<asp:Label ID="edate" runat="server" Text=""></asp:Label>
+        <asp:Label ID="lblsdate" runat="server" Text=""></asp:Label>
+        -<asp:Label ID="lbledate" runat="server" Text=""></asp:Label>
     </h4>
     <br />
 
-    <asp:Label runat="server" Text="" ID="txtLbl" Font-Bold="true"></asp:Label>
+    <asp:Label runat="server" Text="" ID="lblmsg" Font-Bold="true"></asp:Label>
     <br />
     <br />
     <div id="printable">:
@@ -99,10 +99,10 @@
     <br />
     <br />
     <br />
-    <asp:Label runat="server" Text=""  ID="txtLbl2" Font-Bold="true"></asp:Label>
+    <asp:Label runat="server" Text=""  ID="lblmsg2" Font-Bold="true"></asp:Label>
     <br />
     <br />
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems"  EmptyDataRowStyle-BackColor="Window">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                <ControlStyle Font-Size="10pt" />

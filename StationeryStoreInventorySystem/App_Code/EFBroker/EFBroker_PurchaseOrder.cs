@@ -250,10 +250,15 @@ public class EFBroker_PurchaseOrder
     public static List<ShortfallItems> GenerateReorderReportForPurchasedItems(DateTime startDate, DateTime endDate)
     {
         StationeryEntities entities = new StationeryEntities();
-    
-        var itemList = (from item in entities.Items
-                        join pItems in entities.Item_PurchaseOrder on item.ItemCode equals pItems.ItemCode
-                        where item.ReorderLevel >= item.BalanceQty && (pItems.PurchaseOrder.OrderDate >= startDate && endDate >= pItems.PurchaseOrder.OrderDate)
+
+        //var itemList = (from item in entities.Items
+        //                join pItems in entities.Item_PurchaseOrder on item.ItemCode equals pItems.ItemCode
+        //                where item.ReorderLevel >= item.BalanceQty && (pItems.PurchaseOrder.OrderDate >= startDate && endDate >= pItems.PurchaseOrder.OrderDate)
+                            
+        var itemList = (from porder in entities.Item_PurchaseOrder                        
+                        group porder by porder.ItemCode into p
+                        join item in entities.Items on p.Key equals item.ItemCode
+                        where item.ReorderLevel >= item.BalanceQty && (p.OrderByDescending(x=>x.PurchaseOrderID).FirstOrDefault().PurchaseOrder.OrderDate >= startDate && endDate >= (p.OrderByDescending(x => x.PurchaseOrderID).FirstOrDefault().PurchaseOrder.OrderDate))
                         select new ShortfallItems
                         {
                             ItemCode = item.ItemCode,
@@ -262,31 +267,32 @@ public class EFBroker_PurchaseOrder
                             ReorderLevel = item.ReorderLevel,
                             UnitOfMeasure = item.UnitOfMeasure,
                             Balance = item.BalanceQty,
-                            PurchaseOrderNo = pItems.PurchaseOrderID,
-                            ExpectedDate = pItems.PurchaseOrder.ExpectedDate
+                            PurchaseOrderNo = p.OrderByDescending(x => x.PurchaseOrderID).FirstOrDefault().PurchaseOrderID,
+                            ExpectedDate = p.OrderByDescending(x => x.PurchaseOrderID).FirstOrDefault().PurchaseOrder.ExpectedDate
                         }).ToList<ShortfallItems>();
         return itemList;
     }
     public static List<ShortfallItems> GenerateShortfallItemsReport(DateTime startDate, DateTime endDate)
     {
         StationeryEntities entities = new StationeryEntities();
-        var lowStockItemList = (from i in entities.Item_PurchaseOrder
-                                where !(entities.Items.Any(x => x.ItemCode == i.ItemCode) && (i.PurchaseOrder.OrderDate >= startDate && endDate >= i.PurchaseOrder.OrderDate))
-                                join item in entities.Items on i.ItemCode equals item.ItemCode
-                                where item.ReorderLevel>=item.BalanceQty
+        
+        var lowStockItemList = (from i in entities.Items
+                                where !(entities.Item_PurchaseOrder.Any(x => x.ItemCode == i.ItemCode && (x.PurchaseOrder.OrderDate >= startDate && endDate >= x.PurchaseOrder.OrderDate)))                                
+                                where i.ReorderLevel >= i.BalanceQty
                                 select new ShortfallItems
                                 {
-                                    ItemCode = item.ItemCode,
-                                    Description = item.Description,
-                                    ReorderQuantity = item.ReorderQty,
-                                    ReorderLevel = item.ReorderLevel,
-                                    UnitOfMeasure = item.UnitOfMeasure,
-                                    Balance = item.BalanceQty,
+                                    ItemCode = i.ItemCode,
+                                    Description = i.Description,
+                                    ReorderQuantity = i.ReorderQty,
+                                    ReorderLevel = i.ReorderLevel,
+                                    UnitOfMeasure = i.UnitOfMeasure,
+                                    Balance = i.BalanceQty,
                                     NullablePurchaseOrderNo = "-",
                                     ExpectedDate = null,
-                                }).ToList();
-
+                                }).Distinct().ToList();
         return lowStockItemList;
+
+
     }
 
     public static List<DateTime?> GetAllFinalisedReorderMonths()

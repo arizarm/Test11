@@ -50,7 +50,7 @@
 
                     <%-- Catalogue Menu --%>
                     <asp:Label ID="lblCatalogue" runat="server" CssClass="CategoryHeader">Catalogue</asp:Label>
-                    <asp:HyperLink ID="hLinkStationeryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/StationeryCatalogue.aspx">Stationery Catalogue</asp:HyperLink>
+                    <asp:HyperLink ID="hLinkStationeryCatalogue" runat="server" CssClass="hyperLinkCategoryStyle" NavigateUrl="~/Department/StationCatalogueEmp.aspx">Stationery Catalogue</asp:HyperLink>
 
                 </div>
 

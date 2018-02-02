@@ -68,8 +68,9 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                 editor.commit();
                 Intent i3 = new Intent(this, LoginActivity.class);
                 startActivity(i3);
-                Toast.makeText(getApplicationContext(),
-                        "Logged out",Toast.LENGTH_SHORT).show();
+                Util.greenToast("Logged out",getApplicationContext());
+//                Toast.makeText(getApplicationContext(),
+//                        "Logged out",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

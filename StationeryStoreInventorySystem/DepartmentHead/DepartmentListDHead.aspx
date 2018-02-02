@@ -120,7 +120,7 @@
         <tr>
             <td class="auto-style2">Assignment Start Date :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                 <asp:Button ID="btnEditDate" runat="server" Text="Edit Date" OnClick="btnEditDate_Click"/>
+                 <asp:Button ID="btnEditDate" runat="server" Text="Edit Date" OnClick="btnEditDate_Click" CssClass="alert-success"/>
             </td>
             
                

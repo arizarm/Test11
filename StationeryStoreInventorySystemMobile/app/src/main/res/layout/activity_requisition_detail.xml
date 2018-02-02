@@ -9,7 +9,6 @@
 
     <TextView
         android:id="@+id/reqByTV"
-        style="@style/TitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -23,11 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.17"
+        style="@style/TitleStyle"
         />
 
     <TextView
         android:id="@+id/reqByData"
-        style="@style/TitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -40,7 +39,9 @@
         app:layout_constraintTop_toBottomOf="@+id/reqByTV"
         app:layout_constraintVertical_bias="0.0"
         android:layout_marginLeft="32dp"
-        android:gravity="start" />
+        android:gravity="start"
+        style="@style/TextStyle"
+        />
 
     <TextView
         android:id="@+id/reqDateTV"
@@ -68,13 +69,15 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        style="@style/TextStyle"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btnReject"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.823"
         app:layout_constraintStart_toEndOf="@+id/reqByData"
         app:layout_constraintTop_toBottomOf="@+id/reqDateTV"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.526"
+        style="@style/TextStyle"
+        />
 
     <TextView
         android:id="@+id/textView6"
@@ -85,6 +88,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
         android:text="@string/title"
+        style="@style/TitleStyle"
         android:textSize="24sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +116,8 @@
         app:layout_constraintTop_toBottomOf="@+id/reqDateData"
         app:layout_constraintVertical_bias="1.0"
         style="@style/button_text"
-        android:background="@drawable/green_button"/>
+        android:background="@drawable/green_button"
+        />
 
     <Button
         android:id="@+id/btnReject"
@@ -123,9 +128,9 @@
         android:text="@string/btnReject"
         app:layout_constraintBottom_toTopOf="@+id/detailListView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="8dp"
         style="@style/button_text"
-        android:background="@drawable/green_button"/>
+        android:background="@drawable/red_button"
+        android:layout_marginRight="8dp" />
 
     <ListView
         android:id="@+id/detailListView"

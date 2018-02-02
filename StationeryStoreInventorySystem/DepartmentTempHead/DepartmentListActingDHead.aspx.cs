@@ -89,7 +89,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
             int cid = deptController.GetCollectionidbyDeptCode(dcode);
             int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-            deptController.UpdateCollectionPoint(dcode, c);
+           
 
             int empRepid = empDRep.EmpID;
 
@@ -97,7 +97,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             string empRepEmail = empDRep.Email;
             Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
             String newempEmail = newDeptRep.Email;
-            deptController.UpdateDeptRep(dcode, empid);
+           
 
             if (c == cid && empid == empRepid)
             {
@@ -107,20 +107,11 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             {
                 if (c != cid)
                 {
-                    List<String> clerkEmails = EmployeeController.getAllClerkMails();
-
-                    if (clerkEmails != null)
-                    {
-                        for (int i = 0; i < clerkEmails.Count; i++)
-                        {
-                            Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                        }
-                    }
+                    deptController.UpdateCollectionPoint(dcode, c);
                 }
                 if (empid != empRepid)
                 {
-                    Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                    Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                    deptController.UpdateDeptRep(dcode, empid);
                 }
                 Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
 

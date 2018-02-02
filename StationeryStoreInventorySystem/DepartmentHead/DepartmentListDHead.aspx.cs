@@ -164,7 +164,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
             {
                 int cid = deptController.GetCollectionidbyDeptCode(dcode);
                 int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-                deptController.UpdateCollectionPoint(dcode, c);
+               
 
                 Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
                 int empRepid = empDRep.EmpID;
@@ -172,7 +172,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                 int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
                 Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
                 String newempEmail = newDeptRep.Email;
-                deptController.UpdateDeptRep(dcode, empid);
+               
 
 
                 if (Convert.ToInt32(DropDownListActingDHead.SelectedValue) == 0)
@@ -201,20 +201,11 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
-
-                                if (clerkEmails != null)
-                                {
-                                    for (int i = 0; i < clerkEmails.Count; i++)
-                                    {
-                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                                    }
-                                }
+                                deptController.UpdateCollectionPoint(dcode, c);
                             }
                             if (empid != empRepid)
                             {
-                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                                deptController.UpdateDeptRep(dcode, empid);
                             }
                             if (Aempid != 0 || sdate != "" || edate != "")
                             {
@@ -245,20 +236,11 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
-
-                                if (clerkEmails != null)
-                                {
-                                    for (int i = 0; i < clerkEmails.Count; i++)
-                                    {
-                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                                    }
-                                }
+                                deptController.UpdateCollectionPoint(dcode, c);
                             }
                             if (empid != empRepid)
                             {
-                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                                deptController.UpdateDeptRep(dcode, empid);
                             }
                             //if (Aempid != 0 || sdate != "" || edate != "")
                             //{
@@ -306,20 +288,11 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                         {
                             if (c != cid)
                             {
-                                List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
-
-                                if (clerkEmails != null)
-                                {
-                                    for (int i = 0; i < clerkEmails.Count; i++)
-                                    {
-                                        Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                                    }
-                                }
+                                deptController.UpdateCollectionPoint(dcode, c);
                             }
                             if (empid != empRepid)
                             {
-                                Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                                Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                                deptController.UpdateDeptRep(dcode, empid);
                             }
                             if (Aempid != aid || sdate != ssdate || edate != eedate)
                             {
@@ -344,28 +317,26 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
                         string sdate = txtSDate.Text;
                         string edate = txtEDate.Text;
-
-                        if (c != cid)
+                        if (c == cid && empid == empRepid)
                         {
-                            List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
+                            Response.Redirect(LoginController.DepartmentDetailInfoURI);
+                        }
+                        else
+                        {
 
-                            if (clerkEmails != null)
+                            if (c != cid)
                             {
-                                for (int i = 0; i < clerkEmails.Count; i++)
-                                {
-                                    Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                                }
+                                deptController.UpdateCollectionPoint(dcode, c);
                             }
-                        }
-                        if (empid != empRepid)
-                        {
-                            Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                            Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
-                        }
-                        Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
+                            if (empid != empRepid)
+                            {
+                                deptController.UpdateDeptRep(dcode, empid);
+                            }
+                            Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
 
-                        deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
-                        Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
+                            deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
+                            Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
+                        }
                     }
                 }
             }

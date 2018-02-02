@@ -11,11 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        style="@style/TextStyle"
+        />
 
     <TextView
         android:id="@+id/textView7"
-        style="@style/TitleStyle"
+        android:textAppearance="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -25,22 +27,25 @@
         android:layout_marginRight="239dp"
         android:width="20dp"
         android:text="@string/qty"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        style="@style/TitleStyle"
+        />
 
  <TextView
      android:id="@+id/textView4"
-     style="@style/TextStyle"
      android:layout_width="23dp"
      android:layout_height="wrap_content"
      android:layout_alignBaseline="@+id/textView7"
      android:layout_alignEnd="@+id/textView8"
      android:textSize="20sp"
      android:textStyle="bold"
-     android:layout_alignRight="@+id/textView8" />
+     android:layout_alignRight="@+id/textView8"
+     style="@style/TextStyle"
+     />
 
  <TextView
      android:id="@+id/textView8"
-     style="@style/TitleStyle"
+     android:textAppearance="@style/TextStyle"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:layout_alignParentEnd="true"
@@ -49,16 +54,19 @@
      android:layout_marginEnd="210dp"
      android:layout_marginRight="210dp"
      android:text="@string/uom"
-     android:textSize="18sp" />
+     android:textSize="18sp"
+     style="@style/TitleStyle"
+     />
 
     <TextView
         android:id="@+id/textView5"
-        style="@style/TextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView8"
         android:layout_alignBottom="@+id/textView8"
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        style="@style/TextStyle"
+        />
 </RelativeLayout>

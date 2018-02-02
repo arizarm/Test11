@@ -5,10 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing;
+using System.Threading;
 
 public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 {
     int maxChars = 100;
+    bool informSupervisor;
+    bool informManager;
     protected void Page_Load(object sender, EventArgs e)
     {
         Dictionary<Item, int> discrepancies = new Dictionary<Item, int>();
@@ -41,26 +44,26 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             {
                 Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
             }
-            GridView1.DataSource = fullDiscrepancies;
-            GridView1.DataBind();
+            gvDiscrepancies.DataSource = fullDiscrepancies;
+            gvDiscrepancies.DataBind();
 
             if (Session["monthly"] != null)
             {
                 if ((bool)Session["monthly"] == false)
                 {
-                    GridView1.Columns[4].Visible = false;
+                    gvDiscrepancies.Columns[4].Visible = false;
                 }
             }
         }
-        Label1.Text = "";
-        Label5.Text = "";
+        lblErrorCharLimit.Text = "";
+        lblRequired.Text = "";
     }
 
-    protected void Button2_Click(object sender, EventArgs e)
+    protected void btnSubmit_Click(object sender, EventArgs e)
     {
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
-        foreach (GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in gvDiscrepancies.Rows)
         {
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
             string stock = (row.FindControl("lblStock") as Label).Text;
@@ -144,7 +147,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 }
                 else
                 {
-                    Label1.Text = "Make sure all remarks are under 100 characters long";
+                    lblErrorCharLimit.Text = "Make sure all remarks are under 100 characters long";
                     row.BackColor = Color.Yellow;
                     complete = false;
                     break;
@@ -152,7 +155,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             }
             else
             {
-                Label5.Text = "Please state the cause of discrepancies for all items in Remarks";
+                lblRequired.Text = "Please state the cause of discrepancies for all items in Remarks";
                 complete = false;
                 break;
             }
@@ -164,8 +167,10 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             EFBroker_Discrepancy.SaveDiscrepencies(dList);
 
 
-            bool informSupervisor = false;
-            bool informManager = false;
+            //bool informSupervisor = false;
+            //bool informManager = false;
+            informSupervisor = false;
+            informManager = false;
             foreach (Discrepency d in dList)
             {
                 if (Math.Abs((decimal)d.TotalDiscrepencyAmount) < 250)
@@ -178,7 +183,26 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 }
             }
 
+            ThreadStart emailThreadStart = new ThreadStart(DiscrepancyMailNotification);
+            Thread emailThread = new Thread(emailThreadStart);
+            emailThread.Start();
 
+            Session["discrepancyList"] = null;
+            Session["discrepancyDisplay"] = null;
+            Session["RetrievalShortfallItemList"] = null;
+            Session["RetrievalID"] = null;
+
+            Session["monthly"] = null;
+            Session["ItemToUpdate"] = null;
+
+            Utility.AlertMessageThenRedirect("Discrepancies successfully reported", "GenerateDiscrepancyV2.aspx");
+        }
+    }
+
+    private void DiscrepancyMailNotification()
+    {
+        try
+        {
             if (informSupervisor)
             {
                 string supervisorEmail = EFBroker_DeptEmployee.GetEmployeeListByRole("Store Supervisor")[0].Email;
@@ -218,15 +242,10 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 }
             }
 
-            Session["discrepancyList"] = null;
-            Session["discrepancyDisplay"] = null;
-            Session["RetrievalShortfallItemList"] = null;
-            Session["RetrievalID"] = null;
-
-            Session["monthly"] = null;
-            Session["ItemToUpdate"] = null;
-
-            Utility.AlertMessageThenRedirect("Discrepancies successfully reported", "GenerateDiscrepancyV2.aspx");
+        }
+        catch(Exception ex)
+        {
+            Utility.DisplayAlertMessage("Discrepancy reporting: Discrepancies successfully reported but not all notification mails sent successfully");
         }
     }
 }

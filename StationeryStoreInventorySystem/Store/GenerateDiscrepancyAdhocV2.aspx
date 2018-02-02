@@ -6,7 +6,7 @@
     <div>
         <div class="updateDeptHead"><h2 class="mainPageHeader">Discrepancies Summary</h2></div>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
+        <asp:GridView ID="gvDiscrepancies" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
@@ -19,9 +19,6 @@
                     </ItemTemplate>
                 </asp:TemplateField>               
                 <asp:TemplateField HeaderText="Unit of Measure">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.Key.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
@@ -49,11 +46,11 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <asp:Label ID="Label1" runat="server" ForeColor="Red" Text=""></asp:Label>
+        <asp:Label ID="lblErrorCharLimit" runat="server" ForeColor="Red" Text=""></asp:Label>
         <br />
-        <asp:Label ID="Label5" runat="server" ForeColor="Red" Text=""></asp:Label>
+        <asp:Label ID="lblRequired" runat="server" ForeColor="Red" Text=""></asp:Label>
         <br />
-        <asp:Button ID="Button2" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="Button2_Click"/>     
+        <asp:Button ID="btnSubmit" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="btnSubmit_Click"/>     
     </div>
 </asp:Content>
 

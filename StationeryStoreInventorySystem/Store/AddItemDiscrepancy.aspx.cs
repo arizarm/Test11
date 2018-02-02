@@ -40,10 +40,10 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         {
             Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
         }
-        Label1.Text = "";      //Resetting error text field
+        lblErrorMsg.Text = "";      //Resetting error text field
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void btnAddItem_Click(object sender, EventArgs e)
     {
         Dictionary<Item, int> discrepancies = null;
         Dictionary<Item, String> discrepancyDisplay = null;
@@ -118,17 +118,17 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
                 }
                 else
                 {
-                    Label1.Text = "Adjustment cannot reduce stock to less than 0";
+                    lblErrorMsg.Text = "Adjustment cannot reduce stock to less than 0";
                 }
             }
             else
             {
-                Label1.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
+                lblErrorMsg.Text = "Please enter a non-zero integer for adjustment amount (either positive or negative)";
             }
         }
         else
         {
-            Label1.Text = "Please enter an integer for adjustment amount (either positive or negative)";
+            lblErrorMsg.Text = "Please enter an integer for adjustment amount (either positive or negative)";
         }
     }
 }

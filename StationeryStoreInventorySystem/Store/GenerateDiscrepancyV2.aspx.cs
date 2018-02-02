@@ -27,8 +27,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         if (Session["discrepancyDisplay"] != null && Session["discrepancyList"] != null)
         {
             Dictionary<Item, String> iList2 = (Dictionary<Item, String>)Session["discrepancyDisplay"];
-            GridView2.DataSource = iList2;
-            GridView2.DataBind();
+            gvDiscrepancyList.DataSource = iList2;
+            gvDiscrepancyList.DataBind();
         }
 
         //if (Request.UrlReferrer != null)
@@ -38,26 +38,25 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         //        ShowAll();
         //    }
         //}
-
         
-        Label1.Text = "";
+        lblErrorFinalise.Text = "";
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void btnGenerateDiscrepancy_Click(object sender, EventArgs e)
     {      //Generate discrepancy button
         GenerateDiscrepancyList();
     }
 
-    protected void Button3_Click(object sender, EventArgs e)
-    {        //Check all button
-        for (int i = 0; i < GridView1.Rows.Count; i++)
+    protected void btnCheckAll_Click(object sender, EventArgs e)
+    {        //Check all button, for testing
+        for (int i = 0; i < gvItemList.Rows.Count; i++)
         {
-            GridViewRow row = GridView1.Rows[i];
-            (row.FindControl("CheckBox1") as CheckBox).Checked = true;
+            GridViewRow row = gvItemList.Rows[i];
+            (row.FindControl("cbxCorrect") as CheckBox).Checked = true;
         }
     }
 
-    protected void Button2_Click(object sender, EventArgs e)
+    protected void btnFinalise_Click(object sender, EventArgs e)
     {     //Finalise discrepancy button
         if (itemError == false)
         {
@@ -65,11 +64,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
         else
         {
-            Label1.Text = "Unable to finalise.";
+            lblErrorFinalise.Text = "Unable to finalise.";
         }
     }
 
-    protected void Button4_Click(object sender, EventArgs e)
+    protected void btnSearch_Click(object sender, EventArgs e)
     {        //Search button
 
         Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
@@ -97,10 +96,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             //}
         }
 
-        GridView1.DataSource = searchResults;
-        GridView1.DataBind();
+        gvItemList.DataSource = searchResults;
+        gvItemList.DataBind();
 
-        foreach (GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in gvItemList.Rows)
         {
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;
@@ -109,26 +108,26 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
-    protected void Button5_Click(object sender, EventArgs e)
+    protected void btnDisplayAll_Click(object sender, EventArgs e)
     {       //Display all button
         ShowAll();
     }
-    protected void Button6_Click(object sender, EventArgs e)
+    protected void btnClearList_Click(object sender, EventArgs e)
     {       //Clear list button
         Dictionary<Item, int> emptyList = new Dictionary<Item, int>();
         Dictionary<Item, String> emptyDisplay = new Dictionary<Item, string>();
         Session["discrepancyList"] = emptyList;
         Session["discrepancyDisplay"] = emptyDisplay;
-        GridView2.DataSource = emptyDisplay;
-        GridView2.DataBind();
+        gvDiscrepancyList.DataSource = emptyDisplay;
+        gvDiscrepancyList.DataBind();
     }
     private void ErrorClear()
     {
         if (itemError == false)
         {
-            Label5.Text = "";
-            Label7.Text = "";
-            Label8.Text = "";
+            lblErrorMissed.Text = "";
+            lblErrorBase.Text = "";
+            lblErrorMissedItems.Text = "";
         }
     }
 
@@ -138,10 +137,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         Dictionary<Item, String> discrepancyDisplay = new Dictionary<Item, String>();
         List<String> missed = new List<String>();
         itemError = false;      //Whether there are any rows with errors in the whole page
-        for (int i = 0; i < GridView1.Rows.Count; i++)
+        for (int i = 0; i < gvItemList.Rows.Count; i++)
         {
-            GridViewRow row = GridView1.Rows[i];
-            bool ticked = (row.FindControl("CheckBox1") as CheckBox).Checked;
+            GridViewRow row = gvItemList.Rows[i];
+            bool ticked = (row.FindControl("cbxCorrect") as CheckBox).Checked;
             string txtActual = (row.FindControl("txtActual") as TextBox).Text;
             string itemCode = (row.FindControl("lblItemCode1") as Label).Text;
             bool error = false;       //Whether a row has an error
@@ -183,7 +182,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 {
                     ErrorClear();
                     row.BackColor = Color.Transparent;
-                    Label5.Text = "Some items have not been checked yet. ";
+                    lblErrorMissed.Text = "Some items have not been checked yet. ";
                     itemError = true;
                     error = true;
                 }
@@ -202,7 +201,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             if (error)
             {
                 row.BackColor = Color.Yellow;
-                Label7.Text = "Please double-check the highlighted items.";
+                lblErrorBase.Text = "Please double-check the highlighted items.";
                 missed.Add(itemCode);
             }
         }   //end of iterating through gridview rows
@@ -218,13 +217,13 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                 }
                 missedMessage += missed[i];
             }
-            Label8.Text = missedMessage;
+            lblErrorMissedItems.Text = missedMessage;
         }
         Session["itemError"] = itemError;
 
         //Indicate monthly inventory check mode if the number of items in GridView1
         //when generating discrepancies matches the number of active items in the database
-        if (GridView1.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
+        if (gvItemList.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
         {
             Session["monthly"] = true;
         }
@@ -236,8 +235,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         Session["discrepancyList"] = discrepancyList;
         Session["discrepancyDisplay"] = discrepancyDisplay;
 
-        GridView2.DataSource = discrepancyDisplay;
-        GridView2.DataBind();
+        gvDiscrepancyList.DataSource = discrepancyDisplay;
+        gvDiscrepancyList.DataBind();
     }
 
     private string GetAdjustmentsString(List<Discrepency> dList)
@@ -311,10 +310,10 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             }
         }
 
-        GridView1.DataSource = displayItems;
-        GridView1.DataBind();
+        gvItemList.DataSource = displayItems;
+        gvItemList.DataBind();
 
-        foreach (GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in gvItemList.Rows)
         {
             HyperLink link = row.FindControl("lnkItem") as HyperLink;
             Label lbl = row.FindControl("lblItemCode1") as Label;

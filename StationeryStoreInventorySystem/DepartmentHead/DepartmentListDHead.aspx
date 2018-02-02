@@ -45,6 +45,13 @@
         .auto-style10 {
             height: 21px;
         }
+        .auto-style11 {
+            width: 422px;
+            height: 68px;
+        }
+        .auto-style12 {
+            height: 68px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -111,7 +118,7 @@
         <tr>
             <td class="auto-style2">Acting Department Head :</td>
             <td>
-                <asp:DropDownList ID="DropDownListActingDHead" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DropDownListActingDHead_SelectedIndexChanged">
+                <asp:DropDownList ID="ddlActingDHead" runat="server" class="auto-styledd" AutoPostBack="True" OnSelectedIndexChanged="DdlActingDHead_SelectedIndexChanged">
                 </asp:DropDownList>
 
             </td>
@@ -120,7 +127,7 @@
         <tr>
             <td class="auto-style2">Assignment Start Date :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                 <asp:Button ID="btnEditDate" runat="server" Text="Edit Date" OnClick="btnEditDate_Click"/>
+                 <asp:Button ID="btnEditDate" runat="server" Text="Edit Date" OnClick="btnEditDate_Click" CssClass="alert-success"/>
             </td>
             
                
@@ -129,7 +136,7 @@
             <td>
                 <asp:TextBox ID="txtSDate" runat="server" ClientIDMode="Static" Visible="False"></asp:TextBox>
                 <asp:Label ID="lblStartDate" runat="server"></asp:Label>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="reqForSDate" runat="server" ControlToValidate="txtSDate" ErrorMessage="Please enter Start Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
 
 
 
@@ -138,8 +145,8 @@
             
         </tr>
         <tr>
-            <td class="auto-style2">Assignment End Date :</td>
-            <td>
+            <td class="auto-style11">Assignment End Date :</td>
+            <td class="auto-style12">
 
 
 
@@ -147,7 +154,7 @@
                 <br />
                 <asp:TextBox ID="txtEDate" runat="server" ClientIDMode="Static" Visible="False"></asp:TextBox>
                 <asp:Label ID="lblEndDate" runat="server"></asp:Label>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="reqForEDate" runat="server" ControlToValidate="txtEDate" ErrorMessage="Please enter End Date for Delegate!" ForeColor="#FF3300" Enabled="False"></asp:RequiredFieldValidator>
 
             </td>
         </tr>
@@ -159,21 +166,21 @@
                     Operator="GreaterThanEqual" ControlToValidate="txtEDate" ControlToCompare="txtSDate"
                     ErrorMessage="The end date must be after the start date" ForeColor="#FF3300" Enabled="False" Type="Date" />
 
-                <asp:DropDownList ID="DropDownListDRep" runat="server" class="auto-styledd" AutoPostBack="True">
+                <asp:DropDownList ID="ddlDRep" runat="server" class="auto-styledd" AutoPostBack="True">
                 </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td class="auto-style2">Collection Point :</td>
             <td>
-                <asp:DropDownList ID="DropDownListCollectionPoint" runat="server" class="auto-styledd">
+                <asp:DropDownList ID="ddlCollectionPoint" runat="server" class="auto-styledd">
                 </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <td></td>
             <td class="auto-style2">
-                <asp:Button ID="BtnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click" />
+                <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="button" OnClick="BtnUpdate_Click" />
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<a href="../Department/DepartmentDetailInfo.aspx"><input type="button" id="btnCancel" class="rejectBtn" value="Cancel"/></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </td>

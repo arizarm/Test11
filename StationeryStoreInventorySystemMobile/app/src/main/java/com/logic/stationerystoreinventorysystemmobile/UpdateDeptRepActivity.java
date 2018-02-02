@@ -57,12 +57,13 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
         name = (TextView) findViewById(R.id.txtError);
 
         new AsyncTask<String, Void, LinkedHashMap<String,String>>() {
-            ProgressDialog progress;
+
 
             @Override
             protected  LinkedHashMap<String,String> doInBackground(String... params) {
                 return Employee.listEmployee(params[0]);
             }
+
 
             @Override
             protected void onPostExecute(LinkedHashMap<String,String> result) {
@@ -141,10 +142,15 @@ public class UpdateDeptRepActivity extends AppCompatActivity implements AdapterV
                             Employee.updateDeptRep(params[0]);
                             return null;
                         }
-
+                        ProgressDialog progress;
+                        @Override
+                        protected void onPreExecute() {
+                            progress = ProgressDialog.show(UpdateDeptRepActivity.this, "Update Department Rep", "Sending mail to concern Employee", true);
+                        }
                         @Override
                         protected void onPostExecute(Void result) {
-
+                            Intent i=new Intent(getApplicationContext(),UpdateDeptRepActivity.class);
+                            startActivity(i);
 
                         }
                     }.execute(emp);

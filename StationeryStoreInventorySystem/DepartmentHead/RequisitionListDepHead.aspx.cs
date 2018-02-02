@@ -17,15 +17,15 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
                 Employee emp = (Employee)Session["emp"];
 
                 //Dep Head
-                GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
-                GridView1.DataBind();
+                gvRequisitionForm.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
+                gvRequisitionForm.DataBind();
                 ViewState["DataSource"] = "displayAll";
                 //Dep Representative
                 showEmptyLabel();
 
                 int count = RequisitionControl.CountPending(emp.DeptCode);
 
-                pendingCount.Text = "Total Pendings: " + count.ToString();
+                lblPendingCount.Text = "Total Pendings: " + count.ToString();
             }
             else
             {
@@ -36,34 +36,34 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     public void showEmptyLabel()
     {
-        if (GridView1.Rows.Count <= 0)
+        if (gvRequisitionForm.Rows.Count <= 0)
         {
-            Label5.Visible = true;
-            Label5.Text = "No Requisition Found.";
+            lblNoList.Visible = true;
+            lblNoList.Text = "No Requisition Found.";
         }
         else
         {
-            Label5.Visible = false;
+            lblNoList.Visible = false;
         }
     }
 
-    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DdlStatus_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            if (ddlStatus.SelectedItem.ToString() == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
-                GridView1.DataBind();
+                gvRequisitionForm.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
+                gvRequisitionForm.DataBind();
                 ViewState["DataSource"] = "displayAll";
                 showEmptyLabel();
             }
             else
             {
-                string selectedStatus = DropDownList1.SelectedValue.ToString();
-                GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(selectedStatus, emp.DeptCode);
-                GridView1.DataBind();
+                string selectedStatus = ddlStatus.SelectedValue.ToString();
+                gvRequisitionForm.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(selectedStatus, emp.DeptCode);
+                gvRequisitionForm.DataBind();
                 ViewState["DataSource"] = "displayStatusSearch";
                 showEmptyLabel();
             }
@@ -73,28 +73,28 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Utility.logout();
         }
     }
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        searchWord = SearchBox.Text;
+        searchWord = txtSearch.Text;
         if (String.IsNullOrWhiteSpace(searchWord))
         {
             ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox", "<script language='javascript'>alert('" + "Please enter value to search!" + "');</script>");
         }
         else
         {
-            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            if (ddlStatus.SelectedItem.ToString() == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord.Trim(), emp.DeptCode);
-                GridView1.DataBind();
+                gvRequisitionForm.DataSource = RequisitionControl.HeadSearchWithoutStatus(searchWord.Trim(), emp.DeptCode);
+                gvRequisitionForm.DataBind();
                 ViewState["DataSource"] = "displaySearch";
                 ViewState["searchString"] = searchWord;
                 showEmptyLabel();
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord.Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
-                GridView1.DataBind();
+                gvRequisitionForm.DataSource = RequisitionControl.HeadSearchWithStatus(searchWord.Trim(), emp.DeptCode, ddlStatus.SelectedItem.ToString());
+                gvRequisitionForm.DataBind();
                 ViewState["DataSource"] = "displaySearchStatus";
                 ViewState["searchString"] = searchWord;
                 showEmptyLabel();
@@ -102,39 +102,39 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
     }
 
-    protected void DisplayBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplayAll_Click(object sender, EventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
-        GridView1.DataBind();
+        gvRequisitionForm.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
+        gvRequisitionForm.DataBind();
         ViewState["DataSource"] = "displayAll";
         showEmptyLabel();
     }
 
-    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void GvRequisitionForm_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        GridView1.PageIndex = e.NewPageIndex;
+        gvRequisitionForm.PageIndex = e.NewPageIndex;
         if (((string)ViewState["DataSource"]).Equals("displayAll"))
         {
-            GridView1.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
+            gvRequisitionForm.DataSource = RequisitionControl.DisplayAllByDeptCode(emp.DeptCode);
         }
         else if (((string)ViewState["DataSource"]).Equals("displayStatusSearch"))
         {
-            GridView1.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(DropDownList1.SelectedItem.ToString(), emp.DeptCode);
+            gvRequisitionForm.DataSource = RequisitionControl.getRequisitionListByStatusAndDepCode(ddlStatus.SelectedItem.ToString(), emp.DeptCode);
         }
         else if (((string)ViewState["DataSource"]).Equals("displaySearch"))
         {
-            GridView1.DataSource = RequisitionControl.HeadSearchWithoutStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode);
+            gvRequisitionForm.DataSource = RequisitionControl.HeadSearchWithoutStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode);
         }
         else
         {
-            GridView1.DataSource = RequisitionControl.HeadSearchWithStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode, DropDownList1.SelectedItem.ToString());
+            gvRequisitionForm.DataSource = RequisitionControl.HeadSearchWithStatus(((string)ViewState["searchString"]).Trim(), emp.DeptCode, ddlStatus.SelectedItem.ToString());
         }
-        GridView1.DataBind();
+        gvRequisitionForm.DataBind();
     }
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvRequisitionForm_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

@@ -125,7 +125,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
         }
     }
 
-    protected void btnUpdate_Click(object sender, EventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {

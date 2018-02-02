@@ -63,6 +63,11 @@ public class LoginActivity extends Activity {
                         if (emp.get("role").equals("DepartmentHead")) {
                             loginCheck = true;
                             message = "Department Head Access Granted";
+                        }else if(emp.get("role").equals("Representative")){
+
+                            message = "Department Rep Access Granted";
+                            Intent i = new Intent(getApplicationContext(),UpdateCollectionPointActivity.class);
+                            startActivity(i);
                         }
                         else if(emp.get("role").equals("Store Clerk") || emp.get("role").equals("Store Supervisor") || emp.get("role").equals("Store Manager"))
                         {
@@ -83,7 +88,10 @@ public class LoginActivity extends Activity {
                                     {
                                         loginCheck = true;
                                         message = "Acting Dept Head Access Granted";
-                                    }//
+                                    }else
+                                    {
+                                        message = "Access Denied";
+                                    }
                                 }
                             }.execute(emp.get("eid"));
                         }

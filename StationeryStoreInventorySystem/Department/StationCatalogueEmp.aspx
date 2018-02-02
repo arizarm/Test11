@@ -24,14 +24,14 @@
     <div class="row">
 
         <div class="col-md-12 pull-right">
-            <asp:button id="PrintViewButton" runat="server" text="View Printable Version" class="btn btn-default pull-right" onclick="PrintViewButton_Click" />
-            <button type="button" id="PrintButton" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true" visible="false">Print Catalogue</button>
+            <asp:button id="btnViewPrint" runat="server" text="View Printable Version" class="btn btn-default pull-right" onclick="BtnViewPrint_Click" />
+            <button type="button" id="btnForPrint" runat="server" class="btn btn-default pull-right" onclick="printDiv()" aria-hidden="true" visible="false">Print Catalogue</button>
         </div>
     </div>
 
     <br />
     <div id="printable">
-        <asp:gridview id="GridView1" runat="server" cssclass="mGrid mGrid60percent" RowStyle-height="50px" autogeneratecolumns="False" horizontalalign="Center" OnRowDataBound="GridView1_RowDataBound">
+        <asp:gridview id="gvForStationCatalogue" runat="server" cssclass="mGrid mGrid60percent" RowStyle-height="50px" autogeneratecolumns="False" horizontalalign="Center" OnRowDataBound="GvForStationCatalogue_RowDataBound">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>

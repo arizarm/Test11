@@ -54,19 +54,19 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
                 //UpdateDeptRp
                 string empDRepname = empDRep.EmpName;
-                DropDownListDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
-                DropDownListDRep.DataTextField = "EmpName";
-                DropDownListDRep.DataValueField = "EmpID";
-                DropDownListDRep.DataBind();
-                DropDownListDRep.Items.FindByText(empDRepname).Selected = true;
+                ddlDRep.DataSource = deptController.GetEmployeeListForDRep(dcode, empid);
+                ddlDRep.DataTextField = "EmpName";
+                ddlDRep.DataValueField = "EmpID";
+                ddlDRep.DataBind();
+                ddlDRep.Items.FindByText(empDRepname).Selected = true;
 
                 //UpdateCollectionPoint
                 string empCollectionname = deptController.GetDepartmentForCollectionPointSelected(dcode);
-                DropDownListCollectionPoint.DataSource = deptController.GetCollectionPointList();
-                DropDownListCollectionPoint.DataTextField = "CollectionPoint1";
-                DropDownListCollectionPoint.DataValueField = "CollectionLocationID";
-                DropDownListCollectionPoint.DataBind();
-                DropDownListCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
+                ddlCollectionPoint.DataSource = deptController.GetCollectionPointList();
+                ddlCollectionPoint.DataTextField = "CollectionPoint1";
+                ddlCollectionPoint.DataValueField = "CollectionLocationID";
+                ddlCollectionPoint.DataBind();
+                ddlCollectionPoint.Items.FindByText(empCollectionname).Selected = true;
             }
 
             else
@@ -76,7 +76,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
         }
     }
 
-    protected void btnUpdate_Click(object sender, EventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
 
         if (Session["emp"] != null)
@@ -88,16 +88,16 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
 
             Employee empDRep = deptController.GetEmployeeListForDRepSelected(dcode);
             int cid = deptController.GetCollectionidbyDeptCode(dcode);
-            int c = Convert.ToInt16(DropDownListCollectionPoint.SelectedValue);
-            deptController.UpdateCollectionPoint(dcode, c);
+            int c = Convert.ToInt16(ddlCollectionPoint.SelectedValue);
+           
 
             int empRepid = empDRep.EmpID;
 
-            int empid = Convert.ToInt16(DropDownListDRep.SelectedValue);
+            int empid = Convert.ToInt16(ddlDRep.SelectedValue);
             string empRepEmail = empDRep.Email;
             Employee newDeptRep = deptController.GetEmployeeEmailByEid(empid);
             String newempEmail = newDeptRep.Email;
-            deptController.UpdateDeptRep(dcode, empid);
+           
 
             if (c == cid && empid == empRepid)
             {
@@ -107,20 +107,11 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
             {
                 if (c != cid)
                 {
-                    List<String> clerkEmails = EmployeeController.getAllClerkMails();
-
-                    if (clerkEmails != null)
-                    {
-                        for (int i = 0; i < clerkEmails.Count; i++)
-                        {
-                            Utility.sendMail(clerkEmails[i].ToString(), "Change Collection Point", "New Collection Point is updated!");
-                        }
-                    }
+                    deptController.UpdateCollectionPoint(dcode, c);
                 }
                 if (empid != empRepid)
                 {
-                    Utility.sendMail(newempEmail, "Change Department Rep", "Your Role have changed to Department Rep");
-                    Utility.sendMail(empRepEmail, "Change Department Rep", "Your Role have changed to Employee");
+                    deptController.UpdateDeptRep(dcode, empid);
                 }
                 Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
 
@@ -133,7 +124,7 @@ public partial class DepartmentListActingDHead : System.Web.UI.Page
         }
 
     }
-    protected void btnCancel_Click(object sender, EventArgs e)
+    protected void BtnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect(LoginController.DepartmentDetailInfoURI);
     }

@@ -87,6 +87,10 @@ public interface IDeptService
     [WebGet(UriTemplate = "/Employee/{empid}/", ResponseFormat = WebMessageFormat.Json)]
     IsTemp CheckIsTempHead(string empid);
 
+    [OperationContract]
+    [WebGet(UriTemplate = "/Employee/check/{deptCode}/", ResponseFormat = WebMessageFormat.Json)]
+    CheckHasTemp CheckHasTempHead(string deptCode);
+
 }
 
 [DataContract]
@@ -96,6 +100,15 @@ public class IsTemp
 
     [DataMember]
     public bool IsTempHead { get { return isTempHead; } set { isTempHead = value; } }
+}
+
+[DataContract]
+public class CheckHasTemp
+{
+    bool hasTemp;
+
+    [DataMember]
+    public bool HasTemp { get { return hasTemp; } set { hasTemp = value; } }
 }
 
 [DataContract]

@@ -19,33 +19,33 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
 
-            Label1.Text = r.EmployeeName;
-            Label2.Text = r.Date;
-            Label3.Text = r.Status;
+            lblReqname.Text = r.EmployeeName;
+            lblReqDate.Text = r.Date;
+            lblStatus.Text = r.Status;
 
-            if (Label3.Text.Equals("Approved") || Label3.Text.Equals("approved") || Label3.Text.Equals("InProgress"))
+            if (lblStatus.Text.Equals("Approved") || lblStatus.Text.Equals("approved") || lblStatus.Text.Equals("InProgress"))
             {
-                Label3.ForeColor = System.Drawing.Color.Green;
+                lblStatus.ForeColor = System.Drawing.Color.Green;
             }
-            else if (Label3.Text.Equals("Pending"))
+            else if (lblStatus.Text.Equals("Pending"))
             {
-                Label3.ForeColor = System.Drawing.Color.Blue;
+                lblStatus.ForeColor = System.Drawing.Color.Blue;
             }
-            else if (Label3.Text.Equals("Priority"))
+            else if (lblStatus.Text.Equals("Priority"))
             {
-                Label3.ForeColor = System.Drawing.Color.Red;
+                lblStatus.ForeColor = System.Drawing.Color.Red;
             }
             else
             {
-                Label3.ForeColor = System.Drawing.Color.Black;
+                lblStatus.ForeColor = System.Drawing.Color.Black;
             }
 
             if (r.Status.ToString() != "Pending")
             {
                 ReasonLabel.Visible = false;
-                TextArea1.Visible = false;
-                ApproveButton.Visible = false;
-                RejectButton.Visible = false;
+                txtReason.Visible = false;
+                btnApprove.Visible = false;
+                btnReject.Visible = false;
             }
         }
         else
@@ -61,23 +61,23 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
     protected void showAllItems()
     {
-        GridView1.DataSource = RequisitionControl.getList(id);
-        GridView1.DataBind();
+        gvRequisitionDetailList.DataSource = RequisitionControl.getList(id);
+        gvRequisitionDetailList.DataBind();
     }
 
 
-    protected void ApproveButton_Click(object sender, EventArgs e)
+    protected void BtnApprove_Click(object sender, EventArgs e)
     {
         if (Request.QueryString["requisitionNo"] != null && Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
             id = Convert.ToInt32(Request.QueryString["requisitionNo"]);
-            string reason = TextArea1.Value;
+            string reason = txtReason.Value;
             RequisitionControl.approveRequisition(id, reason, emp.EmpID);
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
-            approveSuccess.Text = "You apporved the requisition requested by " + Label1.Text + " Successfully";
+            approveSuccess.Text = "You apporved the requisition requested by " + lblReqname.Text + " Successfully";
         }
         else
         {
@@ -85,7 +85,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
         }
     }
 
-    protected void RejectButton_Click(object sender, EventArgs e)
+    protected void BtnReject_Click(object sender, EventArgs e)
     {
         if (Request.QueryString["requisitionNo"] != null && Session["emp"] != null)
         {
@@ -96,7 +96,7 @@ public partial class ApproveRequisition : System.Web.UI.Page
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
 
-            approveSuccess.Text = "You Rejected the requisition requested by " + Label1.Text + " Successfully";
+            approveSuccess.Text = "You Rejected the requisition requested by " + lblReqname.Text + " Successfully";
         }
         else
         {
@@ -104,24 +104,9 @@ public partial class ApproveRequisition : System.Web.UI.Page
         }
     }
 
-    protected void backButton_Click(object sender, EventArgs e)
-    {
-        if (Session["emp"] != null)
-        {
-            Employee emp = (Employee)Session["emp"];
+   
 
-            if (emp.Role == "DepartmentHead")
-            {
-                Response.Redirect(LoginController.RequisitionListDepHeadURI);
-            }
-            else if (emp.Role == "Representative")
-            {
-                Response.Redirect(LoginController.RequisitionListDepRepURI);
-            }
-        }
-    }
-
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void BtnBack_Click(object sender, EventArgs e)
     {
         Response.Redirect("~/DepartmentTempHead/RequisitionListDepTempHead.aspx");
     }

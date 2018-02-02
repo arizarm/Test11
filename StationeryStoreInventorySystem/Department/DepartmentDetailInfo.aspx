@@ -100,7 +100,7 @@
             <tr>
                 <td></td>
                 <td class="auto-style2">
-                    <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="button" OnClick="btnUpdate_Click"/>
+                    <asp:Button ID="btnUpdate" runat="server" Text="Update" CssClass="button" OnClick="BtnUpdate_Click"/>
                 </td>
                 
             </tr>

@@ -16,8 +16,8 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             {
                 Employee emp = (Employee)Session["emp"];
                 //Dep Emp
-                GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-                GridView1.DataBind();
+                gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                gvRequisitionList.DataBind();
                 ViewState["DataSource"] = "displayAll";
                 showEmptyLabel();
             }
@@ -30,35 +30,35 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
 
     public void showEmptyLabel()
     {
-        if (GridView1.Rows.Count <= 0)
+        if (gvRequisitionList.Rows.Count <= 0)
         {
-            Label5.Visible = true;
-            Label5.Text = "No Requisition Found.";
+            lblError.Visible = true;
+            lblError.Text = "No Requisition Found.";
         }
         else
         {
-            Label5.Visible = false;
+            lblError.Visible = false;
         }
     }
-    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DdlStatus_SelectedIndexChanged(object sender, EventArgs e)
     {
 
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            string selectedStatus = DropDownList1.SelectedValue;
+            string selectedStatus = ddlStatus.SelectedValue;
 
-            if (DropDownList1.SelectedItem.Text == "Select Status")
+            if (ddlStatus.SelectedItem.Text == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-                GridView1.DataBind();
+                gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+                gvRequisitionList.DataBind();
                 ViewState["DataSource"] = "displayAll";
                 showEmptyLabel();
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
-                GridView1.DataBind();
+                gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, selectedStatus);
+                gvRequisitionList.DataBind();
                 ViewState["DataSource"] = "displayStatusSearch";
                 showEmptyLabel();
             }
@@ -68,11 +68,11 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Utility.logout();
         }
     }
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        searchWord = SearchBox.Text;
-        if (SearchBox.Text == String.Empty)
+        searchWord = txtSearch.Text;
+        if (txtSearch.Text == String.Empty)
         {
             ClientScript.RegisterStartupScript(Page.GetType(),
       "MessageBox",
@@ -80,18 +80,18 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
         else
         {
-            if (DropDownList1.SelectedItem.ToString() == "Select Status")
+            if (ddlStatus.SelectedItem.ToString() == "Select Status")
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
-                GridView1.DataBind();
+                gvRequisitionList.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(searchWord.Trim(), emp.EmpID);
+                gvRequisitionList.DataBind();
                 ViewState["DataSource"] = "displaySearch";
                 ViewState["searchWord"] = searchWord;
                 showEmptyLabel();
             }
             else
             {
-                GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
-                GridView1.DataBind();
+                gvRequisitionList.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(searchWord.Trim(), emp.EmpID, ddlStatus.SelectedItem.ToString());
+                gvRequisitionList.DataBind();
                 ViewState["DataSource"] = "displaySearchStatus";
                 ViewState["searchWord"] = searchWord;
                 showEmptyLabel();
@@ -99,13 +99,13 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
     }
 
-    protected void DisplayBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplay_Click(object sender, EventArgs e)
     {
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];
-            GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
-            GridView1.DataBind();
+            gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+            gvRequisitionList.DataBind();
             ViewState["DataSource"] = "displayAll";
             showEmptyLabel();
         }
@@ -115,34 +115,34 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         }
     }
 
-    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void GVRequisitionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         Employee emp = (Employee)Session["emp"];
-        GridView1.PageIndex = e.NewPageIndex;
+        gvRequisitionList.PageIndex = e.NewPageIndex;
         if(((string)ViewState["DataSource"]).Equals("displayAll"))
         {
-            GridView1.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
+            gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByID(emp.EmpID);
         }
         else if (((string)ViewState["DataSource"]).Equals("displayStatusSearch"))
         {
-            GridView1.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, DropDownList1.SelectedItem.ToString());
+            gvRequisitionList.DataSource = RequisitionControl.getRequisitionListByEmpIDAndStatus(emp.EmpID, ddlStatus.SelectedItem.ToString());
         }
         else if (((string)ViewState["DataSource"]).Equals("displaySearch"))
         {
-            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID);
+            gvRequisitionList.DataSource = RequisitionControl.SearchForRepRequisitionWithoutStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID);
         }
         else
         {
-            GridView1.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID, DropDownList1.SelectedItem.ToString());
+            gvRequisitionList.DataSource = RequisitionControl.SearchForRepRequisitionWithStatus(((string)ViewState["searchWord"]).Trim(), emp.EmpID, ddlStatus.SelectedItem.ToString());
         }
-        GridView1.DataBind();
+        gvRequisitionList.DataBind();
     }
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GVRquisitionList_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            Label statusLabel = (Label)e.Row.FindControl("Label4");
+            Label statusLabel = (Label)e.Row.FindControl("lblStatus");
             statusLabel.Font.Bold = true;
             string status = statusLabel.Text;
 

@@ -38,6 +38,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
     SharedPreferences pref;
     String deptCode;
     String eid;
+    String role;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -51,7 +52,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         }
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
@@ -68,13 +69,14 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                 editor.commit();
                 Intent i3 = new Intent(this, LoginActivity.class);
                 startActivity(i3);
-                Toast.makeText(getApplicationContext(),
-                        "Logged out",Toast.LENGTH_SHORT).show();
+                Util.greenToast("Logged out",getApplicationContext());
+//                Toast.makeText(getApplicationContext(),
+//                        "Logged out",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,7 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         deptCode=pref.getString("deptCode","ENGL");
         eid=pref.getString("eid","1027");
+        role=pref.getString("role","");
 
         btnApprove = (Button) findViewById(R.id.btnApprove);
         btnReject = (Button) findViewById(R.id.btnReject);
@@ -99,6 +102,27 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
 
         reqBy.setText(requestor);
         reqDate.setText(date);
+
+        if(role.equals("DepartmentHead")) {
+            new AsyncTask<String, Void, Boolean>() {
+                @Override
+                protected Boolean doInBackground(String... params) {
+                    return Employee.CheckHasTempHead(params[0]);
+                }
+
+                @Override
+                protected void onPostExecute(Boolean result) {
+                    if (result) {
+                        btnApprove.setVisibility(View.INVISIBLE);
+                        btnReject.setVisibility(View.INVISIBLE);
+                    } else {
+                        btnApprove.setVisibility(View.VISIBLE);
+                        btnReject.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            }.execute(deptCode);
+        }
 
         btnApprove.setOnClickListener(this);
         final ListView lv = (ListView) findViewById(R.id.detailListView);
@@ -182,7 +206,6 @@ public class RequisitionDetailActivity extends FragmentActivity implements View.
                     protected void onPreExecute() {
                         progress = ProgressDialog.show(RequisitionDetailActivity.this, "Requisition Approved", "Sending mail to store clerks", true);
                     }
-
 
                     @Override
                     protected void onPostExecute(Void result){

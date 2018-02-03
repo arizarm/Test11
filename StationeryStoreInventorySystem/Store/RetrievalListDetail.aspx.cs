@@ -27,9 +27,9 @@ public partial class RetrievalForm : System.Web.UI.Page
                     //RangeValidator
                     foreach (GridViewRow r in gvRe.Rows)
                     {
-                        int totalRequestedQty = Convert.ToInt32((r.FindControl("labTotalRequestedQty") as Label).Text);
+                        int totalRequestedQty = Convert.ToInt32((r.FindControl("lblTotalRequestedQty") as Label).Text);
 
-                        RangeValidator rv = r.FindControl("RangeValidator1") as RangeValidator;
+                        RangeValidator rv = r.FindControl("rng") as RangeValidator;
                         rv.MaximumValue = totalRequestedQty.ToString();
                     }
                     //
@@ -46,12 +46,12 @@ public partial class RetrievalForm : System.Web.UI.Page
         }
     }
 
-    protected void Save_Click(object sender, EventArgs e)
+    protected void BtnSave_Click(object sender, EventArgs e)
     {
-        saveRetrievalQty();
+        SaveRetrievalQty();
     }
 
-    public List<RetrievalShortfallItem> saveRetrievalQty()
+    public List<RetrievalShortfallItem> SaveRetrievalQty()
     {
         int retrievalId = (int)Session["RetrievalID"];
 
@@ -67,7 +67,7 @@ public partial class RetrievalForm : System.Web.UI.Page
         return retCon.UpdateRetrieval(retrievalId, retrievedData);
     }
 
-    protected void FinalizeDisbursmentList_Click(object sender, EventArgs e)
+    protected void BtnFinalizeDisbursmentList_Click(object sender, EventArgs e)
     {
         int retrievalId = (int)Session["RetrievalID"];
 
@@ -75,7 +75,7 @@ public partial class RetrievalForm : System.Web.UI.Page
 
         Dictionary<Item, int> discToUpdate = new Dictionary<Item, int>();  //shortfall item + adjustment qty
 
-        RetrievalShortfallItemList = saveRetrievalQty();
+        RetrievalShortfallItemList = SaveRetrievalQty();
 
         if (retCon.CheckInvalidDisbursement(retrievalId))
         {

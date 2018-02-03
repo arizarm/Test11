@@ -15,10 +15,10 @@ public partial class RetrievalList : System.Web.UI.Page
         //
         if (retCon.DisplayRetrievalList().Count == 0)
         {
-            SearchBtn.Visible = false;
-            DisplayBtn.Visible = false;
-            SearchBox.Visible = false;
-            CheckRetrievalListValidation.Text = "There is no pending Retrieval!";
+            btnSearch.Visible = false;
+            btnDisplay.Visible = false;
+            txtSearchBox.Visible = false;
+            lblCheckRetrievalListValidation.Text = "There is no pending Retrieval!";
         }
         else
         {
@@ -30,7 +30,6 @@ public partial class RetrievalList : System.Web.UI.Page
                 Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
                 foreach (Retrieval r in retList)
                 {
-
                     retDisplay.Add(r, EFBroker_DeptEmployee.GetEmployeebyEmpID((int)r.RetrievedBy).EmpName);
                 }
 
@@ -41,9 +40,9 @@ public partial class RetrievalList : System.Web.UI.Page
         }
     }
 
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
-        string searchWord = SearchBox.Text;
+        string searchWord = txtSearchBox.Text;
 
         List<Retrieval> retList = retCon.DisplaySearch(searchWord);
         Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
@@ -57,7 +56,7 @@ public partial class RetrievalList : System.Web.UI.Page
 
     }
 
-    protected void DisplayBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplay_Click(object sender, EventArgs e)
     {
         List<Retrieval> retList = retCon.DisplayRetrievalList();
         Dictionary<Retrieval, string> retDisplay = new Dictionary<Retrieval, string>();
@@ -71,18 +70,18 @@ public partial class RetrievalList : System.Web.UI.Page
     }
 
 
-    protected void gvDetailBtn_Click(object sender, EventArgs e)
+    protected void BtnGvDetail_Click(object sender, EventArgs e)
     {
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn        
-        Session["RetrievalID"] = Convert.ToInt32((row.FindControl("LabelRetrievalID") as Label).Text); //row.Cells[1]
+        Session["RetrievalID"] = Convert.ToInt32((row.FindControl("lblRetrievalID") as Label).Text); //row.Cells[1]
         Response.Redirect("~/Store/RetrievalListDetail.aspx");
     }
 
-    protected void gvReq_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvReq_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            Label statusLabel = (Label)e.Row.FindControl("Label1");
+            Label statusLabel = (Label)e.Row.FindControl("lblStatus");
 
             string status = statusLabel.Text;
 

@@ -84,9 +84,19 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
                         protected void onPostExecute(Void params) {
 
                             Util.greenToast("Requisition Generation Successful", RegenerateRequisitionActivity.this);
-                            Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
-                            startActivity(intent);
+
                             progress.dismiss();
+
+                            if(DiscrepancyHolder.itemToUpdate)
+                            {
+                                Intent intent = new Intent(getApplicationContext(), DiscrepancySummaryActivity.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
+                                startActivity(intent);
+                            }
                         }
                     }.execute();
 //                } else {
@@ -102,8 +112,17 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
     }
 
     public void btnCancelClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
-        startActivity(intent);
+
+        if(DiscrepancyHolder.itemToUpdate)
+        {
+            Intent intent = new Intent(getApplicationContext(), DiscrepancySummaryActivity.class);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(getApplicationContext(), DisbursementActivity.class);
+            startActivity(intent);
+        }
     }
 
     public static void setRegenerateRequisition(RegenerateRequisition r) {
@@ -111,34 +130,8 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storemenu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item1:
-                Intent i1 = new Intent(this, RetrievalListActivity.class);
-                startActivity(i1);
-                return true;
-            case R.id.item2:
-                Intent i2 = new Intent(this, DisbursementActivity.class);
-                startActivity(i2);
-                return true;
-            case R.id.item3:
-                Intent i3 = new Intent(this, DiscrepancyMenuActivity.class);
-                startActivity(i3);
-                return true;
-            case R.id.item4:
-                Intent i4 = new Intent(this, DeptActivity.class);
-                startActivity(i4);
-                return true;
-            case R.id.item5:
-                Util.LogOut(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onBackPressed() {
+        Util.redsToast("Cannot leave the screen before transaction completed!", RegenerateRequisitionActivity.this);
+        return;
     }
 }

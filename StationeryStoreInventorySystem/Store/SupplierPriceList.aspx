@@ -186,7 +186,7 @@
                         <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="TxtNewPrice" runat="server" OnTextChanged="TxtNewPrice_TextChanged"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TxtNewPrice" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ForeColor="Red" />
+                        <asp:TextBox ID="TxtNewPrice" runat="server"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TxtNewPrice" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ForeColor="Red" />
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

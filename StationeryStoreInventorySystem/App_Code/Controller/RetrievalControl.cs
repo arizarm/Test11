@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Windows.Forms;
 using System.Transactions;
-
+using System.Threading;
 
 /// <summary>
 /// Summary description for RetrievalControl
@@ -235,6 +235,7 @@ public class RetrievalControl
                         {
                             //find the correct Disbursement_Item to save
                             di.ActualQty += rsub.ActualQty;
+                            // di.ActualQty = rsub.ActualQty;
                             EFBroker_Disbursement.UpdateDisbursementItem(di);
                         }
                     }
@@ -256,12 +257,8 @@ public class RetrievalControl
                     if (shortfallList.ItemCode == di.ItemCode)
                     {
                         di.ActualQty = 0;
+                        EFBroker_Disbursement.UpdateDisbursementItem(di);
                     }
-                    else
-                    {
-                        di.ActualQty = di.TotalRequestedQty;
-                    }
-                    EFBroker_Disbursement.UpdateDisbursementItem(di);
                 }
             }
         }
@@ -334,14 +331,22 @@ public class RetrievalControl
                 d.Status = "Ready";
                 EFBroker_Disbursement.UpdateDisbursement(d);
 
-                //
-                string departmentRepresentativeEmail = EFBroker_DeptEmployee.GetDRepresentativeEmailByDeptCode(depCode);
-                string departmentRepresentativeName = EFBroker_DeptEmployee.GetDRepresentativeNameByDeptCode(depCode);
-                Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(), "Dear " + departmentRepresentativeName + ", " + Environment.NewLine + Environment.NewLine + "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to " + collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() + " at " + d.CollectionTime + ". Thank you.");
+                //Thread,asynctask for email 
+                Thread emailThread = new Thread(() => SendEmailToDepartmentRepresentative(depCode, d, collectionPoint));
+                emailThread.Start();
                 //
             }
         }
     }
+
+    //
+    static public void SendEmailToDepartmentRepresentative(string depCode, Disbursement d, string collectionPoint)
+    {
+        string departmentRepresentativeEmail = EFBroker_DeptEmployee.GetDRepresentativeEmailByDeptCode(depCode);
+        string departmentRepresentativeName = EFBroker_DeptEmployee.GetDRepresentativeNameByDeptCode(depCode);
+        Utility.sendMail(departmentRepresentativeEmail, "New Collection Notification " + DateTime.Now.ToString(), "Dear " + departmentRepresentativeName + ", " + Environment.NewLine + Environment.NewLine + "Disbursement for items from your department is ready for collection. Your access code is " + d.AccessCode + ". Please go to " + collectionPoint + " on " + ((DateTime)d.CollectionDate).ToShortDateString() + " at " + d.CollectionTime + ". Thank you.");
+    }
+    //
 
 
     public void AddDisbursement(int requisitionId, List<int> requisitionNo)

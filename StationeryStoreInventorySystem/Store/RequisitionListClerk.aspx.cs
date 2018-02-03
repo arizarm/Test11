@@ -16,12 +16,12 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
         if (RequisitionControl.DisplayAll().Count == 0)
         {
-            GenerateBtn.Visible = false;
-            SearchBtn.Visible = false;
-            DisplayBtn.Visible = false;
-            DropDownList1.Visible = false;
-            SearchBox.Visible = false;
-            CheckBoxValidation.Text = "There is no pending requisition!";
+            btnGenerate.Visible = false;
+            btnSearch.Visible = false;
+            btnDisplay.Visible = false;
+            ddlStatus.Visible = false;
+            txtSearchBox.Visible = false;
+            lblCheckBoxValidation.Text = "There is no pending requisition!";
         }
         else
         {
@@ -31,18 +31,18 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
                 gvReq.DataBind();
             }
 
-            if (DropDownList1.Text == "Priority")
+            if (ddlStatus.Text == "Priority")
             {
-                DropDownList1.Text = "Select Status";
+                ddlStatus.Text = "Select Status";
 
                 gvReq.DataSource = null;
                 gvReq.DataSource = RequisitionControl.DisplayPriority();
                 gvReq.DataBind();
             }
 
-            if (DropDownList1.Text == "Approved")
+            if (ddlStatus.Text == "Approved")
             {
-                DropDownList1.Text = "Select Status";
+                ddlStatus.Text = "Select Status";
 
                 gvReq.DataSource = null;
                 gvReq.DataSource = RequisitionControl.DisplayApproved();
@@ -54,41 +54,42 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
     {
-        if (((CheckBox)gvReq.HeaderRow.FindControl("CheckAll")).Checked)
+        
+        if (((CheckBox)gvReq.HeaderRow.FindControl("cbxCheckAll")).Checked)
         {
             foreach (GridViewRow row in gvReq.Rows)
             {
-                ((CheckBox)row.FindControl("CheckBox")).Checked = true;
+                ((CheckBox)row.FindControl("cbxCheckBox")).Checked = true;
             }
         }
 
-        if (!((CheckBox)gvReq.HeaderRow.FindControl("CheckAll")).Checked)
+        if (!((CheckBox)gvReq.HeaderRow.FindControl("cbxCheckAll")).Checked)
         {
             foreach (GridViewRow row in gvReq.Rows)
             {
-                ((CheckBox)row.FindControl("CheckBox")).Checked = false;
+                ((CheckBox)row.FindControl("cbxCheckBox")).Checked = false;
             }
         }
     }
 
 
-    protected void SearchBtn_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {
-        string searchWord = SearchBox.Text;
+        string searchWord = txtSearchBox.Text;
 
         gvReq.DataSource = RequisitionControl.DisplaySearch(searchWord);
         gvReq.DataBind();
 
     }
 
-    protected void DisplayBtn_Click(object sender, EventArgs e)
+    protected void BtnDisplay_Click(object sender, EventArgs e)
     {
-        DropDownList1.Text = "Select Status";
+        ddlStatus.Text = "Select Status";
         gvReq.DataSource = RequisitionControl.DisplayAll();
         gvReq.DataBind();
     }
 
-    protected void GenerateBtn_Click(object sender, EventArgs e)
+    protected void BtnGenerate_Click(object sender, EventArgs e)
     {
         bool check = false;
 
@@ -96,11 +97,11 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
         foreach (GridViewRow row in gvReq.Rows)
         {
-            if (((CheckBox)row.FindControl("CheckBox")).Checked == false)
+            if (((CheckBox)row.FindControl("cbxCheckBox")).Checked == false)
             {
-                CheckBoxValidation.Text = "Please select at least one requisition!";
+                lblCheckBoxValidation.Text = "Please select at least one requisition!";
             }
-            else if (((CheckBox)row.FindControl("CheckBox")).Checked)
+            else if (((CheckBox)row.FindControl("cbxCheckBox")).Checked)
             {
                 check = true;
                 requisitionNo.Add(Convert.ToInt32((row.FindControl("lblrequisitionNo") as Label).Text));
@@ -117,7 +118,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         }
     }
 
-    protected void gvDetailBtn_Click(object sender, EventArgs e)
+    protected void BtnGvDetail_Click(object sender, EventArgs e)
     {
         GridViewRow row = ((Button)sender).NamingContainer as GridViewRow;  //detail btn
         string s = (row.FindControl("lblrequisitionNo") as Label).Text; //row.Cells[2]
@@ -125,21 +126,21 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
         Response.Redirect("~/Store/RequisitionDetail.aspx");
     }
 
-    protected void gvReq_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvReq_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            Label statusLabel = (Label)e.Row.FindControl("Label1");
+            Label lblStatus = (Label)e.Row.FindControl("lblStatus");
 
-            string status = statusLabel.Text;
+            string status = lblStatus.Text;
 
             if (status == "Approved")
             {
-                statusLabel.ForeColor = System.Drawing.Color.Green;
+                lblStatus.ForeColor = System.Drawing.Color.Green;
             }
             else if (status == "Priority")
             {
-                statusLabel.ForeColor = System.Drawing.Color.Red;
+                lblStatus.ForeColor = System.Drawing.Color.Red;
             }
         }
     }

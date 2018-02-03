@@ -83,7 +83,7 @@ public class DiscrepancyAdhocActivity extends AppCompatActivity implements Adapt
     }
 
     private void displayAll(){
-        list = findViewById(R.id.listItemsAdhoc);
+        list = findViewById(R.id.lvItemsAdhoc);
         new AsyncTask<Void, Void, ArrayList<CatalogueItem>>(){
             ProgressDialog progress;
             @Override

@@ -16,78 +16,57 @@
     <br />
 
     <div>
-        <%--<h2>There are insufficient numbers of quantities for the following items.</h2>--%>
-        <%--<h3>Please allocate the items to departments</h3>--%>
-
         <asp:GridView ID="gvMain" runat="server" AutoGenerateColumns="False" CssClass="mGrid " RowStyle-Height="50px">
             <Columns>
                 <asp:TemplateField HeaderText="Item Description">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="itemDescription" runat="server" Text='<%# Bind("Description")%>'></asp:Label>
+                        <asp:Label ID="lblItemDescription" runat="server" Text='<%# Bind("Description")%>'></asp:Label>
                         <asp:HiddenField ID="hdfItemCode" runat="server" Value='<%# Bind("ItemCode")%>' />
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Retrieved Quantity">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="availableQuantity" runat="server" Text='<%# Bind("Qty")%>'></asp:Label>
+                        <asp:Label ID="lblRetrievedQuantity" runat="server" Text='<%# Bind("Qty")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Breakdown by Department">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
-
                     <ItemTemplate>
-                         <asp:Label ID="totalActualQuantityValidator" runat="server" ForeColor="Red" ></asp:Label>
+                         <asp:Label ID="lblTotalActualQuantityValidator" runat="server" ForeColor="Red" ></asp:Label>
+
                         <asp:GridView ID="gvSub" runat="server" AutoGenerateColumns="False" CssClass="mGrid" Width="100%">
                             <Columns>
                                 <asp:TemplateField HeaderText="Requested Date">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
-                                    </EditItemTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="RequestDate" runat="server" Text='<%# Bind("RequestDate")%>'></asp:Label>
+                                        <asp:Label ID="lblRequestDate" runat="server" Text='<%# Bind("RequestDate","{0:dddd, dd MMMM yyyy}")%>'></asp:Label>
                                     </ItemTemplate>
+                                    <ItemStyle Width="200px" />
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Department Name">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox" runat="server"></asp:TextBox>
-                                    </EditItemTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="DeptName" runat="server" Text='<%# Bind("DeptName")%>'></asp:Label>
+                                        <asp:Label ID="lblDeptName" runat="server" Text='<%# Bind("DeptName")%>'></asp:Label>
                                         <asp:HiddenField ID="hdfdeptCode" runat="server" Value='<%# Bind("deptCode")%>' />
                                     </ItemTemplate>
+                                       <ItemStyle Width="220px" />
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Requested Quantity">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-                                    </EditItemTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="requestedQty" runat="server" Text='<%# Bind("RequestedQty")%>'></asp:Label>
+                                        <asp:Label ID="lblRequestedQty" runat="server" Text='<%# Bind("RequestedQty")%>'></asp:Label>
                                     </ItemTemplate>
+                                       <ItemStyle Width="140px" />
+
                                 </asp:TemplateField>
 
                                 <asp:TemplateField HeaderText="Allocated Actual Quantity">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
-                                    </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:TextBox ID="txtActualQuantity" runat="server"></asp:TextBox>
                                        
-                                        <asp:RangeValidator ID="RangeValidator1" runat="server" display="Dynamic" ErrorMessage="Invalid Quantity!" ControlToValidate="txtActualQuantity"  MinimumValue="0" Style="color: red"></asp:RangeValidator>
+                                        <asp:RangeValidator ID="rng" runat="server" display="Dynamic" ErrorMessage="Invalid Quantity!" ControlToValidate="txtActualQuantity"  MinimumValue="0" Style="color: red"></asp:RangeValidator>
                                         <br />
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" display="Dynamic" ErrorMessage="Please enter the Qty" ControlToValidate="txtActualQuantity" Style="color: red"></asp:RequiredFieldValidator>
-
+                                        <asp:RequiredFieldValidator ID="req" runat="server" display="Dynamic" ErrorMessage="Please enter the Qty" ControlToValidate="txtActualQuantity" Style="color: red"></asp:RequiredFieldValidator>
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -102,7 +81,7 @@
 
     </div>
     <div>
-        <asp:Button ID="BtnGenerateDisbursementList" runat="server" Text="Finalize Disbursement List" CssClass="button" OnClick="BtnGenerateDisbursementList_Click" />
+        <asp:Button ID="btnFinalizeDisbursementList" runat="server" Text="Finalize Disbursement List" CssClass="button" OnClick="BtnFinalizeDisbursementList_Click" />
     </div>
 
 

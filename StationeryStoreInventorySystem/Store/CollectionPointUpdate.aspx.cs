@@ -7,10 +7,11 @@ using System.Web.UI.WebControls;
 
 public partial class CollectionPointUpdate : System.Web.UI.Page
 {
-    RetrievalControl retCon = new RetrievalControl();     
+    RetrievalControl retCon = new RetrievalControl();
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        //lblDateValidate.Text = "";
         if (Session["RetrievalID"] == null)
         {
             Response.Redirect(LoginController.RequisitionListClerkURI);
@@ -24,9 +25,9 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
                 {
                     if (!IsPostBack)
                     {
-                            int retrievalId = (int)Session["RetrievalID"];
-                            gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
-                            gvCollectionPoint.DataBind();
+                        int retrievalId = (int)Session["RetrievalID"];
+                        gvCollectionPoint.DataSource = retCon.DisplayCollectionPoint(retrievalId);
+                        gvCollectionPoint.DataBind();
 
                     }
                 }
@@ -40,15 +41,15 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
                 Response.Redirect(LoginController.RequisitionListClerkURI);
             }
         }
-            
+
     }
 
     protected void DateValidator(object source, ServerValidateEventArgs args)
     {
         string date = txtSDate.Text;
-        
-        string todayDate = DateTime.Today.ToString("yyyy-MM-dd");
-        if (Convert.ToDateTime(date) > Convert.ToDateTime(todayDate))
+
+        string todaydate = DateTime.Today.ToString("yyyy-MM-dd");
+        if (Convert.ToDateTime(date) > Convert.ToDateTime(todaydate))
         {
             args.IsValid = true;
         }
@@ -59,27 +60,21 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
     }
 
 
-    protected void Submit_Click(object sender, EventArgs e)
-    {
-    //    if (Session["RetrievalID"] != null)
-    //    {
-            int retrievalId = (int)Session["RetrievalID"];
-        //}
-        //else
-        //{
-        //    Response.Redirect(LoginController.DisbursementListURI);
-        //}
-   
+    protected void BtnSubmit_Click(object sender, EventArgs e)
+    {       
+        int retrievalId = (int)Session["RetrievalID"];
 
         DateTime date = DateTime.Parse(txtSDate.Text);
 
+
+        //if(DateValidator())
         if (Page.IsValid)
         {
             foreach (GridViewRow row in gvCollectionPoint.Rows)
             {
-                string collectionPoint = (row.FindControl("labCollectionPoint") as Label).Text;
+                string collectionPoint = (row.FindControl("lblCollectionPoint") as Label).Text;
                 // DateTime date = DateTime.Parse((row.FindControl("txtDate") as TextBox).Text);
-                string time = (row.FindControl("time") as TextBox).Text;
+                string time = (row.FindControl("txtTime") as TextBox).Text;
                 retCon.SaveCollectionTimeAndDateToDisbursement(retrievalId, collectionPoint, date, time);
             }
 
@@ -88,6 +83,10 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
                 if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)////////////////////////////////////
                 {
                     Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
+
+                    //
+                    Session["RetrievalShortfallItemList"] = null;
+                    Session["RetrievalID"] = null;
                 }
                 else
                 {
@@ -104,6 +103,9 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
                 Response.Redirect(LoginController.DisbursementListURI);
             }
         }
-
-    }
+        //else
+        //{
+        //    lblDateValidate.Text = "Please select a future date.";
+        //}
+    }    
 }

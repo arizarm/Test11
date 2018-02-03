@@ -4,7 +4,6 @@ package com.logic.stationerystoreinventorysystemmobile;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,6 +135,7 @@ public class DisbursementDetailFragment extends Fragment {
 
                                     //check for shortfall item
                                     if (actQty < reqQty) {
+                                        actualQtyValidate = true;
 
                                         Log.i("ShortfallCheck", "Shortfall item exists");
 
@@ -152,7 +151,7 @@ public class DisbursementDetailFragment extends Fragment {
                                         if (actQty < retrievedQty) {
                                             discrepancyQty = actQty - retrievedQty;
                                             DiscrepancyHolder.addDiscrepancy(itemCode, discrepancyQty);
-
+                                            DiscrepancyHolder.itemToUpdatePresent();
                                             Log.i("Discrepancy Item", itemCode + String.valueOf(discrepancyQty));
                                         }
                                     } else if (actQty > retrievedQty) {
@@ -172,42 +171,54 @@ public class DisbursementDetailFragment extends Fragment {
                                     EditText edtAccessCode = view.findViewById(R.id.accessCode);
                                     accessCode = edtAccessCode.getText().toString();
 
-                                    //create object to check access code
-                                    final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
-
-                                    //check access code
-                                    boolean chkR = AccessCodeCheck.checkAccessCode(codeCheckObj);
-
-                                    //check if access code is correct
-                                    if (chkR) {
-
-                                        //save current data to database if access code is correct
-                                        DisbursementDetailListItems.UpdateDisbursement(toBeUpdated);
-                                        status = "Acknowledgement successful!";
-                                        redToast = false;
-                                        actualQtyValidate = true;
-                                    } else {
-                                        //return error if wrong access code
-                                        status = "Wrong Access Code!";
+                                    if (accessCode.equals("")) {
+                                        status = "Please enter Access Code!";
                                         redToast = true;
                                         actualQtyValidate = false;
+                                    }
+                                    else
+                                    {
+                                        //create object to check access code
+                                        final AccessCodeCheck codeCheckObj = new AccessCodeCheck(disbId, accessCode);
+
+                                        //check access code
+                                        boolean chkR = AccessCodeCheck.checkAccessCode(codeCheckObj);
+
+                                        //check if access code is correct
+                                        if (chkR) {
+
+                                            //save current data to database if access code is correct
+                                            DisbursementDetailListItems.UpdateDisbursement(toBeUpdated);
+                                            status = "Acknowledgement successful!";
+                                            redToast = false;
+                                            actualQtyValidate = true;
+                                        } else {
+                                            //return error if wrong access code
+                                            status = "Wrong Access Code!";
+                                            redToast = true;
+                                            actualQtyValidate = false;
+                                        }
                                     }
                                 }
 
                                 //if access code ok
-                                if (actualQtyValidate == true) {
+                                if (actualQtyValidate == true)
+
+                                {
                                     if (regenReqList.size() != 0) {
                                         RegenerateRequisitionActivity.setRegenReqList(regenReqList);
                                         RegenerateRequisition r = RegenerateRequisition.GetRegenrateInfo(disbId);
                                         RegenerateRequisitionActivity.setRegenerateRequisition(r);
                                         Intent intent = new Intent(getActivity(), RegenerateRequisitionActivity.class);
                                         startActivity(intent);
+                                    } else if (DiscrepancyHolder.itemToUpdate) {
+                                        Intent intent = new Intent(getActivity(), DiscrepancySummaryActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         Intent intent = new Intent(getActivity(), DisbursementActivity.class);
                                         startActivity(intent);
                                     }
                                 }
-
                                 return status;
                             }
 
@@ -216,25 +227,25 @@ public class DisbursementDetailFragment extends Fragment {
 
                                 Log.i("Result", result);
                                 //display toast message at the end of transaction
-                                if(redToast)
-                                {
-                                    Util.redsToast(result,getActivity());
-                                }
-                                else
-                                {
-                                    Util.greenToast(result,getActivity());
+                                if (redToast) {
+                                    Util.redsToast(result, getActivity());
+                                } else {
+                                    Util.greenToast(result, getActivity());
                                 }
 
                                 progress.dismiss();
 
                             }
-                        }.execute();
+                        }.
+
+                                execute();
                     }
                 });
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
             }
         }
+
     }
 
     //to get disbursement object from other class

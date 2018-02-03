@@ -11,62 +11,46 @@
     <br />
     <br />
     <div>
-        <asp:TextBox ID="SearchBox" ValidationGroup="1" runat="server" Width="311px"></asp:TextBox>
-        <asp:Button ID="SearchBtn" runat="server" Text="Search" ValidationGroup="1" CssClass="button" OnClick="SearchBtn_Click" />
-        <asp:Button ID="DisplayBtn" runat="server" Text="Display All" CssClass="button" OnClick="DisplayBtn_Click" />
+        <asp:TextBox ID="txtSearchBox" ValidationGroup="1" runat="server" Width="311px"></asp:TextBox>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" ValidationGroup="1" CssClass="button" OnClick="BtnSearch_Click" />
+        <asp:Button ID="btnDisplay" runat="server" Text="Display All" CssClass="button" OnClick="BtnDisplay_Click" />
     </div>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="1" Display="Dynamic" runat="server" ErrorMessage="" ControlToValidate="SearchBox" Style="color: red"> </asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="req" ValidationGroup="1" Display="Dynamic" runat="server" ErrorMessage="" ControlToValidate="txtSearchBox" Style="color: red"> </asp:RequiredFieldValidator>
     <div>
-        <asp:Label ID="CheckRetrievalListValidation" runat="server" Text="" ForeColor="Red" Font-Size="40px"></asp:Label>
-        <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid" AutoGenerateColumns="False" OnRowDataBound="gvReq_RowDataBound">
+        <asp:Label ID="lblCheckRetrievalListValidation" runat="server" Text="" ForeColor="Red" Font-Size="40px"></asp:Label>
+        <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid" AutoGenerateColumns="False" OnRowDataBound="GvReq_RowDataBound">
             <Columns>
 
                 <asp:TemplateField HeaderText="Date">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label4" runat="server" Text='<%# Bind("Key.RetrievedDate","{0:dddd, dd MMMM yyyy}") %>'></asp:Label>
+                        <asp:Label ID="lblDate" runat="server" Text='<%# Bind("Key.RetrievedDate","{0:dddd, dd MMMM yyyy}") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Retrieval No">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox6" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="LabelRetrievalID" runat="server" Text='<%# Bind("Key.RetrievalID") %>'></asp:Label>
+                        <asp:Label ID="lblRetrievalID" runat="server" Text='<%# Bind("Key.RetrievalID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
 
                 <asp:TemplateField HeaderText="Retrieved By">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox7" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
+                        <asp:Label ID="lblRetrievedBy" runat="server" Text='<%# Bind("Value") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Status">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Key.RetrievalStatus") %>' Font-Bold="true" Width="140px"></asp:Label>
+                        <asp:Label ID="lblStatus" runat="server" Text='<%# Bind("Key.RetrievalStatus") %>' Font-Bold="true" Width="140px"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText="Detail">
-                    <EditItemTemplate>
-                        <asp:Button ID="Button1" runat="server" Text="Detail" />
-                    </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="gvDetailBtn" runat="server" OnClick="gvDetailBtn_Click" Text="Detail" CssClass="alert-success" />
+                        <asp:Button ID="btnGvDetail" runat="server" OnClick="BtnGvDetail_Click" Text="Detail" CssClass="alert-success" />
                     </ItemTemplate>
                 </asp:TemplateField>
-
 
             </Columns>
         </asp:GridView>

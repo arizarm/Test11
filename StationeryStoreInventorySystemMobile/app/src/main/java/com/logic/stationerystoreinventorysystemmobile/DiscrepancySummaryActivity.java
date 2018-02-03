@@ -31,7 +31,7 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_summary);
 
-        list = findViewById(R.id.listDiscrepancies);
+        list = findViewById(R.id.lvDiscrepancies);
 
         new AsyncTask<Void, Void, ArrayList<Discrepancy>>(){
             ProgressDialog progress;
@@ -55,11 +55,27 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(ArrayList<Discrepancy> dList){
 //                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), dList, R.layout.discrepancy_summary_row, new String[]{"itemCode", "description", "balanceQty", "adjustmentQty"}, new int[]{R.id.tvItemCode,R.id.tvItemName, R.id.tvBalance, R.id.tvAdj});
-                DiscrepancySummaryAdapter adapter = new DiscrepancySummaryAdapter(getApplicationContext(), R.layout.discrepancy_summary_row, dList);
-                list.setAdapter(adapter);
+                if(dList.size() > 0){
+                    DiscrepancySummaryAdapter adapter = new DiscrepancySummaryAdapter(getApplicationContext(), R.layout.discrepancy_summary_row, dList);
+                    list.setAdapter(adapter);
+                }
+                else{
+                    final TextView tvError = findViewById(R.id.tvError);
+                    tvError.setText("No items have been added yet");
+                }
                 progress.dismiss();
             }
         }.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(DiscrepancyHolder.itemToUpdate()){
+            Util.redsToast("Cannot leave before the transaction is completed", this);
+        }
+        else{
+            finish();
+        }
     }
 
     protected void submitClick(View v){
@@ -75,7 +91,7 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
         if(Util.isInt(eid)){
             View v2;
 
-            ListView listDisc = findViewById(R.id.listDiscrepancies);
+            ListView listDisc = findViewById(R.id.lvDiscrepancies);
             TextView tvItemCode;
             TextView tvAdjustmentQty;
             EditText etRemarks;
@@ -166,35 +182,35 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
         return adjustment;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storemenu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item1:
-                Intent i1 = new Intent(this, RetrievalListActivity.class);
-                startActivity(i1);
-                return true;
-            case R.id.item2:
-                Intent i2 = new Intent(this, DisbursementActivity.class);
-                startActivity(i2);
-                return true;
-            case R.id.item3:
-                Intent i3 = new Intent(this, DiscrepancyMenuActivity.class);
-                startActivity(i3);
-                return true;
-            case R.id.item4:
-                Intent i4 = new Intent(this, DeptActivity.class);
-                startActivity(i4);
-                return true;
-            case R.id.item5:
-                Util.LogOut(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.storemenu, menu);
+//        return true;
+//    }
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.item1:
+//                Intent i1 = new Intent(this, RetrievalListActivity.class);
+//                startActivity(i1);
+//                return true;
+//            case R.id.item2:
+//                Intent i2 = new Intent(this, DisbursementActivity.class);
+//                startActivity(i2);
+//                return true;
+//            case R.id.item3:
+//                Intent i3 = new Intent(this, DiscrepancyMenuActivity.class);
+//                startActivity(i3);
+//                return true;
+//            case R.id.item4:
+//                Intent i4 = new Intent(this, DeptActivity.class);
+//                startActivity(i4);
+//                return true;
+//            case R.id.item5:
+//                Util.LogOut(this);
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 }

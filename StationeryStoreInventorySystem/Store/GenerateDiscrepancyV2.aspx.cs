@@ -151,6 +151,16 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
+    protected void btnUncheckAll_Click(object sender, EventArgs e)
+    {        //Uncheck all button, for testing purpose
+        for (int i = 0; i < gvItemList.Rows.Count; i++)
+        {
+            GridViewRow row = gvItemList.Rows[i];
+            (row.FindControl("cbxCorrect") as CheckBox).Checked = true;
+        }
+
+    }
+
     protected void btnFinalise_Click(object sender, EventArgs e)
     {     //Finalise discrepancy button
         if (itemError == false)
@@ -306,5 +316,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
         }
     }
+
+    
 }
 

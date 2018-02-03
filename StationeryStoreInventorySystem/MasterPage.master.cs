@@ -10,6 +10,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        btnSignOut.UseSubmitBehavior = false;
         if (Session["emp"] != null)
         {
             Employee emp = (Employee)Session["emp"];

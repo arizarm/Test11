@@ -16,7 +16,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
         {
             try
             {
-                GridView1.DataSource = EFBroker_Item.GetCatalogueList();
+                gvForStationeryCatalogue.DataSource = EFBroker_Item.GetCatalogueList();
             }
             catch (Exception sql)
             {
@@ -24,7 +24,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
             }
             if (!IsPostBack)
             {
-                GridView1.DataBind();
+                gvForStationeryCatalogue.DataBind();
                 DisplayClickableURL();
 
             }
@@ -37,11 +37,11 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     public void DisplayClickableURL()
     {
-        foreach (GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in gvForStationeryCatalogue.Rows)
         {
             HyperLink itemLink = row.FindControl("lnkStockCard") as HyperLink;
-            Label lblItemCode = row.FindControl("LabelICode") as Label;
-            Label lbldesc = row.FindControl("LabelDescription") as Label;
+            Label lblItemCode = row.FindControl("LblItemCode") as Label;
+            Label lbldesc = row.FindControl("LblDescription") as Label;
             itemLink.Visible = true;
             lbldesc.Visible = false;
             itemLink.NavigateUrl = LoginController.ItemStockCardURI + "?itemCode=" + lblItemCode.Text;
@@ -49,7 +49,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
 
 
-    protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void GvForStationeryCatalogue_RowCommand(object sender, GridViewCommandEventArgs e)
     {
 
 
@@ -72,7 +72,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
                     break;
                 case "CancelEdit":
                     {
-                        cancelEdit(index);
+                        CancelEdit(index);
                     }
                     break;
                 case "UpdateRow":
@@ -94,13 +94,13 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     protected void EditRow(int index)
     {
 
-        GridView1.EditIndex = index;
-        GridView1.DataBind();
-        GridViewRowCollection a = GridView1.Rows;
+        gvForStationeryCatalogue.EditIndex = index;
+        gvForStationeryCatalogue.DataBind();
+        GridViewRowCollection a = gvForStationeryCatalogue.Rows;
         GridViewRow row = a[index];
-        Label itemLabel = (Label)row.FindControl("LabelICode");
-        DropDownList ddl = (DropDownList)row.FindControl("DropDownListCat");
-        DropDownList ddl2 = (DropDownList)row.FindControl("DropDownListUOM");
+        Label itemLabel = (Label)row.FindControl("LblItemCode");
+        DropDownList ddl = (DropDownList)row.FindControl("DdlCategory");
+        DropDownList ddl2 = (DropDownList)row.FindControl("DdlUOM");
 
         ddl.DataTextField = "CategoryName";
         ddl.DataValueField = "CategoryID";
@@ -118,7 +118,7 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     }
     protected void RemoveRow(int index)
     {
-        Label r = (Label)GridView1.Rows[index].FindControl("LabelICode");
+        Label r = (Label)gvForStationeryCatalogue.Rows[index].FindControl("LblItemCode");
         string itemCode = r.Text;
         EFBroker_Item.RemoveItem(itemCode);
         Utility.DisplayAlertMessage(Message.DeleteSuccessful);
@@ -128,143 +128,47 @@ public partial class StationeryCatalogue : System.Web.UI.Page
     {
         if (Page.IsValid)
         {
-            GridViewRow row = GridView1.Rows[index];
-            Label itemCode = (Label)row.FindControl("LabelICode");
-            DropDownList categoryList = (DropDownList)row.FindControl("DropDownListCat");
-            TextBox description = (TextBox)row.FindControl("TextboxDesc");
-            TextBox reorderLevel = (TextBox)row.FindControl("TextBoxReLvl");
-            TextBox reorderQty = (TextBox)row.FindControl("TextBoxReQty");
-            TextBox bin = (TextBox)row.FindControl("TextBoxBin");
-            DropDownList unitMeasure = (DropDownList)row.FindControl("DropDownListUOM");
+            GridViewRow row = gvForStationeryCatalogue.Rows[index];
+            Label itemCode = (Label)row.FindControl("LblItemCode");
+            DropDownList categoryList = (DropDownList)row.FindControl("DdlCategory");
+            TextBox description = (TextBox)row.FindControl("TxtDescription");
+            TextBox reorderLevel = (TextBox)row.FindControl("TxtReorderLvl");
+            TextBox reorderQty = (TextBox)row.FindControl("TxtReorderQty");
+            TextBox bin = (TextBox)row.FindControl("TxtBin");
+            DropDownList unitMeasure = (DropDownList)row.FindControl("DdlUOM");
             if (ItemBusinessLogic.IsValidItemFields(itemCode.Text, categoryList.SelectedItem.Text, description.Text, reorderLevel.Text, reorderQty.Text, unitMeasure.SelectedValue, bin.Text))
             {
                 int level = Convert.ToInt32(reorderLevel.Text);
                 int qty = Convert.ToInt32(reorderQty.Text);
                 ItemBusinessLogic.UpdateItem(itemCode.Text, categoryList.SelectedItem.Text, description.Text, level, qty, unitMeasure.SelectedValue, bin.Text);
-                cancelEdit(index);
+                CancelEdit(index);
             }
         }
     }
-    protected void cancelEdit(int index)
+    protected void CancelEdit(int index)
     {
-        //GridViewRowCollection a = GridView1.Rows;
-        //GridViewRow row = a[index];
-        //CustomValidator customValidator1 = (CustomValidator)row.FindControl("CustomValidator1");
-        //customValidator1.IsValid = true;
-        //RequiredFieldValidator requiredFieldValidator1 = (RequiredFieldValidator)row.FindControl("RequiredFieldValidator1");
-        //requiredFieldValidator1.IsValid = true;
-        GridViewRow row = GridView1.Rows[index];
+        GridViewRow row = gvForStationeryCatalogue.Rows[index];
         row.BackColor = Color.Transparent;
-        GridView1.EditIndex = -1;
-        GridView1.DataBind();
+        gvForStationeryCatalogue.EditIndex = -1;
+        gvForStationeryCatalogue.DataBind();
     }
-    //protected bool addItem(string itemCode, string categoryName, string description, string reorderLevel, string reorderQty, string UOM)
-    //{
-    //    bool failure = false, success = true;
-    //    ItemBusinessLogic ilogic = new ItemBusinessLogic();
-    //    Item item = new Item();
-    //    int level, qty;
-    //    if (string.IsNullOrEmpty(itemCode) || string.IsNullOrEmpty(categoryName) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(UOM) || string.IsNullOrEmpty(reorderLevel) || string.IsNullOrEmpty(reorderQty))
-    //    {
-    //        return failure;
-    //    }
-    //    else if (!int.TryParse(reorderLevel, out level) || !int.TryParse(reorderQty, out qty))
-    //    {
-    //        return failure;
-    //    }
-    //    else if (ilogic.GetItembyItemCode(itemCode) != null)
-    //    {
-    //        return failure;
-    //    }
-    //    else
-    //    {
-    //        Category cat = ilogic.getCategorybyName(categoryName);
-    //        if (cat == null)
-    //        {
-    //            categoryName = ilogic.firstUpperCase(categoryName);
-    //            ilogic.addCategory(categoryName);
-    //            cat = ilogic.getCategorybyName(categoryName);
-    //        }
-
-    //        item.ItemCode = itemCode;
-    //        item.Category = cat;
-    //        item.Description = description;
-    //        item.ReorderLevel = level;
-    //        item.ReorderQty = qty;
-    //        item.UnitOfMeasure = UOM;
-    //        item.ActiveStatus = "Y";
-    //        ilogic.addItem(item);
-    //    }
-    //    return success;
-    //}
-
-    //protected void Button1_Click(object sender, EventArgs e)
-    //{
-    //    //addItem("itemcode","test","test","10","10","test");
-    //    string itemCode, categoryName, description, reorderLevel, reorderQty, uom;
-
-
-    //    if (Page.IsValid)
-    //    {
-    //        itemCode = TextBoxItemNo.Text;
-    //        description = TextBoxDesc.Text;
-    //        reorderLevel = TextBoxReLvl.Text;
-    //        reorderQty = TextBoxReQty.Text;
-    //        categoryName = TextBoxCategory.Text;
-    //        uom = TextBoxUOM.Text;
-    //        if (addItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom))
-    //        {
-    //            TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = "";
-    //            refreshPage();
-    //        }
-
-    //    }
-    //    return;
-    //}
-
-    //protected void DropDownListCategory_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (!DropDownListCategory.SelectedValue.Equals("0"))
-    //    {
-    //        TextBoxCategory.Text = DropDownListCategory.SelectedItem.Text;
-    //    }
-    //}
-
-    //protected void DropDownListUOM_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (!DropDownListUOM.SelectedValue.Equals("Other"))
-    //    {
-    //        TextBoxUOM.Text = DropDownListUOM.SelectedItem.Text;
-    //    }
-    //}
-
-    //protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-    //{
-    //    args.IsValid = (EFBroker_Item.GetItembyDescription(args.Value) == null);
-    //    return;
-    //}
-
-    protected void PrintViewButton_Click(object sender, EventArgs e)
+    protected void BtnPrintView_Click(object sender, EventArgs e)
     {
-        if (PrintViewButton.Text == "View Printable Version")
+        if (BtnPrintView.Text == "View Printable Version")
         {
-            GridView1.Columns[7].Visible = false;
-            GridView1.Columns[8].Visible = false;
-            PrintViewButton.Text = "Back";
-            PrintButton.Visible = true;
+            gvForStationeryCatalogue.Columns[7].Visible = false;
+            gvForStationeryCatalogue.Columns[8].Visible = false;
+            BtnPrintView.Text = "Back";
+            BtnPrint.Visible = true;
         }
         else
         {
-            GridView1.Columns[7].Visible = true;
-            GridView1.Columns[8].Visible = true;
-            PrintViewButton.Text = "View Printable Version";
-            PrintButton.Visible = false;
+            gvForStationeryCatalogue.Columns[7].Visible = true;
+            gvForStationeryCatalogue.Columns[8].Visible = true;
+            BtnPrintView.Text = "View Printable Version";
+            BtnPrint.Visible = false;
 
         }
     }
 
-    protected void LinkButton5_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(LoginController.StationeryCatalogueDetailURI);
-    }
 }

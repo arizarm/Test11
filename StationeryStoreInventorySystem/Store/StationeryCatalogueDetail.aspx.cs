@@ -17,35 +17,35 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         temp.CategoryID = 0;
         temp.CategoryName = "Other";
         catList.Add(temp);
-        DropDownListCategory.DataSource = catList;
-        DropDownListCategory.DataTextField = "CategoryName";
-        DropDownListCategory.DataValueField = "CategoryID";
+        DdlCategory.DataSource = catList;
+        DdlCategory.DataTextField = "CategoryName";
+        DdlCategory.DataValueField = "CategoryID";
         List<string> UOMList = EFBroker_Item.GetDistinctUOMList();
         UOMList.Add("Other");
-        DropDownListUOM.DataSource = UOMList;
+        DdlUOM.DataSource = UOMList;
         if (Session["itemlist"] == null)
         {
             iList = new List<Item>();
-            LabelSubtitle.Visible = false;
+            LblSubtitle.Visible = false;
         }
         else
         {
             iList = (List<Item>)Session["itemlist"];
             if (iList.Count != 0) { 
-            LabelSubtitle.Visible = true;
+            LblSubtitle.Visible = true;
             }
         }
 
         // data population
-        GridView1.DataSource = iList;
-        GridView1.DataBind();
+        gvItemAdded.DataSource = iList;
+        gvItemAdded.DataBind();
         if (!IsPostBack)
         {
-            DropDownListUOM.DataBind();
-            DropDownListCategory.DataBind();
+            DdlUOM.DataBind();
+            DdlCategory.DataBind();
         }
-        ControlToUpdate(TextBoxCategory, DropDownListCategory);
-        ControlToUpdate(TextBoxUOM, DropDownListUOM);
+        ControlToUpdate(TxtCategory, DdlCategory);
+        ControlToUpdate(TxtUOM, DdlUOM);
     }
     //void Page_PreRender(object sender, EventArgs e)
     //{
@@ -53,7 +53,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
     //    ViewState.Add("itemlist", iList);
     //}
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void BtnAdd_Click(object sender, EventArgs e)
     {
         ItemBusinessLogic ilogic = new ItemBusinessLogic();
         //addItem("itemcode","test","test","10","10","test");
@@ -62,39 +62,39 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
 
         if (Page.IsValid)
         {
-            itemCode = TextBoxItemNo.Text.ToUpper();
-            description = TextBoxDesc.Text;
-            reorderLevel = TextBoxReLvl.Text;
-            reorderQty = TextBoxReQty.Text;
-            categoryName = Utility.FirstUpperCase(TextBoxCategory.Text);
-            uom = Utility.FirstUpperCase(TextBoxUOM.Text);
-            bin = TextBoxBin.Text;
+            itemCode = TxtItemCode.Text.ToUpper();
+            description = TxtDescription.Text;
+            reorderLevel = TxtReorderLvl.Text;
+            reorderQty = TxtReorderQty.Text;
+            categoryName = Utility.FirstUpperCase(TxtCategory.Text);
+            uom = Utility.FirstUpperCase(TxtUOM.Text);
+            bin = TxtBin.Text;
             if(ItemBusinessLogic.ValidateNewItemfields(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin))
             {
                 Item item = ItemBusinessLogic.AddItem(itemCode, categoryName, description, reorderLevel, reorderQty, uom, bin);
                 iList.Add(item);
                 Session["itemlist"] = iList;
-                TextBoxItemNo.Text = TextBoxDesc.Text = TextBoxReLvl.Text = TextBoxReQty.Text = TextBoxCategory.Text = uom = TextBoxUOM.Text = TextBoxBin.Text =LabelMessage.Text="";
-                LabelMessage.Visible = false;
+                TxtItemCode.Text = TxtDescription.Text = TxtReorderLvl.Text = TxtReorderQty.Text = TxtCategory.Text = uom = TxtUOM.Text = TxtBin.Text =LblMessage.Text="";
+                LblMessage.Visible = false;
                 Response.Redirect(Request.RawUrl);
             }
             else
             {
-                LabelMessage.Text = "One or more fields is invalid, please check your fields";
-                LabelMessage.Visible = true;
+                LblMessage.Text = "One or more fields is invalid, please check your fields";
+                LblMessage.Visible = true;
             }
         }
         return;
     }
 
-    protected void DropDownListCategory_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DdlCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ControlToUpdate(TextBoxCategory, DropDownListCategory);
+        ControlToUpdate(TxtCategory, DdlCategory);
     }
 
-    protected void DropDownListUOM_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DdlUOM_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ControlToUpdate(TextBoxUOM, DropDownListUOM);
+        ControlToUpdate(TxtUOM, DdlUOM);
     }
     protected void ControlToUpdate(TextBox textbox, DropDownList ddList)
     {
@@ -102,7 +102,7 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         {
             //textbox.Enabled = true;
             textbox.Visible = true;
-            textbox.Text = "";
+            //textbox.Text = "";
             textbox.ReadOnly = false;
         }
         else
@@ -115,19 +115,14 @@ public partial class StationeryCatalogueDetail : System.Web.UI.Page
         return;
     }
 
-    protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CstTxtItemCode_ServerValidate(object source, ServerValidateEventArgs args)
     {
         //args.IsValid = (EFBroker_Item.GetItembyItemCode(args.Value) == null);
-        args.IsValid = ValidatorUtil.ValidateNewItem(CustomValidator1, args.Value);
+        args.IsValid = ValidatorUtil.ValidateNewItem(CstTxtItemCode, args.Value);
     }
 
 
-    protected void LinkButton1_Click(object sender, EventArgs e)
-    {
-        Response.Redirect(LoginController.StationeryCatalogueURI);
-    }
-
-    protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+    protected void CstTxtDescription_ServerValidate(object source, ServerValidateEventArgs args)
     {
         if (EFBroker_Item.GetItembyDescription(args.Value) != null)
         {

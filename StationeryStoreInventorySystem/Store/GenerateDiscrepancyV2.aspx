@@ -70,6 +70,7 @@
         <% if (gvItemList.Rows.Count > 0)
             {%>
         <h3>Item List</h3>
+            <%} %>
         <asp:GridView ID="gvItemList" runat="server" AutoGenerateColumns="False" CssClass="mGrid" EmptyDataText="No items matching your search found">
             <Columns>
                 
@@ -125,10 +126,15 @@
             </Columns>
 
         </asp:GridView>
+            <% if (gvItemList.Rows.Count > 0)
+            {%>
         <br />
         <asp:Button ID="btnGenerateDiscrepancy" runat="server" Text="Generate Discrepancy List" OnClick="btnGenerateDiscrepancy_Click" CssClass="button" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <%-- Check and uncheck all buttons only for testing --%>
+        <%--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <asp:Button ID="btnCheckAll" runat="server" Text="Check All" OnClick="btnCheckAll_Click" CssClass="button"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <asp:Button ID="btnUncheckAll" runat="server" Text="Uncheck All" CssClass="button" OnClick="btnUncheckAll_Click"/>--%>
         <%} %>
 
         </asp:Panel>

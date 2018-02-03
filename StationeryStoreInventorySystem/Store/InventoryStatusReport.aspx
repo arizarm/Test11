@@ -40,7 +40,7 @@
            <asp:Button ID="Display" runat="server" Text="Display All" CssClass="button" OnClick="Display_Click" />
     </div>
     <div id="printable">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" RowStyle-Height=" 50px" HorizontalAlign="Center">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid" RowStyle-Height=" 50px"  HorizontalAlign="Center">
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
@@ -59,6 +59,9 @@
                 <asp:BoundField DataField='currentQty' HeaderText="Quantity on hand" />
                 <asp:BoundField DataField='reorderLevel' HeaderText="Reorder level" />
             </Columns>
+            <EmptyDataTemplate>
+                Item is not found
+            </EmptyDataTemplate>
         </asp:GridView>
     </div>
 

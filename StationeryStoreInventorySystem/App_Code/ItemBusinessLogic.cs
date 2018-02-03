@@ -87,7 +87,7 @@ public class ItemBusinessLogic
         Item i = EFBroker_Item.GetItembyItemCode(itemCode);
         if (i != null)
         {
-            i.Category = category;
+            i.CategoryID = category.CategoryID;
             i.Description = description;
             i.ReorderLevel = reorderLevel;
             i.ReorderQty = reorderQty;

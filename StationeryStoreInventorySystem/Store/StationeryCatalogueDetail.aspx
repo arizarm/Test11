@@ -6,15 +6,15 @@
     <div class="row updateDeptHead">
         <h2 class="mainPageHeader">Logic University Stationery Catalogue (New Item)</h2>
     </div>
-    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">&lt &lt Return to Catalogue List &gt &gt</asp:LinkButton>
-    <asp:Panel ID="Panel1" runat="server">
+    <br />
+    <asp:Panel ID="pnlAdd" runat="server" DefaultButton ="BtnAdd">
         <table>
             <tr>
-                <td>Item Number:</td>
+                <td>Item Code:</td>
                 <td>
-                    <asp:TextBox ID="TextBoxItemNo" MaxLength="10" runat="server"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxItemNo" CssClass="errorfont" ErrorMessage="Item Number cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="CustomValidator1" runat="server" ControlToValidate="TextBoxItemNo" CssClass="errorfont" ErrorMessage="Item Code exists in the database" OnServerValidate="CustomValidator1_ServerValidate" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:CustomValidator>
+                    <asp:TextBox ID="TxtItemCode" MaxLength="10" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtItemCode" runat="server" ControlToValidate="TxtItemCode" CssClass="errorfont" ErrorMessage="Item Code cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CstTxtItemCode" runat="server" ControlToValidate="TxtItemCode" CssClass="errorfont" ErrorMessage="Item Code exists in the database" OnServerValidate="CstTxtItemCode_ServerValidate" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:CustomValidator>
                 </td>
             </tr>
             <tr>
@@ -28,10 +28,10 @@
             <tr>
                 <td>Category:</td>
                 <td>
-                    <asp:DropDownList ID="DropDownListCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListCategory_SelectedIndexChanged">
+                    <asp:DropDownList ID="DdlCategory" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DdlCategory_SelectedIndexChanged">
                     </asp:DropDownList>
-                    <asp:TextBox ID="TextBoxCategory" runat="server" MaxLength="10" ReadOnly="true"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBoxCategory" CssClass="errorfont" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="TxtCategory" runat="server" MaxLength="10" ReadOnly="true"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtCategory" runat="server" ControlToValidate="TxtCategory" CssClass="errorfont" ErrorMessage="Category cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -45,9 +45,9 @@
             <tr>
                 <td>Item Description : </td>
                 <td>
-                    <asp:TextBox ID="TextBoxDesc" runat="server" MaxLength="50"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBoxDesc" CssClass="errorfont" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="CustomValidator2" runat="server" ControlToValidate="TextBoxDesc" CssClass="errorfont" ErrorMessage="Description currently used for current items" OnServerValidate="CustomValidator2_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
+                    <asp:TextBox ID="TxtDescription" runat="server" MaxLength="50"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtDescription" runat="server" ControlToValidate="TxtDescription" CssClass="errorfont" ErrorMessage="Description cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:CustomValidator ID="CstTxtDescription" runat="server" ControlToValidate="TxtDescription" CssClass="errorfont" ErrorMessage="Description currently used for current items" OnServerValidate="CstTxtDescription_ServerValidate" ValidationGroup="validateItemGroup"></asp:CustomValidator>
                 </td>
             </tr>
             <tr>
@@ -61,10 +61,10 @@
             <tr>
                 <td>Unit of Measure:</td>
                 <td>
-                    <asp:DropDownList ID="DropDownListUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownListUOM_SelectedIndexChanged">
+                    <asp:DropDownList ID="DdlUOM" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DdlUOM_SelectedIndexChanged">
                     </asp:DropDownList>
-                    <asp:TextBox ID="TextBoxUOM" runat="server" ReadOnly="true" Visible="false" MaxLength="10"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBoxUOM" CssClass="errorfont" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:TextBox ID="TxtUOM" runat="server" ReadOnly="true" Visible="false" MaxLength="10"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtUOM" runat="server" ControlToValidate="TxtUOM" CssClass="errorfont" ErrorMessage="Unit of Measure cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -78,9 +78,9 @@
             <tr>
                 <td>Reorder Level : </td>
                 <td>
-                    <asp:TextBox ID="TextBoxReLvl" runat="server" MaxLength="10"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TextBoxReLvl" CssClass="errorfont" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator1" runat="server" CssClass="errorfont" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReLvl" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+                    <asp:TextBox ID="TxtReorderLvl" runat="server" MaxLength="10"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtReorderLvl" runat="server" ControlToValidate="TxtReorderLvl" CssClass="errorfont" ErrorMessage="Reorder Level cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RangeValidator ID="RngTxtReorderLvl" runat="server" CssClass="errorfont" ErrorMessage="Reorder Level must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TxtReorderLvl" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                 </td>
             </tr>
             <tr>
@@ -94,9 +94,9 @@
             <tr>
                 <td>Reorder Quantity : </td>
                 <td>
-                    <asp:TextBox ID="TextBoxReQty" runat="server" MaxLength="10"></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TextBoxReQty" CssClass="errorfont" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator2" runat="server" CssClass="errorfont" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TextBoxReQty" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
+                    <asp:TextBox ID="TxtReorderQty" runat="server" MaxLength="10"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="ReqTxtReorderQty" runat="server" ControlToValidate="TxtReorderQty" CssClass="errorfont" ErrorMessage="Reorder Quantity cannot be left blank" ValidationGroup="validateItemGroup" Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:RangeValidator ID="RngTxtReorderQty" runat="server" CssClass="errorfont" ErrorMessage="Reorder Qty must be a positive number" ValidationGroup="validateItemGroup" ControlToValidate="TxtReorderQty" MaximumValue="1000000000" MinimumValue="0" Type="Integer" Display="Dynamic"></asp:RangeValidator>
                 </td>
             </tr>
             <tr>
@@ -111,7 +111,7 @@
                 <td>Bin No:
                 </td>
                 <td>
-                    <asp:TextBox ID="TextBoxBin" MaxLength="10" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="TxtBin" MaxLength="10" runat="server"></asp:TextBox>
                 </td>
             </tr>
             <tr>
@@ -124,75 +124,56 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="Button1" runat="server" Text="Add" CssClass="button" OnClick="Button1_Click" ValidationGroup="validateItemGroup" /></td>
+                    <asp:Button ID="BtnAdd" runat="server" Text="Add" CssClass="button" OnClick="BtnAdd_Click" ValidationGroup="validateItemGroup" /></td>
                 <td>
-                    <asp:Label ID="LabelMessage" runat="server" Text="" Visible="false"></asp:Label>
+                    <asp:Label ID="LblMessage" runat="server" Text="" Visible="false"></asp:Label>
                 </td>
             </tr>
 
         </table>
     </asp:Panel>
     <br />
-    <asp:Label ID="LabelSubtitle" runat="server" Text="Items Added" CssClass="h3"></asp:Label>
+    <asp:Label ID="LblSubtitle" runat="server" Text="Items Added" CssClass="h3"></asp:Label>
     <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" RowStyle-Height="50px" CssClass="mGrid">
+    <asp:GridView ID="gvItemAdded" runat="server" AutoGenerateColumns="False" RowStyle-Height="50px" CssClass="mGrid">
         <Columns>
-            <asp:TemplateField HeaderText="Item Number">
+            <asp:TemplateField HeaderText="Item Code">
                 <ItemTemplate>
-                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("itemCode") %>'></asp:Label>
+                    <asp:Label ID="LblItemCode" runat="server" Text='<%# Bind("itemCode") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Category">
-                <EditItemTemplate>
-                    <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("category.CategoryName")  %>'></asp:Label>
+                    <asp:Label ID="LblCategory" runat="server" Text='<%# Bind("category.CategoryName")  %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Description">
-                <EditItemTemplate>
-                    <asp:TextBox ID="TextBox6" runat="server" MaxLength="50" Text='<%# Bind("description") %>'></asp:TextBox>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label3" runat="server" Text='<%# Bind("description") %>'></asp:Label>
+                    <asp:Label ID="LblDescription" runat="server" Text='<%# Bind("description") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Reorder Level">
-                <EditItemTemplate>
-                    <asp:TextBox ID="TextBox9" runat="server" MaxLength="10" Text='<%# Bind("reorderLevel") %>'></asp:TextBox>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label4" runat="server" Text='<%# Bind("reorderLevel") %>'></asp:Label>
+                    <asp:Label ID="LblReorderLvl" runat="server" Text='<%# Bind("reorderLevel") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Reorder Qty">
-                <EditItemTemplate>
-                    <asp:TextBox ID="TextBox8" runat="server" MaxLength="10" Text='<%# Bind("reorderQty") %>'></asp:TextBox>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label5" runat="server" Text='<%# Bind("reorderQty") %>'></asp:Label>
+                    <asp:Label ID="LblReorderQty" runat="server" Text='<%# Bind("reorderQty") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Unit Of Measure">
-                <EditItemTemplate>
-                    <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label6" runat="server" Text='<%# Bind("unitOfMeasure") %>'></asp:Label>
+                    <asp:Label ID="LblUOM" runat="server" Text='<%# Bind("unitOfMeasure") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Bin">
-                <EditItemTemplate>
-                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("bin") %>'></asp:TextBox>
-                </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label7" runat="server" Text='<%# Bind("bin") %>'></asp:Label>
+                    <asp:Label ID="LblBin" runat="server" Text='<%# Bind("bin") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
-
-
         </Columns>
     </asp:GridView>
+    <br />
 </asp:Content>
 

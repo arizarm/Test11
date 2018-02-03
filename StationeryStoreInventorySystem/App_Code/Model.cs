@@ -116,8 +116,8 @@ public partial class Discrepency
     public string Status { get; set; }
     public Nullable<decimal> TotalDiscrepencyAmount { get; set; }
 
-    public virtual Employee Employee { get; set; }
     public virtual Item Item { get; set; }
+    public virtual Employee Employee { get; set; }
     public virtual Employee Employee1 { get; set; }
 }
 

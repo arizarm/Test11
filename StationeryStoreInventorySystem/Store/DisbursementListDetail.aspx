@@ -103,8 +103,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-        </asp:GridView>
-    </div>
+        </asp:GridView>    
 
     <br />
     <br />
@@ -114,7 +113,7 @@
     <br />
     <br />
     <br />
-
+        </div>
     <asp:Button ID="btnReset" runat="server" Text="Reset Data" CssClass="button" OnClick="btnReset_Click" />
     <asp:Button ID="btnAck" runat="server" Text="Acknowledge" ValidationGroup="1" CssClass="button" OnClick="btnAck_Click" />
 </asp:Content>

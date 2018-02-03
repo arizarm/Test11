@@ -37,8 +37,8 @@ public partial class StockAdjustment : System.Web.UI.Page
                     }
                 }
             }
-            GridView1.DataSource = monthlySource;
-            GridView1.DataBind();
+            gvMonthly.DataSource = monthlySource;
+            gvMonthly.DataBind();
 
             foreach (Discrepency d in pending)
             {
@@ -60,13 +60,13 @@ public partial class StockAdjustment : System.Web.UI.Page
                     Utility.logout();
                 }
             }
-            GridView2.DataSource = pendingSource;
-            GridView2.DataBind();
+            gvPending.DataSource = pendingSource;
+            gvPending.DataBind();
 
         }
     }
 
-    protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void gvPending_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //Disallow processing of regular pending discrepancies that came before
         //a monthly inventory check discrepancy by hiding them
@@ -84,11 +84,11 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void Button2_Click(object sender, EventArgs e)
+    protected void btnProcess_Click(object sender, EventArgs e)
     {
         Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
-        ProcessApprovalAndRejections(GridView1, summary);
-        ProcessApprovalAndRejections(GridView2, summary);
+        ProcessApprovalAndRejections(gvMonthly, summary);
+        ProcessApprovalAndRejections(gvPending, summary);
         Session["discrepancySummary"] = summary;
         Response.Redirect(LoginController.StockAdjustmentSummaryURI);
     }
@@ -97,7 +97,7 @@ public partial class StockAdjustment : System.Web.UI.Page
     {
         foreach (GridViewRow row in gdv.Rows)
         {
-            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            RadioButtonList rbl = row.FindControl("rblAction") as RadioButtonList;
 
             if (rbl.SelectedIndex == 0 || rbl.SelectedIndex == 1)
             {
@@ -118,16 +118,16 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void Clear2_Click(object sender, EventArgs e)
+    protected void btnClear_Click(object sender, EventArgs e)
     {
-        foreach (GridViewRow row in GridView1.Rows)
+        foreach (GridViewRow row in gvMonthly.Rows)
         {
-            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            RadioButtonList rbl = row.FindControl("rblAction") as RadioButtonList;
             rbl.ClearSelection();
         }
-        foreach (GridViewRow row in GridView2.Rows)
+        foreach (GridViewRow row in gvPending.Rows)
         {
-            RadioButtonList rbl = row.FindControl("RadioButtonList1") as RadioButtonList;
+            RadioButtonList rbl = row.FindControl("rblAction") as RadioButtonList;
             rbl.ClearSelection();
         }
     }

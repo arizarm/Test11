@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="updateDeptHead"><h2 class="mainPageHeader">Stock Adjustment Approval Summary</h2></div>
     <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
+    <asp:GridView ID="gvActionSummary" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvActionSummary_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
                 <ItemTemplate>
@@ -53,6 +53,6 @@
         </Columns>
     </asp:GridView>
     <br /><br />
-    <asp:Button ID="Button2" runat="server" Text="Process Discrepancies" CssClass="button" OnClick="Button2_Click"/>
+    <asp:Button ID="btnProcess" runat="server" Text="Process Discrepancies" CssClass="button" OnClick="btnProcess_Click"/>
 </asp:Content>
 

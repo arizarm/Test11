@@ -28,13 +28,13 @@ public class DiscrepancyAdhocActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_adhoc);
 
-        list = findViewById(R.id.listItemsAdhoc);
+        list = findViewById(R.id.lvItemsAdhoc);
         list.setOnItemClickListener(this);
         displayAll();
     }
 
     protected void searchClick(View v){
-        list = findViewById(R.id.listItemsAdhoc);
+        list = findViewById(R.id.lvItemsAdhoc);
         EditText txtSearch = findViewById(R.id.txtSearch);
         String searchString = txtSearch.getText().toString();
         new AsyncTask<String, Void, ArrayList<CatalogueItem>>(){

@@ -6,10 +6,10 @@
     
     <div class="updateDeptHead"><h2 class="mainPageHeader">Stock Adjustment Approval</h2></div>
     <br />
-    <%if (GridView1.Rows.Count > 0)
+    <%if (gvMonthly.Rows.Count > 0)
         { %>
     <h3>Monthly Inventory Check Discrepancies</h3>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
+    <asp:GridView ID="gvMonthly" runat="server" AutoGenerateColumns="False" CssClass="mGrid">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
                 <ItemTemplate>
@@ -18,7 +18,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="100%" Height="100%">
+                    <asp:RadioButtonList ID="rblAction" runat="server" Width="100%" Height="100%">
                         <asp:ListItem Text="Approve"></asp:ListItem>
                         <asp:ListItem Text="Reject"></asp:ListItem>
                     </asp:RadioButtonList>
@@ -64,17 +64,11 @@
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
-    <%--
-    <br />
-    <asp:Button ID="Button1" runat="server" Text="Process Monthly Discrepancies" CssClass="button" OnClick="Button1_Click"/>
-    &nbsp&nbsp
-    <asp:Button ID="Clear1" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="Clear1_Click"/>
-        --%>
     <%} %>
-    <%if (GridView2.Rows.Count > 0)
+    <%if (gvPending.Rows.Count > 0)
         { %>
     <h3>Discrepancies Pending Approval</h3>
-    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" CssClass="mGrid">
+    <asp:GridView ID="gvPending" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvPending_RowDataBound" CssClass="mGrid">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
                 <ItemTemplate>
@@ -83,7 +77,7 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center">
                 <ItemTemplate>
-                    <asp:RadioButtonList ID="RadioButtonList1" runat="server" Width="100%" Height="100%">
+                    <asp:RadioButtonList ID="rblAction" runat="server" Width="100%" Height="100%">
                         <asp:ListItem Text="Approve"></asp:ListItem>
                         <asp:ListItem Text="Reject"></asp:ListItem>
                     </asp:RadioButtonList>
@@ -131,9 +125,9 @@
         </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="Button2" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="Button2_Click"/>
+    <asp:Button ID="btnProcess" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="btnProcess_Click"/>
     &nbsp&nbsp
-    <asp:Button ID="Clear2" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="Clear2_Click"/>
+    <asp:Button ID="btnClear" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="btnClear_Click"/>
     <%} %>
     </asp:Content>
 

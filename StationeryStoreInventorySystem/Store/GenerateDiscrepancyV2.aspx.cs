@@ -30,109 +30,12 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             gvDiscrepancyList.DataSource = iList2;
             gvDiscrepancyList.DataBind();
         }
-
-        //if (Request.UrlReferrer != null)
-        //{
-        //    if (Request.UrlReferrer.ToString().Contains("AddItemDiscrepancy"))
-        //    {    //Load full list after adding an item
-        //        ShowAll();
-        //    }
-        //}
         
         lblErrorFinalise.Text = "";
     }
 
     protected void btnGenerateDiscrepancy_Click(object sender, EventArgs e)
     {      //Generate discrepancy button
-        GenerateDiscrepancyList();
-    }
-
-    protected void btnCheckAll_Click(object sender, EventArgs e)
-    {        //Check all button, for testing
-        for (int i = 0; i < gvItemList.Rows.Count; i++)
-        {
-            GridViewRow row = gvItemList.Rows[i];
-            (row.FindControl("cbxCorrect") as CheckBox).Checked = true;
-        }
-    }
-
-    protected void btnFinalise_Click(object sender, EventArgs e)
-    {     //Finalise discrepancy button
-        if (itemError == false)
-        {
-            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
-        }
-        else
-        {
-            lblErrorFinalise.Text = "Unable to finalise.";
-        }
-    }
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {        //Search button
-
-        Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
-        string search = txtSearch.Text.ToLower();
-        List<Item> iList = EFBroker_Item.SearchItemsByItemCodeOrDesc(search);
-
-        foreach (Item i in iList)
-        {
-            //If a monthly inventory check discrepancy is not yet approved, the sum of only
-            //discrepancies starting from the monthly one will be displayed
-            Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
-            List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
-            if (dMonthly == null)
-            {
-
-                string adjStr = GetAdjustmentsString(dList);
-
-                searchResults.Add(i, adjStr);
-            }
-            else
-            {
-                string adjStr = GetPartialAdjustmentsString(dList, dMonthly);
-                searchResults.Add(i, adjStr);
-            }
-            //}
-        }
-
-        gvItemList.DataSource = searchResults;
-        gvItemList.DataBind();
-
-        foreach (GridViewRow row in gvItemList.Rows)
-        {
-            HyperLink link = row.FindControl("lnkItem") as HyperLink;
-            Label lbl = row.FindControl("lblItemCode1") as Label;
-            string itemCode = lbl.Text;
-            link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
-        }
-    }
-
-    protected void btnDisplayAll_Click(object sender, EventArgs e)
-    {       //Display all button
-        ShowAll();
-    }
-    protected void btnClearList_Click(object sender, EventArgs e)
-    {       //Clear list button
-        Dictionary<Item, int> emptyList = new Dictionary<Item, int>();
-        Dictionary<Item, String> emptyDisplay = new Dictionary<Item, string>();
-        Session["discrepancyList"] = emptyList;
-        Session["discrepancyDisplay"] = emptyDisplay;
-        gvDiscrepancyList.DataSource = emptyDisplay;
-        gvDiscrepancyList.DataBind();
-    }
-    private void ErrorClear()
-    {
-        if (itemError == false)
-        {
-            lblErrorMissed.Text = "";
-            lblErrorBase.Text = "";
-            lblErrorMissedItems.Text = "";
-        }
-    }
-
-    private void GenerateDiscrepancyList()
-    {
         Dictionary<Item, int> discrepancyList = new Dictionary<Item, int>();
         Dictionary<Item, String> discrepancyDisplay = new Dictionary<Item, String>();
         List<String> missed = new List<String>();
@@ -156,7 +59,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                     int actualQuantity = 0;
                     if (Int32.TryParse(txtActual, out actualQuantity))
                     {
-                        //Calculate the adjustment needed, then add to GridView2
+                        //Calculate the adjustment needed, then add to gvDiscrepancyList
                         string quantity = (row.FindControl("lblStock") as Label).Text;
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = EFBroker_Item.GetItembyItemCode(itemCode);
@@ -221,7 +124,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
         Session["itemError"] = itemError;
 
-        //Indicate monthly inventory check mode if the number of items in GridView1
+        //Indicate monthly inventory check mode if the number of items in gvItemList
         //when generating discrepancies matches the number of active items in the database
         if (gvItemList.Rows.Count == EFBroker_Item.GetActiveItemList().Count)
         {
@@ -237,6 +140,88 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
         gvDiscrepancyList.DataSource = discrepancyDisplay;
         gvDiscrepancyList.DataBind();
+    }
+
+    protected void btnCheckAll_Click(object sender, EventArgs e)
+    {        //Check all button, for testing purpose
+        for (int i = 0; i < gvItemList.Rows.Count; i++)
+        {
+            GridViewRow row = gvItemList.Rows[i];
+            (row.FindControl("cbxCorrect") as CheckBox).Checked = true;
+        }
+    }
+
+    protected void btnFinalise_Click(object sender, EventArgs e)
+    {     //Finalise discrepancy button
+        if (itemError == false)
+        {
+            Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
+        }
+        else
+        {
+            lblErrorFinalise.Text = "Unable to finalise.";
+        }
+    }
+
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {        //Search button
+
+        Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
+        string search = txtSearch.Text.ToLower();
+        List<Item> iList = EFBroker_Item.SearchItemsByItemCodeOrDesc(search);
+
+        foreach (Item i in iList)
+        {
+            //If a monthly inventory check discrepancy is not yet approved, the sum of only
+            //discrepancies starting from the monthly one will be displayed
+            Discrepency dMonthly = EFBroker_Discrepancy.GetPendingMonthlyDiscrepancyByItemCode(i.ItemCode);
+            List<Discrepency> dList = EFBroker_Discrepancy.GetPendingDiscrepanciesByItemCode(i.ItemCode);
+            if (dMonthly == null)
+            {
+                string adjStr = GetAdjustmentsString(dList);
+
+                searchResults.Add(i, adjStr);
+            }
+            else
+            {
+                string adjStr = GetPartialAdjustmentsString(dList, dMonthly);
+                searchResults.Add(i, adjStr);
+            }
+        }
+
+        gvItemList.DataSource = searchResults;
+        gvItemList.DataBind();
+
+        foreach (GridViewRow row in gvItemList.Rows)
+        {
+            HyperLink link = row.FindControl("lnkItem") as HyperLink;
+            Label lbl = row.FindControl("lblItemCode1") as Label;
+            string itemCode = lbl.Text;
+            link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
+        }
+    }
+
+    protected void btnDisplayAll_Click(object sender, EventArgs e)
+    {       //Display all button
+        ShowAll();
+    }
+    protected void btnClearList_Click(object sender, EventArgs e)
+    {       //Clear list button
+        Dictionary<Item, int> emptyList = new Dictionary<Item, int>();
+        Dictionary<Item, String> emptyDisplay = new Dictionary<Item, string>();
+        Session["discrepancyList"] = emptyList;
+        Session["discrepancyDisplay"] = emptyDisplay;
+        gvDiscrepancyList.DataSource = emptyDisplay;
+        gvDiscrepancyList.DataBind();
+    }
+    private void ErrorClear()
+    {
+        if (itemError == false)
+        {
+            lblErrorMissed.Text = "";
+            lblErrorBase.Text = "";
+            lblErrorMissedItems.Text = "";
+        }
     }
 
     private string GetAdjustmentsString(List<Discrepency> dList)

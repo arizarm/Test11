@@ -224,8 +224,14 @@ public class EFBroker_PurchaseOrder
                                            where stck.ItemCode == item.ItemCode
                                            select stck).FirstOrDefault();
                 itemStockCard.Qty = item.OrderQty;
+                itemStockCard.TransactionType = "Purchase";
+                itemStockCard.TransactionDetailID = item.PurchaseOrderID;
                 itemStockCard.Balance = itemStockCard.Balance + itemStockCard.Qty;
+                Item itm = entities.Items.Where(x => x.ItemCode == item.ItemCode).FirstOrDefault();
+                itm.BalanceQty = itemStockCard.Balance;
+                entities.StockCards.Add(itemStockCard);
             }
+
             entities.SaveChanges();
             ts.Complete();
         }

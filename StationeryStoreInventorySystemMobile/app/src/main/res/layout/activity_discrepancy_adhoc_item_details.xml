@@ -22,7 +22,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tvItemCodeLabel"
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -47,12 +47,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/tvItemNameLabel"
+                    style="@style/TitleStyle"
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Item Name:"
-                    style="@style/TitleStyle" />
+                    android:text="Item Name:" />
 
                 <TextView
                     android:id="@+id/tvItemName"
@@ -73,12 +73,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/tvBalanceLabel"
+                    style="@style/TitleStyle"
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Quantity in Stock:"
-                    style="@style/TitleStyle" />
+                    android:text="Quantity in Stock:" />
 
                 <TextView
                     android:id="@+id/tvBalance"
@@ -99,12 +99,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/tvUomLabel"
+                    style="@style/TitleStyle"
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Unit of Measure:"
-                    style="@style/TitleStyle" />
+                    android:text="Unit of Measure:" />
 
                 <TextView
                     android:id="@+id/tvUom"
@@ -126,12 +126,12 @@
 
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/tvPendingAdjLabel"
+                    style="@style/TitleStyle"
                     android:layout_width="430dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Pending Adjustment:"
-                    style="@style/TitleStyle" />
+                    android:text="Pending Adjustment:" />
 
                 <TextView
                     android:id="@+id/tvPendingAdj"

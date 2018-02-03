@@ -20,8 +20,8 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
             {
                 Response.Redirect(LoginController.StockAdjustmentURI);
             }
-            GridView1.DataSource = summary;
-            GridView1.DataBind();
+            gvActionSummary.DataSource = summary;
+            gvActionSummary.DataBind();
         }
         else
         {
@@ -29,11 +29,11 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
         }
     }
 
-    protected void Button2_Click(object sender, EventArgs e)
+    protected void btnProcess_Click(object sender, EventArgs e)
     {
         try
         {
-            foreach (GridViewRow row in GridView1.Rows)
+            foreach (GridViewRow row in gvActionSummary.Rows)
             {
                 int discID = Int32.Parse((row.FindControl("lblDiscID") as Label).Text);
                 string action = (row.FindControl("lblAction") as Label).Text;
@@ -83,7 +83,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
         }
     }
 
-    protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void gvActionSummary_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

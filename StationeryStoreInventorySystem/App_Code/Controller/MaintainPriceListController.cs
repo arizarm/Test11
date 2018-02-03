@@ -76,4 +76,10 @@ public class MaintainPriceListController
     {
         EFBroker_PriceList.UpdatePriceListObject(newPrice, firstCPK, secondCPK, thirdCPK);
     }
+
+    public PriceList GetPriceListGivenItemCodeRankNTenderYear(string itemC, int rank, string tenderY)
+    {
+        PriceList pl = EFBroker_PriceList.GetPriceListGivenItemCodeRankNTenderYear(itemC, rank, tenderY);
+        return pl;
+    }
 }

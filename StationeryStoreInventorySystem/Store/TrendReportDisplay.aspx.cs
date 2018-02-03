@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
 
 public partial class TrendReportDisplay : System.Web.UI.Page
 {
@@ -12,12 +13,14 @@ public partial class TrendReportDisplay : System.Web.UI.Page
     {
         List<TrendReport> ListOfBROs = (List<TrendReport>)Session["reportsToDisplay"];
         int typeOfReport = (int)Session["typeOfReport"];
-
+        //ReportDocument myReport = new ReportDocument();
+        //string reportPath;
         switch (typeOfReport)
         {
             case 0:
                     CrystalReportViewer crv1 = new CrystalReportViewer();
-
+                    //reportPath = Server.MapPath("crystalreport1.rpt");
+                    //myReport.Load(reportPath);
                     ContentPlaceHolder content = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
                     crv1.AutoDataBind = true;
                     content.Controls.Add(crv1);

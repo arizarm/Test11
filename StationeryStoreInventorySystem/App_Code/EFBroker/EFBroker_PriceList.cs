@@ -71,4 +71,14 @@ public class EFBroker_PriceList
         }
         return prices;
     }
+
+    public static PriceList GetPriceListGivenItemCodeRankNTenderYear(string itemC, int rank, string tenderY)
+    {
+        PriceList pl;
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            pl = context.PriceLists.Where(x => x.ItemCode == itemC).Where(y => y.SupplierRank == rank).Where(z => z.TenderYear == tenderY).FirstOrDefault();
+        }
+        return pl;
+    }
 }

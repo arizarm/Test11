@@ -31,28 +31,28 @@ public partial class SupplierPriceList : System.Web.UI.Page
             {
                 if ((string)Session["empRole"] == "Store Supervisor" || (string)Session["empRole"] == "Store Manager")
                 {
-                    UpdateButton.Enabled = true;
-                    UpdateButton.Visible = true;
+                    BtnUpdate.Enabled = true;
+                    BtnUpdate.Visible = true;
                 }
                 //Set Default Supplier Info on Page
                 Supplier s = slc.GetSupplierGivenSupplierCode(code);
-                TextBox1.Text = s.SupplierCode;
-                TextBox2.Text = s.SupplierName;
-                TextBox3.Text = s.SupplierContactName;
-                SupplierPhoneNoTextBox.Text = s.SupplierPhone;
-                TextBox5.Text = s.SupplierFax;
-                TextBox6.Text = s.SupplierAddress;
-                TextBox8.Text = s.SupplierEmail;
-                TextBox9.Text = s.ActiveStatus;
+                TxtSupCode.Text = s.SupplierCode;
+                TxtSupName.Text = s.SupplierName;
+                TxtContactName.Text = s.SupplierContactName;
+                TxtSupplierPhoneNo.Text = s.SupplierPhone;
+                TxtFaxNo.Text = s.SupplierFax;
+                TxtAddress.Text = s.SupplierAddress;
+                TxtEmail.Text = s.SupplierEmail;
+                TxtActive.Text = s.ActiveStatus;
                 if (s.ActiveStatus == "Y")
                 {
-                    DeleteButton.CssClass = "rejectBtn";
-                    DeleteButton.Text = "Set To Inactive";
+                    BtnDelete.CssClass = "rejectBtn";
+                    BtnDelete.Text = "Set To Inactive";
                 }
                 else
                 {
-                    DeleteButton.CssClass = "button";
-                    DeleteButton.Text = "Set To Active";
+                    BtnDelete.CssClass = "button";
+                    BtnDelete.Text = "Set To Active";
                 }
 
                 //Populate dropdownlists for Item and Category
@@ -69,22 +69,22 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     }
 
-    protected void UpdateButton_Click(object sender, EventArgs e)
+    protected void BtnUpdate_Click(object sender, EventArgs e)
     {
-        Supplier s = new Supplier();
-        s.SupplierCode = TextBox1.Text;
-        s.SupplierName = TextBox2.Text;
-        s.SupplierContactName = TextBox3.Text;
-        s.SupplierPhone = SupplierPhoneNoTextBox.Text;
-        s.SupplierFax = TextBox5.Text;
-        s.SupplierAddress = TextBox6.Text;
-        s.SupplierEmail = TextBox8.Text;
-        s.ActiveStatus = TextBox9.Text;
-        slc.UpdateSupplier(s);
-        Utility.DisplayAlertMessage(Message.UpdateSuccessful);
+            Supplier s = new Supplier();
+            s.SupplierCode = TxtSupCode.Text;
+            s.SupplierName = TxtSupName.Text;
+            s.SupplierContactName = TxtContactName.Text;
+            s.SupplierPhone = TxtSupplierPhoneNo.Text;
+            s.SupplierFax = TxtFaxNo.Text;
+            s.SupplierAddress = TxtAddress.Text;
+            s.SupplierEmail = TxtEmail.Text;
+            s.ActiveStatus = TxtActive.Text;
+            slc.UpdateSupplier(s);
+            Utility.DisplayAlertMessage(Message.UpdateSuccessful);
     }
 
-    protected void DeleteButton_Click(object sender, EventArgs e)
+    protected void BtnDelete_Click(object sender, EventArgs e)
     {
         Supplier s = slc.GetSupplierGivenSupplierCode(code);
 
@@ -96,39 +96,45 @@ public partial class SupplierPriceList : System.Web.UI.Page
         else
         {
             slc.MakeSupplierActive(code);
-            DeleteButton.CssClass = "rejectBtn";
-            DeleteButton.Text = "Set To Inactive";
+            BtnDelete.CssClass = "rejectBtn";
+            BtnDelete.Text = "Set To Inactive";
             Utility.DisplayAlertMessage(Message.ActiveSuccessful);
-            TextBox9.Text = "Y";
+            TxtActive.Text = "Y";
         }
     }
 
-    protected void AddNewItemButton_Click(object sender, EventArgs e)
+    protected void BtnAddNewItem_Click(object sender, EventArgs e)
     {
         string Year = DateTime.Now.Year.ToString();
-        TextBox11.Text = Year;
-        Table3.Visible = true;
-        AddNewItemButton.Visible = false;
+        TxtTenderYear.Text = Year;
+        TblNewItem.Visible = true;
+        BtnAddNewItem.Visible = false;
     }
 
-    protected void AddItemButton_Click(object sender, EventArgs e)
+    protected void BtnAddItem_Click(object sender, EventArgs e)
     {
         try
         {
             PriceList pl = new PriceList();
             pl.SupplierCode = code;
-            pl.ItemCode = ItemDropDownList.SelectedValue;
-            if (!ValidatorUtil.isEmpty(TextBox7.Text))
-                pl.Price = decimal.Parse(TextBox7.Text);
-            if (!(PriorityRankList.SelectedValue == "NA"))
-                pl.SupplierRank = int.Parse(PriorityRankList.SelectedValue);
-            if (!ValidatorUtil.isEmpty(TextBox11.Text))
-                pl.TenderYear = (TextBox11.Text);
+            pl.ItemCode = DDLItem.SelectedValue;
+            if (!ValidatorUtil.isEmpty(TxtAddNewItem.Text.Trim()))
+                pl.Price = decimal.Parse(TxtAddNewItem.Text.Trim());
+            if (!(DDLPriorityRank.SelectedValue == "NA"))
+                pl.SupplierRank = int.Parse(DDLPriorityRank.SelectedValue);
+            if (!ValidatorUtil.isEmpty(TxtTenderYear.Text.Trim()))
+                pl.TenderYear = (TxtTenderYear.Text.Trim());
 
-            mplc.AddPriceListItem(pl);
-            DefaultDropDownListRestore();
-            PopulateTenderSupplyList();
-            Utility.DisplayAlertMessage(Message.SuccessfulItemAdd);
+            PriceList verifiPL = mplc.GetPriceListGivenItemCodeRankNTenderYear(pl.ItemCode, int.Parse(DDLPriorityRank.SelectedValue), pl.TenderYear);
+            if (verifiPL == null)
+            {
+                mplc.AddPriceListItem(pl);
+                DefaultDropDownListRestore();
+                PopulateTenderSupplyList();
+                Utility.DisplayAlertMessage(Message.SuccessfulItemAdd);
+            }
+            else
+                Utility.DisplayAlertMessage(Message.PriceListExistsForGivenTenderYear);
         }
         catch (InvalidOperationException)
         {
@@ -145,19 +151,19 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     }
 
-    protected void CategoryDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DDLCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if ((CategoryDropDownList.SelectedIndex != 0))
+        if ((DDLCategory.SelectedIndex != 0))
         {
-            List<Item> ShortlistedItems = mplc.GetAllItemsForGivenCat(CategoryDropDownList.SelectedItem.Value.ToString());
+            List<Item> ShortlistedItems = mplc.GetAllItemsForGivenCat(DDLCategory.SelectedItem.Value.ToString());
             List<TenderListObj> tenderItemList = new List<TenderListObj>();
             foreach (Item i in ShortlistedItems)
             {
                 TenderListObj a = new TenderListObj(i);
                 tenderItemList.Add(a);
             }
-            ItemDropDownList.DataSource = tenderItemList;
-            ItemDropDownList.DataBind();
+            DDLItem.DataSource = tenderItemList;
+            DDLItem.DataBind();
         }
         else
         {
@@ -165,12 +171,12 @@ public partial class SupplierPriceList : System.Web.UI.Page
         }
     }
 
-    protected void ItemDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DDLItem_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ItemDropDownList.SelectedIndex != 0)
+        if (DDLItem.SelectedIndex != 0)
         {
-            string catName = mplc.GetCatForGivenItemCode(ItemDropDownList.SelectedValue);
-            CategoryDropDownList.SelectedValue = catName;
+            string catName = mplc.GetCatForGivenItemCode(DDLItem.SelectedValue);
+            DDLCategory.SelectedValue = catName;
         }
         else
         {
@@ -187,22 +193,22 @@ public partial class SupplierPriceList : System.Web.UI.Page
             TenderListObj a = new TenderListObj(i);
             tenderItemList.Add(a);
         }
-        ItemDropDownList.DataSource = tenderItemList;
-        ItemDropDownList.DataBind();
-        ItemDropDownList.Items.Insert(0, new ListItem("Select", "NA"));
+        DDLItem.DataSource = tenderItemList;
+        DDLItem.DataBind();
+        DDLItem.Items.Insert(0, new ListItem("Select", "NA"));
 
         List<string> catList = mplc.GetAllCategoryNames();
-        CategoryDropDownList.DataSource = catList;
-        CategoryDropDownList.DataBind();
-        CategoryDropDownList.Items.Insert(0, new ListItem("Select", "NA"));
+        DDLCategory.DataSource = catList;
+        DDLCategory.DataBind();
+        DDLCategory.Items.Insert(0, new ListItem("Select", "NA"));
 
         List<int> rank = new List<int>() { 1, 2, 3 };
-        PriorityRankList.DataSource = rank;
-        PriorityRankList.DataBind();
+        DDLPriorityRank.DataSource = rank;
+        DDLPriorityRank.DataBind();
 
-        TextBox7.Text = "";
+        TxtAddNewItem.Text = "";
         string Year = DateTime.Now.Year.ToString();
-        TextBox11.Text = Year;
+        TxtTenderYear.Text = Year;
     }
 
     protected void PopulateTenderSupplyList()
@@ -216,15 +222,15 @@ public partial class SupplierPriceList : System.Web.UI.Page
             TenderListObj A = new TenderListObj(itemDesc, itemPrice);
             tenderSupplyList.Add(A);
         }
-        TenderPriceDropDownList.DataSource = tenderSupplyList;
-        TenderPriceDropDownList.DataBind();
+        DDLTenderPrice.DataSource = tenderSupplyList;
+        DDLTenderPrice.DataBind();
     }
 
-    protected void ItemDelete_Click(object sender, EventArgs e)
+    protected void BtnItemDelete_Click(object sender, EventArgs e)
     {
         //get description of item for this supplier
         GridViewRow Row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
-        string itemP = TenderPriceDropDownList.DataKeys[Row.RowIndex].Value.ToString();
+        string itemP = DDLTenderPrice.DataKeys[Row.RowIndex].Value.ToString();
 
         //get the pricelist composite primary key
         PriceList pl = mplc.GetPriceListObjForGivenItemCodeNSupplier(itemP, code);
@@ -238,25 +244,25 @@ public partial class SupplierPriceList : System.Web.UI.Page
         Utility.DisplayAlertMessage(Message.DeleteSuccessful);
     }
 
-    protected void TenderPriceDropDownList_RowEditing(object sender, GridViewEditEventArgs e)
+    protected void DDLTenderPrice_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        TenderPriceDropDownList.EditIndex = e.NewEditIndex;
+        DDLTenderPrice.EditIndex = e.NewEditIndex;
         PopulateTenderSupplyList();
     }
 
-    protected void TenderPriceDropDownList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    protected void DDLTenderPrice_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        TenderPriceDropDownList.EditIndex = -1;
+        DDLTenderPrice.EditIndex = -1;
         PopulateTenderSupplyList();
     }
 
-    protected void TenderPriceDropDownList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    protected void DDLTenderPrice_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         //get new price
-        System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)TenderPriceDropDownList.Rows[e.RowIndex].FindControl("NewPriceTextBox");
+        System.Web.UI.WebControls.TextBox newPriceTB = (System.Web.UI.WebControls.TextBox)DDLTenderPrice.Rows[e.RowIndex].FindControl("TxtNewPrice");
         if (newPriceTB.Text.Trim() == "")
         {
-            TenderPriceDropDownList.EditIndex = -1;
+            DDLTenderPrice.EditIndex = -1;
             PopulateTenderSupplyList();
         }
         else
@@ -264,8 +270,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
             string newPrice = newPriceTB.Text;
 
             //get itemCode for this supplier
-            GridViewRow Row = TenderPriceDropDownList.Rows[e.RowIndex];
-            string itemP = TenderPriceDropDownList.DataKeys[Row.RowIndex].Value.ToString();
+            GridViewRow Row = DDLTenderPrice.Rows[e.RowIndex];
+            string itemP = DDLTenderPrice.DataKeys[Row.RowIndex].Value.ToString();
 
             //get the pricelist composite primary key
             PriceList pl = mplc.GetPriceListObjForGivenItemCodeNSupplier(itemP, code);
@@ -274,60 +280,20 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
             mplc.UpdatePrice(newPrice, code, itemCode, tenderY);
 
-            TenderPriceDropDownList.EditIndex = -1;
+            DDLTenderPrice.EditIndex = -1;
             PopulateTenderSupplyList();
         }
     }
 
 
-    protected void SupplierPhoneNoTextBox_TextChanged(object sender, EventArgs e)
+    protected void TxtSupplierPhoneNo_TextChanged(object sender, EventArgs e)
     {
-        PhoneNoValidator.Enabled = true;
+        RegPhoneNo.Enabled = true;
     }
 
-
-    protected void NewPriceTextBox_TextChanged(object sender, EventArgs e)
+    protected void DDLTenderPrice_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
-    }
-
-    protected void TenderPriceDropDownList_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        TenderPriceDropDownList.PageIndex = e.NewPageIndex;
+        DDLTenderPrice.PageIndex = e.NewPageIndex;
         PopulateTenderSupplyList();
-    }
-}
-
-public class TenderListObj
-{
-    string itemP, itemDesc, itemD;
-    public TenderListObj(Item iD, string iP)
-    {
-        this.itemD = iD.ItemCode;
-        this.itemP = iP;
-        this.itemDesc = iD.Description;
-    }
-
-    public TenderListObj(Item iD)
-    {
-        this.itemD = iD.ItemCode;
-        this.itemDesc = iD.Description;
-    }
-
-    public string ItemDescription
-    {
-        get { return itemDesc; }
-        set { itemDesc = value; }
-    }
-
-    public string ItemPrice
-    {
-        get { return itemP; }
-        set { itemP = value; }
-    }
-
-    public string ItemCode
-    {
-        get { return itemD; }
-        set { itemD = value; }
     }
 }

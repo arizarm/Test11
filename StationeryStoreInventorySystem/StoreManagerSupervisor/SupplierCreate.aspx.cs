@@ -14,17 +14,17 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     }
 
-    protected void SaveButton_Click(object sender, EventArgs e)
+    protected void BtnSave_Click(object sender, EventArgs e)
     {
         Supplier S = new Supplier();
-        S.SupplierCode = TextBox1.Text;
-        S.SupplierName = TextBox2.Text;
-        S.SupplierContactName = TextBox3.Text;
-        S.SupplierPhone = TextBox4.Text;
-        S.SupplierFax = TextBox5.Text;
-        S.SupplierAddress = TextBox6.Text;
-        S.SupplierEmail = TextBox7.Text;
-        S.ActiveStatus = TextBox8.Text;
+        S.SupplierCode = TxtSupCode.Text;
+        S.SupplierName = TxtSupName.Text;
+        S.SupplierContactName = TxtContactName.Text;
+        S.SupplierPhone = TxtPhoneNo.Text;
+        S.SupplierFax = TxtFaxNo.Text;
+        S.SupplierAddress = TxtAddress.Text;
+        S.SupplierEmail = TxtEmail.Text;
+        S.ActiveStatus = TxtActive.Text;
 
         SupplierListController slc = new SupplierListController();
         slc.CreateSupplier(S);

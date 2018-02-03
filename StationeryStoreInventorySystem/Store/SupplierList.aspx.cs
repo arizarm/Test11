@@ -16,8 +16,8 @@ public partial class SupplierList : System.Web.UI.Page
             SupplierListController slc = new SupplierListController();
             List<Supplier> LS = slc.ListAllSuppliers();
 
-            GridView1.DataSource = LS;
-            GridView1.DataBind();
+            GVSupplierList.DataSource = LS;
+            GVSupplierList.DataBind();
 
             if ((string)Session["empRole"] == "Store Supervisor" || (string)Session["empRole"] == "Store Manager")
             {

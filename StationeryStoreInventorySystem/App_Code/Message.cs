@@ -79,4 +79,8 @@ public class Message
 
     public const String ActiveSuccessful
     = "Supplier successfully set to Active";
+
+    public const String PriceListExistsForGivenTenderYear
+    = "PriceList already exists for Item, Rank and Tender Year selected";
+
 }

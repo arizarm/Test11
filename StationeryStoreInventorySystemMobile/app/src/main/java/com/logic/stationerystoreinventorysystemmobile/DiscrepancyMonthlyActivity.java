@@ -24,7 +24,7 @@ public class DiscrepancyMonthlyActivity extends AppCompatActivity implements Ada
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discrepancy_monthly);
 
-        list = findViewById(R.id.listItems);
+        list = findViewById(R.id.lvItems);
         list.setOnItemClickListener(this);
         ArrayList<CatalogueItem> ciList = DiscrepancyHolder.getMonthlyItems();
 

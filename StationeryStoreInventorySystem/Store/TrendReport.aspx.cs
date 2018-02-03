@@ -19,17 +19,17 @@ public partial class RequisitionTrend : System.Web.UI.Page
             {
                 case "RTR":
                     DisplayCommonComponents();
-                    DepartmentLabel.Visible = true;
-                    DepartmentRadioButtonList.Visible = true;
-                    SplitReportRadioButtonList.Visible = true;
-                    HeaderLabel.Text = Message.RTReport;
+                    LblDepartment.Visible = true;
+                    RBtnLDepartment.Visible = true;
+                    RBtnLSplit.Visible = true;
+                    LblHeader.Text = Message.RTReport;
                     break;
                 case "ROR":
                     DisplayCommonComponents();
                     SupplierLabel.Visible = true;
-                    SupplierRadioButtonList.Visible = true;
-                    SplitRORReportRadioButtonList.Visible = true;
-                    HeaderLabel.Text = Message.ROReport;
+                    RBtnLSupplier.Visible = true;
+                    RBtnLSplitROR.Visible = true;
+                    LblHeader.Text = Message.ROReport;
                     break;
             }
             List<string> catAdded = new List<string>();
@@ -48,55 +48,55 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
     protected void DisplayCommonComponents()
     {
-        MainTable.Visible = true;
-        DurationLabel.Visible = true;
-        SelectCategoryLabel.Visible = true;
-        DurationRadioButtonList.Visible = true;
-        CategoryRadioButtonList.Visible = true;
-        SplitLabel.Visible = true;
-        GenerateButton.Visible = true;
+        TblMain.Visible = true;
+        LblDuration.Visible = true;
+        LblSelectCategory.Visible = true;
+        RBtnLDuration.Visible = true;
+        RBtnLCategory.Visible = true;
+        LblSplit.Visible = true;
+        BtnGenerate.Visible = true;
     }
 
-    protected void DurationRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void RBtnLDuration_SelectedIndexChanged(object sender, EventArgs e)
     {
         string type = Request.QueryString["type"];
-        int selectedIndex = DurationRadioButtonList.SelectedIndex;
+        int selectedIndex = RBtnLDuration.SelectedIndex;
         if (type.Equals("RTR"))
         {
             switch (selectedIndex)
             {
                 case 0:
-                    FromLabel.Visible = false;
-                    FromDropDownList.Visible = false;
-                    DurationDropDownList.Visible = false;
-                    DurationAddButton.Visible = false;
-                    DurationGridView.Visible = false;
+                    LblFrom.Visible = false;
+                    DDLFrom.Visible = false;
+                    DDLDuration.Visible = false;
+                    BtnDurationAdd.Visible = false;
+                    GVDuration.Visible = false;
                     ViewState["durSel"] = 0;
                     break;
                 case 1:
-                    FromLabel.Visible = true;
-                    FromDropDownList.Visible = true;
-                    DurationDropDownList.Visible = false;
-                    DurationAddButton.Visible = false;
-                    DurationGridView.Visible = false;
+                    LblFrom.Visible = true;
+                    DDLFrom.Visible = true;
+                    DDLDuration.Visible = false;
+                    BtnDurationAdd.Visible = false;
+                    GVDuration.Visible = false;
                     ViewState["durSel"] = 1;
                     GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
-                    FromDropDownList.DataSource = allMonths;
-                    FromDropDownList.DataBind();
-                    ViewState["fromMonth"] = FromDropDownList.SelectedValue;
+                    DDLFrom.DataSource = allMonths;
+                    DDLFrom.DataBind();
+                    ViewState["fromMonth"] = DDLFrom.SelectedValue;
                     break;
                 case 2:
-                    FromLabel.Visible = false;
-                    FromDropDownList.Visible = false;
-                    DurationDropDownList.Visible = true;
-                    DurationAddButton.Visible = true;
-                    DurationGridView.Visible = true;
+                    LblFrom.Visible = false;
+                    DDLFrom.Visible = false;
+                    DDLDuration.Visible = true;
+                    BtnDurationAdd.Visible = true;
+                    GVDuration.Visible = true;
                     ViewState["durSel"] = 2;
                     GenerateRequisitionTrendController Grtc1 = new GenerateRequisitionTrendController();
                     List<string> FromMths = Grtc1.GetUniqueRequisitionMonths();
-                    DurationDropDownList.DataSource = FromMths;
-                    DurationDropDownList.DataBind();
+                    DDLDuration.DataSource = FromMths;
+                    DDLDuration.DataBind();
                     break;
             }
         }
@@ -105,65 +105,65 @@ public partial class RequisitionTrend : System.Web.UI.Page
             switch (selectedIndex)
             {
                 case 0:
-                    FromLabel.Visible = false;
-                    FromDropDownList.Visible = false;
-                    DurationDropDownList.Visible = false;
-                    DurationAddButton.Visible = false;
-                    DurationGridView.Visible = false;
+                    LblFrom.Visible = false;
+                    DDLFrom.Visible = false;
+                    DDLDuration.Visible = false;
+                    BtnDurationAdd.Visible = false;
+                    GVDuration.Visible = false;
                     ViewState["durSel"] = 0;
                     break;
                 case 1:
-                    FromLabel.Visible = true;
-                    FromDropDownList.Visible = true;
-                    DurationDropDownList.Visible = false;
-                    DurationAddButton.Visible = false;
-                    DurationGridView.Visible = false;
+                    LblFrom.Visible = true;
+                    DDLFrom.Visible = true;
+                    DDLDuration.Visible = false;
+                    BtnDurationAdd.Visible = false;
+                    GVDuration.Visible = false;
                     ViewState["durSel"] = 1;
                     GenerateReorderTrendController grtc = new GenerateReorderTrendController();
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
-                    FromDropDownList.DataSource = allMonths;
-                    FromDropDownList.DataBind();
-                    ViewState["fromMonth"] = FromDropDownList.SelectedValue;
+                    DDLFrom.DataSource = allMonths;
+                    DDLFrom.DataBind();
+                    ViewState["fromMonth"] = DDLFrom.SelectedValue;
                     break;
                 case 2:
-                    FromLabel.Visible = false;
-                    FromDropDownList.Visible = false;
-                    DurationDropDownList.Visible = true;
-                    DurationAddButton.Visible = true;
-                    DurationGridView.Visible = true;
+                    LblFrom.Visible = false;
+                    DDLFrom.Visible = false;
+                    DDLDuration.Visible = true;
+                    BtnDurationAdd.Visible = true;
+                    GVDuration.Visible = true;
                     ViewState["durSel"] = 2;
                     GenerateReorderTrendController Grtc1 = new GenerateReorderTrendController();
                     List<string> FromMths = Grtc1.GetUniqueRequisitionMonths();
-                    DurationDropDownList.DataSource = FromMths;
-                    DurationDropDownList.DataBind();
+                    DDLDuration.DataSource = FromMths;
+                    DDLDuration.DataBind();
                     break;
             }
         }
     }
 
-    protected void CategoryRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void RBtnLCategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int selectedIndex = CategoryRadioButtonList.SelectedIndex;
+        int selectedIndex = RBtnLCategory.SelectedIndex;
         string type = Request.QueryString["type"];
         if (type.Equals("RTR"))
         {
             switch (selectedIndex)
             {
                 case 0:
-                    CategoryDropDownList.Visible = false;
-                    CategoryAddButton.Visible = false;
-                    CategoryGridView.Visible = false;
+                    DDLCategory.Visible = false;
+                    BtnCategoryAdd.Visible = false;
+                    GVCategory.Visible = false;
                     ViewState["catSel"] = 0;
                     break;
                 case 1:
-                    CategoryDropDownList.Visible = true;
-                    CategoryAddButton.Visible = true;
-                    CategoryGridView.Visible = true;
+                    DDLCategory.Visible = true;
+                    BtnCategoryAdd.Visible = true;
+                    GVCategory.Visible = true;
                     ViewState["catSel"] = 1;
                     GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
                     List<string> CatNames = grtc.GetAllCategoryNames();
-                    CategoryDropDownList.DataSource = CatNames;
-                    CategoryDropDownList.DataBind();
+                    DDLCategory.DataSource = CatNames;
+                    DDLCategory.DataBind();
                     break;
             }
         }
@@ -172,85 +172,85 @@ public partial class RequisitionTrend : System.Web.UI.Page
             switch (selectedIndex)
             {
                 case 0:
-                    CategoryDropDownList.Visible = false;
-                    CategoryAddButton.Visible = false;
-                    CategoryGridView.Visible = false;
+                    DDLCategory.Visible = false;
+                    BtnCategoryAdd.Visible = false;
+                    GVCategory.Visible = false;
                     ViewState["catSel"] = 0;
                     break;
                 case 1:
-                    CategoryDropDownList.Visible = true;
-                    CategoryAddButton.Visible = true;
-                    CategoryGridView.Visible = true;
+                    DDLCategory.Visible = true;
+                    BtnCategoryAdd.Visible = true;
+                    GVCategory.Visible = true;
                     ViewState["catSel"] = 1;
                     GenerateReorderTrendController grtc = new GenerateReorderTrendController();
                     List<string> CatNames = grtc.GetAllCategoryNames();
-                    CategoryDropDownList.DataSource = CatNames;
-                    CategoryDropDownList.DataBind();
+                    DDLCategory.DataSource = CatNames;
+                    DDLCategory.DataBind();
                     break;
             }
         }
     }
 
-    protected void DepartmentRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void RBtnLDepartment_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int SelectedIndex = DepartmentRadioButtonList.SelectedIndex;
+        int SelectedIndex = RBtnLDepartment.SelectedIndex;
         switch (SelectedIndex)
         {
             case 0:
-                SharedDropDownList.Visible = false;
-                SharedAddButton.Visible = false;
-                SharedGridView.Visible = false;
+                DDLShared.Visible = false;
+                BtnSharedAdd.Visible = false;
+                GVShared.Visible = false;
                 ViewState["sharedListSel"] = 0;
                 break;
             case 1:
-                SharedDropDownList.Visible = true;
-                SharedAddButton.Visible = true;
-                SharedGridView.Visible = true;
+                DDLShared.Visible = true;
+                BtnSharedAdd.Visible = true;
+                GVShared.Visible = true;
                 ViewState["sharedListSel"] = 1;
                 GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
                 List<string> deptNames = grtc.GetAllDepartmentNames();
-                SharedDropDownList.DataSource = deptNames;
-                SharedDropDownList.DataBind();
+                DDLShared.DataSource = deptNames;
+                DDLShared.DataBind();
                 break;
         }
 
     }
 
-    protected void SupplierRadioButtonList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void RBtnLSupplier_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int SelectedIndex = SupplierRadioButtonList.SelectedIndex;
+        int SelectedIndex = RBtnLSupplier.SelectedIndex;
         switch (SelectedIndex)
         {
             case 0:
-                SharedDropDownList.Visible = false;
-                SharedAddButton.Visible = false;
-                SharedGridView.Visible = false;
+                DDLShared.Visible = false;
+                BtnSharedAdd.Visible = false;
+                GVShared.Visible = false;
                 ViewState["sharedListSel"] = 0;
                 break;
             case 1:
-                SharedDropDownList.Visible = true;
-                SharedAddButton.Visible = true;
-                SharedGridView.Visible = true;
+                DDLShared.Visible = true;
+                BtnSharedAdd.Visible = true;
+                GVShared.Visible = true;
                 ViewState["sharedListSel"] = 1;
                 GenerateReorderTrendController grtc = new GenerateReorderTrendController();
                 List<string> supplierNames = grtc.GetAllSupplierNames();
-                SharedDropDownList.DataSource = supplierNames;
-                SharedDropDownList.DataBind();
+                DDLShared.DataSource = supplierNames;
+                DDLShared.DataBind();
                 break;
         }
 
     }
 
 
-    protected void CategoryAddButton_Click(object sender, EventArgs e)
+    protected void BtnCategoryAdd_Click(object sender, EventArgs e)
     {
-        string addMe = CategoryDropDownList.SelectedItem.Text;
+        string addMe = DDLCategory.SelectedItem.Text;
 
         if (((List<string>)ViewState["catAdded"]).Count == 0)
         {
             ((List<string>)ViewState["catAdded"]).Add(addMe);
-            CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
-            CategoryGridView.DataBind();
+            GVCategory.DataSource = ((List<string>)ViewState["catAdded"]);
+            GVCategory.DataBind();
         }
         else
         {
@@ -264,42 +264,42 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 if (i == ((List<string>)ViewState["catAdded"]).Count - 1)
                 {
                     ((List<string>)ViewState["catAdded"]).Add(addMe);
-                    CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
-                    CategoryGridView.DataBind();
+                    GVCategory.DataSource = ((List<string>)ViewState["catAdded"]);
+                    GVCategory.DataBind();
                     break;
                 }
             }
         }
     }
 
-    protected void RemoveCategoryBtn_Click(object sender, EventArgs e)
+    protected void BtnRemoveCategory_Click(object sender, EventArgs e)
     {
         //get row position of item
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
 
         ((List<string>)ViewState["catAdded"]).RemoveAt(row.RowIndex);
-        CategoryGridView.DataSource = ((List<string>)ViewState["catAdded"]);
-        CategoryGridView.DataBind();
+        GVCategory.DataSource = ((List<string>)ViewState["catAdded"]);
+        GVCategory.DataBind();
     }
 
-    protected void RemoveSharedBtn_Click(object sender, EventArgs e)
+    protected void BtnRemoveShared_Click(object sender, EventArgs e)
     {
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
 
         ((List<string>)ViewState["sharedListAdded"]).RemoveAt(row.RowIndex);
-        SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
-        SharedGridView.DataBind();
+        GVShared.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+        GVShared.DataBind();
     }
 
-    protected void SharedAddButton_Click(object sender, EventArgs e)
+    protected void BtnSharedAdd_Click(object sender, EventArgs e)
     {
-        string addMe = SharedDropDownList.SelectedItem.Text;
+        string addMe = DDLShared.SelectedItem.Text;
 
         if (((List<string>)ViewState["sharedListAdded"]).Count == 0)
         {
             ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
-            SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
-            SharedGridView.DataBind();
+            GVShared.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+            GVShared.DataBind();
         }
         else
         {
@@ -316,8 +316,8 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 if (i == ((List<string>)ViewState["sharedListAdded"]).Count - 1)
                 {
                     ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
-                    SharedGridView.DataSource = ((List<string>)ViewState["sharedListAdded"]);
-                    SharedGridView.DataBind();
+                    GVShared.DataSource = ((List<string>)ViewState["sharedListAdded"]);
+                    GVShared.DataBind();
                     break;
                 }
             }
@@ -325,15 +325,15 @@ public partial class RequisitionTrend : System.Web.UI.Page
     }
 
 
-    protected void DurationAddButton_Click(object sender, EventArgs e)
+    protected void BtnDurationAdd_Click(object sender, EventArgs e)
     {
-        string addMe = DurationDropDownList.SelectedItem.Text;
+        string addMe = DDLDuration.SelectedItem.Text;
 
         if (((List<string>)ViewState["dateAdded"]).Count == 0)
         {
             ((List<string>)ViewState["dateAdded"]).Add(addMe);
-            DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
-            DurationGridView.DataBind();
+            GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
+            GVDuration.DataBind();
         }
         else if (((List<string>)ViewState["dateAdded"]).Count == 1 || (((List<string>)ViewState["dateAdded"]).Count == 2))
         {
@@ -347,8 +347,8 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 if (i == ((List<string>)ViewState["dateAdded"]).Count - 1)
                 {
                     ((List<string>)ViewState["dateAdded"]).Add(addMe);
-                    DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
-                    DurationGridView.DataBind();
+                    GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
+                    GVDuration.DataBind();
                     break;
                 }
             }
@@ -366,8 +366,8 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 {
                     ((List<string>)ViewState["dateAdded"]).RemoveAt(0);
                     ((List<string>)ViewState["dateAdded"]).Add(addMe);
-                    DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
-                    DurationGridView.DataBind();
+                    GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
+                    GVDuration.DataBind();
                     break;
                 }
             }
@@ -375,16 +375,16 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
     }
 
-    protected void RemoveDurationBtn_Click(object sender, EventArgs e)
+    protected void BtnRemoveDuration_Click(object sender, EventArgs e)
     {
         GridViewRow row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
 
         ((List<string>)ViewState["dateAdded"]).RemoveAt(row.RowIndex);
-        DurationGridView.DataSource = ((List<string>)ViewState["dateAdded"]);
-        DurationGridView.DataBind();
+        GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
+        GVDuration.DataBind();
     }
 
-    protected void GenerateButton_Click(object sender, EventArgs e)
+    protected void BtnGenerate_Click(object sender, EventArgs e)
     {
         bool areAllFieldsValid = VerifyAllCustomFieldsAreValid();
         ReportToSelect = Request.QueryString["type"];
@@ -400,7 +400,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
                 List<TrendReport> basicReportObjects = new List<TrendReport>();
 
-                int splitBySelected = SplitReportRadioButtonList.SelectedIndex;
+                int splitBySelected = RBtnLSplit.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string dept in deptSelected)
@@ -497,7 +497,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
                 List<TrendReport> basicReportObjects = new List<TrendReport>();
 
-                int splitBySelected = SplitRORReportRadioButtonList.SelectedIndex;
+                int splitBySelected = RBtnLSplitROR.SelectedIndex;
                 if (splitBySelected == 0)
                 {
                     foreach (string suppl in supplierSelected)
@@ -697,19 +697,19 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
         if ((int)ViewState["durSel"] == 2)
         {
-            if (DurationGridView.Rows.Count == 0)
+            if (GVDuration.Rows.Count == 0)
                 areAllFieldsValid = false;
         }
 
         if ((int)ViewState["catSel"] == 1)
         {
-            if (CategoryGridView.Rows.Count == 0)
+            if (GVCategory.Rows.Count == 0)
                 areAllFieldsValid = false;
         }
 
         if ((int)ViewState["sharedListSel"] == 1)
         {
-            if (SharedGridView.Rows.Count == 0)
+            if (GVShared.Rows.Count == 0)
                 areAllFieldsValid = false;
         }
 
@@ -717,8 +717,8 @@ public partial class RequisitionTrend : System.Web.UI.Page
     }
 
 
-    protected void FromDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    protected void DDLFrom_SelectedIndexChanged(object sender, EventArgs e)
     {
-        ViewState["fromMonth"] = FromDropDownList.SelectedValue;
+        ViewState["fromMonth"] = DDLFrom.SelectedValue;
     }
 }

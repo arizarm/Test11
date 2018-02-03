@@ -41,7 +41,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/tvItemNameLabel"
                 style="@style/TitleStyle"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/tvBalanceLabel"
                 style="@style/TitleStyle"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/tvUomLabel"
                 style="@style/TitleStyle"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
 
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/tvPendingAdjLabel"
                 style="@style/TitleStyle"
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"

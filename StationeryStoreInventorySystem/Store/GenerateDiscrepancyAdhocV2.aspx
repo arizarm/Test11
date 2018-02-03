@@ -50,7 +50,7 @@
         <br />
         <asp:Label ID="lblRequired" runat="server" ForeColor="Red" Text=""></asp:Label>
         <br />
-        <asp:Button ID="btnSubmit" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="btnSubmit_Click"/>     
+        <asp:Button ID="btnSubmit" runat="server" Text="Submit Discrepancy List"  CssClass="button" OnClick="BtnSubmit_Click"/>     
     </div>
 </asp:Content>
 

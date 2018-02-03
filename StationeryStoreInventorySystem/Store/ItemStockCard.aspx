@@ -17,9 +17,9 @@
     <br />
     <br />
      <br />
-    <%if (GridView1.Rows.Count > 0)
+    <%if (gvTransactions.Rows.Count > 0)
         { %>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+    <asp:GridView ID="gvTransactions" runat="server" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Transaction Date">
                 <ItemTemplate>

@@ -34,7 +34,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         lblErrorFinalise.Text = "";
     }
 
-    protected void btnGenerateDiscrepancy_Click(object sender, EventArgs e)
+    protected void BtnGenerateDiscrepancy_Click(object sender, EventArgs e)
     {      //Generate discrepancy button
         Dictionary<Item, int> discrepancyList = new Dictionary<Item, int>();
         Dictionary<Item, String> discrepancyDisplay = new Dictionary<Item, String>();
@@ -142,7 +142,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         gvDiscrepancyList.DataBind();
     }
 
-    protected void btnCheckAll_Click(object sender, EventArgs e)
+    protected void BtnCheckAll_Click(object sender, EventArgs e)
     {        //Check all button, for testing purpose
         for (int i = 0; i < gvItemList.Rows.Count; i++)
         {
@@ -151,7 +151,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
-    protected void btnUncheckAll_Click(object sender, EventArgs e)
+    protected void BtnUncheckAll_Click(object sender, EventArgs e)
     {        //Uncheck all button, for testing purpose
         for (int i = 0; i < gvItemList.Rows.Count; i++)
         {
@@ -161,7 +161,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
     }
 
-    protected void btnFinalise_Click(object sender, EventArgs e)
+    protected void BtnFinalise_Click(object sender, EventArgs e)
     {     //Finalise discrepancy button
         if (itemError == false)
         {
@@ -173,7 +173,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
-    protected void btnSearch_Click(object sender, EventArgs e)
+    protected void BtnSearch_Click(object sender, EventArgs e)
     {        //Search button
 
         Dictionary<Item, String> searchResults = new Dictionary<Item, String>();
@@ -211,11 +211,11 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         }
     }
 
-    protected void btnDisplayAll_Click(object sender, EventArgs e)
+    protected void BtnDisplayAll_Click(object sender, EventArgs e)
     {       //Display all button
         ShowAll();
     }
-    protected void btnClearList_Click(object sender, EventArgs e)
+    protected void BtnClearList_Click(object sender, EventArgs e)
     {       //Clear list button
         Dictionary<Item, int> emptyList = new Dictionary<Item, int>();
         Dictionary<Item, String> emptyDisplay = new Dictionary<Item, string>();

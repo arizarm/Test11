@@ -11,7 +11,7 @@
     <p>Quantity in Stock: <asp:Label ID="lblStock" runat="server" Text=""></asp:Label></p>
     <p>Adjustment Amount: <asp:TextBox ID="txtAdj" runat="server"></asp:TextBox></p>
     <br /> <br />
-    <asp:Button ID="btnAddItem" runat="server" Text="Add Item" CssClass="button" OnClick="btnAddItem_Click" />
+    <asp:Button ID="btnAddItem" runat="server" Text="Add Item" CssClass="button" OnClick="BtnAddItem_Click" />
 
 &nbsp;&nbsp; 
     <asp:Label ID="lblErrorMsg" runat="server" ForeColor="Red" Text=""></asp:Label>

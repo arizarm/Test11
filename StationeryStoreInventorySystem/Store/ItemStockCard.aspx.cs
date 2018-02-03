@@ -86,8 +86,8 @@ public partial class ItemStockCard : System.Web.UI.Page
                     }
                 }
 
-                GridView1.DataSource = scDisplayList;
-                GridView1.DataBind();
+                gvTransactions.DataSource = scDisplayList;
+                gvTransactions.DataBind();
             }
             else    //if item is not found or no entries found in price list table
             {

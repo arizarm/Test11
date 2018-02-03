@@ -66,7 +66,7 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void gvPending_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvPending_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         //Disallow processing of regular pending discrepancies that came before
         //a monthly inventory check discrepancy by hiding them
@@ -84,7 +84,7 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void btnProcess_Click(object sender, EventArgs e)
+    protected void BtnProcess_Click(object sender, EventArgs e)
     {
         Dictionary<KeyValuePair<Discrepency, Item>, String> summary = new Dictionary<KeyValuePair<Discrepency, Item>, String>();
         ProcessApprovalAndRejections(gvMonthly, summary);
@@ -118,7 +118,7 @@ public partial class StockAdjustment : System.Web.UI.Page
         }
     }
 
-    protected void btnClear_Click(object sender, EventArgs e)
+    protected void BtnClear_Click(object sender, EventArgs e)
     {
         foreach (GridViewRow row in gvMonthly.Rows)
         {

@@ -68,7 +68,7 @@
     <%if (gvPending.Rows.Count > 0)
         { %>
     <h3>Discrepancies Pending Approval</h3>
-    <asp:GridView ID="gvPending" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvPending_RowDataBound" CssClass="mGrid">
+    <asp:GridView ID="gvPending" runat="server" AutoGenerateColumns="False" OnRowDataBound="GvPending_RowDataBound" CssClass="mGrid">
         <Columns>
             <asp:TemplateField HeaderText="Discrepancy ID" Visible="False">
                 <ItemTemplate>
@@ -125,9 +125,9 @@
         </Columns>
     </asp:GridView>
     <br />
-    <asp:Button ID="btnProcess" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="btnProcess_Click"/>
+    <asp:Button ID="btnProcess" runat="server" Text="Process Pending Discrepancies" CssClass="button" OnClick="BtnProcess_Click"/>
     &nbsp&nbsp
-    <asp:Button ID="btnClear" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="btnClear_Click"/>
+    <asp:Button ID="btnClear" runat="server" Text="Clear Selections" CssClass="rejectBtn" OnClick="BtnClear_Click"/>
     <%} %>
     </asp:Content>
 

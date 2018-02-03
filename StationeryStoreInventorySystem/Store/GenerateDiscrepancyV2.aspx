@@ -40,9 +40,9 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <asp:Button ID="btnFinalise" runat="server" Text="Finalise Discrepancy List"  CssClass="button" OnClick="btnFinalise_Click"/>
+        <asp:Button ID="btnFinalise" runat="server" Text="Finalise Discrepancy List"  CssClass="button" OnClick="BtnFinalise_Click"/>
         &nbsp;&nbsp;&nbsp;
-        <asp:Button ID="btnClearList" runat="server" Text="Clear List" CssClass="rejectBtn" OnClick="btnClearList_Click"/>
+        <asp:Button ID="btnClearList" runat="server" Text="Clear List" CssClass="rejectBtn" OnClick="BtnClearList_Click"/>
         <% } %>
 
         <%if (lblErrorMissedItems.Text != "")
@@ -62,8 +62,8 @@
         <br />
         <h3>Search by Item Code or Name</h3>
         <asp:TextBox ID="txtSearch" runat="server" Width="212px" ValidationGroup="Search"></asp:TextBox>&nbsp;
-        <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" ValidationGroup="Search" CssClass="button"/>&nbsp;
-        <asp:Button ID="btnDisplayAll" runat="server" Text="Display All" OnClick="btnDisplayAll_Click" CssClass="button"/>
+        <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="BtnSearch_Click" ValidationGroup="Search" CssClass="button"/>&nbsp;
+        <asp:Button ID="btnDisplayAll" runat="server" Text="Display All" OnClick="BtnDisplayAll_Click" CssClass="button"/>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="txtSearch" ValidationGroup="Search"></asp:RequiredFieldValidator>
 
 
@@ -129,12 +129,12 @@
             <% if (gvItemList.Rows.Count > 0)
             {%>
         <br />
-        <asp:Button ID="btnGenerateDiscrepancy" runat="server" Text="Generate Discrepancy List" OnClick="btnGenerateDiscrepancy_Click" CssClass="button" />
+        <asp:Button ID="btnGenerateDiscrepancy" runat="server" Text="Generate Discrepancy List" OnClick="BtnGenerateDiscrepancy_Click" CssClass="button" />
             <%-- Check and uncheck all buttons only for testing --%>
            <%-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <asp:Button ID="btnCheckAll" runat="server" Text="Check All" OnClick="btnCheckAll_Click" CssClass="button"/>
+         <asp:Button ID="btnCheckAll" runat="server" Text="Check All" OnClick="BtnCheckAll_Click" CssClass="button"/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <asp:Button ID="btnUncheckAll" runat="server" Text="Uncheck All" CssClass="button" OnClick="btnUncheckAll_Click"/>
+         <asp:Button ID="btnUncheckAll" runat="server" Text="Uncheck All" CssClass="button" OnClick="BtnUncheckAll_Click"/>
             --%>
         <%} %>
 

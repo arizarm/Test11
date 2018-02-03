@@ -29,7 +29,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
         }
     }
 
-    protected void btnProcess_Click(object sender, EventArgs e)
+    protected void BtnProcess_Click(object sender, EventArgs e)
     {
         try
         {
@@ -83,7 +83,7 @@ public partial class StockAdjustmentSummary : System.Web.UI.Page
         }
     }
 
-    protected void gvActionSummary_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvActionSummary_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

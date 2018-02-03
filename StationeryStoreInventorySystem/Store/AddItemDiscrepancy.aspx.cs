@@ -43,7 +43,7 @@ public partial class AddItemDiscrepancy : System.Web.UI.Page
         lblErrorMsg.Text = "";      //Resetting error text field
     }
 
-    protected void btnAddItem_Click(object sender, EventArgs e)
+    protected void BtnAddItem_Click(object sender, EventArgs e)
     {
         Dictionary<Item, int> discrepancies = null;
         Dictionary<Item, String> discrepancyDisplay = null;

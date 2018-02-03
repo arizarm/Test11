@@ -59,7 +59,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         lblRequired.Text = "";
     }
 
-    protected void btnSubmit_Click(object sender, EventArgs e)
+    protected void BtnSubmit_Click(object sender, EventArgs e)
     {
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;

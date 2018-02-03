@@ -183,9 +183,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                 }
             }
 
-            ThreadStart emailThreadStart = new ThreadStart(DiscrepancyMailNotification);
-            Thread emailThread = new Thread(emailThreadStart);
-            emailThread.Start();
+
 
             Session["discrepancyList"] = null;
             Session["discrepancyDisplay"] = null;
@@ -194,6 +192,11 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
             Session["monthly"] = null;
             Session["ItemToUpdate"] = null;
+
+
+            ThreadStart emailThreadStart = new ThreadStart(DiscrepancyMailNotification);
+            Thread emailThread = new Thread(emailThreadStart);
+            emailThread.Start();
 
             Utility.AlertMessageThenRedirect("Discrepancies successfully reported", "GenerateDiscrepancyV2.aspx");
         }
@@ -245,7 +248,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
         }
         catch(Exception ex)
         {
-            Utility.DisplayAlertMessage("Discrepancy reporting: Discrepancies successfully reported but not all notification mails sent successfully");
+
         }
     }
 }

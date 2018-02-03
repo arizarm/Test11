@@ -83,4 +83,7 @@ public class Message
     public const String PriceListExistsForGivenTenderYear
     = "PriceList already exists for Item, Rank and Tender Year selected";
 
+    public const String GeneralError
+    = "Error encountered. Please try again. If issue persists, contact your local IT helpdesk for support.";
+
 }

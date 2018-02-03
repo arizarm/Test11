@@ -11,13 +11,15 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        List<TrendReport> ListOfBROs = (List<TrendReport>)Session["reportsToDisplay"];
-        int typeOfReport = (int)Session["typeOfReport"];
-        //ReportDocument myReport = new ReportDocument();
-        //string reportPath;
-        switch (typeOfReport)
+        try
         {
-            case 0:
+            List<TrendReport> ListOfBROs = (List<TrendReport>)Session["reportsToDisplay"];
+            int typeOfReport = (int)Session["typeOfReport"];
+            //ReportDocument myReport = new ReportDocument();
+            //string reportPath;
+            switch (typeOfReport)
+            {
+                case 0:
                     CrystalReportViewer crv1 = new CrystalReportViewer();
                     //reportPath = Server.MapPath("crystalreport1.rpt");
                     //myReport.Load(reportPath);
@@ -30,11 +32,11 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 
                     RequisitionTrendByDept cr1 = new RequisitionTrendByDept();
                     crv1.ReportSource = cr1;
-                    cr1.SetDataSource(ListOfBROs);              
+                    cr1.SetDataSource(ListOfBROs);
 
-                break;
+                    break;
 
-            case 1:
+                case 1:
                     CrystalReportViewer crv2 = new CrystalReportViewer();
 
                     ContentPlaceHolder content1 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
@@ -48,9 +50,9 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 
                     crv2.ReportSource = cr2;
                     cr2.SetDataSource(ListOfBROs);
-                break;
+                    break;
 
-            case 2:
+                case 2:
                     CrystalReportViewer crv3 = new CrystalReportViewer();
 
                     ContentPlaceHolder content2 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
@@ -64,9 +66,9 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 
                     crv3.ReportSource = cr3;
                     cr3.SetDataSource(ListOfBROs);
-                break;
+                    break;
 
-            case 3:
+                case 3:
                     CrystalReportViewer crv4 = new CrystalReportViewer();
 
                     ContentPlaceHolder content3 = (ContentPlaceHolder)this.Master.FindControl("ContentPlaceHolder1");
@@ -80,7 +82,16 @@ public partial class TrendReportDisplay : System.Web.UI.Page
 
                     crv4.ReportSource = cr4;
                     cr4.SetDataSource(ListOfBROs);
-                break;
+                    break;
+            }
+        }
+        catch (NullReferenceException)
+        {
+            Utility.DisplayAlertMessage(Message.PageInvalidEntry);
+        }
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
         }
     }
 

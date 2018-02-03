@@ -16,18 +16,25 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void BtnSave_Click(object sender, EventArgs e)
     {
-        Supplier S = new Supplier();
-        S.SupplierCode = TxtSupCode.Text;
-        S.SupplierName = TxtSupName.Text;
-        S.SupplierContactName = TxtContactName.Text;
-        S.SupplierPhone = TxtPhoneNo.Text;
-        S.SupplierFax = TxtFaxNo.Text;
-        S.SupplierAddress = TxtAddress.Text;
-        S.SupplierEmail = TxtEmail.Text;
-        S.ActiveStatus = TxtActive.Text;
+        try
+        {
+            Supplier S = new Supplier();
+            S.SupplierCode = TxtSupCode.Text;
+            S.SupplierName = TxtSupName.Text;
+            S.SupplierContactName = TxtContactName.Text;
+            S.SupplierPhone = TxtPhoneNo.Text;
+            S.SupplierFax = TxtFaxNo.Text;
+            S.SupplierAddress = TxtAddress.Text;
+            S.SupplierEmail = TxtEmail.Text;
+            S.ActiveStatus = TxtActive.Text;
 
-        SupplierListController slc = new SupplierListController();
-        slc.CreateSupplier(S);
-        Utility.AlertMessageThenRedirect(Message.SupplierSuccessfulAdd, "/Store/SupplierList.aspx");
+            SupplierListController slc = new SupplierListController();
+            slc.CreateSupplier(S);
+            Utility.AlertMessageThenRedirect(Message.SupplierSuccessfulAdd, "/Store/SupplierList.aspx");
+        }
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
+        }
     }
 }

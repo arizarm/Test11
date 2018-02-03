@@ -53,9 +53,9 @@ public class EFBroker_Employee
         {
             if (context.Employees.Where(x => x.Email == email).Count() == 1)
             {    //Check if email exists
-                if (context.Employees.Where(x => x.Email == email).Select(y => y.Password).First() == password)
+                string passHash = context.Employees.Where(x => x.Email == email).Select(y => y.Password).First();
+                if (DevOne.Security.Cryptography.BCrypt.BCryptHelper.CheckPassword(password, passHash))
                 {      //Check if the password is correct
-
                     return true;
                 }
                 else

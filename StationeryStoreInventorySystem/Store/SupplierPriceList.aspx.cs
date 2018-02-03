@@ -63,14 +63,15 @@ public partial class SupplierPriceList : System.Web.UI.Page
         }
         catch (InvalidOperationException)
         {
-            Utility.DisplayAlertMessage(Message.PageInvalidEntry);
-            Response.Redirect("SupplierList.aspx");
+            Utility.AlertMessageThenRedirect(Message.PageInvalidEntry, "SupplierList.aspx");
         }
 
     }
 
     protected void BtnUpdate_Click(object sender, EventArgs e)
     {
+        try
+        {
             Supplier s = new Supplier();
             s.SupplierCode = TxtSupCode.Text;
             s.SupplierName = TxtSupName.Text;
@@ -82,24 +83,36 @@ public partial class SupplierPriceList : System.Web.UI.Page
             s.ActiveStatus = TxtActive.Text;
             slc.UpdateSupplier(s);
             Utility.DisplayAlertMessage(Message.UpdateSuccessful);
+        }
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
+        }
     }
 
     protected void BtnDelete_Click(object sender, EventArgs e)
     {
-        Supplier s = slc.GetSupplierGivenSupplierCode(code);
+        try
+        {
+            Supplier s = slc.GetSupplierGivenSupplierCode(code);
 
-        if (s.ActiveStatus == "Y")
-        {
-            slc.DeleteSupplier(code);
-            Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
+            if (s.ActiveStatus == "Y")
+            {
+                slc.DeleteSupplier(code);
+                Utility.AlertMessageThenRedirect(Message.InactiveSuccessful, "/Store/SupplierList.aspx");
+            }
+            else
+            {
+                slc.MakeSupplierActive(code);
+                BtnDelete.CssClass = "rejectBtn";
+                BtnDelete.Text = "Set To Inactive";
+                Utility.DisplayAlertMessage(Message.ActiveSuccessful);
+                TxtActive.Text = "Y";
+            }
         }
-        else
+        catch (Exception)
         {
-            slc.MakeSupplierActive(code);
-            BtnDelete.CssClass = "rejectBtn";
-            BtnDelete.Text = "Set To Inactive";
-            Utility.DisplayAlertMessage(Message.ActiveSuccessful);
-            TxtActive.Text = "Y";
+            Utility.DisplayAlertMessage(Message.GeneralError);
         }
     }
 
@@ -148,7 +161,10 @@ public partial class SupplierPriceList : System.Web.UI.Page
         {
             Utility.DisplayAlertMessage(Message.ValidationError);
         }
-
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
+        }
     }
 
     protected void DDLCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -219,7 +235,8 @@ public partial class SupplierPriceList : System.Web.UI.Page
         {
             Item itemDesc = mplc.GetItemForGivenItemCode(lpl[i].ItemCode);
             string itemPrice = "$" + lpl[i].Price + "/" + mplc.GetUnitOfMeasureForGivenItemCode(lpl[i].ItemCode) + "  ";
-            TenderListObj A = new TenderListObj(itemDesc, itemPrice);
+            decimal? itemPriceOnly = lpl[i].Price;
+            TenderListObj A = new TenderListObj(itemDesc, itemPrice, itemPriceOnly);
             tenderSupplyList.Add(A);
         }
         DDLTenderPrice.DataSource = tenderSupplyList;
@@ -228,20 +245,27 @@ public partial class SupplierPriceList : System.Web.UI.Page
 
     protected void BtnItemDelete_Click(object sender, EventArgs e)
     {
-        //get description of item for this supplier
-        GridViewRow Row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
-        string itemP = DDLTenderPrice.DataKeys[Row.RowIndex].Value.ToString();
+        try
+        {
+            //get description of item for this supplier
+            GridViewRow Row = ((System.Web.UI.WebControls.Button)sender).Parent.Parent as GridViewRow;
+            string itemP = DDLTenderPrice.DataKeys[Row.RowIndex].Value.ToString();
 
-        //get the pricelist composite primary key
-        PriceList pl = mplc.GetPriceListObjForGivenItemCodeNSupplier(itemP, code);
-        string itemCode = pl.ItemCode;
-        string tenderY = pl.TenderYear;
-        //delete by giving the cpk
-        mplc.RemovePriceListObject(code, itemCode, tenderY);
-        //repopulate tender list
-        PopulateTenderSupplyList();
+            //get the pricelist composite primary key
+            PriceList pl = mplc.GetPriceListObjForGivenItemCodeNSupplier(itemP, code);
+            string itemCode = pl.ItemCode;
+            string tenderY = pl.TenderYear;
+            //delete by giving the cpk
+            mplc.RemovePriceListObject(code, itemCode, tenderY);
+            //repopulate tender list
+            PopulateTenderSupplyList();
 
-        Utility.DisplayAlertMessage(Message.DeleteSuccessful);
+            Utility.DisplayAlertMessage(Message.DeleteSuccessful);
+        }
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
+        }
     }
 
     protected void DDLTenderPrice_RowEditing(object sender, GridViewEditEventArgs e)

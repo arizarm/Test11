@@ -25,7 +25,7 @@
             <div class="header row">
                 <asp:Image ID="Image2" runat="server" ImageUrl="~/images/logo.jpeg" CssClass="logo" />
                 <asp:Label ID="LoginUserName" runat="server" Text="Label" class="loginUser"></asp:Label>
-                <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" />
+                <asp:Button ID="btnSignOut" Style="width: 28%" runat="server" Text="Sign Out" class="login-btn" OnClick="btnSignOut_Click" CausesValidation="false" />
             </div>
 
             <div class="left-col">

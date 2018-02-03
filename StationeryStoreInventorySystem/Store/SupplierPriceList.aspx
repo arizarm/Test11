@@ -97,7 +97,6 @@
                 </asp:TableCell>
                 <asp:TableCell>
                     <asp:TextBox ID="TxtActive" runat="server" TextMode="SingleLine" Width="130%" Enabled="false"></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="RegActive" runat="server" ErrorMessage="Enter Y or N" ValidationExpression="[YN]" ControlToValidate="TxtActive"></asp:RegularExpressionValidator>
                 </asp:TableCell>
             </asp:TableRow>
 
@@ -145,8 +144,8 @@
                     <asp:TableCell>Price: </asp:TableCell>
                     <asp:TableCell>
                         <asp:TextBox ID="TxtAddNewItem" runat="server" ValidationGroup="AddNewItem"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="ReqItem" runat="server" ErrorMessage="Enter a value" ControlToValidate="TxtEmail" ForeColor="Red" ValidationGroup="AddNewItem" />
-                        <asp:RegularExpressionValidator ID="RegNewItemPriceRange" runat="server" ErrorMessage="Correct format: 12.00" ControlToValidate="TxtEmail" ForeColor="Red" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ValidationGroup="AddNewItem" />
+                        <asp:RequiredFieldValidator ID="ReqItem" runat="server" ErrorMessage="Enter a value" ControlToValidate="TxtAddNewItem" ForeColor="Red" ValidationGroup="AddNewItem" />
+                        <asp:RegularExpressionValidator ID="RegNewItemPriceRange" runat="server" ErrorMessage="Correct format: 12.00" ControlToValidate="TxtAddNewItem" ForeColor="Red" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ValidationGroup="AddNewItem" />
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow />
@@ -186,7 +185,7 @@
                         <asp:Label runat="server" Text='<%# Eval("ItemPrice") %>'></asp:Label>
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox ID="TxtNewPrice" runat="server"></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TxtNewPrice" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ForeColor="Red" />
+                        <asp:TextBox ID="TxtNewPrice" runat="server" Text='<%# Eval("ItemPriceOnly") %>'></asp:TextBox><asp:RegularExpressionValidator ID="NewPriceRangeValidator" runat="server" ErrorMessage="Input correct format eg:12.00" ControlToValidate="TxtNewPrice" ValidationExpression="(\d{1,4})([.]{0,1}\d{0,2})" ForeColor="Red" />
                     </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
@@ -199,7 +198,7 @@
                 </asp:TemplateField>
                 <asp:TemplateField>
                     <ItemTemplate>
-                        <asp:Button ID="BtnItemDelete" runat="server" Text="Delete" OnClick="BtnItemDelete_Click" CssClass="alert-warning"/>
+                        <asp:Button ID="BtnItemDelete" runat="server" Text="Delete" OnClientClick="return confirm('Confirm Delete?');" OnClick="BtnItemDelete_Click" CssClass="alert-warning"/>
                     </ItemTemplate>
                     <EditItemTemplate>
                         <asp:Button ID="BtnCancelItemEdit" runat="server" Text="Cancel" CommandName="Cancel" CssClass="alert-warning"/>

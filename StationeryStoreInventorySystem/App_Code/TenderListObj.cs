@@ -9,6 +9,15 @@ using System.Web;
 public class TenderListObj
 {
     string itemP, itemDesc, itemD;
+    decimal? itemPriceOnly;
+
+    public TenderListObj(Item iD, string iP, decimal? itemPrice)
+    {
+        this.itemD = iD.ItemCode;
+        this.itemP = iP;
+        this.itemDesc = iD.Description;
+        this.itemPriceOnly = itemPrice;
+    }
     public TenderListObj(Item iD, string iP)
     {
         this.itemD = iD.ItemCode;
@@ -38,5 +47,10 @@ public class TenderListObj
     {
         get { return itemD; }
         set { itemD = value; }
+    }
+    public decimal? ItemPriceOnly
+    {
+        get { return itemPriceOnly; }
+        set { itemPriceOnly = value; }
     }
 }

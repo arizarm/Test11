@@ -25,12 +25,12 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Quantity in Stock" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
+                        <asp:Label ID="lblStockDisc" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Unit of Measure">
                     <ItemTemplate>
-                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="lblUomDisc" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Actual Quantity / Adjustment Quantity" ItemStyle-HorizontalAlign="Center">
@@ -64,7 +64,7 @@
         <asp:TextBox ID="txtSearch" runat="server" Width="212px" ValidationGroup="Search"></asp:TextBox>&nbsp;
         <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="BtnSearch_Click" ValidationGroup="Search" CssClass="button"/>&nbsp;
         <asp:Button ID="btnDisplayAll" runat="server" Text="Display All" OnClick="BtnDisplayAll_Click" CssClass="button"/>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="" ControlToValidate="txtSearch" ValidationGroup="Search"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="reqSearch" runat="server" ErrorMessage="" ControlToValidate="txtSearch" ValidationGroup="Search"></asp:RequiredFieldValidator>
 
 
         <% if (gvItemList.Rows.Count > 0)
@@ -86,17 +86,14 @@
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Unit of Measure">
                     <ItemTemplate>
-                        <asp:Label ID="lblUom" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
+                        <asp:Label ID="lblUomItem" runat="server" Text='<%# Bind("Key.UnitOfMeasure") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 
                     <asp:TemplateField HeaderText="Qty in stock (excluding pending discrepancies)" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center">
                     <ItemTemplate>
-                        <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
+                        <asp:Label ID="lblStockItem" runat="server" Text='<%# Bind("Key.BalanceQty") %>'></asp:Label>
                     </ItemTemplate>
-
-<HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-
 <ItemStyle HorizontalAlign="Center" Width="160px"></ItemStyle>
                 </asp:TemplateField>
                

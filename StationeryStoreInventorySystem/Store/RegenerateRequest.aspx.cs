@@ -13,7 +13,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["RegrenerateItems"] == null)
+        if (Session["RegenerateItems"] == null)
         {
             Response.Redirect(LoginController.DisbursementListURI);
         }
@@ -22,7 +22,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
             DateTime date = (DateTime)Session["RegenerateDate"];
             string depName = (string)Session["RegenerateDep"]; ;
             string requestedBy = (string)Session["RequestedByName"];
-            List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+            List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegenerateItems"];
 
             if (!IsPostBack)
             {
@@ -33,7 +33,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
             lblReqDate.Text = date.ToLongDateString();
             lblDepartment.Text = depName;
             lblReqBy.Text = requestedBy;
-        }     
+        }
     }
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
@@ -64,7 +64,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
         int empID = EFBroker_DeptEmployee.GetDeptRepEmpIDByDeptCode(depName);
         string depCode = EFBroker_DeptEmployee.GetDepartByEmpID(empID).DeptCode;
 
-        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegrenerateItems"];
+        List<RequestedItem> shortfallItem = (List<RequestedItem>)Session["RegenerateItems"];
 
         List<RequestedItem> regenerateItem = new List<RequestedItem>();
 
@@ -77,7 +77,7 @@ public partial class RegenerateRequest : System.Web.UI.Page
             }
         }
 
-        RequisitionControl.addNewRequisitionItem(regenerateItem, date, status,empID, depCode);
+        RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, empID, depCode);
 
         redirectCheck();
     }
@@ -86,11 +86,18 @@ public partial class RegenerateRequest : System.Web.UI.Page
     {
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
-            Session["ItemToUpdate"] = true;          
+            Session["ItemToUpdate"] = true;
             Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
         }
         else
         {
+            Session["SelectedDisb"] = null;
+            Session["disbItemsList"] = null;
+            Session["discrepancyList"] = null;
+            Session["RegenerateDate"] = null;
+            Session["RegenerateDep"] = null;
+            Session["RequestedByName"] = null;
+            Session["RegenerateItems"] = null;
             Response.Redirect(LoginController.DisbursementListURI);
         }
     }

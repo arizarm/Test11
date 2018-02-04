@@ -60,7 +60,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
                     if (Int32.TryParse(txtActual, out actualQuantity))
                     {
                         //Calculate the adjustment needed, then add to gvDiscrepancyList
-                        string quantity = (row.FindControl("lblStock") as Label).Text;
+                        string quantity = (row.FindControl("lblStockItem") as Label).Text;
                         int adj = actualQuantity - Int32.Parse(quantity);
                         Item item = EFBroker_Item.GetItembyItemCode(itemCode);
                         string actual = actualQuantity.ToString();

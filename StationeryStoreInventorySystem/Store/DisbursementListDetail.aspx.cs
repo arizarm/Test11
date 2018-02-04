@@ -122,22 +122,22 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                 //update Disbursement table (actual qty + status)
                 disbCon.UpdateDisbursement(disbId, actualQtyList, disbRemark);
 
-                //add discrepancy item to session 
-                Session["discrepancyList"] = discToUpdate;
-
                 //redirect to Regenerate Request page if any shortfall
                 if (shortfallItem.Count != 0)
                 {
+                    Session["discrepancyList"] = discToUpdate;
                     Session["RegenerateDate"] = disbCon.getRegenrateDate(disbId);
                     Session["RegenerateDep"] = lblDepartment.Text;
                     Session["RequestedByName"] = EFBroker_DeptEmployee.GetDeptRepByDeptCode(lblDepartment.Text);
-                    Session["RegrenerateItems"] = shortfallItem;
+                    Session["RegenerateItems"] = shortfallItem;
                    
                     Response.Redirect(LoginController.RegenerateRequestURI);
                 }
                 //redirect back to Disbursement List page if no shortfall
                 else
                 {
+                    Session["SelectedDisb"] = null;
+                    Session["disbItemsList"] = null;
                     Response.Redirect(LoginController.DisbursementListURI);
                 }
             }

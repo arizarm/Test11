@@ -42,8 +42,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         if (Session["ReorderItem"] != null)
         {
             ritems = (List<ReorderItem>)Session["ReorderItem"];
-            gvPurchaseItems.DataSource = ritems;
-            gvPurchaseItems.DataBind();
+            GvreorderItems.DataSource = ritems;
+            GvreorderItems.DataBind();
 
         }
         else
@@ -51,8 +51,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             //To add PurchaseItems to session if session is empty
             ritems = pCtrlr.GetReorderItemList();
             Session["ReorderItem"] = ritems;
-            gvPurchaseItems.DataSource = ritems;
-            gvPurchaseItems.DataBind();
+            GvreorderItems.DataSource = ritems;
+            GvreorderItems.DataBind();
 
         }
 
@@ -60,7 +60,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
 
 
-    protected void reoderItems_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvreoderItems_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -126,9 +126,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             if (ritems.Exists(x => x.ItemCode == itemCode))
             {
                 itemPriceList = pCtrlr.GetItemPriceList().Where(x => x.ItemCode == itemCode).ToList();
-                for (int i = 0; i < gvPurchaseItems.Rows.Count; i++)
+                for (int i = 0; i < GvreorderItems.Rows.Count; i++)
                 {
-                    GridViewRow gvRow = gvPurchaseItems.Rows[i];
+                    GridViewRow gvRow = GvreorderItems.Rows[i];
 
                     Label codeLbl = (Label)gvRow.FindControl("lblItemCode");
                     string codeNo = codeLbl.Text;
@@ -152,9 +152,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
                 {
 
                     ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
-                    gvPurchaseItems.DataSource = ritems;
+                    GvreorderItems.DataSource = ritems;
                     Session["ReorderItem"] = ritems;
-                    gvPurchaseItems.DataBind();
+                    GvreorderItems.DataBind();
                     ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
                     "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
                 }
@@ -168,9 +168,9 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             else
             {
                 ritems.Add(pCtrlr.AddPurchaseItem(itemCode));
-                gvPurchaseItems.DataSource = ritems;
+                GvreorderItems.DataSource = ritems;
                 Session["ReorderItem"] = ritems;
-                gvPurchaseItems.DataBind();
+                GvreorderItems.DataBind();
                 ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
                 "<script language='javascript'>alert('" + "Item Added!" + "');</script>");
             }
@@ -186,8 +186,8 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         //Update reorderItemList ie. gvPurchaseItems
         ritems = pCtrlr.GetReorderItemList();
         Session["ReorderItem"] = ritems;
-        gvPurchaseItems.DataSource = ritems;
-        gvPurchaseItems.DataBind();
+        GvreorderItems.DataSource = ritems;
+        GvreorderItems.DataBind();
 
         ddlsupervisorNames.SelectedIndex = 0;
         ddlAddNewItem.SelectedIndex = 0;
@@ -204,11 +204,11 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
             Dictionary<PurchaseOrder, List<Item_PurchaseOrder>> purchaseItemList = new Dictionary<PurchaseOrder, List<Item_PurchaseOrder>>(pComparer);
 
-            for (int i = 0; i < gvPurchaseItems.Rows.Count; i++)
+            for (int i = 0; i < GvreorderItems.Rows.Count; i++)
             {
                 PurchaseOrder pOrder = new PurchaseOrder();
 
-                GridViewRow gvRow = gvPurchaseItems.Rows[i];
+                GridViewRow gvRow = GvreorderItems.Rows[i];
                 if(((CheckBox)gvRow.FindControl("CbxItem")).Checked)
                 {
                     DropDownList splrControl = (DropDownList)gvRow.FindControl("ddlSupplierList");
@@ -262,11 +262,13 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
             else
             {
                 pCtrlr.AddPurchaseOrder(purchaseItemList);
+                Session["ReorderItem"] = null;
                 ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
              "<script language='javascript'>alert('" + "Purchase Done, Awaiting Approval!" + "');</script>");
-
+                Response.Redirect(LoginController.PurchaseOrderListURI);
             }
         }
+
                 
     }
 
@@ -338,23 +340,23 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
     {
-        if (((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
+        if (((CheckBox)GvreorderItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
         {
-            foreach (GridViewRow row in gvPurchaseItems.Rows)
+            foreach (GridViewRow row in GvreorderItems.Rows)
             {
                 ((CheckBox)row.FindControl("CbxItem")).Checked = true;
             }
         }
 
-        if (!((CheckBox)gvPurchaseItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
+        if (!((CheckBox)GvreorderItems.HeaderRow.FindControl("CbxCheckAll")).Checked)
         {
-            foreach (GridViewRow row in gvPurchaseItems.Rows)
+            foreach (GridViewRow row in GvreorderItems.Rows)
             {
                 ((CheckBox)row.FindControl("CbxItem")).Checked = false;
             }
         }
     }
-    protected void orderQtyTxtBx_TextChanged(object sender, EventArgs e)
+    protected void OrderQtyTxtBx_TextChanged(object sender, EventArgs e)
     {
         //Page.Validate();
         //if (Page.IsValid)

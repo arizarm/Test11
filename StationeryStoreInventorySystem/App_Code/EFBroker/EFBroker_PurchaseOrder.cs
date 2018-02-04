@@ -220,16 +220,19 @@ public class EFBroker_PurchaseOrder
             List<Item_PurchaseOrder> itemList = entities.Item_PurchaseOrder.Where(x => x.PurchaseOrderID == order.PurchaseOrderID).ToList();
             foreach (Item_PurchaseOrder item in itemList)
             {
-                StockCard itemStockCard = (from stck in entities.StockCards.OrderBy(x => x.Balance)
-                                           where stck.ItemCode == item.ItemCode
-                                           select stck).FirstOrDefault();
+                //StockCard itemStockCard = (from stck in entities.StockCards.OrderBy(x => x.Balance)
+                //                           where stck.ItemCode == item.ItemCode
+                //                           select stck).FirstOrDefault();
+                StockCard itemStockCard = new StockCard();
+                itemStockCard.ItemCode = item.ItemCode;
                 itemStockCard.Qty = item.OrderQty;
                 itemStockCard.TransactionType = "Purchase";
-                itemStockCard.TransactionDetailID = item.PurchaseOrderID;
-                itemStockCard.Balance = itemStockCard.Balance + itemStockCard.Qty;
+                itemStockCard.TransactionDetailID = item.PurchaseOrderID;               
                 Item itm = entities.Items.Where(x => x.ItemCode == item.ItemCode).FirstOrDefault();
+                itemStockCard.Balance = itm.BalanceQty + itemStockCard.Qty;
                 itm.BalanceQty = itemStockCard.Balance;
                 entities.StockCards.Add(itemStockCard);
+                
             }
 
             entities.SaveChanges();

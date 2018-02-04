@@ -13,7 +13,7 @@ public class DisbursementService : IDisbursementService
     public List<WCFDisbursement> getAllDisbursement()
     {
         List<WCFDisbursement> wcfDisbList = new List<WCFDisbursement>();
-        List<DisbursementListItems> disbList = disbCon.gvDisbursementPopulate();
+        List<DisbursementListItems> disbList = disbCon.GvDisbursementPopulate();
 
         foreach (DisbursementListItems d in disbList)
         {
@@ -25,7 +25,7 @@ public class DisbursementService : IDisbursementService
     public List<WCFDisbursementDetail> getDisbursementDetail(string id)
     {
         List<WCFDisbursementDetail> wcfDisbDetailList = new List<WCFDisbursementDetail>();
-        List<DisbursementDetailListItems> disbDetailList = disbCon.gvDisbursementDetailPopulate(Convert.ToInt32(id));
+        List<DisbursementDetailListItems> disbDetailList = disbCon.GvDisbursementDetailPopulate(Convert.ToInt32(id));
         foreach (DisbursementDetailListItems dI in disbDetailList)
         {
             wcfDisbDetailList.Add(WCFDisbursementDetail.Make(dI.ItemCode,dI.ItemCode,dI.Remarks,dI.ReqQty,dI.ActualQty,dI.ActualQty));
@@ -35,7 +35,7 @@ public class DisbursementService : IDisbursementService
 
     public string AccessCodeValidate(string disbId, string accessCode)
     {
-        return (disbCon.checkAccessCode(Convert.ToInt32(disbId), accessCode)).ToString();
+        return (disbCon.CheckAccessCode(Convert.ToInt32(disbId), accessCode)).ToString();
     }
 
     public void UpdateDisbursement(List<WCFUpdateDisbursement> qtyList)
@@ -55,7 +55,7 @@ public class DisbursementService : IDisbursementService
 
     public WCFRegenerateRequest GetRegenerateDate(string disbId)
     {
-        string reqDate = (disbCon.getRegenrateDate(Convert.ToInt32(disbId))).ToLongDateString();
+        string reqDate = (disbCon.GetRegenrateDate(Convert.ToInt32(disbId))).ToLongDateString();
         string depName = EFBroker_Disbursement.GetDisbursmentbyDisbID(Convert.ToInt32(disbId)).Department.DeptName;
         string reqBy = EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
         
@@ -77,7 +77,7 @@ public class DisbursementService : IDisbursementService
             requItemList.Add(rItem);
         }
 
-        DateTime date = (disbCon.getRegenrateDate(disbId));
+        DateTime date = (disbCon.GetRegenrateDate(disbId));
         string depName = EFBroker_Disbursement.GetDisbursmentbyDisbID(Convert.ToInt32(disbId)).Department.DeptName;
         string reqBy = EFBroker_DeptEmployee.GetDeptRepByDeptCode(depName);
         int empID = EFBroker_DeptEmployee.GetDeptRepEmpIDByDeptCode(depName);

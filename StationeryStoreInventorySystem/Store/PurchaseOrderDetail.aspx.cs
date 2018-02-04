@@ -52,8 +52,8 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                 lblorderStatus.ForeColor = System.Drawing.Color.Black;
             }
            List<PurchaseOrderItemDetails>itemList = pCtrlr.GetPurchaseOrderItemsDetails(orderID);
-            gvPurchaseDetail.DataSource = itemList;
-            gvPurchaseDetail.DataBind();
+            GvPurchaseDetail.DataSource = itemList;
+            GvPurchaseDetail.DataBind();
 
             decimal? totAmnt = 0;
             foreach(PurchaseOrderItemDetails item in itemList)
@@ -62,7 +62,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
 
             }
             lblTotalAmount.Text = String.Format("{0:C}", totAmnt);
-           foreach (GridViewRow row in gvPurchaseDetail.Rows)
+           foreach (GridViewRow row in GvPurchaseDetail.Rows)
             {
                 if (Session["emp"] != null)
                 {
@@ -79,22 +79,22 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                                 txtDeliveryOrderID.Visible = false;
                                 BtnCloseOrder.Visible = false;
                                 BtnReject.Visible = false;
-                                gvPurchaseDetail.Columns[5].Visible = false;
+                                GvPurchaseDetail.Columns[5].Visible = false;
 
                             }
                             else if (pOrder.Status == "Approved")
                             {
                                 lbldelivery.Visible = true;
                                 txtDeliveryOrderID.Visible = true;
-                                BtnCloseOrder.Visible = true;                           
-                                gvPurchaseDetail.Columns[5].Visible = true;
+                                BtnCloseOrder.Visible = true;
+                                GvPurchaseDetail.Columns[5].Visible = true;
                             }
                             else if (pOrder.Status == "Pending")
                             {
                                 lbldelivery.Visible = false;
                                 txtDeliveryOrderID.Visible = false;
                                 BtnCloseOrder.Visible = false;
-                                gvPurchaseDetail.Columns[5].Visible = true;
+                                GvPurchaseDetail.Columns[5].Visible = true;
                             }
 
                         }
@@ -107,7 +107,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                                 txtDeliveryOrderID.Visible = false;
                                 BtnCloseOrder.Visible = false;
                                 BtnReject.Visible = false;
-                                gvPurchaseDetail.Columns[5].Visible = false;
+                                GvPurchaseDetail.Columns[5].Visible = false;
 
                             }                       
 
@@ -135,7 +135,7 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
                             BtnApprove.Visible = true;
                             BtnReject.Visible = true;                       
                         }
-                        gvPurchaseDetail.Columns[5].Visible = false;
+                        GvPurchaseDetail.Columns[5].Visible = false;
                         lbldelivery.Visible = false;
                         txtDeliveryOrderID.Visible = false;
                         BtnCloseOrder.Visible = false;
@@ -189,49 +189,49 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         purchaseOrder.Status = "Closed";
         purchaseOrder.PurchaseOrderID = orderid;
         pCtrlr.ClosePurchaseOrder(purchaseOrder);
-        Session["PurchaseItems"] = null;
-        ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
-    "<script language='javascript'>alert('" + "Order Closed!" + "');</script>");
+        Session["ReorderItem"] = null;
+     //   ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
+     //"<script language='javascript'>alert('" + "Order Closed!" + "');</script>");
         Response.Redirect(LoginController.PurchaseOrderListURI);
     }
 
 
 
 
-    protected void orderQtyTxtBx_TextChanged(object sender, EventArgs e)
+    protected void OrderQtyTxtBx_TextChanged(object sender, EventArgs e)
     {
         TextBox txt = sender as TextBox;
         GridViewRow row = txt.NamingContainer as GridViewRow;
         int rowIndex = row.RowIndex;
     }
-    protected void gvPurchaseDetail_RowEditing(object sender, GridViewEditEventArgs e)
+    protected void GvPurchaseDetail_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        gvPurchaseDetail.EditIndex = e.NewEditIndex;
-        gvPurchaseDetail.EditRowStyle.BackColor = System.Drawing.Color.Yellow;
+        GvPurchaseDetail.EditIndex = e.NewEditIndex;
+        GvPurchaseDetail.EditRowStyle.BackColor = System.Drawing.Color.Yellow;
         BindGrid();
     }
-    protected void gvPurchaseDetail_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    protected void GvPurchaseDetail_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
 
         // Retrieve the row being edited.
         decimal price, amount;
         int qty;
-        int index = gvPurchaseDetail.EditIndex;
-        GridViewRow row = gvPurchaseDetail.Rows[index];
+        int index = GvPurchaseDetail.EditIndex;
+        GridViewRow row = GvPurchaseDetail.Rows[index];
         TextBox qtyTxt = row.FindControl("txtorderQty") as TextBox;
         
         bool ok = int.TryParse(qtyTxt.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out qty);
 
-        Label priceLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblPrice");
+        Label priceLbl = (Label)GvPurchaseDetail.Rows[e.RowIndex].FindControl("lblPrice");
         ok = decimal.TryParse(priceLbl.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out price);
 
-        Label amountLbl = (Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblAmount");
+        Label amountLbl = (Label)GvPurchaseDetail.Rows[e.RowIndex].FindControl("lblAmount");
         ok = decimal.TryParse(amountLbl.Text, NumberStyles.Currency,
         CultureInfo.CurrentCulture.NumberFormat, out amount);
 
-        Label itemLbl =(Label)gvPurchaseDetail.Rows[e.RowIndex].FindControl("lblItemCode");
+        Label itemLbl =(Label)GvPurchaseDetail.Rows[e.RowIndex].FindControl("lblItemCode");
         amount = qty * price;
         amountLbl.Text = String.Format("{0:C}", amount);
 
@@ -241,15 +241,15 @@ public partial class PurchaseOrderDetail: System.Web.UI.Page
         item.PurchaseOrderID = orderid;
         item.ItemCode = itemLbl.Text;
         pCtrlr.UpdatePurchaseItem(item);
-        gvPurchaseDetail.EditIndex = -1;
+        GvPurchaseDetail.EditIndex = -1;
         BindGrid();
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",
    "<script language='javascript'>alert('" + "Item Updated!" + "');</script>");
     }
 
-    protected void gvPurchaseDetail_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    protected void GvPurchaseDetail_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        gvPurchaseDetail.EditIndex = -1;
+        GvPurchaseDetail.EditIndex = -1;
         //Bind data to the GridView control.
         BindGrid();
     }

@@ -69,6 +69,22 @@ public static class Utility
         HttpContext.Current.Session.Remove("empRole");
         HttpContext.Current.Session.Remove("empID");
         HttpContext.Current.Session.Remove("itemlist");
+        HttpContext.Current.Session.Remove("itemError");
+        HttpContext.Current.Session.Remove("discrepancyDisplay");
+        HttpContext.Current.Session.Remove("discrepancyList");
+        HttpContext.Current.Session.Remove("monthly");
+        HttpContext.Current.Session.Remove("ItemToUpdate");
+        HttpContext.Current.Session.Remove("discrepancySummary");
+        HttpContext.Current.Session.Remove("RetrievalShortfallItemList");
+        HttpContext.Current.Session.Remove("RetrievalID");
+        HttpContext.Current.Session.Remove("RequisitionNo");
+        HttpContext.Current.Session.Remove("SelectedDisb");
+        HttpContext.Current.Session.Remove("disbItemsList");
+        HttpContext.Current.Session.Remove("RegenerateDate");
+        HttpContext.Current.Session.Remove("RegenerateDep");
+        HttpContext.Current.Session.Remove("RequestedByName");
+        HttpContext.Current.Session.Remove("RegenerateItems");
+
         HttpContext.Current.Response.Redirect(LoginController.LoginURI);
     }
 

@@ -16,6 +16,12 @@
         .gvHeaderColumn {
             text-align: center;
         }
+        .emptyRowStyle{
+
+            color:red;
+            font-size:large;
+
+        }
     </style>
 
     <link type="text/css" href="css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />
@@ -48,8 +54,8 @@
     <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter a date" ControlToValidate="txtDate" ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red" />
     <asp:CustomValidator runat="server" ControlToValidate="txtDate" ErrorMessage="Date cannot be lesser than today." ValidationGroup="PurchaseOrderValidationGrp" Display="Dynamic" ForeColor="Red" OnServerValidate="DateValidator"></asp:CustomValidator>
         <br />
-        <asp:GridView ID="gvPurchaseItems" runat="server" AutoGenerateColumns="False" CssClass="mGrid" DataKeyNames="ItemCode" RowStyle-Height="50px" 
-            OnRowDataBound="reoderItems_RowDataBound" EmptyDataText="Nothing to order. All items has enough stock!">
+        <asp:GridView ID="GvreorderItems" runat="server" AutoGenerateColumns="False" CssClass="mGrid" DataKeyNames="ItemCode" RowStyle-Height="50px" 
+            OnRowDataBound="GvreoderItems_RowDataBound" EmptyDataText="Nothing to order. All items has enough stock!" EmptyDataRowStyle-CssClass="emptyRowStyle">
             <Columns>
 
                 <asp:TemplateField HeaderText="Select" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
@@ -86,7 +92,7 @@
 
                 <asp:TemplateField HeaderText="Re-order Quantity" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                     <ItemTemplate>
-                        <asp:TextBox runat="server" ID="txtReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black" CausesValidation="True" CssClass="textboxStyle" AutoPostBack="true" OnTextChanged="orderQtyTxtBx_TextChanged" />
+                        <asp:TextBox runat="server" ID="txtReorderQty" Text='<%# Bind("ReorderQty") %>' Height="38px" Width="80px" ForeColor="Black" CausesValidation="True" CssClass="textboxStyle" AutoPostBack="true" OnTextChanged="OrderQtyTxtBx_TextChanged" />
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="Please enter Quantity" ControlToValidate="txtReorderQty" Display="Dynamic" ForeColor="Red" />
                         <asp:RegularExpressionValidator runat="server" ErrorMessage="Please Enter digits " ControlToValidate="txtReorderQty" ValidationExpression="[0-9]+" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
                         <%-- <asp:CustomValidator ID="ReorderQtyVal" runat="server" ErrorMessage="Quantity cannot be less than Reorder Quantity" ValidateEmptyText="true"  Display="Dynamic" ForeColor="Red" ValidationGroup="PurchaseOrderValidationGrp"  OnServerValidate="ReorderQtyValidation"/>--%>

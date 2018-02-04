@@ -20,22 +20,22 @@ public partial class PurchaseOrderList : System.Web.UI.Page
 
     private void BindData()
     {
-        
-        gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
-        gvPurchaseOrder.DataBind();
+
+        GvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
+        GvPurchaseOrder.DataBind();
     }
     protected void OrderStatusDrpdwn_SelectedIndexChanged(object sender, EventArgs e)
     {
         string selectedStatus = ddlOrderStatus.SelectedItem.Text;
         if(selectedStatus =="--Select Status--")
         {
-            gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
-            gvPurchaseOrder.DataBind();
+            GvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderList();
+            GvPurchaseOrder.DataBind();
         }
         else
         {
-            gvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderListByStatus(selectedStatus);
-            gvPurchaseOrder.DataBind();
+            GvPurchaseOrder.DataSource = pCtlr.GetPurchaseOrderListByStatus(selectedStatus);
+            GvPurchaseOrder.DataBind();
         }
         
     }
@@ -44,9 +44,9 @@ public partial class PurchaseOrderList : System.Web.UI.Page
     {
         BindData();
     }
-    protected void gvPurchaseOrder_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    protected void GvPurchaseOrder_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
-        gvPurchaseOrder.PageIndex = e.NewPageIndex;
+        GvPurchaseOrder.PageIndex = e.NewPageIndex;
         BindData();
     }
 
@@ -59,8 +59,8 @@ public partial class PurchaseOrderList : System.Web.UI.Page
             List<PurchaseOrder> porderList = pCtlr.SearchPurchaseOrder(searchTxt);
             if (porderList != null)
             {
-                gvPurchaseOrder.DataSource = porderList;
-                gvPurchaseOrder.DataBind();
+                GvPurchaseOrder.DataSource = porderList;
+                GvPurchaseOrder.DataBind();
             }
             else
             {
@@ -81,7 +81,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
         Response.Redirect("~/Store/PurchaseOrderDetail.aspx?OrderID=" + orderID);
     }
 
-    protected void gvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void GvPurchaseOrder_RowDataBound(object sender, GridViewRowEventArgs e)
     {
        
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -134,7 +134,7 @@ public partial class PurchaseOrderList : System.Web.UI.Page
                 }
                 else if (Session["empRole"].ToString() == "Store Supervisor"|| Session["empRole"].ToString() == "Store Manager")
                 {
-                    gvPurchaseOrder.Columns[5].Visible = false;
+                    GvPurchaseOrder.Columns[5].Visible = false;
                 }
               
             }           

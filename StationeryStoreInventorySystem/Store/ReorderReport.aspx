@@ -45,7 +45,7 @@
     <br />
     <br />
     <div id="printable">:
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvPurchasedreoderItem"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px" >
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvPurchasedreoderItem" EmptyDataText="No shortfall items"   EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px" >
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                     <ControlStyle Font-Size="10pt"/>
@@ -102,7 +102,7 @@
     <asp:Label runat="server" Text=""  ID="lblmsg2" Font-Bold="true"></asp:Label>
     <br />
     <br />
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="gvShortfallItems"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvShortfallItems" EmptyDataText="No shortfall items"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                <ControlStyle Font-Size="10pt" />
@@ -114,7 +114,7 @@
                     <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"  />
                      <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />
             </asp:BoundField>
-            <asp:BoundField HeaderText="QuantityOnHand" DataField="Balance" HeaderStyle-CssClass="gvHeaderColumn">
+            <asp:BoundField HeaderText="Available Quantity" DataField="Balance" HeaderStyle-CssClass="gvHeaderColumn">
                  <ControlStyle Font-Size="10pt" />
                 <HeaderStyle Font-Size="11pt" HorizontalAlign="Center" Wrap="False"   Width="150px"/>
                    <ItemStyle Font-Size="Smaller"  HorizontalAlign="Center" Wrap="False" />

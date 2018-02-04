@@ -14,6 +14,9 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        //
+        lblCheckBoxValidation.Text = "";
+        //
         if (RequisitionControl.DisplayAll().Count == 0)
         {
             btnGenerate.Visible = false;
@@ -54,7 +57,7 @@ public partial class ReqisitionListClerk : System.Web.UI.Page
 
     protected void CheckAll_CheckedChanged(object sender, EventArgs e)
     {
-        
+
         if (((CheckBox)gvReq.HeaderRow.FindControl("cbxCheckAll")).Checked)
         {
             foreach (GridViewRow row in gvReq.Rows)

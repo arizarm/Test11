@@ -77,6 +77,7 @@ public class EFBroker_Disbursement
         }
         return disbursementItem;
     }
+
     public static List<Disbursement_Item> GetDisbursement_ItemsbyDisbID(int disbID)
     {
         List<Disbursement_Item> disbursementDetail = new List<Disbursement_Item>();
@@ -188,8 +189,21 @@ public class EFBroker_Disbursement
             context.Entry(disItem).State = System.Data.Entity.EntityState.Modified;
             context.SaveChanges();
         }
-
     }
 
+   public static string GetRetrievalStatusByRequisitionId(int requisitionId)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return context.Retrievals.Where(x => x.RetrievalID == requisitionId).Select(x => x.RetrievalStatus).First().ToString();
+        }
+    }
 
+    public static int GetRetrievedQtyByRequisitionIdNItemCode(int requisitionId, string itemCode)
+    {
+        using (StationeryEntities context = new StationeryEntities())
+        {
+            return (int)context.Disbursement_Item.Include("Disbursement").Where(x => x.Disbursement.RetrievalID == requisitionId && x.ItemCode.Equals(itemCode)).Select(x => x.ActualQty).First();
+        }
+    }
 }

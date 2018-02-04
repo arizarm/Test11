@@ -56,7 +56,7 @@ public partial class DisbursementList : System.Web.UI.Page
 
     protected List<DisbursementListItems> FillDisbursementListItems()
     {
-        List<DisbursementListItems> disbursementListItemsList = disbCon.gvDisbursementPopulate();
+        List<DisbursementListItems> disbursementListItemsList = disbCon.GvDisbursementPopulate();
         Session["disbItemsList"] = disbursementListItemsList;
         return disbursementListItemsList;
     }

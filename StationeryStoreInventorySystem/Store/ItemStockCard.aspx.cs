@@ -17,7 +17,8 @@ public partial class ItemStockCard : System.Web.UI.Page
         if (!ValidatorUtil.isEmpty(itemCode))
         {
             Item item = EFBroker_Item.GetItembyItemCode(itemCode);
-            List<PriceList> plList = EFBroker_PriceList.GetPriceListByItemCode(itemCode);
+            string currentYear = DateTime.Now.Year.ToString();
+            List<PriceList> plList = EFBroker_PriceList.GetPriceListByItemCode(itemCode).Where(c => c.TenderYear == currentYear).ToList();
             if (item != null && plList.Count > 0)
             {
                 lblItemCode.Text = item.ItemCode;

@@ -386,203 +386,210 @@ public partial class RequisitionTrend : System.Web.UI.Page
 
     protected void BtnGenerate_Click(object sender, EventArgs e)
     {
-        bool areAllFieldsValid = VerifyAllCustomFieldsAreValid();
-        ReportToSelect = Request.QueryString["type"];
-        if (ReportToSelect == "RTR")
+        try
         {
-
-            if (areAllFieldsValid)
+            bool areAllFieldsValid = VerifyAllCustomFieldsAreValid();
+            ReportToSelect = Request.QueryString["type"];
+            if (ReportToSelect == "RTR")
             {
-                GenerateRequisitionTrendController genRTC = new GenerateRequisitionTrendController();
-                List<string> deptSelected = GetSelectedDepartments();
-                List<string> catSelected = GetSelectedCategories();
-                List<string> duratnSelected = GetSelectedDuration();
 
-                List<TrendReport> basicReportObjects = new List<TrendReport>();
-
-                int splitBySelected = RBtnLSplit.SelectedIndex;
-                if (splitBySelected == 0)
+                if (areAllFieldsValid)
                 {
-                    foreach (string dept in deptSelected)
+                    GenerateRequisitionTrendController genRTC = new GenerateRequisitionTrendController();
+                    List<string> deptSelected = GetSelectedDepartments();
+                    List<string> catSelected = GetSelectedCategories();
+                    List<string> duratnSelected = GetSelectedDuration();
+
+                    List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                    int splitBySelected = RBtnLSplit.SelectedIndex;
+                    if (splitBySelected == 0)
                     {
-
-                        string categoryName;
-                        string departmentName = dept;
-                        int month1 = 0, month2 = 0, month3 = 0;
-
-                        foreach (string cat in catSelected)
-                        {
-                            categoryName = cat;
-                            TrendReport input;
-
-                            if (duratnSelected.Count == 1)
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
-                                basicReportObjects.Add(input);
-                            }
-                            else if (duratnSelected.Count == 2)
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
-                                basicReportObjects.Add(input);
-                            }
-                            else
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                month3 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
-                                basicReportObjects.Add(input);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (string cat in catSelected)
-                    {
-                        string categoryName = cat;
-                        string departmentName = "";
-                        int month1 = 0, month2 = 0, month3 = 0;
-
                         foreach (string dept in deptSelected)
                         {
-                            departmentName = dept;
-                            TrendReport input;
-                            if (duratnSelected.Count == 1)
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
-                                basicReportObjects.Add(input);
-                            }
-                            else if (duratnSelected.Count == 2)
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
-                                basicReportObjects.Add(input);
-                            }
-                            else
-                            {
-                                month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
-                                month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
-                                month3 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
-                                input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
-                                basicReportObjects.Add(input);
-                            }
 
+                            string categoryName;
+                            string departmentName = dept;
+                            int month1 = 0, month2 = 0, month3 = 0;
+
+                            foreach (string cat in catSelected)
+                            {
+                                categoryName = cat;
+                                TrendReport input;
+
+                                if (duratnSelected.Count == 1)
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else if (duratnSelected.Count == 2)
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                    month3 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                    basicReportObjects.Add(input);
+                                }
+                            }
                         }
                     }
-                }
-                Session["reportsToDisplay"] = basicReportObjects;
-                Session["typeOfReport"] = splitBySelected;
-                Response.Redirect("~/Store/TrendReportDisplay.aspx");
-            }
-            else
-            {
-                Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
-            }
-        }
-        else if (ReportToSelect == "ROR")
-        {
-
-            if (areAllFieldsValid)
-            {
-                GenerateReorderTrendController genRTC = new GenerateReorderTrendController();
-                List<string> duratnSelected = GetSelectedDuration();
-                List<string> catSelected = GetSelectedCategories();
-                List<string> supplierSelected = GetSelectedSuppliers();
-
-                List<TrendReport> basicReportObjects = new List<TrendReport>();
-
-                int splitBySelected = RBtnLSplitROR.SelectedIndex;
-                if (splitBySelected == 0)
-                {
-                    foreach (string suppl in supplierSelected)
+                    else
                     {
-
-                        string categoryName;
-                        string supplierName = suppl;
-                        int month1 = 0, month2 = 0, month3 = 0;
-
                         foreach (string cat in catSelected)
                         {
-                            categoryName = cat;
-                            TrendReport input;
+                            string categoryName = cat;
+                            string departmentName = "";
+                            int month1 = 0, month2 = 0, month3 = 0;
 
-                            if (duratnSelected.Count == 1)
+                            foreach (string dept in deptSelected)
                             {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
-                                basicReportObjects.Add(input);
-                            }
-                            else if (duratnSelected.Count == 2)
-                            {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
-                                basicReportObjects.Add(input);
-                            }
-                            else
-                            {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                month3 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
-                                basicReportObjects.Add(input);
+                                departmentName = dept;
+                                TrendReport input;
+                                if (duratnSelected.Count == 1)
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, duratnSelected[0]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else if (duratnSelected.Count == 2)
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else
+                                {
+                                    month1 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[0], dept, cat);
+                                    month2 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[1], dept, cat);
+                                    month3 = genRTC.GetTotalRequisitionByCategoryGivenMonth(duratnSelected[2], dept, cat);
+                                    input = new TrendReport(departmentName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                    basicReportObjects.Add(input);
+                                }
+
                             }
                         }
                     }
-                    Session["typeOfReport"] = 2;
+                    Session["reportsToDisplay"] = basicReportObjects;
+                    Session["typeOfReport"] = splitBySelected;
+                    Response.Redirect("~/Store/TrendReportDisplay.aspx");
                 }
                 else
                 {
-                    foreach (string cat in catSelected)
-                    {
-                        string categoryName = cat;
-                        string supplierName = "";
-                        int month1 = 0, month2 = 0, month3 = 0;
+                    Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                }
+            }
+            else if (ReportToSelect == "ROR")
+            {
 
+                if (areAllFieldsValid)
+                {
+                    GenerateReorderTrendController genRTC = new GenerateReorderTrendController();
+                    List<string> duratnSelected = GetSelectedDuration();
+                    List<string> catSelected = GetSelectedCategories();
+                    List<string> supplierSelected = GetSelectedSuppliers();
+
+                    List<TrendReport> basicReportObjects = new List<TrendReport>();
+
+                    int splitBySelected = RBtnLSplitROR.SelectedIndex;
+                    if (splitBySelected == 0)
+                    {
                         foreach (string suppl in supplierSelected)
                         {
-                            supplierName = suppl;
-                            TrendReport input;
-                            if (duratnSelected.Count == 1)
-                            {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
-                                basicReportObjects.Add(input);
-                            }
-                            else if (duratnSelected.Count == 2)
-                            {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
-                                basicReportObjects.Add(input);
-                            }
-                            else
-                            {
-                                month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
-                                month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
-                                month3 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
-                                input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
-                                basicReportObjects.Add(input);
-                            }
 
+                            string categoryName;
+                            string supplierName = suppl;
+                            int month1 = 0, month2 = 0, month3 = 0;
+
+                            foreach (string cat in catSelected)
+                            {
+                                categoryName = cat;
+                                TrendReport input;
+
+                                if (duratnSelected.Count == 1)
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else if (duratnSelected.Count == 2)
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                    month3 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                    basicReportObjects.Add(input);
+                                }
+                            }
                         }
+                        Session["typeOfReport"] = 2;
                     }
-                    Session["typeOfReport"] = 3;
-                }
-                Session["reportsToDisplay"] = basicReportObjects;
+                    else
+                    {
+                        foreach (string cat in catSelected)
+                        {
+                            string categoryName = cat;
+                            string supplierName = "";
+                            int month1 = 0, month2 = 0, month3 = 0;
 
-                Response.Redirect("~/Store/TrendReportDisplay.aspx");
+                            foreach (string suppl in supplierSelected)
+                            {
+                                supplierName = suppl;
+                                TrendReport input;
+                                if (duratnSelected.Count == 1)
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, duratnSelected[0]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else if (duratnSelected.Count == 2)
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, month2, duratnSelected[0], duratnSelected[1]);
+                                    basicReportObjects.Add(input);
+                                }
+                                else
+                                {
+                                    month1 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[0], suppl, cat);
+                                    month2 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[1], suppl, cat);
+                                    month3 = genRTC.GetTotalReorderByCategoryGivenMonth(duratnSelected[2], suppl, cat);
+                                    input = new TrendReport(supplierName, categoryName, month1, month2, month3, duratnSelected[0], duratnSelected[1], duratnSelected[2]);
+                                    basicReportObjects.Add(input);
+                                }
+
+                            }
+                        }
+                        Session["typeOfReport"] = 3;
+                    }
+                    Session["reportsToDisplay"] = basicReportObjects;
+
+                    Response.Redirect("~/Store/TrendReportDisplay.aspx");
+                }
+                else
+                {
+                    Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                }
             }
-            else
-            {
-                Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
-            }
+        }
+        catch (Exception)
+        {
+            Utility.DisplayAlertMessage(Message.GeneralError);
         }
     }
 

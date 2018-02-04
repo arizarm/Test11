@@ -11,14 +11,14 @@
     <br />
     <br />
     <div>
-        <asp:TextBox ID="txtSearchBox" ValidationGroup="1" runat="server" Width="311px"></asp:TextBox>
+        <asp:TextBox ID="txtSearchBox" ValidationGroup="1" runat="server" Width="311px" ></asp:TextBox>
         <asp:Button ID="btnSearch" runat="server" Text="Search" ValidationGroup="1" CssClass="button" OnClick="BtnSearch_Click" />
         <asp:Button ID="btnDisplay" runat="server" Text="Display All" CssClass="button" OnClick="BtnDisplay_Click" />
     </div>
     <asp:RequiredFieldValidator ID="req" ValidationGroup="1" Display="Dynamic" runat="server" ErrorMessage="" ControlToValidate="txtSearchBox" Style="color: red"> </asp:RequiredFieldValidator>
     <div>
         <asp:Label ID="lblCheckRetrievalListValidation" runat="server" Text="" ForeColor="Red" Font-Size="40px"></asp:Label>
-        <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid" AutoGenerateColumns="False" OnRowDataBound="GvReq_RowDataBound">
+        <asp:GridView ID="gvReq" runat="server" Width="100%" CssClass="mGrid" AutoGenerateColumns="False" OnRowDataBound="GvReq_RowDataBound" EmptyDataText="No Retrieval is found">
             <Columns>
 
                 <asp:TemplateField HeaderText="Date">

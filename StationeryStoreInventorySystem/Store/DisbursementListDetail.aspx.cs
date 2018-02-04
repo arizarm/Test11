@@ -38,7 +38,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         lblDepartment.Text = disb.DepName.ToString();
         lblColPoint.Text = disb.CollectionPoint.ToString();
 
-        retrievedItem = disbCon.gvDisbursementDetailPopulate(disbId);
+        retrievedItem = disbCon.GvDisbursementDetailPopulate(disbId);
         gvDisbDetail.DataSource = retrievedItem;
         gvDisbDetail.DataBind();
     }
@@ -48,7 +48,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         int disbId = (int)Session["SelectedDisb"];
 
         List<DisbursementDetailListItems> retrievedItem = new List<DisbursementDetailListItems>();
-        retrievedItem = disbCon.gvDisbursementDetailPopulate(disbId);
+        retrievedItem = disbCon.GvDisbursementDetailPopulate(disbId);
 
         List<RequestedItem> shortfallItem = new List<RequestedItem>();
         List<int> actualQtyList = new List<int>();
@@ -94,7 +94,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                 string iCode = (r.FindControl("hdnflditemCode") as HiddenField).Value;
                 string iDesc = (r.FindControl("lblitemDesc") as Label).Text;
                 int shortfallQty = reqQty - actualQty;
-                string uom = RequisitionControl.getUOM(iCode); 
+                string uom = EFBroker_Item.GetUnitbyItemCode(iCode); 
                 reqItem = new RequestedItem(iCode, iDesc, shortfallQty, uom);
                 shortfallItem.Add(reqItem);
 
@@ -117,7 +117,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
         if (check)
         {
             //check access code
-            if (disbCon.checkAccessCode(disbId, txtAccessCode.Text))
+            if (disbCon.CheckAccessCode(disbId, txtAccessCode.Text))
             {
                 //update Disbursement table (actual qty + status)
                 disbCon.UpdateDisbursement(disbId, actualQtyList, disbRemark);
@@ -126,7 +126,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
                 if (shortfallItem.Count != 0)
                 {
                     Session["discrepancyList"] = discToUpdate;
-                    Session["RegenerateDate"] = disbCon.getRegenrateDate(disbId);
+                    Session["RegenerateDate"] = disbCon.GetRegenrateDate(disbId);
                     Session["RegenerateDep"] = lblDepartment.Text;
                     Session["RequestedByName"] = EFBroker_DeptEmployee.GetDeptRepByDeptCode(lblDepartment.Text);
                     Session["RegenerateItems"] = shortfallItem;

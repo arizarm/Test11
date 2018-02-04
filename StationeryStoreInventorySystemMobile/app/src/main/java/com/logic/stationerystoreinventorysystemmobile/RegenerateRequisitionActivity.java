@@ -87,6 +87,8 @@ public class RegenerateRequisitionActivity extends AppCompatActivity {
 
                             progress.dismiss();
 
+                            DisbursementDetailFragment d = new DisbursementDetailFragment();
+                            d.setDisbursementListItems(null);
                             if(DiscrepancyHolder.itemToUpdate)
                             {
                                 Intent intent = new Intent(getApplicationContext(), DiscrepancySummaryActivity.class);

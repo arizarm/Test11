@@ -15,7 +15,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
-                        <asp:Label ID="lblItemCode2" runat="server" Text='<%# Bind("Key.ItemCode") %>'></asp:Label>
+                        <asp:Label ID="lblItemCodeDisc" runat="server" Text='<%# Bind("Key.ItemCode") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Item Name">
@@ -76,12 +76,12 @@
                 
                 <asp:TemplateField HeaderText="Item Code">
                     <ItemTemplate>
-                        <asp:Label ID="lblItemCode1" runat="server" Text='<%# Bind("Key.ItemCode") %>'></asp:Label>
+                        <asp:Label ID="lblItemCodeItem" runat="server" Text='<%# Bind("Key.ItemCode") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Item Name">
                     <ItemTemplate>
-                        <asp:HyperLink ID="lnkItem" runat="server" NavigateUrl="" Text='<%# Bind("Key.Description") %>'></asp:HyperLink>
+                        <asp:HyperLink ID="hlkDesc" runat="server" NavigateUrl="" Text='<%# Bind("Key.Description") %>'></asp:HyperLink>
                     </ItemTemplate>
                 </asp:TemplateField>
                  <asp:TemplateField HeaderText="Unit of Measure">

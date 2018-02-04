@@ -45,7 +45,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
             GridViewRow row = gvItemList.Rows[i];
             bool ticked = (row.FindControl("cbxCorrect") as CheckBox).Checked;
             string txtActual = (row.FindControl("txtActual") as TextBox).Text;
-            string itemCode = (row.FindControl("lblItemCode1") as Label).Text;
+            string itemCode = (row.FindControl("lblItemCodeItem") as Label).Text;
             bool error = false;       //Whether a row has an error
 
             if (!ticked)   //If a row is not checked
@@ -204,8 +204,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
         foreach (GridViewRow row in gvItemList.Rows)
         {
-            HyperLink link = row.FindControl("lnkItem") as HyperLink;
-            Label lbl = row.FindControl("lblItemCode1") as Label;
+            HyperLink link = row.FindControl("hlkDesc") as HyperLink;
+            Label lbl = row.FindControl("lblItemCodeItem") as Label;
             string itemCode = lbl.Text;
             link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
         }
@@ -310,8 +310,8 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
 
         foreach (GridViewRow row in gvItemList.Rows)
         {
-            HyperLink link = row.FindControl("lnkItem") as HyperLink;
-            Label lbl = row.FindControl("lblItemCode1") as Label;
+            HyperLink link = row.FindControl("hlkDesc") as HyperLink;
+            Label lbl = row.FindControl("lblItemCodeItem") as Label;
             string itemCode = lbl.Text;
             link.NavigateUrl = LoginController.AddItemDiscrepancyURI + "?itemCode=" + itemCode;
         }

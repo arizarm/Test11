@@ -79,10 +79,10 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
         RequisitionControl.addNewRequisitionItem(regenerateItem, date, status, empID, depCode);
 
-        redirectCheck();
+        RedirectCheck();
     }
 
-    protected void redirectCheck()
+    protected void RedirectCheck()
     {
         if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)
         {
@@ -104,6 +104,6 @@ public partial class RegenerateRequest : System.Web.UI.Page
 
     protected void btnCancel_Click(object sender, EventArgs e)
     {
-        redirectCheck();
+        RedirectCheck();
     }
 }

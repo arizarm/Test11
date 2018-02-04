@@ -107,7 +107,7 @@
 
     <br />
     <br />
-    <asp:Label ID="Label1" runat="server" Text="Enter Access Code : "></asp:Label>
+    <asp:Label ID="lblAccessCode" runat="server" Text="Enter Access Code : "></asp:Label>
     <asp:TextBox ID="txtAccessCode" runat="server"></asp:TextBox>
     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtAccessCode" Style="color: red">Access Code cannot be empty!</asp:RequiredFieldValidator>
     <br />

@@ -38,7 +38,7 @@
 
 
     <div>
-        <asp:GridView ID="gvReq" runat="server" AutoGenerateColumns="False" OnRowDataBound="GvReq_RowDataBound" CssClass="mGrid" RowStyle-Height="50px">
+        <asp:GridView ID="gvReq" runat="server" AutoGenerateColumns="False" OnRowDataBound="GvReq_RowDataBound" CssClass="mGrid" RowStyle-Height="50px" EmptyDataText="No Requisition is found">
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>

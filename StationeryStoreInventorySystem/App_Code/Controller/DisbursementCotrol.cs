@@ -7,7 +7,7 @@ using System.Web;
 public class DisbursementCotrol
 {
     //GET DISBURSEMENT LIST TO DISPLAY
-    public List<DisbursementListItems> gvDisbursementPopulate()
+    public List<DisbursementListItems> GvDisbursementPopulate()
     {
         List<DisbursementListItems> disbursementListItemsList = new List<DisbursementListItems>();
 
@@ -45,7 +45,7 @@ public class DisbursementCotrol
         return disbursementListItems;
     }
     //GET DISBURSEMENT DETAIL LIST TO DISPLAY
-    public List<DisbursementDetailListItems> gvDisbursementDetailPopulate(int disbId)
+    public List<DisbursementDetailListItems> GvDisbursementDetailPopulate(int disbId)
     {
         List<DisbursementDetailListItems> disbursementDetailListItemsList = new List<DisbursementDetailListItems>();
 
@@ -69,7 +69,7 @@ public class DisbursementCotrol
     }
 
     //VERIFY ACCESS CODE
-    public bool checkAccessCode(int disbId, string accessCode)
+    public bool CheckAccessCode(int disbId, string accessCode)
     {
         if (EFBroker_Disbursement.GetAccessCodebyDisbID(disbId).Equals(accessCode))
         {
@@ -82,14 +82,14 @@ public class DisbursementCotrol
     }
 
     //Get earliest date for regenerate requisition
-    public DateTime getRegenrateDate(int disbId)
+    public DateTime GetRegenrateDate(int disbId)
     {
         return (DateTime)EFBroker_Requisition.GetEarliestReqDateTimebyDisbID(disbId);
     }
 
 
     //ADD REQUISITION ITEM
-    public void addItemToRequisition(string code, int qty, int id)
+    public void AddItemToRequisition(string code, int qty, int id)
     {
         Requisition_Item ri = new Requisition_Item();
         ri.RequisitionID = id;

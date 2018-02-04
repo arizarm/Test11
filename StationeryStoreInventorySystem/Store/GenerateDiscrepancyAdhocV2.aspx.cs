@@ -198,7 +198,30 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
             Thread emailThread = new Thread(emailThreadStart);
             emailThread.Start();
 
-            Utility.AlertMessageThenRedirect("Discrepancies successfully reported", "GenerateDiscrepancyV2.aspx");
+            string destination = "";
+
+            if(Session["empRole"] != null)
+            {
+                string role = (string)Session["empRole"];
+                if(role == "Store Supervisor" || role == "Store Manager")
+                {
+                    destination = "PurchaseOrderList.aspx";
+                }
+                else if(role == "Store Clerk")
+                {
+                    destination = "RequisitionListClerk.aspx";
+                }
+                else
+                {
+                    Utility.logout();
+                }
+            }
+            else
+            {
+                Utility.logout();
+            }
+
+            Utility.AlertMessageThenRedirect("Discrepancies successfully reported", destination);
         }
     }
 

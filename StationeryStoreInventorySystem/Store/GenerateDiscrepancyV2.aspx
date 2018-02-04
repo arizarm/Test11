@@ -128,11 +128,11 @@
         <br />
         <asp:Button ID="btnGenerateDiscrepancy" runat="server" Text="Generate Discrepancy List" OnClick="BtnGenerateDiscrepancy_Click" CssClass="button" />
             <%-- Check and uncheck all buttons only for testing --%>
-           <%-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <asp:Button ID="btnCheckAll" runat="server" Text="Check All" OnClick="BtnCheckAll_Click" CssClass="button"/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <asp:Button ID="btnUncheckAll" runat="server" Text="Uncheck All" CssClass="button" OnClick="BtnUncheckAll_Click"/>
-            --%>
+            
         <%} %>
 
         </asp:Panel>

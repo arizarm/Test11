@@ -97,32 +97,37 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
             EditText etRemarks;
             int requestedBy = Integer.parseInt(eid);
             final ArrayList<Discrepancy> toBeSubmitted = new ArrayList<Discrepancy>();
+            int listCount = listDisc.getAdapter().getCount();
 
-            for(int i = 0; i < listDisc.getAdapter().getCount(); i++){
-                v2 = listDisc.getAdapter().getView(i, null, null);
+            if(listCount > 0) {
+                for (int i = 0; i < listCount; i++) {
+                    v2 = listDisc.getAdapter().getView(i, null, null);
 
-                tvItemCode = v2.findViewById(R.id.tvItemCode);
-                tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
-                etRemarks = v2.findViewById(R.id.etRemarks);
+                    tvItemCode = v2.findViewById(R.id.tvItemCode);
+                    tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
+                    etRemarks = v2.findViewById(R.id.etRemarks);
 
-                String itemCode = tvItemCode.getText().toString();
-                int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
-                String remarks = etRemarks.getText().toString();
+                    String itemCode = tvItemCode.getText().toString();
+                    int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
+                    String remarks = etRemarks.getText().toString();
 
-                if(remarks.isEmpty()){
-                    tvError.setText("Please input remarks for all items");
-                    complete = false;
-                }
-                else{
-                    Discrepancy d = null;
+                    if (remarks.isEmpty()) {
+                        tvError.setText("Please input remarks for all items");
+                        complete = false;
+                    } else {
+                        Discrepancy d = null;
 //                    if(itemToUpdate){
 //                        d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status, itemToUpdate);
 //                    }
 //                    else{
                         d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status);
 //                    }
-                    toBeSubmitted.add(d);
+                        toBeSubmitted.add(d);
+                    }
                 }
+            }
+            else{
+                complete = false;
             }
             if(complete){
                 try {

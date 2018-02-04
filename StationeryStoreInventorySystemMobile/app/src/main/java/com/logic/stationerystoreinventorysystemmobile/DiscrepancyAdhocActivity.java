@@ -73,8 +73,13 @@ public class DiscrepancyAdhocActivity extends AppCompatActivity implements Adapt
     }
 
     protected void finaliseClick(View v){
-        Intent i = new Intent(this, DiscrepancySummaryActivity.class);
-        startActivity(i);
+        if(DiscrepancyHolder.getDiscrepancyList().size() > 0) {
+            Intent i = new Intent(this, DiscrepancySummaryActivity.class);
+            startActivity(i);
+        }
+        else{
+            Util.redsToast("No items added yet", this);
+        }
     }
 
     protected void displayAllClick(View v){

@@ -97,37 +97,44 @@ public class DiscrepancySummaryActivity extends AppCompatActivity {
             EditText etRemarks;
             int requestedBy = Integer.parseInt(eid);
             final ArrayList<Discrepancy> toBeSubmitted = new ArrayList<Discrepancy>();
-            int listCount = listDisc.getAdapter().getCount();
 
-            if(listCount > 0) {
-                for (int i = 0; i < listCount; i++) {
-                    v2 = listDisc.getAdapter().getView(i, null, null);
+            if(listDisc.getAdapter() != null) {
+                int listCount = listDisc.getAdapter().getCount();
 
-                    tvItemCode = v2.findViewById(R.id.tvItemCode);
-                    tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
-                    etRemarks = v2.findViewById(R.id.etRemarks);
+                if (listCount > 0) {
+                    for (int i = 0; i < listCount; i++) {
+                        v2 = listDisc.getAdapter().getView(i, null, null);
 
-                    String itemCode = tvItemCode.getText().toString();
-                    int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
-                    String remarks = etRemarks.getText().toString();
+                        tvItemCode = v2.findViewById(R.id.tvItemCode);
+                        tvAdjustmentQty = v2.findViewById(R.id.tvAdj);
+                        etRemarks = v2.findViewById(R.id.etRemarks);
 
-                    if (remarks.isEmpty()) {
-                        tvError.setText("Please input remarks for all items");
-                        complete = false;
-                    } else {
-                        Discrepancy d = null;
+                        String itemCode = tvItemCode.getText().toString();
+                        int adjustmentQty = revertAdjustmentQtyStr(tvAdjustmentQty.getText().toString());
+                        String remarks = etRemarks.getText().toString();
+
+                        if (remarks.isEmpty()) {
+                            tvError.setText("Please input remarks for all items");
+                            complete = false;
+                        } else {
+                            Discrepancy d = null;
 //                    if(itemToUpdate){
 //                        d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status, itemToUpdate);
 //                    }
 //                    else{
-                        d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status);
+                            d = new Discrepancy(itemCode, requestedBy, adjustmentQty, remarks, status);
 //                    }
-                        toBeSubmitted.add(d);
+                            toBeSubmitted.add(d);
+                        }
                     }
+                } else {
+                    complete = false;
+                    Util.redsToast("No items added yet", this);
                 }
             }
             else{
                 complete = false;
+                Util.redsToast("No items added yet", this);
             }
             if(complete){
                 try {

@@ -51,14 +51,21 @@ public class DiscrepancyMonthlyActivity extends AppCompatActivity implements Ada
         ArrayList<CatalogueItem> ciList = DiscrepancyHolder.getMonthlyItems();
 
         if(DiscrepancyHolder.monthlyComplete()){
-            for(CatalogueItem ci : ciList){
-                if(ci.get("correctQty").equals("N") && ci.get("actualQty") != null){
-                    int adjustment = Integer.parseInt(ci.get("actualQty")) - Integer.parseInt(ci.get("balanceQty"));
-                    DiscrepancyHolder.addDiscrepancy(ci.get("itemCode"), adjustment);
+            if(ciList.size() > 0) {
+                for (CatalogueItem ci : ciList) {
+                    if (ci.get("correctQty").equals("N") && ci.get("actualQty") != null) {
+                        int adjustment = Integer.parseInt(ci.get("actualQty")) - Integer.parseInt(ci.get("balanceQty"));
+                        DiscrepancyHolder.addDiscrepancy(ci.get("itemCode"), adjustment);
+                    }
                 }
+                Intent i = new Intent(this, DiscrepancySummaryActivity.class);
+                startActivity(i);
             }
-            Intent i = new Intent(this, DiscrepancySummaryActivity.class);
-            startActivity(i);
+            else{
+                Intent i = new Intent(this,MainActivity.class);
+                Util.greenToast("Monthly check complete. No discrepancies found", this);
+                startActivity(i);
+            }
         }
         else{
             TextView tvError = findViewById(R.id.tvError);

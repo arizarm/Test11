@@ -81,9 +81,9 @@
    
     <br />
     <br />
-    <asp:GridView ID="gvPurchaseDetail" runat="server" AutoGenerateColumns="False" RowStyle-Height="50px" CssClass="mGrid60percent"
-        EmptyDataText="No items haven been ordered for this order" OnRowEditing="gvPurchaseDetail_RowEditing"
-        OnRowUpdating="gvPurchaseDetail_RowUpdating" OnRowCancelingEdit="gvPurchaseDetail_RowCancelingEdit">
+    <asp:GridView ID="GvPurchaseDetail" runat="server" AutoGenerateColumns="False" RowStyle-Height="50px" CssClass="mGrid60percent"
+        EmptyDataText="No items haven been ordered for this order" OnRowEditing="GvPurchaseDetail_RowEditing"
+        OnRowUpdating="GvPurchaseDetail_RowUpdating" OnRowCancelingEdit="GvPurchaseDetail_RowCancelingEdit">
         <Columns>
             <asp:TemplateField HeaderText="ItemCode" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="gvHeaderColumn">
                 <HeaderStyle Width="90px" />
@@ -105,7 +105,7 @@
                     <asp:Label ID="lblorderQty" runat="server"  Width="170px" Text='<%# Bind("OrderQty") %>' ForeColor="Black"></asp:Label>
                 </ItemTemplate>
                 <EditItemTemplate>
-                    <asp:TextBox ID="txtorderQty" runat="server" Width="60px" Text='<%# Bind("OrderQty") %>' MaxLength="4" ForeColor="Black" OnTextChanged="orderQtyTxtBx_TextChanged"></asp:TextBox>
+                    <asp:TextBox ID="txtorderQty" runat="server" Width="60px" Text='<%# Bind("OrderQty") %>' MaxLength="4" ForeColor="Black" OnTextChanged="OrderQtyTxtBx_TextChanged"></asp:TextBox>
                     <asp:RequiredFieldValidator runat="server" ErrorMessage="Cannot be blank" Display="Dynamic" ForeColor="Red" ControlToValidate="txtorderQty" ValidationGroup="PurchaseDetailGrp" />
                     <asp:RegularExpressionValidator runat="server" ErrorMessage="Invalid.Please enter only the digits" ForeColor="Red" ControlToValidate="txtorderQty" ValidationExpression="^[0-9]+$" ValidationGroup="PurchaseDetailGrp" />
                 </EditItemTemplate>

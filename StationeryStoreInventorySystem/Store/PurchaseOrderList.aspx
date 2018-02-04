@@ -26,9 +26,9 @@
     </div>
  
     <div>
-        <asp:GridView ID="gvPurchaseOrder" runat="server" CssClass="mGrid" EmptyDataText="No records found"  RowStyle-Height="50px" 
+        <asp:GridView ID="GvPurchaseOrder" runat="server" CssClass="mGrid" EmptyDataText="No records found"  RowStyle-Height="50px" 
             EmptyDataRowStyle-BackColor="Window" AutoGenerateColumns="False" PageSize="15"  AllowPaging="True" DataKeyNames="PurchaseOrderID"
-            OnPageIndexChanging="gvPurchaseOrder_PageIndexChanging"  OnRowDataBound="gvPurchaseOrder_RowDataBound" 
+            OnPageIndexChanging="GvPurchaseOrder_PageIndexChanging"  OnRowDataBound="GvPurchaseOrder_RowDataBound" 
         >
             <Columns>
                 
@@ -85,7 +85,7 @@
                         <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
                     </EditItemTemplate>--%>
                     <ItemTemplate >
-                        <asp:Button ID="BtnDelete" runat="server" Text="Delete" CommandName="Delete"  OnClick="BtnDelete_Click" CssClass="deletebutton" CommandArgument='<%#Eval("PurchaseOrderID")%>' />
+                        <asp:Button ID="BtnDelete" runat="server" Text="Delete" CommandName="Delete"  OnClick="BtnDelete_Click" OnClientClick="return confirm('Are you sure you want to delete this item?');" CssClass="deletebutton" CommandArgument='<%#Eval("PurchaseOrderID")%>' />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

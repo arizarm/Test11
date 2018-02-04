@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Collections;
 using System.Transactions;
+using System.Threading;
 
 public partial class RequisitionForm : System.Web.UI.Page
 {
@@ -112,9 +113,9 @@ public partial class RequisitionForm : System.Web.UI.Page
                 {
                     string mail = tempHead.Email;
                     string receiver = mail;
-                    string subject = "New Requisition";
-                    string body = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
-                    Utility.sendMail(receiver, subject, body);
+                    Thread emailThreadWithParam = new Thread(() => TempMailNotification(receiver));
+                    emailThreadWithParam.Start();
+                    
                 }
 
                
@@ -122,9 +123,9 @@ public partial class RequisitionForm : System.Web.UI.Page
                 {
                     string mail1 = deptHead.Email;
                     string receiver1 = mail1;
-                    string subject1 = "New Requisition";
-                    string body1 = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
-                    Utility.sendMail(receiver1, subject1, body1);
+                    Thread emailThreadWithParam1 = new Thread(() => HeadMailNotification(receiver1));
+                    emailThreadWithParam1.Start();
+                   
                 }
                 Response.Redirect(LoginController.RequisitionListDepEmpURI);
             }
@@ -181,5 +182,19 @@ public partial class RequisitionForm : System.Web.UI.Page
     {
         gvItemList.EditIndex = -1;
         BindGrid();
+    }
+
+    private void TempMailNotification(String receiver)
+    {
+        string subject = "New Requisition";
+        string body = "Dear Acting Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+        Utility.sendMail(receiver, subject, body);
+    }
+
+    private void HeadMailNotification(String receiver1)
+    {
+        string subject1 = "New Requisition";
+        string body1 = "Dear Department Head,\nOne of your employees has made a new requisition. Please check and see for more information.";
+        Utility.sendMail(receiver1, subject1, body1);
     }
 }

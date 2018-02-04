@@ -44,7 +44,7 @@
        <tr><th>--%>
     <table class="auto-style5">
             <tr >
-                <th colspan="2" class="updateDeptHead"> <h2 class="auto-style1">Update Department Info</h2>
+                <th colspan="2" class="updateDeptHead"> <h2 class="auto-style1"> Department Info</h2>
                     </th>
             </tr>            
             <tr>

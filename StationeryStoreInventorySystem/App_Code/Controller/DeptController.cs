@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 /// <summary>
@@ -88,13 +89,13 @@ public class DeptController
 
     public void UpdateDeptRep(string deptcode, int cid)
     {
-        Employee oldDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
-        String oldEmail = oldDeptRep.Email;
-        Utility.sendMail(oldEmail, "Change Department Rep", "Your Role have changed to Employee");
+        Thread emailThreadWithParamC = new Thread(() => CRepMailNotification(deptcode));
+        emailThreadWithParamC.Start();
+
+
         EFBroker_DeptEmployee.UpdateDeptRep(deptcode, cid);
-        Employee newDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
-        String newEmail = newDeptRep.Email;
-        Utility.sendMail(newEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+        Thread emailThreadWithParamS = new Thread(() => SRepMailNotification(deptcode));
+        emailThreadWithParamS.Start();
 
     }
 
@@ -117,6 +118,13 @@ public class DeptController
     public void UpdateCollectionPoint(string deptcode, int cid)
     {
         EFBroker_DeptEmployee.UpdateCollectionPoint(deptcode, cid);
+        ThreadStart emailThreadStart = new ThreadStart(CPMailNotification);
+        Thread emailThread = new Thread(emailThreadStart);
+        emailThread.Start();
+       
+    }
+    private void CPMailNotification()
+    {
         List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
         if (clerkEmails != null)
@@ -127,5 +135,19 @@ public class DeptController
 
             }
         }
+    }
+    private void CRepMailNotification(String deptcode)
+    {
+        Employee oldDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
+        String oldEmail = oldDeptRep.Email;
+        Utility.sendMail(oldEmail, "Change Department Rep", "Your Role have changed to Employee");
+    }
+
+    private void SRepMailNotification(String deptcode)
+    {
+        Employee newDeptRep = EFBroker_DeptEmployee.GetEmployeeListForDRepSelected(deptcode);
+        String newEmail = newDeptRep.Email;
+        Utility.sendMail(newEmail, "Change Department Rep", "Your Role have changed to Department Rep");
+
     }
 }

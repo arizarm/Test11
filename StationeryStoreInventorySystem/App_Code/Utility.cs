@@ -40,7 +40,7 @@ public static class Utility
     }
     public static bool checkIsTempDepHead(Employee e)
     {
-        DateTime today = DateTime.Now;
+        DateTime today = DateTime.Now.Date;
         if (e.IsTempHead == "Y")
         {
             if(today >= e.StartDate && today <= e.EndDate )

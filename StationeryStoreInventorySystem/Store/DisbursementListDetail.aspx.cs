@@ -63,7 +63,7 @@ public partial class DisbursementListDetail : System.Web.UI.Page
             string remark;
             try
             {
-                remark = (r.FindControl("remarks") as Label).Text;
+                remark = (r.FindControl("txtremarks") as TextBox).Text;
             }
             catch
             {

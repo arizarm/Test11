@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Transactions;
+using System.Threading;
 
 /// <summary>
 /// Summary description for RequisitionControl
@@ -261,6 +262,13 @@ public class RequisitionControl
     public static void approveRequisition(int id, string reason, int? empID)
     {
         EFBroker_Requisition.ApproveRequisition(id, reason, empID);
+        ThreadStart emailThreadStart = new ThreadStart(ApproveMailNotification);
+        Thread emailThread = new Thread(emailThreadStart);
+        emailThread.Start();
+       
+    }
+    private static void ApproveMailNotification()
+    {
         List<String> clerkEmails = EFBroker_Employee.getAllClerkMails();
 
         if (clerkEmails != null)
@@ -271,6 +279,7 @@ public class RequisitionControl
             }
         }
     }
+
     public static void rejectRequisition(int id, string reason, int empID)
     {
         EFBroker_Requisition.RejectRequisition(id, reason, empID);

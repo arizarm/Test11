@@ -26,37 +26,38 @@ public class RetrievalListActivity extends AppCompatActivity implements AdapterV
         final ListView lv = (ListView) findViewById(R.id.listView);
         lv.setOnItemClickListener(this);
 
-        if (!Retrieval.list().isEmpty()) {
-            new AsyncTask<Void, Void, List<Retrieval>>() {
+        new AsyncTask<Void, Void, List<Retrieval>>() {
 
-                ProgressDialog progress;
+            ProgressDialog progress;
 
-                @Override
-                protected void onPreExecute() {
-                    progress = ProgressDialog.show(RetrievalListActivity.this, "Loading", "Getting Retrieval List", true);
-                }
+            @Override
+            protected void onPreExecute() {
+                progress = ProgressDialog.show(RetrievalListActivity.this, "Loading", "Getting Retrieval List", true);
+            }
 
-                @Override
-                protected List<Retrieval> doInBackground(Void... params) {
-                    return Retrieval.list();
-                }
+            @Override
+            protected List<Retrieval> doInBackground(Void... params) {
+                return Retrieval.list();
+            }
 
-                @Override
-                protected void onPostExecute(List<Retrieval> result) {
+            @Override
+            protected void onPostExecute(List<Retrieval> result) {
 
+                progress.dismiss();
+
+                if (!result.isEmpty()) {
                     lv.setAdapter(new SimpleAdapter
                             (RetrievalListActivity.this, result, R.layout.retrieval_list_row,
                                     new String[]{"RetrievedDate", "RetrievalID", "RetrievedBy", "RetrievalStatus"},
                                     new int[]{R.id.text1, R.id.text2, R.id.text3, R.id.text4}));
 
-                    progress.dismiss();
+                } else {
+                    Util.redsToast("There is no Pending Retrieval !!", RetrievalListActivity.this);
+                    Intent i2 = new Intent(RetrievalListActivity.this, MainActivity.class);
+                    startActivity(i2);
                 }
-            }.execute();
-        } else {
-            Util.redsToast("There is no Pending Retrieval !!",this);
-            Intent i2 = new Intent(this, MainActivity.class);
-            startActivity(i2);
-        }
+            }
+        }.execute();
     }
 
     @Override

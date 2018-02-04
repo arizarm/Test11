@@ -82,7 +82,7 @@ public partial class CollectionPointUpdate : System.Web.UI.Page
             {
                 if (((Dictionary<Item, int>)Session["discrepancyList"]).Count != 0)////////////////////////////////////
                 {
-                    Response.Redirect(LoginController.GenerateDiscrepancyV2URI);
+                    Response.Redirect(LoginController.GenerateDiscrepancyAdhocV2URI);
 
                     //
                     Session["RetrievalShortfallItemList"] = null;

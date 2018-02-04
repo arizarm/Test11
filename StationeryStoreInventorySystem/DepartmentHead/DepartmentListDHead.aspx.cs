@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -209,7 +210,8 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                             }
                             if (Aempid != 0 || sdate != "" || edate != "")
                             {
-                                Utility.sendMail(oldDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
+                                Thread emailThreadWithParam = new Thread(() => ADMailNotification(oldDeptTempEmail));
+                                emailThreadWithParam.Start();
                             }
                             deptController.UpdateRevoke();
 
@@ -242,10 +244,7 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                             {
                                 deptController.UpdateDeptRep(dcode, empid);
                             }
-                            //if (Aempid != 0 || sdate != "" || edate != "")
-                            //{
-                            //    Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
-                            //}
+                           
                             Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
 
                         }
@@ -296,9 +295,10 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                             }
                             if (Aempid != aid || sdate != ssdate || edate != eedate)
                             {
-                                Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
-                                Utility.sendMail(oldDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
-
+                                Thread emailThreadWithParamnew = new Thread(() => ADNewMailNotification(newDeptTempEmail));
+                                emailThreadWithParamnew.Start();
+                                Thread emailThreadWithParam = new Thread(() => ADMailNotification(oldDeptTempEmail));
+                                emailThreadWithParam.Start();
                             }
                             deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
                             Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
@@ -327,9 +327,9 @@ public partial class DepartmentListDHead : System.Web.UI.Page
                             {
                                 deptController.UpdateDeptRep(dcode, empid);
                             }
-                            Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
-
-                            deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
+                        Thread emailThreadWithParamnew = new Thread(() => ADNewMailNotification(newDeptTempEmail));
+                        emailThreadWithParamnew.Start();
+                        deptController.UpdateActingDHead(dcode, Aempid, sdate, edate);
                             Response.Redirect(LoginController.DepartmentDetailInfoURI + "?SuccessMsg=" + "Successfully Updated!!");
                         
                     }
@@ -346,7 +346,17 @@ public partial class DepartmentListDHead : System.Web.UI.Page
         }
     }
 
+    private void ADMailNotification(String oldDeptTempEmail)
+    {
+        Utility.sendMail(oldDeptTempEmail, "Change Acting Department Head", "Your authority have been revoked");
 
+    }
+
+    private void ADNewMailNotification(String newDeptTempEmail)
+    {
+        Utility.sendMail(newDeptTempEmail, "Change Acting Department Head", "Your Role have authorized to Acting Head");
+
+    }
 
     protected void DdlActingDHead_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -446,12 +456,19 @@ public partial class DepartmentListDHead : System.Web.UI.Page
 
 
 
-    protected void btnEditDate_Click(object sender, EventArgs e)
+    protected void BtnEditDate_Click(object sender, EventArgs e)
     {
         txtSDate.Visible = true;
         txtEDate.Visible = true;
         lblStartDate.Visible = false;
         lblEndDate.Visible = false;
         btnEditDate.Visible = false;
+    }
+
+
+
+    private void ADMailNotification()
+    {
+       
     }
 }

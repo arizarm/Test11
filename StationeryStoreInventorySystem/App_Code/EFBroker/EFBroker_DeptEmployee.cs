@@ -342,7 +342,7 @@ public class EFBroker_DeptEmployee
         return context.CollectionPoints.Select(x => x.CollectionPoint1).ToList();
     }
 
-
+    //AUTHOR : CHOU MING SHENG
     public static string GetDRepresentativeEmailByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())

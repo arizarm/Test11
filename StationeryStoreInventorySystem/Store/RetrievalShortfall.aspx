@@ -64,7 +64,7 @@
                                     <ItemTemplate>
                                         <asp:TextBox ID="txtActualQuantity" runat="server"></asp:TextBox>
                                        
-                                        <asp:RangeValidator ID="rng" runat="server" display="Dynamic" ErrorMessage="Invalid Quantity!" ControlToValidate="txtActualQuantity"  MinimumValue="0" Style="color: red"></asp:RangeValidator>
+                                        <asp:RangeValidator ID="rng" runat="server" display="Dynamic" ErrorMessage="Invalid Quantity!" ControlToValidate="txtActualQuantity"  MinimumValue="0" Style="color: red" Type="Integer"></asp:RangeValidator>
                                         <br />
                                         <asp:RequiredFieldValidator ID="req" runat="server" display="Dynamic" ErrorMessage="Please enter the Qty" ControlToValidate="txtActualQuantity" Style="color: red"></asp:RequiredFieldValidator>
                                     </ItemTemplate>

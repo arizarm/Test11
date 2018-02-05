@@ -145,7 +145,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
             Label statusLabel = (Label)e.Row.FindControl("lblStatus");
             statusLabel.Font.Bold = true;
             string status = statusLabel.Text;
-
+            statusLabel.Font.Bold = true;
             if (status == "Approved" || status == "approved" || status == "InProgress")
             {
                 statusLabel.ForeColor = System.Drawing.Color.Green;

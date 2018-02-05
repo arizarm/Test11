@@ -89,8 +89,9 @@ public class DiscrepancyMonthlyItemDetailsActivity extends AppCompatActivity {
         }
 
         if(complete){
-            Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
-            startActivity(i);
+//            Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
+//            startActivity(i);
+            finish();
         }
     }
 
@@ -101,8 +102,9 @@ public class DiscrepancyMonthlyItemDetailsActivity extends AppCompatActivity {
                 break;
             }
         }
-        Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
-        startActivity(i);
+        finish();
+//        Intent i = new Intent(this, DiscrepancyMonthlyActivity.class);
+//        startActivity(i);
     }
 
     @Override

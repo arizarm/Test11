@@ -108,7 +108,6 @@ public class LoginActivity extends Activity {
                                         protected Boolean doInBackground(String... params) {
                                             return Employee.CheckIsTempHead(params[0]);
                                         }
-
                                         @Override
                                         protected void onPostExecute(Boolean result) {
                                             if (result)

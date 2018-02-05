@@ -16,14 +16,32 @@ public partial class ReorderReport : System.Web.UI.Page
         {
             DateTime sDate = Convert.ToDateTime(startDate.Text);
             DateTime eDate = Convert.ToDateTime(endDate.Text);
-            
+
             lblsdate.Text = sDate.ToShortDateString();
             lbledate.Text = eDate.ToShortDateString();
             lblmsg.Text = "List of items running low on stock which are yet to be delivered from supplier";
-            GvPurchasedreoderItem.DataSource = pCtrlr.GenerateReorderReportForPurchasedItems(sDate, eDate);
+            List<ShortfallItems> ritem = pCtrlr.GenerateReorderReportForPurchasedItems(sDate, eDate);
+            if (ritem.Count == 0)
+            {
+                lblresult1.Text = "No Shortfall item";
+            }
+            else
+            {
+                lblresult1.Text = "";
+            }
+            GvPurchasedreoderItem.DataSource = ritem;
             GvPurchasedreoderItem.DataBind();
+            List<ShortfallItems> ritem1 = pCtrlr.GenerateShortfallItemsReport(sDate, eDate);
+            if (ritem1.Count == 0)
+            {
+                lblresult2.Text = "No Shortfall item";
+            }
+            else
+            {
+                lblresult2.Text = "";
+            }
             lblmsg2.Text = "List of items running low on stock with no purchases done yet";
-            GvShortfallItems.DataSource = pCtrlr.GenerateShortfallItemsReport(sDate, eDate);
+            GvShortfallItems.DataSource = ritem1;
             GvShortfallItems.DataBind();
         }
         else
@@ -51,20 +69,20 @@ public partial class ReorderReport : System.Web.UI.Page
         //DateTime sDate = DateTime.ParseExact(startDate.Text, "dd-mm-yy", CultureInfo.InvariantCulture);
         //DateTime eDate = DateTime.ParseExact(endDate.Text, "dd-mm-yy", CultureInfo.InvariantCulture);
         //DateTime today = DateTime.Parse(DateTime.Today.Date.ToString("dd-mm-yy"));
-        if (d1>today && d2 > today)
-        {           
+        if (d1 > today && d2 > today)
+        {
             e.IsValid = false;
             lblerror.Text = "Start Date & End Date cannot be greater than today";
-            lblerror.ForeColor = System.Drawing.Color.Red;  
+            lblerror.ForeColor = System.Drawing.Color.Red;
 
-        } 
-        else if(d1 > today)
+        }
+        else if (d1 > today)
         {
             e.IsValid = false;
             lblerror.Text = "Start Date cannot be greater than today";
             lblerror.ForeColor = System.Drawing.Color.Red;
-        }   
-        else if(d2 > today)
+        }
+        else if (d2 > today)
         {
             e.IsValid = false;
             lblerror.Text = "End Date cannot be greater than today";
@@ -84,6 +102,6 @@ public partial class ReorderReport : System.Web.UI.Page
                 lblerror.Text = "";
             }
         }
-        
+
     }
 }

@@ -156,7 +156,7 @@ public partial class GenerateDiscrepancyV2 : System.Web.UI.Page
         for (int i = 0; i < gvItemList.Rows.Count; i++)
         {
             GridViewRow row = gvItemList.Rows[i];
-            (row.FindControl("cbxCorrect") as CheckBox).Checked = true;
+            (row.FindControl("cbxCorrect") as CheckBox).Checked = false;
         }
 
     }

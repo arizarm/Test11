@@ -38,7 +38,7 @@ public partial class Department_DepartmentDetailInfo : System.Web.UI.Page
                 lblMessage.Text = s;
 
 
-                if (empRole == "Employee" && tempHead == "N")
+                if (empRole == "Employee")
                 {
                     btnUpdate.Visible = false;
 

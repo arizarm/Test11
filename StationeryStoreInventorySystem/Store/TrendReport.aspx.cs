@@ -71,6 +71,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLDuration.Visible = false;
                     BtnDurationAdd.Visible = false;
                     GVDuration.Visible = false;
+                    LblDurAlert.Visible = false;
                     ViewState["durSel"] = 0;
                     break;
                 case 1:
@@ -79,6 +80,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLDuration.Visible = false;
                     BtnDurationAdd.Visible = false;
                     GVDuration.Visible = false;
+                    LblDurAlert.Visible = false;
                     ViewState["durSel"] = 1;
                     GenerateRequisitionTrendController grtc = new GenerateRequisitionTrendController();
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
@@ -110,6 +112,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLDuration.Visible = false;
                     BtnDurationAdd.Visible = false;
                     GVDuration.Visible = false;
+                    LblDurAlert.Visible = false;
                     ViewState["durSel"] = 0;
                     break;
                 case 1:
@@ -118,6 +121,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLDuration.Visible = false;
                     BtnDurationAdd.Visible = false;
                     GVDuration.Visible = false;
+                    LblDurAlert.Visible = false;
                     ViewState["durSel"] = 1;
                     GenerateReorderTrendController grtc = new GenerateReorderTrendController();
                     List<string> allMonths = grtc.GetRequisitionsUpTo2MonthsAgo();
@@ -153,6 +157,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLCategory.Visible = false;
                     BtnCategoryAdd.Visible = false;
                     GVCategory.Visible = false;
+                    LblCatAlert.Visible = false;
                     ViewState["catSel"] = 0;
                     break;
                 case 1:
@@ -175,6 +180,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     DDLCategory.Visible = false;
                     BtnCategoryAdd.Visible = false;
                     GVCategory.Visible = false;
+                    LblCatAlert.Visible = false;
                     ViewState["catSel"] = 0;
                     break;
                 case 1:
@@ -200,6 +206,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 DDLShared.Visible = false;
                 BtnSharedAdd.Visible = false;
                 GVShared.Visible = false;
+                LblSharedAlert.Visible = false;
                 ViewState["sharedListSel"] = 0;
                 break;
             case 1:
@@ -225,6 +232,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 DDLShared.Visible = false;
                 BtnSharedAdd.Visible = false;
                 GVShared.Visible = false;
+                LblSharedAlert.Visible = false;
                 ViewState["sharedListSel"] = 0;
                 break;
             case 1:
@@ -251,6 +259,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             ((List<string>)ViewState["catAdded"]).Add(addMe);
             GVCategory.DataSource = ((List<string>)ViewState["catAdded"]);
             GVCategory.DataBind();
+            LblCatAlert.Visible = false;
         }
         else
         {
@@ -266,6 +275,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     ((List<string>)ViewState["catAdded"]).Add(addMe);
                     GVCategory.DataSource = ((List<string>)ViewState["catAdded"]);
                     GVCategory.DataBind();
+                    LblCatAlert.Visible = false;
                     break;
                 }
             }
@@ -300,6 +310,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
             GVShared.DataSource = ((List<string>)ViewState["sharedListAdded"]);
             GVShared.DataBind();
+            LblSharedAlert.Visible = false;
         }
         else
         {
@@ -318,6 +329,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     ((List<string>)ViewState["sharedListAdded"]).Add(addMe);
                     GVShared.DataSource = ((List<string>)ViewState["sharedListAdded"]);
                     GVShared.DataBind();
+                    LblSharedAlert.Visible = false;
                     break;
                 }
             }
@@ -334,6 +346,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
             ((List<string>)ViewState["dateAdded"]).Add(addMe);
             GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
             GVDuration.DataBind();
+            LblDurAlert.Visible = false;
         }
         else if (((List<string>)ViewState["dateAdded"]).Count == 1 || (((List<string>)ViewState["dateAdded"]).Count == 2))
         {
@@ -349,6 +362,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     ((List<string>)ViewState["dateAdded"]).Add(addMe);
                     GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
                     GVDuration.DataBind();
+                    LblDurAlert.Visible = false;
                     break;
                 }
             }
@@ -368,6 +382,7 @@ public partial class RequisitionTrend : System.Web.UI.Page
                     ((List<string>)ViewState["dateAdded"]).Add(addMe);
                     GVDuration.DataSource = ((List<string>)ViewState["dateAdded"]);
                     GVDuration.DataBind();
+                    LblDurAlert.Visible = false;
                     break;
                 }
             }
@@ -484,7 +499,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 }
                 else
                 {
-                    Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                    //Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                    if ((int)ViewState["catSel"] == 1 && GVCategory.Rows.Count == 0)
+                        LblCatAlert.Visible = true;
+                    if ((int)ViewState["durSel"] == 2 && GVDuration.Rows.Count == 0)
+                        LblDurAlert.Visible = true;
+                    if ((int)ViewState["sharedListSel"] == 1 && GVShared.Rows.Count == 0)
+                        LblSharedAlert.Visible = true;
                 }
             }
             else if (ReportToSelect == "ROR")
@@ -583,7 +604,13 @@ public partial class RequisitionTrend : System.Web.UI.Page
                 }
                 else
                 {
-                    Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                    //Utility.DisplayAlertMessage(Message.CustomFieldsNotSelected);
+                    if ((int)ViewState["catSel"] == 1 && GVCategory.Rows.Count == 0)
+                        LblCatAlert.Visible = true;
+                    if ((int)ViewState["durSel"] == 2 && GVDuration.Rows.Count == 0)
+                        LblDurAlert.Visible = true;
+                    if ((int)ViewState["sharedListSel"] == 1 && GVShared.Rows.Count == 0)
+                        LblSharedAlert.Visible = true;
                 }
             }
         }

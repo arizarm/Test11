@@ -45,8 +45,10 @@ public class DiscrepancySummaryAdapter extends ArrayAdapter<Discrepancy> {
             etRemarks.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v2, boolean hasFocus) {
+                    if(!hasFocus) {
                         String remarks = etRemarks.getText().toString();
                         d.saveRemarks(remarks);
+                    }
                 }
             });
         }

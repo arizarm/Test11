@@ -188,7 +188,7 @@ public partial class PurchaseOrderForm : System.Web.UI.Page
         Session["ReorderItem"] = ritems;
         GvreorderItems.DataSource = ritems;
         GvreorderItems.DataBind();
-
+        txtDate.Text = "";
         ddlsupervisorNames.SelectedIndex = 0;
         ddlAddNewItem.SelectedIndex = 0;
         ClientScript.RegisterStartupScript(Page.GetType(), "MessageBox",

@@ -41,11 +41,14 @@
     </h4>
     <br />
 
-    <asp:Label runat="server" Text="" ID="lblmsg" Font-Bold="true"></asp:Label>
+    <asp:Label runat="server" ID="lblmsg" Font-Bold="true"></asp:Label>
     <br />
     <br />
-    <div id="printable">:
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvPurchasedreoderItem" EmptyDataText="No shortfall items"   EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px" >
+    <asp:Label runat="server" ID="lblresult1" Font-Bold="true" ForeColor="Red"></asp:Label>
+    <br />
+    <br />
+    <div id="printable">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvPurchasedreoderItem"    EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px" >
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                     <ControlStyle Font-Size="10pt"/>
@@ -99,10 +102,13 @@
     <br />
     <br />
     <br />
-    <asp:Label runat="server" Text=""  ID="lblmsg2" Font-Bold="true"></asp:Label>
+    <asp:Label runat="server"  ID="lblmsg2" Font-Bold="true" ></asp:Label>
+     <br />
+     <br />
+   <asp:Label runat="server" ID="lblresult2" Font-Bold="true" ForeColor="Red"></asp:Label>
     <br />
     <br />
-    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvShortfallItems" EmptyDataText="No shortfall items"  EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px">
+    <asp:GridView runat="server" AutoGenerateColumns="False" ID="GvShortfallItems"   EmptyDataRowStyle-BackColor="Window" CssClass="mGrid" RowStyle-Height="50px">
         <Columns>
             <asp:BoundField HeaderText="ItemCode" DataField="ItemCode" HeaderStyle-CssClass="gvHeaderColumn">
                <ControlStyle Font-Size="10pt" />

@@ -116,6 +116,8 @@
                 android:onClick="submitClick"
                 android:text="Submit Discrepancies"
                 android:textSize="20sp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 style="@style/button_text"
                 android:background="@drawable/green_button"/>
         </LinearLayout>

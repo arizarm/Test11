@@ -78,7 +78,7 @@
     </asp:DropDownList>
     
     <asp:Button ID="BtnDurationAdd" runat="server" Text="Add" Visible="false" OnClick="BtnDurationAdd_Click" CssClass="alert-success"/>
-                
+                                <br /><asp:Label ID="LblDurAlert" runat="server" Text="Please Click Add after Selecting!" ForeColor="Red" Visible="false"/>
                 <asp:Label ID="LblFrom" runat="server" Text="From:" Visible="false"/>
                 <asp:DropDownList ID="DDLFrom" runat="server" Visible="false" AutoPostBack="true" OnSelectedIndexChanged="DDLFrom_SelectedIndexChanged"/>
             </td>
@@ -88,6 +88,7 @@
     </asp:DropDownList>
     
     <asp:Button ID="BtnCategoryAdd" runat="server" Text="Add" Visible="false" OnClick="BtnCategoryAdd_Click" CssClass="alert-success"/>
+                <br /><asp:Label ID="LblCatAlert" runat="server" Text="Please Click Add after Selecting!" ForeColor="Red" Visible="false"/>
             </td>
                                    
             <td>
@@ -95,6 +96,7 @@
     </asp:DropDownList>
     
     <asp:Button ID="BtnSharedAdd" runat="server" Text="Add" Visible="false" OnClick="BtnSharedAdd_Click" CssClass="alert-success"/>
+                <br /><asp:Label ID="LblSharedAlert" runat="server" Text="Please Click Add after Selecting!" ForeColor="Red" Visible="false"/>
             </td>
 
         </tr>

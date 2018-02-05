@@ -120,8 +120,8 @@ public class EFBroker_PurchaseOrder
         {
             var itemPriceList = (from item in entities.Items
                                 join price in entities.PriceLists on item.ItemCode equals price.ItemCode
-                                where  price.TenderYear==currentyear
-                                orderby price.SupplierRank ascending
+                                where  price.TenderYear==currentyear && price.Supplier.ActiveStatus == "Y"
+                                 orderby price.SupplierRank ascending
                                 select new ItemPrice
                                 {
                                     //SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),
@@ -141,8 +141,8 @@ public class EFBroker_PurchaseOrder
         {
             var itemPriceList = (from item in entities.Items
                                     join price in entities.PriceLists on item.ItemCode equals price.ItemCode
-                                    where item.ItemCode == itemCode && price.TenderYear == currentyear
-                                    orderby price.SupplierRank ascending
+                                    where item.ItemCode == itemCode && price.TenderYear == currentyear && price.Supplier.ActiveStatus == "Y"
+                                 orderby price.SupplierRank ascending
                                     select new ItemPrice
                                     {
                                         //SupplierNameWithPrice = price.Supplier.SupplierName + " / " + price.Price + " / " + (price.Price * item.ReorderQty),

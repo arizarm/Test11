@@ -139,6 +139,7 @@ public partial class ReqisitionListEmployee : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label statusLabel = (Label)e.Row.FindControl("Label4");
+            statusLabel.Font.Bold = true;
 
             string status = statusLabel.Text;
             if (status == "Approved" || status == "approved" || status == "InProgress")

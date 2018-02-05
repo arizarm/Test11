@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : KHIN MO MO ZIN
 public partial class RegenerateRequest : System.Web.UI.Page
 {
     static string status = "Priority";

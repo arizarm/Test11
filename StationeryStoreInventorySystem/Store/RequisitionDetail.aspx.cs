@@ -8,8 +8,6 @@ using System.Web.UI.WebControls;
 //AUTHOR : CHOU MING SHENG
 public partial class Store_RequisitionDetail : System.Web.UI.Page
 {
-    StationeryEntities context = new StationeryEntities();
-
     int id = 0;
     string des;
     protected void Page_Load(object sender, EventArgs e)
@@ -20,9 +18,9 @@ public partial class Store_RequisitionDetail : System.Web.UI.Page
 
             ReqisitionListItem r = RequisitionControl.getRequisitionForApprove(id);
 
-            Label1.Text = r.EmployeeName;
-            Label2.Text = r.Date;
-            Label3.Text = r.Status;
+            lblRequestedBy.Text = r.EmployeeName;
+            lblDate.Text = r.Date;
+            lblStatus.Text = r.Status;
 
         }
         else
@@ -38,8 +36,8 @@ public partial class Store_RequisitionDetail : System.Web.UI.Page
 
     protected void showAllItems()
     {
-        GridView1.DataSource = RequisitionControl.getList(id);
-        GridView1.DataBind();
+        gvDetail.DataSource = RequisitionControl.getList(id);
+        gvDetail.DataBind();
     }
 
 }

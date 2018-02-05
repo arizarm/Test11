@@ -25,8 +25,6 @@ public interface IRetrievalService
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
     void Update(string RetrievalID, string ItemCode, string ItemQty);
-    //void Update(WCFRetrievalListDetailUpdate RetrievalDetail);
-    //
 }
 
 [Serializable]

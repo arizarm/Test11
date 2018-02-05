@@ -8,6 +8,7 @@ using System.Web;
 /// </summary>
 /// 
 //AUTHOR : TAN WEN SONG
+//AUTHOR : YIMON SOE
 public class EFBroker_Employee
 {
     public EFBroker_Employee()

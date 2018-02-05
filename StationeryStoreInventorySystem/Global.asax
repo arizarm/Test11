@@ -48,6 +48,7 @@
 
     }
 
+    //AUTHOR : YIMON SOE
     protected void Application_AuthenticateRequest(Object sender, EventArgs e)
     {
 HttpApplication context = (HttpApplication)sender;

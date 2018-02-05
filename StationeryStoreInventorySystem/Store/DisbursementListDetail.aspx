@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="DisbursementListDetail.aspx.cs" Inherits="DisbursementListDetail" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <%--AUTHOR : KHIN MO MO ZIN--%>
     <script src="../Content/JavaScript.js"></script>
     <style type="text/css">
         .auto-style1 {

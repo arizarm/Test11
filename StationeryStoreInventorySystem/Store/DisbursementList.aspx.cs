@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : KHIN MO MO ZIN
 public partial class DisbursementList : System.Web.UI.Page
 {
     DisbursementCotrol disbCon = new DisbursementCotrol();

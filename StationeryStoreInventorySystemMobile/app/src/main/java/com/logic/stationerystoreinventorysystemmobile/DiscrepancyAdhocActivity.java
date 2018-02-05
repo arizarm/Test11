@@ -36,8 +36,8 @@ public class DiscrepancyAdhocActivity extends AppCompatActivity implements Adapt
 
     protected void searchClick(View v){
         list = findViewById(R.id.lvItemsAdhoc);
-        EditText txtSearch = findViewById(R.id.txtSearch);
-        String searchString = txtSearch.getText().toString();
+        EditText etSearch = findViewById(R.id.etSearch);
+        String searchString = etSearch.getText().toString();
         new AsyncTask<String, Void, ArrayList<CatalogueItem>>(){
             ProgressDialog progress;
             String noSearchReturn;

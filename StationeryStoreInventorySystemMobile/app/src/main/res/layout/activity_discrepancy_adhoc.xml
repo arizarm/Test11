@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/txtSearch"
+            android:id="@+id/etSearch"
             style="@style/TextStyle"
             android:layout_width="match_parent"
             android:layout_height="90dp"

@@ -64,6 +64,7 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
     {
         List<Discrepency> dList = new List<Discrepency>();
         bool complete = true;
+        bool monthly = false;
         foreach (GridViewRow row in gvDiscrepancies.Rows)
         {
             string itemCode = (row.FindControl("lblItemCode") as Label).Text;
@@ -125,10 +126,12 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
                         if ((bool)Session["monthly"] == true)
                         {
                             d.Status = "Monthly";
+                            monthly = true;
                         }
                         else
                         {
                             d.Status = "Pending";
+                            monthly = false;
                         }
                     }
                     else
@@ -165,7 +168,14 @@ public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 
         if (complete)
         {
-            EFBroker_Discrepancy.SaveDiscrepencies(dList);
+            if (monthly)
+            {
+                EFBroker_Discrepancy.MonthlyInventoryCheck(dList);
+            }
+            else
+            {
+                EFBroker_Discrepancy.SaveDiscrepencies(dList);
+            }
 
 
             //bool informSupervisor = false;

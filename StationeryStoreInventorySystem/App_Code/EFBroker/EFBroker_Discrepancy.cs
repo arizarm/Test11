@@ -108,4 +108,24 @@ public class EFBroker_Discrepancy
             context.SaveChanges();
         }
     }
+
+    public static void MonthlyInventoryCheck(List<Discrepency> dList)
+    {
+        using(TransactionScope ts = new TransactionScope())
+        {
+            StationeryEntities context = new StationeryEntities();
+            List<Discrepency> pendingList = context.Discrepencies.Where(x => x.Status == "Pending" || x.Status == "Monthly").ToList();
+
+            foreach(Discrepency d in pendingList)
+            {
+                d.Status = "Resolved";
+            }
+
+            context.SaveChanges();
+
+            SaveDiscrepencies(dList);
+
+            ts.Complete();
+        }
+    }
 }

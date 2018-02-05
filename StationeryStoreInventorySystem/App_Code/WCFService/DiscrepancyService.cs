@@ -14,6 +14,7 @@ public class DiscrepancyService : IDiscrepancyService
         List<Discrepency> dList = new List<Discrepency>();
         bool informSupervisor = false;
         bool informManager = false;
+        bool monthly = false;
 
         foreach (WCFDiscrepancy wd in wdList)
         {
@@ -24,6 +25,11 @@ public class DiscrepancyService : IDiscrepancyService
             d.Remarks = wd.Remarks;
             d.Status = wd.Status;
             d.Date = DateTime.Now;
+
+            if(wd.Status == "Monthly")
+            {
+                monthly = true;
+            }
 
             //Code to determine the discrepancy amount
             List<PriceList> plHistory = EFBroker_PriceList.GetPriceListByItemCode(d.ItemCode);
@@ -62,7 +68,7 @@ public class DiscrepancyService : IDiscrepancyService
             }
             dList.Add(d);
         }
-        bool successfullySent = sendDiscrepanciesToDatabase(dList);
+        bool successfullySent = sendDiscrepanciesToDatabase(dList, monthly);
 
         if (successfullySent)
         {
@@ -84,11 +90,18 @@ public class DiscrepancyService : IDiscrepancyService
         }
     }
 
-    private bool sendDiscrepanciesToDatabase(List<Discrepency> dList)
+    private bool sendDiscrepanciesToDatabase(List<Discrepency> dList, bool monthly)
     {
         try
         {
-            EFBroker_Discrepancy.SaveDiscrepencies(dList);
+            if (monthly)
+            {
+                EFBroker_Discrepancy.MonthlyInventoryCheck(dList);
+            }
+            else
+            {
+                EFBroker_Discrepancy.SaveDiscrepencies(dList);
+            }
             return true;
         }
         catch (Exception e)

@@ -4,6 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
+    <%--AUTHOR : CHOU MING SHENG--%>
     <div class="row updateDeptHead">
         <h2 class="mainPageHeader">Retrieval List Detail</h2>
     </div>

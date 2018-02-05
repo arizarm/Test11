@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+//AUTHOR : CHOU MING SHENG
 public class RetrievalListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     @Override

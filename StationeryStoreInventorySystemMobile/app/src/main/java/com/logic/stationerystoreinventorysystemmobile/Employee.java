@@ -15,6 +15,8 @@ import java.util.LinkedHashMap;
  * Created by Yimon Soe on 25/1/2018.
  */
 
+//AUTHOR : YIMON SOE
+//AUTHOR : APRIL SHAR
 public class Employee extends java.util.HashMap<String,String> {
 
     public Employee(){
@@ -83,6 +85,7 @@ public class Employee extends java.util.HashMap<String,String> {
         return  emp;
     }
 
+    //AUTHOR : APRIL SHAR
     public static boolean CheckIsTempHead(String id)
     {
 /*        JSONArray b = JSONParser.getJSONArrayFromUrl(hostURL+"Employee/"+id);
@@ -98,7 +101,7 @@ public class Employee extends java.util.HashMap<String,String> {
         return false;
     }
 
-
+    //AUTHOR : APRIL SHAR
     public static boolean CheckHasTempHead(String id){
 
         JSONObject b = JSONParser.getJSONFromUrl(hostURL+"Employee/check/"+id);

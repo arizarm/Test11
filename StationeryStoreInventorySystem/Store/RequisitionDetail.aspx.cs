@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : CHOU MING SHENG
 public partial class Store_RequisitionDetail : System.Web.UI.Page
 {
     StationeryEntities context = new StationeryEntities();

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+//AUTHOR : KHIN MYO MYO SHWE
 public class CollectionPoint extends  java.util.HashMap<String,String> {
     final static String hostURL = Util.host +"DeptService.svc/";
 

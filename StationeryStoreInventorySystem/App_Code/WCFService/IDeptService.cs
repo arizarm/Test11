@@ -10,8 +10,8 @@ using System.Text;
 [ServiceContract]
 public interface IDeptService
 {
+    //AUTHOR : YIMON SOE
     //Start Login
-
     [OperationContract]
     [WebGet(UriTemplate = "/GetEmployeeByEmail/{email}/{password}", ResponseFormat = WebMessageFormat.Json)]
     WCFEmployee GetEmployeeByEmail(string email,String password);
@@ -19,6 +19,7 @@ public interface IDeptService
     // End Login
 
 
+    //AUTHOR : KHIN MYO MYO SHWE
     // Start Employee
 
     [OperationContract]
@@ -83,6 +84,8 @@ public interface IDeptService
 
     //End Collection Point
 
+
+    //AUTHOR : APRIL SHAR
     [OperationContract]
     [WebGet(UriTemplate = "/Employee/{empid}/", ResponseFormat = WebMessageFormat.Json)]
     IsTemp CheckIsTempHead(string empid);

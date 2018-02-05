@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing;
 
+//AUTHOR : EDWIN TAN
 public partial class StockAdjustment : System.Web.UI.Page
 {
     List<Discrepency> monthly;

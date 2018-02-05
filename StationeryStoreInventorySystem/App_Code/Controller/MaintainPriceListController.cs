@@ -7,6 +7,8 @@ using System.Web;
 /// <summary>
 /// Summary description for MaintainPriceListController
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class MaintainPriceListController
 {
     public List<Item> GetActiveItemList()

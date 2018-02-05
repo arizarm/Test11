@@ -7,6 +7,8 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_Department
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
 public class EFBroker_Department
 {
     public EFBroker_Department()

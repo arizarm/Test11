@@ -8,7 +8,7 @@ using System.Drawing;
 
 public partial class StationeryCatalogue : System.Web.UI.Page
 {
-
+    //AUTHOR : TAN WEN SONG
     protected void Page_Load(object sender, EventArgs e)
     {
         Employee user = (Employee)Session["emp"];

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//AUTHOR : EDWIN TAN
 public class DiscrepancyAdhocActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView list;
 

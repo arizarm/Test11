@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for SupplierInfo
 /// </summary>
+/// 
+//AUTHOR : KIRUTHIKA VENKATESH
 public class ItemPrice
 {
    // private string supplierNameWithPrice;

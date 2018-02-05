@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public class Util {
 
-    final static String host = "http://192.168.1.224/StationeryStoreInventorySystem/";
+    final static String host = "http://172.17.249.194/StationeryStoreInventorySystem/";
 
     public static String getProperty(String key,Context context) throws IOException {
         Properties properties = new Properties();;
@@ -30,6 +30,7 @@ public class Util {
 
     }
 
+    //AUTHOR : EDWIN TAN
     public static boolean isInt(String toBeChecked){
         try{
             Integer i = Integer.parseInt(toBeChecked);
@@ -40,6 +41,7 @@ public class Util {
         }
     }
 
+    //AUTHOR : YIMON SOE
     public static void LogOut(Context context)
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -52,6 +54,7 @@ public class Util {
                 "Logged out",Toast.LENGTH_SHORT).show();
     }
 
+    //AUTHOR : KHIN MO MO ZIN
     //custom toast error message box
     public static void redsToast(String message, Context context) {
 
@@ -65,6 +68,7 @@ public class Util {
         toast.show();
     }
 
+    //AUTHOR : KHIN MO MO ZIN
     //custom toast message box
     public static void greenToast(String message, Context context) {
 

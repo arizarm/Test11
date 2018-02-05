@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+//AUTHOR : CHOU MING SHENG
 public class Retrieval_ItemDetail extends java.util.HashMap<String,String> {
 
      final static String host = Util.host +"RetrievalService.svc";

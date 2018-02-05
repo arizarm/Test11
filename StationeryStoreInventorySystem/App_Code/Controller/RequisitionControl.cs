@@ -8,6 +8,9 @@ using System.Threading;
 /// <summary>
 /// Summary description for RequisitionControl
 /// </summary>
+/// 
+
+////AUTHOR : YIMON SOE, APRIL SHAR, KHIN MYO MYO SHWE, CHOU MING SHENG
 public class RequisitionControl
 {
 

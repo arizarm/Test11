@@ -9,10 +9,11 @@ using System.Threading;
 /// <summary>
 /// Summary description for RetrievalControl
 /// </summary>
+/// 
+//AUTHOR : CHOU MING SHENG
+//AUTHOR : KHIN MO MO ZIN
 public class RetrievalControl
 {
-    static StationeryEntities context = new StationeryEntities();
-
     List<RetrievalListDetailItem> RetrievalListDetailItemList = new List<RetrievalListDetailItem>();
 
     List<Disbursement_Item> Disbursement_ItemList = new List<Disbursement_Item>();
@@ -42,8 +43,9 @@ public class RetrievalControl
         List<RetrievalListDetailItem> retrievalListDetailItemDisplayList = new List<RetrievalListDetailItem>();
 
         //get retrievalStatus by requisitionId
-        string retrievalStatus = context.Retrievals.Where(x => x.RetrievalID == requisitionId).Select(x => x.RetrievalStatus).First().ToString();
 
+        string retrievalStatus = EFBroker_Disbursement.GetRetrievalStatusByRequisitionId(requisitionId);
+        
         // dictionary with itemcode + totalrequestedQty
         Dictionary<string, int> itemcodeAndTotalRequestedQtyDictionary = new Dictionary<string, int>();
 
@@ -90,7 +92,7 @@ public class RetrievalControl
             if (retrievalStatus == "InProgress")
             {
                 //retrievedQty is same as value which inputted in warehouse 
-                retrievedQty = (int)(context.Disbursement_Item.Include("Disbursement").Where(x => x.Disbursement.RetrievalID == requisitionId && x.ItemCode.Equals(kvp.Key)).Select(x => x.ActualQty).First());
+                retrievedQty = EFBroker_Disbursement.GetRetrievedQtyByRequisitionIdNItemCode(requisitionId, kvp.Key);
             }
 
             Item item = EFBroker_Item.GetItembyItemCode(kvp.Key);
@@ -363,8 +365,7 @@ public class RetrievalControl
 
         //foreach requestedByList get depcode
         foreach (int i in requestedByList)
-        {
-            //string departmentCode = context.Employees.Where(x => x.EmpID.Equals(i)).Select(x => x.DeptCode).First().ToString();
+        {            
             string departmentCode = EFBroker_DeptEmployee.GetDepartByEmpID(i).DeptCode.ToString();
 
             if (departmentCodeList.Count() != 0)

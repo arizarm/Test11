@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : CHOU MING SHENG
 public partial class CollectionPointUpdate : System.Web.UI.Page
 {
     RetrievalControl retCon = new RetrievalControl();

@@ -5,11 +5,12 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
+
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
 public class DeptService : IDeptService
 {
+    //AUTHOR : YIMON SOE
     // Start Login
-
     DeptController deptController = new DeptController();
     public WCFEmployee GetEmployeeByEmail(string email, string password)
     {
@@ -21,6 +22,7 @@ public class DeptService : IDeptService
     }
     //End Login
 
+    //AUTHOR : KHIN MYO MYO SHWE
     //Start Employee Function Part
     public List<WCFEmployee> EmployeeList()
     {
@@ -36,6 +38,7 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public WCFEmployee GetDeptHead(string dcode)
     {
 
@@ -46,6 +49,7 @@ public class DeptService : IDeptService
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public WCFEmployee GetActingDHead(string dcode)
     {
         int count = deptController.GetEmployeeListForActingDHeadSelectedCount(dcode);
@@ -64,6 +68,7 @@ public class DeptService : IDeptService
         }
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public List<WCFEmployee> ListForActingDHead(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
@@ -78,6 +83,7 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public WCFEmployee GetDeptRep(string dcode)
     {
 
@@ -88,6 +94,7 @@ public class DeptService : IDeptService
          , emp.EndDate.GetValueOrDefault().ToShortDateString());
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public List<WCFEmployee> ListForDeptRep(string dcode, string id)
     {
         List<WCFEmployee> wlist = new List<WCFEmployee>();
@@ -102,6 +109,7 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public void UpdateActingDHead(WCFEmployee e)
     {
         Employee emp = new Employee
@@ -116,6 +124,7 @@ public class DeptService : IDeptService
         deptController.UpdateActingDHead(e.DeptCode, e.Eid, e.StartDate, e.EndDate);
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public void UpdateDeptRep(WCFEmployee e)
     {
         Employee emp = new Employee
@@ -130,6 +139,7 @@ public class DeptService : IDeptService
     //End Employee Function Part
 
 
+    //AUTHOR : KHIN MYO MYO SHWE
     //Start Department Function Part
     public List<WCFDept> DepartmentList()
     {
@@ -144,6 +154,7 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public WCFDept GetDeptInfo(string dcode)
     {
         string collectpoint = deptController.GetDepartmentForCollectionPointSelected(dcode);
@@ -155,7 +166,7 @@ public class DeptService : IDeptService
     //End Department Function Part
 
     //Start Collection Function Part
-
+    //AUTHOR : KHIN MYO MYO SHWE
     public List<WCFCollectPoint> CollectionPointList()
     {
         List<WCFCollectPoint> wlist = new List<WCFCollectPoint>();
@@ -169,11 +180,13 @@ public class DeptService : IDeptService
         return wlist;
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public string GetCollectionPointByDeptCode(string deptcode)
     {  
         return deptController.GetCollectionidbyDeptCode(deptcode).ToString();
     }
 
+    //AUTHOR : KHIN MYO MYO SHWE
     public void UpdateCollect(WCFDept d)
     {
         Department dept = new Department
@@ -184,7 +197,7 @@ public class DeptService : IDeptService
         deptController.UpdateCollectionPoint(dept.DeptCode,Convert.ToInt16(dept.CollectionLocationID));
     }
 
-
+    //AUTHOR : APRIL SHAR
     //End Collection Function Part
     public IsTemp CheckIsTempHead(string id)
     {
@@ -196,6 +209,7 @@ public class DeptService : IDeptService
         return it;
     }
 
+    //AUTHOR : APRIL SHAR
     public CheckHasTemp CheckHasTempHead(string deptCode)
     {
         bool checkHasTemp = EFBroker_Employee.isDeptHaveTempHead(deptCode);

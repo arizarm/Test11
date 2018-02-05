@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
@@ -7,6 +7,9 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_Requisition
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
+//AUTHOR : APRIL SHAR
 public class EFBroker_Requisition
 {
     public EFBroker_Requisition()

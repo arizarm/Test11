@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.io.IOException;
 
+//AUTHOR : KHIN MO MO ZIN
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -30,6 +30,8 @@
            }).val();
 	    });
 	   
+
+//AUTHOR : TAN WEN SONG
        function printDiv() {
            var divName = "printable";
            var printContents = document.getElementById(divName).innerHTML;

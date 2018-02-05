@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for TenderListObj
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class TenderListObj
 {
     string itemP, itemDesc, itemD;

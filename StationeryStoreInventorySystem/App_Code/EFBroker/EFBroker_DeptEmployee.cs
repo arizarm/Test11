@@ -8,6 +8,9 @@ using System.Transactions;
 /// <summary>
 /// Summary description for EFBroker_DeptEmployee
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
+//AUTHOR : KHIN MYO MYO SHWE
 public class EFBroker_DeptEmployee
 {
 
@@ -129,6 +132,7 @@ public class EFBroker_DeptEmployee
         }
 
     }
+    //AUTHOR : KHIN MO MO ZIN
     public static string GetDeptRepByDeptCode(string depName)
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -137,6 +141,7 @@ public class EFBroker_DeptEmployee
         }
     }
 
+    //AUTHOR : KHIN MO MO ZIN
     public static int GetDeptRepEmpIDByDeptCode(string depName)
     {
         using (StationeryEntities smodel = new StationeryEntities())
@@ -346,6 +351,7 @@ public class EFBroker_DeptEmployee
         }
     }
 
+    //AUTHOR : KHIN MO MO ZIN
     public static string GetDRepresentativeNameByDeptCode(string depCode)
     {
         using (StationeryEntities smodel = new StationeryEntities())

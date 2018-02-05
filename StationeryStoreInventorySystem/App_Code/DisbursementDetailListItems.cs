@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for DisbursementDetailListItems
 /// </summary>
+/// 
+//AUTHOR : KHIN MO MO ZIN
 public class DisbursementDetailListItems
 {
     private string itemCode;

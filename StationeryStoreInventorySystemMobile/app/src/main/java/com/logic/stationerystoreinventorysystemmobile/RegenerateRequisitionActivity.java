@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+//AUTHOR : KHIN MO MO ZIN
 public class RegenerateRequisitionActivity extends AppCompatActivity {
 
     private static ArrayList<RegenerateRequisition> regenReqList = new ArrayList<RegenerateRequisition>();

@@ -4,6 +4,8 @@
     <script src="/Content/JavaScript.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+    <%--AUTHOR : TAN WEN SONG--%>
     <div class="row updateDeptHead">
         <h2 class="mainPageHeader">Logic University Stationery Catalogue</h2>
     </div>

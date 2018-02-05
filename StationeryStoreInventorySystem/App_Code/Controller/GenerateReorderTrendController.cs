@@ -8,6 +8,8 @@ using System.Globalization;
 /// <summary>
 /// Summary description for GenerateReorderTrendController
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class GenerateReorderTrendController
 {
     public List<string> GetAllCategoryNames()

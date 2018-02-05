@@ -7,6 +7,9 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_Report
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class EFBroker_Report
 {
     public static int? GetRequisitionsForGivenMonth(DateTime startDate, DateTime endDate, string dept, string cat)

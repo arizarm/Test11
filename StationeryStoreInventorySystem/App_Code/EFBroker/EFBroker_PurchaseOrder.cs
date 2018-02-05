@@ -7,6 +7,10 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_PurchaseOrder
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG 
+//AUTHOR : KIRUTHIKA VENKATESH
+
 public class EFBroker_PurchaseOrder
 {
     public EFBroker_PurchaseOrder()

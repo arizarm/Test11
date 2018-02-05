@@ -15,6 +15,7 @@ using System.Web.UI;
 /// </summary>
 public static class Utility 
 {
+    //AUTHOR : YIMON SOE
     public static void sendMail(string mailReceiver,string mailSubject,string mailBody)
     {
         MailMessage m = new MailMessage();
@@ -38,6 +39,8 @@ public static class Utility
             Console.WriteLine(ex.Message);
         }
     }
+
+    //AUTHOR : YIMON SOE
     public static bool checkIsTempDepHead(Employee e)
     {
         DateTime today = DateTime.Now.Date;
@@ -58,10 +61,13 @@ public static class Utility
         }
     }
 
+    //AUTHOR : TAN WEN SONG
     public static string FirstUpperCase(string s)
     {
         return s.First().ToString().ToUpper() + s.Substring(1).ToLower();
     }
+
+    //AUTHOR : YIMON SOE
     public static void logout()
     {
         FormsAuthentication.SignOut();
@@ -88,6 +94,7 @@ public static class Utility
         HttpContext.Current.Response.Redirect(LoginController.LoginURI);
     }
 
+    //AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
     public static void DisplayAlertMessage(string message)
     {
         Page page = HttpContext.Current.CurrentHandler as Page;
@@ -98,6 +105,7 @@ public static class Utility
         }
     }
 
+    //AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
     public static void AlertMessageThenRedirect(string message, string redirectAddress)
     {
         var page = HttpContext.Current.CurrentHandler as Page;

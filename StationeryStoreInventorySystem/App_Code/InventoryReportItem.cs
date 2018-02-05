@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for InventoryReportItem
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
 public class InventoryReportItem
 {
     public string itemCode { get; set; }

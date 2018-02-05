@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for Message
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class Message
 {
     public const String EmptySupplierCode

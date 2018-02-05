@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : CHOU MING SHENG
 public partial class RetrievalForm : System.Web.UI.Page
 {
     RetrievalControl retCon = new RetrievalControl();

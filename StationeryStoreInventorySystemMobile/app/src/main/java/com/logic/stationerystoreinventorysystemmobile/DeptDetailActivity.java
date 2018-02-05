@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+//AUTHOR : KHIN MYO MYO SHWE
 public class DeptDetailActivity extends AppCompatActivity{
 
     final static int[] view = { R.id.txtDeptName, R.id.txtContactName, R.id.txtPhone, R.id.txtFax, R.id.txtHead,R.id.txtDeptRep,R.id.txtCollectPoint};

@@ -46,9 +46,6 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainDHeadActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".RegenerateRequisitionActivity"
             android:screenOrientation="portrait"/>
         <activity

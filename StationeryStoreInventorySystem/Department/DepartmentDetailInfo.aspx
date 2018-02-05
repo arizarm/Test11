@@ -2,6 +2,8 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
+    <%--AUTHOR : KHIN MYO MYO SHWE--%>
     <style type="text/css">
         .auto-style1 {
             height: 30px;

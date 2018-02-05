@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-
+//AUTHOR : KHIN MYO MYO SHWE
 public class LinkedHashMapAdapter<K, V> extends BaseAdapter implements Filterable {
 
 

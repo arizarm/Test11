@@ -6,6 +6,9 @@ using System.Web;
 /// <summary>
 /// Summary description for LoginController
 /// </summary>
+/// 
+
+//AUTHOR : YIMON SOE
 public class LoginController
 {
     public LoginController()
@@ -75,6 +78,8 @@ public class LoginController
             HttpContext.Current.Response.Redirect(RepresentativeRequisitionFormURI);
         }
     }
+
+    //AUTHOR : TAN WEN SONG
     public static readonly string GenerateDiscrepancyV2URI = "~/Store/GenerateDiscrepancyV2.aspx";
     public static readonly string GenerateDiscrepancyAdhocV2URI="~/Store/GenerateDiscrepancyAdhocV2.aspx";
     public static readonly string LoginURI = "~/Login.aspx";

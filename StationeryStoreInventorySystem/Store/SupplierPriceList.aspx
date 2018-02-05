@@ -4,6 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
+    <%--AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN--%>
     <asp:Panel ID="PnlMain" runat="server">
         <div class="updateDeptHead">
             <h2 class="mainPageHeader">Supplier Profile</h2>

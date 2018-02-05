@@ -15,6 +15,7 @@ import java.util.List;
  * Created by Mo Mo on 30/1/2018.
  */
 
+//AUTHOR : KHIN MO MO ZIN
 public class DisbursementAdapter extends ArrayAdapter<DisbursementDetailListItems> {
 
     private List<DisbursementDetailListItems> items;

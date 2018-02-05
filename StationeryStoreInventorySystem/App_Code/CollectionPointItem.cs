@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for CollectionPointItem
 /// </summary>
+/// 
+//AUTHOR : CHOU MING SHENG
 public class CollectionPointItem
 {
     private string collectionPoint;

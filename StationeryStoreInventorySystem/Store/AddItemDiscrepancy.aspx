@@ -3,6 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+    <%--AUTHOR : EDWIN TAN--%>
     <div class="updateDeptHead"><h2 class="mainPageHeader">Add to Discrepancy List</h2></div>
     <br />
     <p>Item Code: <asp:Label ID="lblItemCode" runat="server" Text=""></asp:Label></p>

@@ -8,6 +8,8 @@ using System.Reflection;
 /// <summary>
 /// Summary description for ItemBusinessLogic
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
 public class ItemBusinessLogic
 {
     //EFBroker_Item EFBroker_Item;

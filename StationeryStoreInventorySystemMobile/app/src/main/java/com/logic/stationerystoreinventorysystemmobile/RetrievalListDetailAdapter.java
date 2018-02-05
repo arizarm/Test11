@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+//AUTHOR : CHOU MING SHENG
 public class RetrievalListDetailAdapter extends ArrayAdapter<Retrieval_ItemDetail> {
 
     private List<Retrieval_ItemDetail> items;

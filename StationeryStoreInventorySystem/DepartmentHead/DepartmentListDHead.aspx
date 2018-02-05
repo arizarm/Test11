@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="DepartmentListDHead.aspx.cs" Inherits="DepartmentListDHead" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+
+    <%--AUTHOR : KHIN MYO MYO SHWE--%>
     <style type="text/css">
         .auto-style1 {
             height: 40px;

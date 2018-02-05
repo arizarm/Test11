@@ -12,6 +12,8 @@ using System.Web.UI.WebControls;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 
+
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public partial class SupplierPriceList : System.Web.UI.Page
 {
     string code;

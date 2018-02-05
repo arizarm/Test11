@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+//AUTHOR : KHIN MYO MYO SHWE
 public class UpdateCollectionPointActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;

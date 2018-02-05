@@ -7,6 +7,7 @@ using System.Web;
 /// Summary description for RetrievalListDetailItem
 /// </summary>
 /// 
+//AUTHOR : CHOU MING SHENG
 
 [Serializable]
 public class RetrievalListDetailItem

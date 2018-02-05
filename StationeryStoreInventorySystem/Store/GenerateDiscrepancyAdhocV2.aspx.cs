@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Drawing;
 using System.Threading;
 
+//AUTHOR : EDWIN TAN
 public partial class GenerateDiscrepancyAdhocV2 : System.Web.UI.Page
 {
     int maxChars = 100;

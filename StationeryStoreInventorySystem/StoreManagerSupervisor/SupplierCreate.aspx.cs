@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public partial class SupplierPriceList : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)

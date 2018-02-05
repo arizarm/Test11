@@ -7,6 +7,8 @@ using System.Web;
 /// <summary>
 /// Summary description for PurchaseController
 /// </summary>
+/// 
+//AUTHOR : KIRUTHIKA VENKATESH
 public class PurchaseController
 {
     //StationeryEntities entities;

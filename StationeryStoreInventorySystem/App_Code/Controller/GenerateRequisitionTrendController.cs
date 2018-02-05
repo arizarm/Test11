@@ -8,6 +8,8 @@ using System.Globalization;
 /// <summary>
 /// Summary description for GenerateRequisitionTrendController
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class GenerateRequisitionTrendController
 {
     public List<string> GetAllCategoryNames()

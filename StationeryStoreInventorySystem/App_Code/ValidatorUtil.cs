@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 /// </summary>
 public static class ValidatorUtil
 {
+    ////AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
     public static bool isEmpty(String s)
     {
         if (string.IsNullOrEmpty(s))
@@ -16,6 +17,8 @@ public static class ValidatorUtil
         else
             return false;
     }
+
+    //AUTHOR : TAN WEN SONG
     public static bool ValidateNewItem(CustomValidator control, string itemCode)
     {
         Item item = EFBroker_Item.GetItembyItemCode(itemCode.ToUpper());
@@ -36,6 +39,8 @@ public static class ValidatorUtil
             return false;
         }
     }
+
+    //AUTHOR : TAN WEN SONG
     public static bool IsInvalidfieldLength(string field, int length)
     {
         if (field.Length > length)

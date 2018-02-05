@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//AUTHOR : EDWIN TAN
 public class DiscrepancyAdhocItemDetailsActivity extends AppCompatActivity {
     TextView tvItemCode;
     TextView tvItemName;

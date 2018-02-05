@@ -7,6 +7,8 @@ using System.Transactions;
 /// <summary>
 /// Summary description for EFBroker_Item
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
 public class EFBroker_Item
 {
     public EFBroker_Item()
@@ -39,6 +41,8 @@ public class EFBroker_Item
             ts.Complete();
         }
     }
+
+    //AUTHOR : CHOU MING SHENG
     public static Item GetItembyItemCode(string itemCode)
     {
         using (StationeryEntities inventoryDB = new StationeryEntities())

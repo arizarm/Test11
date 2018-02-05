@@ -3,6 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+    <%--AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN--%>
         <div class="updateDeptHead">
         <h2 class="mainPageHeader">SupplierList</h2>
     </div>

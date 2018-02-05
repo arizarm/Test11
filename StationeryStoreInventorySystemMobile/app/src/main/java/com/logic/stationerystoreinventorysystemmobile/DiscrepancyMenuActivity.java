@@ -10,6 +10,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+//AUTHOR : EDWIN TAN
 public class DiscrepancyMenuActivity extends AppCompatActivity {
 
     @Override

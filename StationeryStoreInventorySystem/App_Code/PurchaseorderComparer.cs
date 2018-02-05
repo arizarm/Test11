@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for Purchaseorder
 /// </summary>
+/// 
+//AUTHOR : KIRUTHIKA VENKATESH
 public class PurchaseOrderComparer : IEqualityComparer<PurchaseOrder>
 {
 

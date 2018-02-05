@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//AUTHOR : EDWIN TAN
 public class CatalogueItem extends HashMap<String, String> {
 
     static String host = Util.host + "ItemService.svc/";

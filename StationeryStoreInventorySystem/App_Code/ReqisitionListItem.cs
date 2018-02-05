@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for ReqisitionListItem
 /// </summary>
+/// 
+//AUTHOR : KHIN MO MO ZIN
 public class ReqisitionListItem
 {
     private string date;

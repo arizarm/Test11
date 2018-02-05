@@ -7,6 +7,9 @@ using System.Transactions;
 /// <summary>
 /// Summary description for EFBroker_Discrepancy
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
+//AUTHOR : EDWIN TAN
 public class EFBroker_Discrepancy
 {
     public EFBroker_Discrepancy()

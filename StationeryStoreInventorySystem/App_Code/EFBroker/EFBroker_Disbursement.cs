@@ -6,6 +6,10 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_Disbursement
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
+//AUTHOR : KHIN MO MO ZIN
+//AUTHOR : CHOU MING SHENG
 public class EFBroker_Disbursement
 {
     public EFBroker_Disbursement()

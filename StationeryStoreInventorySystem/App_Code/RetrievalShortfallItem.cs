@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for RetrievalShortfallItem
 /// </summary>
+/// 
+//AUTHOR : CHOU MING SHENG
 [Serializable]
 public class RetrievalShortfallItem
 {

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
+//AUTHOR : CHOU MING SHENG
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "RetrievalService" in code, svc and config file together.
 public class RetrievalService : IRetrievalService
 {

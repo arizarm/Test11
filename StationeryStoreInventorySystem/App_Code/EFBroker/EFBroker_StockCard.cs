@@ -7,6 +7,8 @@ using System.Transactions;
 /// <summary>
 /// Summary description for EFBroker_StockCard
 /// </summary>
+/// 
+//AUTHOR : TAN WEN SONG
 public class EFBroker_StockCard
 {
     public EFBroker_StockCard()
@@ -24,6 +26,8 @@ public class EFBroker_StockCard
         }
         return stockList;
     }
+
+    //AUTHOR : KHIN MO MO ZIN
     public static void AddStockTransaction(StockCard stockCard)
     {
         using (StationeryEntities context = new StationeryEntities())
@@ -32,6 +36,8 @@ public class EFBroker_StockCard
             context.SaveChanges();
         }
     }
+
+    //AUTHOR : EDWIN TAN
     public static void ResolveDiscrepancy(StockCard newEntry, string itemCode, int newBalance)
     {
         using (TransactionScope ts = new TransactionScope())

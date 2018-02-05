@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.content.Intent;
 
+//AUTHOR : YIMON SOE
+//AUTHOR : KHIN MO MO ZIN
 public class LoginActivity extends Activity {
 
     EditText email,password;
@@ -103,6 +105,7 @@ public class LoginActivity extends Activity {
                                 }
                                 else if (emp.get("isTemphead").equals("Y"))
                                 {
+                                    //AUTHOR : APRIL SHAR
                                     new AsyncTask<String, Void, Boolean>() {
                                         @Override
                                         protected Boolean doInBackground(String... params) {

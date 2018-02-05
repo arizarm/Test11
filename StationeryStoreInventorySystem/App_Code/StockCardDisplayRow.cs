@@ -6,6 +6,8 @@ using System.Web;
 /// <summary>
 /// Summary description for StockCardDisplayRow
 /// </summary>
+/// 
+//AUTHOR : EDWIN TAN
 public class StockCardDisplayRow
 {
     string transDate;

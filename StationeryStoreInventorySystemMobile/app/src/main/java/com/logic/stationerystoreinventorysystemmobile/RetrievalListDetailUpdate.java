@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//AUTHOR : CHOU MING SHENG
 public class RetrievalListDetailUpdate extends java.util.HashMap<String,String> {
 
      final static String host = Util.host +"/RetrievalService.svc";

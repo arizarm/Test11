@@ -7,6 +7,8 @@ using System.Web;
 /// <summary>
 /// Summary description for MaintainSupplierListController
 /// </summary>
+/// 
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class SupplierListController
 {
 

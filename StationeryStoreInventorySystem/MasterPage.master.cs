@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+//AUTHOR : KHIN MO MO ZIN
 public partial class MasterPage : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
@@ -73,6 +74,5 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         Utility.logout();
     }
-
 
 }

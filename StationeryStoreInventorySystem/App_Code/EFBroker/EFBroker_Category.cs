@@ -6,6 +6,10 @@ using System.Web;
 /// <summary>
 /// Summary description for EFBroker_Category
 /// </summary>
+/// 
+
+//AUTHOR : TAN WEN SONG
+//AUTHOR : ARIZ ARMAND BIN ABDUL RAHMAN
 public class EFBroker_Category
 {
     public EFBroker_Category()

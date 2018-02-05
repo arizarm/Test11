@@ -29,9 +29,20 @@ public partial class RetrievalForm : System.Web.UI.Page
                     foreach (GridViewRow r in gvRe.Rows)
                     {
                         int totalRequestedQty = Convert.ToInt32((r.FindControl("lblTotalRequestedQty") as Label).Text);
-
-                        RangeValidator rv = r.FindControl("rng") as RangeValidator;
-                        rv.MaximumValue = totalRequestedQty.ToString();
+                        string code = (r.FindControl("hdnflditemCode") as HiddenField).Value;
+                        Item item = EFBroker_Item.GetItembyItemCode(code);
+                        Label l = r.FindControl("lblAvailableQty") as Label;
+                        l.Text = item.BalanceQty.ToString();
+                        if (item.BalanceQty >= totalRequestedQty)
+                        {
+                            RangeValidator rv = r.FindControl("rng") as RangeValidator;
+                            rv.MaximumValue = totalRequestedQty.ToString();
+                        }
+                        else
+                        {
+                            RangeValidator rv = r.FindControl("rng") as RangeValidator;
+                            rv.MaximumValue = item.BalanceQty.ToString();
+                        }
                     }
                     //
                 }
@@ -112,4 +123,5 @@ public partial class RetrievalForm : System.Web.UI.Page
             Response.Redirect("RetrievalListDetailErrorPage.aspx");
         }
     }
+
 }

@@ -26,6 +26,11 @@
                     <asp:Label ID="lblDescription" runat="server" Text='<%# Bind("description") %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField HeaderText="Available Qty">
+                <ItemTemplate>
+                    <asp:Label ID="lblAvailableQty" runat="server"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Total Quantity Requested">
                 <ItemTemplate>
                     <asp:Label ID="lblTotalRequestedQty" runat="server" Text='<%# Bind("totalRequestedQty") %>'></asp:Label>
@@ -41,6 +46,8 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
+
+<RowStyle Height="50px"></RowStyle>
     </asp:GridView>
 
     <asp:Button ID="btnSave" runat="server" Text="Save" ValidationGroup="1"  CssClass="button" OnClick="BtnSave_Click" />&nbsp;&nbsp;&nbsp;

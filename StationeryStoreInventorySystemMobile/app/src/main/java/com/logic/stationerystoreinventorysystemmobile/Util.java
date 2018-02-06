@@ -18,7 +18,7 @@ import java.util.Properties;
  * Created by Yimon Soe on 24/1/2018.
  */
 public class Util {
-
+    //Change the ip address in this string for WCF
     final static String host = "http://172.17.249.125/StationeryStoreInventorySystem/";
 
     public static String getProperty(String key,Context context) throws IOException {

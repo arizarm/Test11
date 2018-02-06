@@ -49,7 +49,7 @@
                     <asp:RangeValidator ID="rvQty" runat="server"
                         ErrorMessage="RangeValidator" ControlToValidate="txtQty"
                         ForeColor="Red" Type="Integer"
-                        MaximumValue="1000" MinimumValue="1" Enabled="true" ValidationGroup="addValid">Invalid Quantity</asp:RangeValidator>
+                        MaximumValue="100000" MinimumValue="1" Enabled="true" ValidationGroup="addValid">Invalid Quantity</asp:RangeValidator>
                 </asp:TableCell>
             </asp:TableRow>
             <asp:TableRow>
@@ -89,7 +89,7 @@
                                     <asp:RangeValidator ID="rvQuantity" runat="server"
                                         ErrorMessage="Invalid Quantity" ControlToValidate="txtQuantity"
                                         ForeColor="Red" Type="Integer"
-                                        MaximumValue="1000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False" ValidationGroup="editValid"></asp:RangeValidator>
+                                        MaximumValue="100000" MinimumValue="1" Display="None" Enabled="True" EnableViewState="False" ValidationGroup="editValid"></asp:RangeValidator>
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="UOM" SortExpression="UnitOfMeasure">

@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public class Util {
 
-    final static String host = "http://172.17.249.194/StationeryStoreInventorySystem/";
+    final static String host = "http://172.17.249.125/StationeryStoreInventorySystem/";
 
     public static String getProperty(String key,Context context) throws IOException {
         Properties properties = new Properties();;
